@@ -30,7 +30,8 @@ public class StaticVariables {
     public static Image
     worldBackGround,
     tree,
-    trunk;
+    trunk,
+    houseNum1,houseNum2,houseNum3;
 
     public static SpriteSheet attack1;
 
@@ -55,6 +56,9 @@ public class StaticVariables {
         moneyIcon=ImageLoader.loadImage("Photos/worldFrame/money_icon.png");
         tree=ImageLoader.loadImage("Photos/world/tree.png");
         trunk=ImageLoader.loadImage("Photos/world/trunk.png");
+        houseNum1=ImageLoader.loadImage("Photos/house/house1.png");
+        houseNum2=ImageLoader.loadImage("Photos/house/house2.png");
+        houseNum3=ImageLoader.loadImage("Photos/house/house3.png");
 
         setTheSpriteSheet();
 

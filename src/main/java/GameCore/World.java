@@ -1,5 +1,6 @@
 package GameCore;
 
+import BackgroundObject.House;
 import BackgroundObject.Tree;
 import BackgroundObject.Trunk;
 import Objects.MainPlayer;
@@ -28,15 +29,27 @@ public class World extends JLabel implements MouseListener {
 
     }
 
+    private void addMouseLisenersToObject(){
+        /*
+        * this method use for insert mouse liseners to obecjt to know if the user is
+        * preesing on object to avoid the main player to walk on object e.g:
+        * walking on house
+        * */
+        for (GameObject gameObject :backGroundObjects) {
+            if(gameObject.getClass().getSimpleName().equals("House"))
+            gameObject.addMouseListener(this);
+        }
+    }
+
     private void addBackGroundObjects() {
 
         new Thread(new Runnable() {
-            public void run() {
-                for (int i = 0; i < 3; i++) {
 
-                }
+            public void run() {
+                random=new Random();
+
+
                 for (int i = 0; i <80 ; ) {
-                    random=new Random();
                     Tree tree=new Tree();
                     tree.setBounds(random.nextInt(getWidth()),random.nextInt(getHeight()),400,600);
                     if(!checkIfInetrcet(tree))
@@ -49,8 +62,13 @@ public class World extends JLabel implements MouseListener {
                 }
                 add(StaticVariables.mainPlayer);
 
+                for (int i = 0; i < 3; i++) {
+                    House house = new House(i);
+                    backGroundObjects.add(house);
+                    add(house);
+
+                }
                 for (int i = 0; i <80 ; ) {
-                    random=new Random();
                     Trunk trunk=new Trunk();
                     trunk.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
                     if(!checkIfInetrcet(trunk))
@@ -60,6 +78,7 @@ public class World extends JLabel implements MouseListener {
                         i++;
                     }
                 }
+                addMouseLisenersToObject();
             }
         }).start();
 
@@ -83,7 +102,13 @@ public class World extends JLabel implements MouseListener {
 
     public void mousePressed(MouseEvent e) {
         StaticVariables.mainPlayer.calculateTheAngle(e.getX(),e.getY());
-        MainPlayer.point=new Point(e.getPoint().x,e.getPoint().y);
+        MainPlayer.point=new Point(StaticVariables.mainPlayer.getX(),StaticVariables.mainPlayer.getY());
+        if(e.getSource().equals(this))
+        {
+
+            MainPlayer.point=new Point(e.getPoint().x,e.getPoint().y);
+        }
+
 
     }
 
