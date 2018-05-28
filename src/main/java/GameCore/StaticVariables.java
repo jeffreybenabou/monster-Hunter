@@ -29,7 +29,8 @@ public class StaticVariables {
 
     public static Image
     worldBackGround,
-    tree;
+    tree,
+    trunk;
 
     public static SpriteSheet attack1;
 
@@ -53,23 +54,27 @@ public class StaticVariables {
         settingLabel=ImageLoader.loadImage("Photos/worldFrame/setting_icon.png");
         moneyIcon=ImageLoader.loadImage("Photos/worldFrame/money_icon.png");
         tree=ImageLoader.loadImage("Photos/world/tree.png");
+        trunk=ImageLoader.loadImage("Photos/world/trunk.png");
 
         setTheSpriteSheet();
-        new Thread(new Runnable() {
-            public void run() {
+
+
+
+
+
 
                 new Thread(new Runnable() {
                     public void run() {
+                        mainPlayer=new MainPlayer();
+                        world=new World();
                         worldBackGround=ImageLoader.loadImage("Photos/world/background.jpg");
-        world.setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(10000,10000,0)));
+                        world.setIcon(new ImageIcon(worldBackGround.getScaledInstance(10000,10000,0)));
 
                     }
                 }).start();
-                mainPlayer=new MainPlayer();
-                world=new World();
 
-            }
-        }).start();
+
+
         gamePanel=new GamePanel();
         mainClass=new MainClass();
         mainMenu=new MainMenu();

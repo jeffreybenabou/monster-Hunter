@@ -5,6 +5,7 @@ import Objects.MainPlayer;
 import Server.Sql;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -84,6 +85,30 @@ public class MainMenu extends JLabel implements MouseListener {
         Sql.checkIfUserExist(getPlayerName());
     }
 
+    private void addTheWatingLabel(){
+
+        JLabel label=new JLabel(new ImageIcon(ImageLoader.loadImage("Photos/Untitled-1.png").getScaledInstance(getWidth(),getHeight(),0)));
+        label.setBounds(0,0,getWidth(),getHeight());
+        StaticVariables.mainClass.add(label);
+
+
+
+            setVisible(false);
+            StaticVariables.mainClass.repaint();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        /*
+        * the sleep method is used for show the waiting label
+        * for 5 second
+        * */
+
+        label.setVisible(false);
+
+    }
+
 
     public void mouseClicked(MouseEvent e) {
 
@@ -93,14 +118,18 @@ public class MainMenu extends JLabel implements MouseListener {
         if(e.getComponent().getName().equals("start"))
         {
 //            addTheUserNameToSql();
+
             new Thread(new Runnable() {
                 public void run() {
-                    if(StaticVariables.world!=null)
+
+                    addTheWatingLabel();
+
                     MainClass.addTheWorld();
                     // TODO: 27/05/2018 add wait screen if world not yet loaded
 
                 }
             }).start();
+
 
 
         }

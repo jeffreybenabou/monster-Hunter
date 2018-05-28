@@ -172,7 +172,6 @@ public class MainPlayer extends GameObject {
     public void calculateTheDistance(){
        distanceFromPoint = Math.hypot(getX() - point.getLocation().getX(), getY() -point.getLocation().getY());
         distanceFromPoint-=100;
-        System.out.println(distanceFromPoint);
 
 
 
