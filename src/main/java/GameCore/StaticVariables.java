@@ -30,8 +30,12 @@ public class StaticVariables {
     public static Image
     worldBackGround,
     tree,
+    rock,
     trunk,
     houseNum1,houseNum2,houseNum3;
+
+    public static Image
+    ghost1,ghost2,ghost3;
 
     public static SpriteSheet attack1;
 
@@ -40,6 +44,7 @@ public class StaticVariables {
     public static MainMenu mainMenu;
     public static MainClass mainClass;
     public static MainPlayer mainPlayer;
+
 
     private static Sql sql;
 
@@ -59,7 +64,10 @@ public class StaticVariables {
         houseNum1=ImageLoader.loadImage("Photos/house/house1.png");
         houseNum2=ImageLoader.loadImage("Photos/house/house2.png");
         houseNum3=ImageLoader.loadImage("Photos/house/house3.png");
-
+        rock=ImageLoader.loadImage("Photos/rock.png");
+        ghost1=ImageLoader.loadImage("Photos/ghost/ghost1.png");
+        ghost1=ImageLoader.loadImage("Photos/ghost/ghost2.png");
+        ghost1=ImageLoader.loadImage("Photos/ghost/ghost3.png");
         setTheSpriteSheet();
 
 

@@ -1,6 +1,7 @@
 package Objects;
 
 import GameCore.GameObject;
+import GameCore.Life;
 import GameCore.StaticVariables;
 
 import javax.swing.*;
@@ -11,10 +12,11 @@ import java.util.Vector;
 
 public class MainPlayer extends GameObject {
 
-    private int xSpriteSheet=220,ySprtieSheet=240,index=0,imageFrameRate=0,imageSpeed=2;
+    public static int sumOfLife=35000;
+    public static Life life;
+    private int xSpriteSheet=220,ySprtieSheet=240,index=0,imageFrameRate=0,imageSpeed=3,damgeToGhost;
     public static String nameOfPlayer;
-    public static boolean isAlive;
-    public static boolean attacking;
+    private  boolean attacking;
     public static boolean Walking;
 
 
@@ -40,7 +42,6 @@ public class MainPlayer extends GameObject {
     public MainPlayer(){
         setBounds(550,250,xSpriteSheet,ySprtieSheet);
         point=new Point(getX(),getY());
-        isAlive=true;
         makeNewElements();
         addMainPlayerPosition();
 
@@ -184,13 +185,13 @@ public class MainPlayer extends GameObject {
     private void setTheUserAction(){
         new Thread(new Runnable() {
             public void run() {
-                while (isAlive)
+                while (life.isAlive())
                 {
 
-                    calculateTheDistance();
+
 
                     changeIcon();
-
+                    calculateTheDistance();
 
                     try {
                         Thread.sleep(3);
@@ -208,9 +209,9 @@ public class MainPlayer extends GameObject {
         imageFrameRate++;
         if(imageFrameRate%5==0)
         {
-            if(attacking)
-                setIcon(attack.get(index));
-            if(distanceFromPoint<50)
+
+
+            if(distanceFromPoint<50&&!attacking)
             {
 
                 if(is_stand_up)
@@ -231,7 +232,7 @@ public class MainPlayer extends GameObject {
                     setIcon(standRightUp.get(index));
             }
 
-            if(distanceFromPoint>=50)
+            if(distanceFromPoint>=50&&!attacking)
             {
                 changeTheBollen();
                 if(angle<164&&angle>=52)
@@ -292,7 +293,7 @@ public class MainPlayer extends GameObject {
 
 
             }
-            else
+            else if(!attacking)
             {
                 changeTheBollen();
                 if(angle<164&&angle>=52)
@@ -313,12 +314,23 @@ public class MainPlayer extends GameObject {
                     is_stand_left_up=true;
             }
 
+            if(attacking)
+            {
+                setIcon(attack.get(index));
+                if(index==attack.size()-1)
+                {
+                    attacking=false;
+                    index=0;
+                }
+
+
+            }
 
 
             if(index==attack.size()-1)
                 index=0;
             else
-                index++;
+            index++;
         }
 
 
@@ -333,5 +345,336 @@ public class MainPlayer extends GameObject {
         is_stand_left_down=false;
         is_stand_left_up=false;
         is_stand_left=false;
+    }
+
+
+    public static int getSumOfLife() {
+        return sumOfLife;
+    }
+
+    public static void setSumOfLife(int sumOfLife) {
+        MainPlayer.sumOfLife = sumOfLife;
+    }
+
+    public static Life getLife() {
+        return life;
+    }
+
+    public static void setLife(Life life) {
+        MainPlayer.life = life;
+    }
+
+    public int getxSpriteSheet() {
+        return xSpriteSheet;
+    }
+
+    public void setxSpriteSheet(int xSpriteSheet) {
+        this.xSpriteSheet = xSpriteSheet;
+    }
+
+    public int getySprtieSheet() {
+        return ySprtieSheet;
+    }
+
+    public void setySprtieSheet(int ySprtieSheet) {
+        this.ySprtieSheet = ySprtieSheet;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getImageFrameRate() {
+        return imageFrameRate;
+    }
+
+    public void setImageFrameRate(int imageFrameRate) {
+        this.imageFrameRate = imageFrameRate;
+    }
+
+    public int getImageSpeed() {
+        return imageSpeed;
+    }
+
+    public void setImageSpeed(int imageSpeed) {
+        this.imageSpeed = imageSpeed;
+    }
+
+    public static String getNameOfPlayer() {
+        return nameOfPlayer;
+    }
+
+    public static void setNameOfPlayer(String nameOfPlayer) {
+        MainPlayer.nameOfPlayer = nameOfPlayer;
+    }
+
+
+
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
+
+    public static boolean isWalking() {
+        return Walking;
+    }
+
+    public static void setWalking(boolean walking) {
+        Walking = walking;
+    }
+
+    public static Point getPoint() {
+        return point;
+    }
+
+    public static void setPoint(Point point) {
+        MainPlayer.point = point;
+    }
+
+    public boolean isIs_stand_left() {
+        return is_stand_left;
+    }
+
+    public void setIs_stand_left(boolean is_stand_left) {
+        this.is_stand_left = is_stand_left;
+    }
+
+    public boolean isIs_stand_right() {
+        return is_stand_right;
+    }
+
+    public void setIs_stand_right(boolean is_stand_right) {
+        this.is_stand_right = is_stand_right;
+    }
+
+    public boolean isIs_stand_up() {
+        return is_stand_up;
+    }
+
+    public void setIs_stand_up(boolean is_stand_up) {
+        this.is_stand_up = is_stand_up;
+    }
+
+    public boolean isIs_stand_down() {
+        return is_stand_down;
+    }
+
+    public void setIs_stand_down(boolean is_stand_down) {
+        this.is_stand_down = is_stand_down;
+    }
+
+    public boolean isIs_stand_left_up() {
+        return is_stand_left_up;
+    }
+
+    public void setIs_stand_left_up(boolean is_stand_left_up) {
+        this.is_stand_left_up = is_stand_left_up;
+    }
+
+    public boolean isIs_stand_left_down() {
+        return is_stand_left_down;
+    }
+
+    public void setIs_stand_left_down(boolean is_stand_left_down) {
+        this.is_stand_left_down = is_stand_left_down;
+    }
+
+    public boolean isIs_stand_right_dowb() {
+        return is_stand_right_dowb;
+    }
+
+    public void setIs_stand_right_dowb(boolean is_stand_right_dowb) {
+        this.is_stand_right_dowb = is_stand_right_dowb;
+    }
+
+    public boolean isIs_stand_right_up() {
+        return is_stand_right_up;
+    }
+
+    public void setIs_stand_right_up(boolean is_stand_right_up) {
+        this.is_stand_right_up = is_stand_right_up;
+    }
+
+    public File getDIR_1() {
+        return DIR_1;
+    }
+
+    public void setDIR_1(File DIR_1) {
+        this.DIR_1 = DIR_1;
+    }
+
+    public Vector<Icon> getUp() {
+        return up;
+    }
+
+    public void setUp(Vector<Icon> up) {
+        this.up = up;
+    }
+
+    public Vector<Icon> getDown() {
+        return down;
+    }
+
+    public void setDown(Vector<Icon> down) {
+        this.down = down;
+    }
+
+    public Vector<Icon> getLeft() {
+        return left;
+    }
+
+    public void setLeft(Vector<Icon> left) {
+        this.left = left;
+    }
+
+    public Vector<Icon> getRight() {
+        return right;
+    }
+
+    public void setRight(Vector<Icon> right) {
+        this.right = right;
+    }
+
+    public Vector<Icon> getLeftUp() {
+        return leftUp;
+    }
+
+    public void setLeftUp(Vector<Icon> leftUp) {
+        this.leftUp = leftUp;
+    }
+
+    public Vector<Icon> getLeftDown() {
+        return leftDown;
+    }
+
+    public int getDamgeToGhost() {
+        return damgeToGhost;
+    }
+
+    public void setDamgeToGhost(int damgeToGhost) {
+        this.damgeToGhost = damgeToGhost;
+    }
+
+    public void setLeftDown(Vector<Icon> leftDown) {
+        this.leftDown = leftDown;
+    }
+
+    public Vector<Icon> getRightUp() {
+        return rightUp;
+    }
+
+    public void setRightUp(Vector<Icon> rightUp) {
+        this.rightUp = rightUp;
+    }
+
+    public Vector<Icon> getRightDown() {
+        return rightDown;
+    }
+
+    public void setRightDown(Vector<Icon> rightDown) {
+        this.rightDown = rightDown;
+    }
+
+    public Vector<Icon> getStandUp() {
+        return standUp;
+    }
+
+    public void setStandUp(Vector<Icon> standUp) {
+        this.standUp = standUp;
+    }
+
+    public Vector<Icon> getStandDown() {
+        return standDown;
+    }
+
+    public void setStandDown(Vector<Icon> standDown) {
+        this.standDown = standDown;
+    }
+
+    public Vector<Icon> getStandLeft() {
+        return standLeft;
+    }
+
+    public void setStandLeft(Vector<Icon> standLeft) {
+        this.standLeft = standLeft;
+    }
+
+    public Vector<Icon> getStandRight() {
+        return standRight;
+    }
+
+    public void setStandRight(Vector<Icon> standRight) {
+        this.standRight = standRight;
+    }
+
+    public Vector<Icon> getStandLefDown() {
+        return standLefDown;
+    }
+
+    public void setStandLefDown(Vector<Icon> standLefDown) {
+        this.standLefDown = standLefDown;
+    }
+
+    public Vector<Icon> getStandRightDown() {
+        return standRightDown;
+    }
+
+    public void setStandRightDown(Vector<Icon> standRightDown) {
+        this.standRightDown = standRightDown;
+    }
+
+    public Vector<Icon> getStandRightUp() {
+        return standRightUp;
+    }
+
+    public void setStandRightUp(Vector<Icon> standRightUp) {
+        this.standRightUp = standRightUp;
+    }
+
+    public Vector<Icon> getStandLeftUp() {
+        return standLeftUp;
+    }
+
+    public void setStandLeftUp(Vector<Icon> standLeftUp) {
+        this.standLeftUp = standLeftUp;
+    }
+
+    public Vector<Icon> getAttack() {
+        return attack;
+    }
+
+    public void setAttack(Vector<Icon> attack) {
+        this.attack = attack;
+    }
+
+    public Vector<Icon> getDie() {
+        return die;
+    }
+
+    public void setDie(Vector<Icon> die) {
+        this.die = die;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public double getDistanceFromPoint() {
+        return distanceFromPoint;
+    }
+
+    public void setDistanceFromPoint(double distanceFromPoint) {
+        this.distanceFromPoint = distanceFromPoint;
     }
 }
