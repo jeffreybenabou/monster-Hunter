@@ -50,28 +50,50 @@ public class World extends JLabel implements MouseListener {
     public void addGhost(){
         if(!Ghost.notTheFirstGhost)
         {
+            /*
+            *  first ghost will apper to the player and when the player kill the ghost
+            *  then the method will be called again but with Ghost.notTheFirstGhost=true
+            *  and will add ghosts and house to the world
+            *
+            * */
             new Thread(new Runnable() {
                 public void run() {
-                    firstGhost=new Ghost(0);
-                    firstGhost.setLocation(5000,5000);
+                    firstGhost=new Ghost(1);
+                    firstGhost.setLocation(100,100);
                     ghostArrayList.add(firstGhost);
                     add(firstGhost);
+                    while(firstGhost.getLifeBar().isAlive()){
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    firstGhost=null;
+                    Ghost.notTheFirstGhost=true;
+                    addGhost();
 
                 }
             }).start();
 
         }
         else
+        {
+            for (GameObject house:backGroundObjects) {
+                if(house.getClass().getSimpleName().equals("House"))
+                    house.setVisible(true);
+            }
             switch (StaticVariables.level)
             {
                 case 1:{
 
                     for (int i = 0; i <10 ; i++) {
                         Random random=new Random();
-                        Ghost ghost=new Ghost(0);
+                        Ghost ghost=new Ghost(1);
                         ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
                         ghostArrayList.add(ghost);
                         add(ghost);
+                        System.out.println(ghost.getLocation());
                     }
                     break;
                 }
@@ -80,8 +102,8 @@ public class World extends JLabel implements MouseListener {
                     int sum;
                     for (int i = 0; i <15 ; i++) {
                         Random random=new Random();
-                        sum=random.nextInt(1);
-                        if(sum==1)
+                        sum=random.nextInt(2);
+                        if(sum==2)
                             ok=true;
 
                         Ghost ghost=new Ghost(sum);
@@ -101,13 +123,13 @@ public class World extends JLabel implements MouseListener {
                 }
                 case 3:{
                     boolean ok=false;
-                    int sum=0;
+                    int sum;
                     for (int i = 0; i <20 ; i++) {
                         Random random=new Random();
-                        sum=random.nextInt(2);
-                        if(sum>1)
+                        sum=random.nextInt(3);
+                        if(sum>2)
                             ok=true;
-                        Ghost ghost=new Ghost(random.nextInt(2));
+                        Ghost ghost=new Ghost(random.nextInt(3));
                         ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
                         ghostArrayList.add(ghost);
                         add(ghost);
@@ -116,7 +138,7 @@ public class World extends JLabel implements MouseListener {
                     {
                         Random random=new Random();
 
-                        Ghost ghost=new Ghost(1);
+                        Ghost ghost=new Ghost(3);
                         ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
                         ghostArrayList.add(ghost);
                         add(ghost);
@@ -124,6 +146,9 @@ public class World extends JLabel implements MouseListener {
                     break;
                 }
             }
+
+        }
+
 
 
     }
@@ -231,7 +256,6 @@ public class World extends JLabel implements MouseListener {
             ghost.getLifeBar().getjProgressBar().setString(""+ghost.getLifeBar().getjProgressBar().getValue());
             StaticVariables.mainPlayer.setAttacking(true);
             StaticVariables.mainPlayer.setIndex(0);
-            ghost.repaint();
         }
 
 
@@ -247,5 +271,38 @@ public class World extends JLabel implements MouseListener {
 
     public void mouseExited(MouseEvent e) {
 
+    }
+
+
+    public ArrayList<Ghost> getGhostArrayList() {
+        return ghostArrayList;
+    }
+
+    public void setGhostArrayList(ArrayList<Ghost> ghostArrayList) {
+        this.ghostArrayList = ghostArrayList;
+    }
+
+    public ArrayList<GameObject> getBackGroundObjects() {
+        return backGroundObjects;
+    }
+
+    public void setBackGroundObjects(ArrayList<GameObject> backGroundObjects) {
+        this.backGroundObjects = backGroundObjects;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public Ghost getFirstGhost() {
+        return firstGhost;
+    }
+
+    public void setFirstGhost(Ghost firstGhost) {
+        this.firstGhost = firstGhost;
     }
 }

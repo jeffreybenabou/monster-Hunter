@@ -205,7 +205,7 @@ public class MainPlayer extends GameObject {
 
     private void changeIcon()
     {
-        StaticVariables.gamePanel.repaint();
+
         imageFrameRate++;
         if(imageFrameRate%5==0)
         {
@@ -332,7 +332,7 @@ public class MainPlayer extends GameObject {
             else
             index++;
         }
-
+        StaticVariables.gamePanel.repaint();
 
     }
 

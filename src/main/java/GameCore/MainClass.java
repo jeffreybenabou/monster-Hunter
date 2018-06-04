@@ -26,8 +26,9 @@ public class MainClass extends JFrame  {
 
     }
     public static void removeTheMainMenu(){
-        StaticVariables.mainMenu.setVisible(false);
         StaticVariables.mainClass.repaint();
+        StaticVariables.mainMenu.setVisible(false);
+
 
     }
     public static void addTheWorld(){
@@ -39,10 +40,11 @@ public class MainClass extends JFrame  {
     }
 
     public static void removeTheWorld(){
+        StaticVariables.mainClass.repaint();
         if(StaticVariables.world!=null)
         StaticVariables.world.setVisible(false);
         StaticVariables.gamePanel.setVisible(false);
-        StaticVariables.mainClass.repaint();
+
     }
 
     private void setTheJFrame() {
@@ -50,7 +52,7 @@ public class MainClass extends JFrame  {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
-
+repaint();
     }
 
 

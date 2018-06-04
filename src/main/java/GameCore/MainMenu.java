@@ -94,7 +94,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
             setVisible(false);
-            StaticVariables.mainClass.repaint();
+
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e1) {

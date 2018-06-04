@@ -45,7 +45,7 @@ public class StaticVariables {
     public static MainClass mainClass;
     public static MainPlayer mainPlayer;
 
-    public static int level=1;
+    public static int level=2;
 
     private static Sql sql;
 
@@ -67,8 +67,8 @@ public class StaticVariables {
         houseNum3=ImageLoader.loadImage("Photos/house/house3.png");
         rock=ImageLoader.loadImage("Photos/rock.png");
         ghost1=ImageLoader.loadImage("Photos/ghost/ghost1.png");
-        ghost1=ImageLoader.loadImage("Photos/ghost/ghost2.png");
-        ghost1=ImageLoader.loadImage("Photos/ghost/ghost3.png");
+        ghost2=ImageLoader.loadImage("Photos/ghost/ghost2.png");
+        ghost3=ImageLoader.loadImage("Photos/ghost/ghost3.png");
         setTheSpriteSheet();
 
 

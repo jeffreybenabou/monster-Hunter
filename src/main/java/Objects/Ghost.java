@@ -47,6 +47,7 @@ public class Ghost extends GameObject {
 // TODO: 29/05/2018 add an explotion or something to make the ghost dissaper
 
             StaticVariables.world.remove(this);
+            StaticVariables.world.getGhostArrayList().remove(this);
 
             setVisible(false);
 
@@ -80,7 +81,8 @@ public class Ghost extends GameObject {
                     }
                     else
                         stopMoving=false;
-
+                    if(StaticVariables.mainClass!=null)
+                        StaticVariables.mainClass.repaint();
                 }
                 removeTheGhostWhenDead();
             }
@@ -139,23 +141,38 @@ public class Ghost extends GameObject {
         Random random=new Random();
        switch (ghostType)
        {
-           case 0:
+           case 1:
            {
                setIcon(new ImageIcon(StaticVariables.ghost1));
                setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
                damgeToMainPlayer=1000*random.nextInt(3)+1;
-               damgeFromMainPlayer=2000;
+               damgeFromMainPlayer=2200;
                speedOfAttack=2000;
                life=10000;
                speed=1;
                break;
            }
-           case 1:
-           {
-               break;
-           }
            case 2:
            {
+               setIcon(new ImageIcon(StaticVariables.ghost2));
+               setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
+               damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
+               damgeFromMainPlayer=2300;
+               speedOfAttack=1800;
+               life=13000;
+               speed=2;
+               break;
+           }
+           case 3:
+           {
+               setIcon(new ImageIcon(StaticVariables.ghost3));
+               setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
+               damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
+               damgeFromMainPlayer=2400;
+               speedOfAttack=1500;
+               life=15000;
+               speed=3;
+
                break;
            }
        }

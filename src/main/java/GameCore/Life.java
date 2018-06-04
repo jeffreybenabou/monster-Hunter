@@ -46,10 +46,6 @@ public class Life implements ChangeListener {
         if(jProgressBar.getValue()<=0)
         {
 
-            if(!Ghost.notTheFirstGhost)
-                StaticVariables.world.addGhost();
-            Ghost.notTheFirstGhost=true;
-
             isAlive=false;
 
         }
