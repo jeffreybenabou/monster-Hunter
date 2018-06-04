@@ -6,6 +6,7 @@ import BackgroundObject.Tree;
 import BackgroundObject.Trunk;
 import Objects.Ghost;
 import Objects.MainPlayer;
+import sun.awt.windows.ThemeReader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class World extends JLabel implements MouseListener {
     private ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
     private Random random;
+    private Ghost firstGhost;
     public World(){
         setBounds(0,0,10000,10000);
         setLayout(null);
@@ -46,13 +48,82 @@ public class World extends JLabel implements MouseListener {
         }
     }
     public void addGhost(){
-        for (int i = 0; i <15 ; i++) {
-            Random random=new Random();
-            Ghost ghost=new Ghost(0);
-            ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-            ghostArrayList.add(ghost);
-            add(ghost);
+        if(!Ghost.notTheFirstGhost)
+        {
+            new Thread(new Runnable() {
+                public void run() {
+                    firstGhost=new Ghost(0);
+                    firstGhost.setLocation(5000,5000);
+                    ghostArrayList.add(firstGhost);
+                    add(firstGhost);
+
+                }
+            }).start();
+
         }
+        else
+            switch (StaticVariables.level)
+            {
+                case 1:{
+
+                    for (int i = 0; i <10 ; i++) {
+                        Random random=new Random();
+                        Ghost ghost=new Ghost(0);
+                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                        ghostArrayList.add(ghost);
+                        add(ghost);
+                    }
+                    break;
+                }
+                case 2:{
+                    boolean ok=false;
+                    int sum;
+                    for (int i = 0; i <15 ; i++) {
+                        Random random=new Random();
+                        sum=random.nextInt(1);
+                        if(sum==1)
+                            ok=true;
+
+                        Ghost ghost=new Ghost(sum);
+                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                        ghostArrayList.add(ghost);
+                        add(ghost);
+                    }
+                    if(!ok)
+                    {
+                        Random random=new Random();
+                        Ghost ghost=new Ghost(2);
+                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                        ghostArrayList.add(ghost);
+                        add(ghost);
+                    }
+                    break;
+                }
+                case 3:{
+                    boolean ok=false;
+                    int sum=0;
+                    for (int i = 0; i <20 ; i++) {
+                        Random random=new Random();
+                        sum=random.nextInt(2);
+                        if(sum>1)
+                            ok=true;
+                        Ghost ghost=new Ghost(random.nextInt(2));
+                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                        ghostArrayList.add(ghost);
+                        add(ghost);
+                    }
+                    if(!ok)
+                    {
+                        Random random=new Random();
+
+                        Ghost ghost=new Ghost(1);
+                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                        ghostArrayList.add(ghost);
+                        add(ghost);
+                    }
+                    break;
+                }
+            }
 
 
     }
@@ -125,12 +196,6 @@ public class World extends JLabel implements MouseListener {
 
     }
 
-    public void activeTheGhostMove(){
-        for (Ghost ghost:ghostArrayList) {
-            ghost.setTheActionToGhost();
-
-        }
-    }
 
     private boolean checkIfInetrcet(GameObject  object) {
         for (GameObject gameObject: backGroundObjects) {

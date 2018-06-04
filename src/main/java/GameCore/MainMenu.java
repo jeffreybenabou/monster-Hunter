@@ -125,8 +125,8 @@ public class MainMenu extends JLabel implements MouseListener {
                     addTheWatingLabel();
 
                     MainClass.addTheWorld();
-                    StaticVariables.world.activeTheGhostMove();
-                    // TODO: 27/05/2018 add wait screen if world not yet loaded
+
+
 
                 }
             }).start();

@@ -1,5 +1,7 @@
 package GameCore;
 
+import Objects.Ghost;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -43,6 +45,11 @@ public class Life implements ChangeListener {
 
         if(jProgressBar.getValue()<=0)
         {
+
+            if(!Ghost.notTheFirstGhost)
+                StaticVariables.world.addGhost();
+            Ghost.notTheFirstGhost=true;
+
             isAlive=false;
 
         }

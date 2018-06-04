@@ -25,6 +25,7 @@ public class Ghost extends GameObject {
             dirDown;
 
     private int speed;
+    public static boolean notTheFirstGhost=false;
 
     public Ghost(int ghostType){
         this.ghostType=ghostType;
@@ -38,6 +39,8 @@ public class Ghost extends GameObject {
         dirRight = !dirLeft;
 
         dirDown = !dirUp;
+        setTheActionToGhost();
+
     }
 
     public void removeTheGhostWhenDead(){
@@ -56,6 +59,7 @@ public class Ghost extends GameObject {
             public void run() {
                 while(lifeBar.isAlive())
                 {
+                    if(notTheFirstGhost)
                     moveTheGhostAroundTheWorld();
                     try {
                         Thread.sleep(10);
@@ -92,6 +96,7 @@ public class Ghost extends GameObject {
          * also check that the player is not getting out of the world bound .
          *
          * */
+
         if (dirDown)
             setLocation(getX(), getY() + speed);
         if (dirUp)

@@ -45,6 +45,7 @@ public class StaticVariables {
     public static MainClass mainClass;
     public static MainPlayer mainPlayer;
 
+    public static int level=1;
 
     private static Sql sql;
 
