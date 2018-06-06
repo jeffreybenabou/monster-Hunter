@@ -3,6 +3,7 @@ package Objects;
 import GameCore.GameObject;
 import GameCore.Life;
 import GameCore.StaticVariables;
+import ImageHandel.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,16 +49,7 @@ public class MainPlayer extends GameObject {
 
 
     }
-    private synchronized void addImageOfMainPlayer(File dir, Vector<Icon> linkedList) {
-        String ImagePath;
-        for (int i = 0; dir.listFiles().length > i; i++) {
 
-            ImagePath = dir.getPath() + "\\" + i + ".png";
-            ImagePath = ImagePath.replace("\\", "/");
-            linkedList.add(new ImageIcon(new ImageIcon(ImagePath).getImage().getScaledInstance(getWidth(),getHeight(),0)));
-
-        }
-    }
 
     public  void calculateTheAngle(int x, int y) {
         float xDistance = getX()-x ;
@@ -73,58 +65,58 @@ public class MainPlayer extends GameObject {
             public void run() {
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_up/");
-                addImageOfMainPlayer(DIR_1, up);
+                ImageLoader.addImageOfMainPlayer(DIR_1, up,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_down/");
-                addImageOfMainPlayer(DIR_1, down);
+                ImageLoader.addImageOfMainPlayer(DIR_1, down,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left/");
-                addImageOfMainPlayer(DIR_1, left);
+                ImageLoader.addImageOfMainPlayer(DIR_1, left,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right/");
-                addImageOfMainPlayer(DIR_1, right);
+                ImageLoader.addImageOfMainPlayer(DIR_1, right,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_up/");
-                addImageOfMainPlayer(DIR_1, standUp);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standUp,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_right/");
-                addImageOfMainPlayer(DIR_1, standRight);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standRight,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_down/");
-                addImageOfMainPlayer(DIR_1, standDown);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standDown,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_left/");
-                addImageOfMainPlayer(DIR_1, standLeft);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standLeft,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_right_down/");
-                addImageOfMainPlayer(DIR_1, standRightDown);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standRightDown,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_right_up/");
-                addImageOfMainPlayer(DIR_1, standRightUp);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standRightUp,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left_down/");
-                addImageOfMainPlayer(DIR_1, leftDown);
+                ImageLoader.addImageOfMainPlayer(DIR_1, leftDown,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left_up/");
-                addImageOfMainPlayer(DIR_1, leftUp);
+                ImageLoader.addImageOfMainPlayer(DIR_1, leftUp,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right_down/");
-                addImageOfMainPlayer(DIR_1, rightDown);
+                ImageLoader.addImageOfMainPlayer(DIR_1, rightDown,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right_up/");
-                addImageOfMainPlayer(DIR_1, rightUp);
+                ImageLoader.addImageOfMainPlayer(DIR_1, rightUp,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_left_down/");
-                addImageOfMainPlayer(DIR_1, standLefDown);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standLefDown,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_left_up/");
-                addImageOfMainPlayer(DIR_1, standLeftUp);
+                ImageLoader.addImageOfMainPlayer(DIR_1, standLeftUp,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/fall/");
-                addImageOfMainPlayer(DIR_1, die);
+                ImageLoader.addImageOfMainPlayer(DIR_1, die,getSize());
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/attack2/");
-                addImageOfMainPlayer(DIR_1, attack);
+                ImageLoader.addImageOfMainPlayer(DIR_1, attack,getSize());
                 setTheUserAction();
 
             }

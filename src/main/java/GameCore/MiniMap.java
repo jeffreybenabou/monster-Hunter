@@ -1,4 +1,6 @@
 package GameCore;
 
-public class MiniMap {
+import javax.swing.*;
+
+public class MiniMap extends JLabel {
 }

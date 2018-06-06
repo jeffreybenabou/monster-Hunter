@@ -5,6 +5,7 @@ import ImageHandel.ImageLoader;
 import java.awt.*;
 
 import ImageHandel.SpriteSheet;
+import Objects.Ghost;
 import Objects.MainPlayer;
 import Server.*;
 
@@ -50,6 +51,11 @@ public class StaticVariables {
     private static Sql sql;
 
     public StaticVariables(){
+        new Thread(new Runnable() {
+            public void run() {
+                Ghost.addGhostImage();
+            }
+        }).start();
         mainMenuBackGround=ImageLoader.loadImage("Photos/menubackground.jpg");
         startButton=ImageLoader.loadImage("Photos/menuButton/newGame.png");
         exitButton=ImageLoader.loadImage("Photos/menuButton/exit.png");
