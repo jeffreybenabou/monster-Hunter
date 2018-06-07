@@ -22,13 +22,13 @@ public class ImageLoader {
         }
     return null;
     }
-    public static void addImageOfMainPlayer(File dir, Vector<Icon> linkedList, Dimension size) {
+    public static void addImageOfMainPlayer(File dir, Vector<Image> linkedList, Dimension size) {
         String ImagePath;
         for (int i = 0; dir.listFiles().length > i; i++) {
 
             ImagePath = dir.getPath() + "\\" + i + ".png";
             ImagePath = ImagePath.replace("\\", "/");
-            linkedList.add(new ImageIcon(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,0)));
+            linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,0));
 
         }
     }

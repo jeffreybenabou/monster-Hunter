@@ -18,7 +18,7 @@ public class Ghost extends GameObject {
 
     private int ghostType,damgeToMainPlayer,damgeFromMainPlayer,speedOfAttack,life;
 
-    public static Vector<Icon>
+    public static Vector<Image>
             left,
             right,
             up,
@@ -74,18 +74,18 @@ public class Ghost extends GameObject {
     }
 
     public static void addTheVector() {
-        left=new Vector<Icon>();
-        right=new Vector<Icon>();
-        up=new Vector<Icon>();
-        down=new Vector<Icon>();
-        attackDown=new Vector<Icon>();
-        attackLeft=new Vector<Icon>();
-        attackLeftDown=new Vector<Icon>();
-        attackLeftUp=new Vector<Icon>();
-        attackRight=new Vector<Icon>();
-        attackRightDown=new Vector<Icon>();
-        attackRightUp=new Vector<Icon>();
-        attackUp=new Vector<Icon>();
+        left=new Vector<Image>();
+        right=new Vector<Image>();
+        up=new Vector<Image>();
+        down=new Vector<Image>();
+        attackDown=new Vector<Image>();
+        attackLeft=new Vector<Image>();
+        attackLeftDown=new Vector<Image>();
+        attackLeftUp=new Vector<Image>();
+        attackRight=new Vector<Image>();
+        attackRightDown=new Vector<Image>();
+        attackRightUp=new Vector<Image>();
+        attackUp=new Vector<Image>();
 
 
     }
@@ -216,30 +216,30 @@ public class Ghost extends GameObject {
                 if (stopMoving) {
                     dirLeft = false; dirDown = false; dirUp = false; dirRight = false;
                     if (StaticVariables.mainPlayer.isIs_stand_down())
-                        setIcon(attackUp.get(index));
+                        setIcon(new ImageIcon(attackUp.get(index)));
                     if (StaticVariables.mainPlayer.isIs_stand_left())
-                        setIcon(attackRight.get(index));
+                        setIcon(new ImageIcon(attackRight.get(index)));
                     if (StaticVariables.mainPlayer.isIs_stand_right())
-                        setIcon(attackLeft.get(index));
+                        setIcon(new ImageIcon(attackLeft.get(index)));
                     if (StaticVariables.mainPlayer.isIs_stand_up())
-                        setIcon(attackDown.get(index));
+                        setIcon(new ImageIcon(attackDown.get(index)));
                     if (StaticVariables.mainPlayer.isIs_stand_left_down())
-                        setIcon(attackRightUp.get(index));
+                        setIcon(new ImageIcon(attackRightUp.get(index)));
                     if (StaticVariables.mainPlayer.isIs_stand_right_up())
-                        setIcon(attackLeftDown.get(index));
+                        setIcon(new ImageIcon(attackLeftDown.get(index)));
                     if (StaticVariables.mainPlayer.isIs_stand_left_up())
-                        setIcon(attackRightDown.get(index));
+                        setIcon(new ImageIcon(attackRightDown.get(index)));
                     if (StaticVariables.mainPlayer.isIs_stand_right_dowb())
-                        setIcon(attackLeftUp.get(index));
+                        setIcon(new ImageIcon(attackLeftUp.get(index)));
                 }
                 if (dirLeft)
-                    setIcon(left.get(index));
+                    setIcon(new ImageIcon(left.get(index)));
                 if (dirRight)
-                    setIcon(right.get(index));
+                    setIcon(new ImageIcon(right.get(index)));
                 if (dirUp)
-                    setIcon(up.get(index));
+                    setIcon(new ImageIcon(up.get(index)));
                 if (dirDown)
-                    setIcon(down.get(index));
+                    setIcon(new ImageIcon(down.get(index)));
 
 
             } else {
@@ -268,8 +268,8 @@ public class Ghost extends GameObject {
            case 1:
            {
 
-               setSize(attackDown.get(0).getIconWidth(),attackDown.get(0).getIconHeight());
-               damgeToMainPlayer=1000*random.nextInt(3)+1;
+               setSize(300,320);
+               damgeToMainPlayer=20*random.nextInt(3)+1;
                damgeFromMainPlayer=2200;
                speedOfAttack=2000;
                life=10000;

@@ -241,6 +241,7 @@ public class World extends JLabel implements MouseListener {
         
         StaticVariables.mainPlayer.calculateTheAngle(e.getX(),e.getY());
         MainPlayer.point=new Point(StaticVariables.mainPlayer.getX(),StaticVariables.mainPlayer.getY());
+
         if(e.getSource().equals(this))
         {
 
@@ -256,6 +257,14 @@ public class World extends JLabel implements MouseListener {
             ghost.getLifeBar().getjProgressBar().setString(""+ghost.getLifeBar().getjProgressBar().getValue());
             StaticVariables.mainPlayer.setAttacking(true);
             StaticVariables.mainPlayer.setIndex(0);
+        }
+        if(e.getComponent().getClass().getSimpleName().equals("Ghost")&&!StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds())&&!StaticVariables.mainPlayer.isAttacking())
+        {
+
+            StaticVariables.mainPlayer.calculateTheAngle(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
+
+            MainPlayer.point=new Point(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
+
         }
 
 

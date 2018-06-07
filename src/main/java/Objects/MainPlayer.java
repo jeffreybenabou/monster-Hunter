@@ -30,7 +30,7 @@ public class MainPlayer extends GameObject {
     is_stand_left_up, is_stand_left_down, is_stand_right_dowb, is_stand_right_up;
     private File DIR_1;
 
-    private Vector<Icon>
+    private Vector<Image>
             up, down, left, right,
             leftUp, leftDown, rightUp, rightDown,
             standUp, standDown, standLeft, standRight,
@@ -136,28 +136,28 @@ public class MainPlayer extends GameObject {
 
 
     private void makeNewElements() {
-        up = new Vector<Icon>();
-        down =  new Vector<Icon>();
-        left =  new Vector<Icon>();
-        right =  new Vector<Icon>();
+        up = new Vector<Image>();
+        down =  new Vector<Image>();
+        left =  new Vector<Image>();
+        right =  new Vector<Image>();
 
-        standDown =  new Vector<Icon>();
-        standUp =  new Vector<Icon>();
-        standLeft =  new Vector<Icon>();
-        standRight =  new Vector<Icon>();
+        standDown =  new Vector<Image>();
+        standUp =  new Vector<Image>();
+        standLeft =  new Vector<Image>();
+        standRight =  new Vector<Image>();
 
-        standLefDown =  new Vector<Icon>();
-        standLeftUp =  new Vector<Icon>();
-        standRightDown =  new Vector<Icon>();
-        standRightUp =  new Vector<Icon>();
+        standLefDown =  new Vector<Image>();
+        standLeftUp =  new Vector<Image>();
+        standRightDown =  new Vector<Image>();
+        standRightUp =  new Vector<Image>();
 
-        leftUp =  new Vector<Icon>();
-        leftDown =  new Vector<Icon>();
-        rightDown =  new Vector<Icon>();
-        rightUp =  new Vector<Icon>();
+        leftUp =  new Vector<Image>();
+        leftDown =  new Vector<Image>();
+        rightDown =  new Vector<Image>();
+        rightUp =  new Vector<Image>();
 
-        attack =  new Vector<Icon>();
-        die =  new Vector<Icon>();
+        attack =  new Vector<Image>();
+        die =  new Vector<Image>();
 
 
     }
@@ -207,21 +207,21 @@ public class MainPlayer extends GameObject {
             {
 
                 if(is_stand_up)
-                    setIcon(standUp.get(index));
+                    setIcon(new ImageIcon(standUp.get(index)));
                 if(is_stand_down)
-                    setIcon(standDown.get(index));
+                    setIcon(new ImageIcon(standDown.get(index)));
                 if(is_stand_left)
-                    setIcon(standLeft.get(index));
+                    setIcon(new ImageIcon(standLeft.get(index)));
                 if(is_stand_right)
-                    setIcon(standRight.get(index));
+                    setIcon(new ImageIcon(standRight.get(index)));
                 if(is_stand_left_down)
-                    setIcon(standLefDown.get(index));
+                    setIcon(new ImageIcon(standLefDown.get(index)));
                 if(is_stand_left_up)
-                    setIcon(standLeftUp.get(index));
+                    setIcon(new ImageIcon(standLeftUp.get(index)));
                 if(is_stand_right_dowb)
-                    setIcon(standRightDown.get(index));
+                    setIcon(new ImageIcon(standRightDown.get(index)));
                 if(is_stand_right_up)
-                    setIcon(standRightUp.get(index));
+                    setIcon(new ImageIcon(standRightUp.get(index)));
             }
 
             if(distanceFromPoint>=50&&!attacking)
@@ -231,55 +231,55 @@ public class MainPlayer extends GameObject {
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX(),StaticVariables.world.getY()+imageSpeed);
                     setLocation(getX(),getY()-imageSpeed);
-                    setIcon(up.get(index));
+                    setIcon(new ImageIcon(up.get(index)));
 
                 }
                 if(angle<183&&angle>=164)
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY()+imageSpeed);
                     setLocation(getX()+imageSpeed,getY()-imageSpeed);
-                    setIcon(rightUp.get(index));
+                    setIcon(new ImageIcon(rightUp.get(index)));
 
                 }
                 if(angle<205&&angle>=183)
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY());
                     setLocation(getX()+imageSpeed,getY());
-                    setIcon(right.get(index));
+                    setIcon(new ImageIcon(right.get(index)));
                 }
                 if(angle<231&&angle>=205)
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY()-imageSpeed);
                     setLocation(getX()+imageSpeed,getY()+imageSpeed);
-                    setIcon(rightDown.get(index));
+                    setIcon(new ImageIcon(rightDown.get(index)));
 
                 }
                 if(angle<281&&angle>=231)
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX(),StaticVariables.world.getY()-imageSpeed);
                     setLocation(getX(),getY()+imageSpeed);
-                    setIcon(down.get(index));
+                    setIcon(new ImageIcon(down.get(index)));
 
                 }
                 if(angle<318&&angle>=281)
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY()-imageSpeed);
                     setLocation(getX()-imageSpeed,getY()+imageSpeed);
-                    setIcon(leftDown.get(index));
+                    setIcon(new ImageIcon(leftDown.get(index)));
                 }
 
                 if(angle>=318)
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY());
                     setLocation(getX()-imageSpeed,getY());
-                    setIcon(left.get(index));
+                    setIcon(new ImageIcon(left.get(index)));
 
                 }
                 if(angle<52&&angle>=0)
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY()+imageSpeed);
                     setLocation(getX()-imageSpeed,getY()-imageSpeed);
-                    setIcon(leftUp.get(index));
+                    setIcon(new ImageIcon(leftUp.get(index)));
 
                 }
 
@@ -308,7 +308,7 @@ public class MainPlayer extends GameObject {
 
             if(attacking)
             {
-                setIcon(attack.get(index));
+                setIcon(new ImageIcon(attack.get(index)));
                 if(index==attack.size()-1)
                 {
                     attacking=false;
@@ -434,6 +434,158 @@ public class MainPlayer extends GameObject {
         return is_stand_left;
     }
 
+    public int getDamgeToGhost() {
+        return damgeToGhost;
+    }
+
+    public void setDamgeToGhost(int damgeToGhost) {
+        this.damgeToGhost = damgeToGhost;
+    }
+
+    public Vector<Image> getUp() {
+        return up;
+    }
+
+    public void setUp(Vector<Image> up) {
+        this.up = up;
+    }
+
+    public Vector<Image> getDown() {
+        return down;
+    }
+
+    public void setDown(Vector<Image> down) {
+        this.down = down;
+    }
+
+    public Vector<Image> getLeft() {
+        return left;
+    }
+
+    public void setLeft(Vector<Image> left) {
+        this.left = left;
+    }
+
+    public Vector<Image> getRight() {
+        return right;
+    }
+
+    public void setRight(Vector<Image> right) {
+        this.right = right;
+    }
+
+    public Vector<Image> getLeftUp() {
+        return leftUp;
+    }
+
+    public void setLeftUp(Vector<Image> leftUp) {
+        this.leftUp = leftUp;
+    }
+
+    public Vector<Image> getLeftDown() {
+        return leftDown;
+    }
+
+    public void setLeftDown(Vector<Image> leftDown) {
+        this.leftDown = leftDown;
+    }
+
+    public Vector<Image> getRightUp() {
+        return rightUp;
+    }
+
+    public void setRightUp(Vector<Image> rightUp) {
+        this.rightUp = rightUp;
+    }
+
+    public Vector<Image> getRightDown() {
+        return rightDown;
+    }
+
+    public void setRightDown(Vector<Image> rightDown) {
+        this.rightDown = rightDown;
+    }
+
+    public Vector<Image> getStandUp() {
+        return standUp;
+    }
+
+    public void setStandUp(Vector<Image> standUp) {
+        this.standUp = standUp;
+    }
+
+    public Vector<Image> getStandDown() {
+        return standDown;
+    }
+
+    public void setStandDown(Vector<Image> standDown) {
+        this.standDown = standDown;
+    }
+
+    public Vector<Image> getStandLeft() {
+        return standLeft;
+    }
+
+    public void setStandLeft(Vector<Image> standLeft) {
+        this.standLeft = standLeft;
+    }
+
+    public Vector<Image> getStandRight() {
+        return standRight;
+    }
+
+    public void setStandRight(Vector<Image> standRight) {
+        this.standRight = standRight;
+    }
+
+    public Vector<Image> getStandLefDown() {
+        return standLefDown;
+    }
+
+    public void setStandLefDown(Vector<Image> standLefDown) {
+        this.standLefDown = standLefDown;
+    }
+
+    public Vector<Image> getStandRightDown() {
+        return standRightDown;
+    }
+
+    public void setStandRightDown(Vector<Image> standRightDown) {
+        this.standRightDown = standRightDown;
+    }
+
+    public Vector<Image> getStandRightUp() {
+        return standRightUp;
+    }
+
+    public void setStandRightUp(Vector<Image> standRightUp) {
+        this.standRightUp = standRightUp;
+    }
+
+    public Vector<Image> getStandLeftUp() {
+        return standLeftUp;
+    }
+
+    public void setStandLeftUp(Vector<Image> standLeftUp) {
+        this.standLeftUp = standLeftUp;
+    }
+
+    public Vector<Image> getAttack() {
+        return attack;
+    }
+
+    public void setAttack(Vector<Image> attack) {
+        this.attack = attack;
+    }
+
+    public Vector<Image> getDie() {
+        return die;
+    }
+
+    public void setDie(Vector<Image> die) {
+        this.die = die;
+    }
+
     public void setIs_stand_left(boolean is_stand_left) {
         this.is_stand_left = is_stand_left;
     }
@@ -502,157 +654,7 @@ public class MainPlayer extends GameObject {
         this.DIR_1 = DIR_1;
     }
 
-    public Vector<Icon> getUp() {
-        return up;
-    }
 
-    public void setUp(Vector<Icon> up) {
-        this.up = up;
-    }
-
-    public Vector<Icon> getDown() {
-        return down;
-    }
-
-    public void setDown(Vector<Icon> down) {
-        this.down = down;
-    }
-
-    public Vector<Icon> getLeft() {
-        return left;
-    }
-
-    public void setLeft(Vector<Icon> left) {
-        this.left = left;
-    }
-
-    public Vector<Icon> getRight() {
-        return right;
-    }
-
-    public void setRight(Vector<Icon> right) {
-        this.right = right;
-    }
-
-    public Vector<Icon> getLeftUp() {
-        return leftUp;
-    }
-
-    public void setLeftUp(Vector<Icon> leftUp) {
-        this.leftUp = leftUp;
-    }
-
-    public Vector<Icon> getLeftDown() {
-        return leftDown;
-    }
-
-    public int getDamgeToGhost() {
-        return damgeToGhost;
-    }
-
-    public void setDamgeToGhost(int damgeToGhost) {
-        this.damgeToGhost = damgeToGhost;
-    }
-
-    public void setLeftDown(Vector<Icon> leftDown) {
-        this.leftDown = leftDown;
-    }
-
-    public Vector<Icon> getRightUp() {
-        return rightUp;
-    }
-
-    public void setRightUp(Vector<Icon> rightUp) {
-        this.rightUp = rightUp;
-    }
-
-    public Vector<Icon> getRightDown() {
-        return rightDown;
-    }
-
-    public void setRightDown(Vector<Icon> rightDown) {
-        this.rightDown = rightDown;
-    }
-
-    public Vector<Icon> getStandUp() {
-        return standUp;
-    }
-
-    public void setStandUp(Vector<Icon> standUp) {
-        this.standUp = standUp;
-    }
-
-    public Vector<Icon> getStandDown() {
-        return standDown;
-    }
-
-    public void setStandDown(Vector<Icon> standDown) {
-        this.standDown = standDown;
-    }
-
-    public Vector<Icon> getStandLeft() {
-        return standLeft;
-    }
-
-    public void setStandLeft(Vector<Icon> standLeft) {
-        this.standLeft = standLeft;
-    }
-
-    public Vector<Icon> getStandRight() {
-        return standRight;
-    }
-
-    public void setStandRight(Vector<Icon> standRight) {
-        this.standRight = standRight;
-    }
-
-    public Vector<Icon> getStandLefDown() {
-        return standLefDown;
-    }
-
-    public void setStandLefDown(Vector<Icon> standLefDown) {
-        this.standLefDown = standLefDown;
-    }
-
-    public Vector<Icon> getStandRightDown() {
-        return standRightDown;
-    }
-
-    public void setStandRightDown(Vector<Icon> standRightDown) {
-        this.standRightDown = standRightDown;
-    }
-
-    public Vector<Icon> getStandRightUp() {
-        return standRightUp;
-    }
-
-    public void setStandRightUp(Vector<Icon> standRightUp) {
-        this.standRightUp = standRightUp;
-    }
-
-    public Vector<Icon> getStandLeftUp() {
-        return standLeftUp;
-    }
-
-    public void setStandLeftUp(Vector<Icon> standLeftUp) {
-        this.standLeftUp = standLeftUp;
-    }
-
-    public Vector<Icon> getAttack() {
-        return attack;
-    }
-
-    public void setAttack(Vector<Icon> attack) {
-        this.attack = attack;
-    }
-
-    public Vector<Icon> getDie() {
-        return die;
-    }
-
-    public void setDie(Vector<Icon> die) {
-        this.die = die;
-    }
 
     public double getAngle() {
         return angle;
