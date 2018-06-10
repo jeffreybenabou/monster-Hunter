@@ -34,7 +34,7 @@ public class Ghost extends GameObject {
 
 
     private Life lifeBar;
-    private boolean stopMoving=false;
+    private boolean stopMoving=false,changeDir=false;
 
     private boolean
 
@@ -59,18 +59,18 @@ public class Ghost extends GameObject {
     public Ghost(int ghostType){
         this.ghostType=ghostType;
         checkTheGhostType();
+        setTheDir();
+        setTheActionToGhost();
 
+    }
 
-
+    public void setTheDir(){
         Random random=new Random();
         dirLeft=random.nextBoolean();
         dirUp=random.nextBoolean();
-
         dirRight = !dirLeft;
 
         dirDown = !dirUp;
-        setTheActionToGhost();
-
     }
 
     public static void addTheVector() {
@@ -109,12 +109,14 @@ public class Ghost extends GameObject {
                 {
                     if(notTheFirstGhost)
                     moveTheGhostAroundTheWorld();
-
-
-                    if(getBounds().intersects(StaticVariables.mainPlayer.getBounds()))
-                        stopMoving=true;
                     else
-                        stopMoving=false;
+                        changeTheGhostIcon();
+                    stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
+
+
+
+
+
                     if(StaticVariables.mainClass!=null)
                         StaticVariables.mainClass.repaint();
                     try {
@@ -137,6 +139,7 @@ public class Ghost extends GameObject {
          * also check that the player is not getting out of the world bound .
          *
          * */
+
 
         if (dirDown)
             setLocation(getX(), getY() + speed);
@@ -213,7 +216,7 @@ public class Ghost extends GameObject {
     private void changeTheGhostIcon() {
         try {
             if (index < left.size()) {
-                if (stopMoving) {
+                if (stopMoving){
                     dirLeft = false; dirDown = false; dirUp = false; dirRight = false;
                     if (StaticVariables.mainPlayer.isIs_stand_down())
                         setIcon(new ImageIcon(attackUp.get(index)));
@@ -232,14 +235,22 @@ public class Ghost extends GameObject {
                     if (StaticVariables.mainPlayer.isIs_stand_right_dowb())
                         setIcon(new ImageIcon(attackLeftUp.get(index)));
                 }
-                if (dirLeft)
-                    setIcon(new ImageIcon(left.get(index)));
-                if (dirRight)
-                    setIcon(new ImageIcon(right.get(index)));
-                if (dirUp)
-                    setIcon(new ImageIcon(up.get(index)));
-                if (dirDown)
-                    setIcon(new ImageIcon(down.get(index)));
+                else
+                {
+
+                    if(!dirUp&&!dirDown&&!dirLeft&&!dirRight)
+                        setTheDir();
+
+                    if (dirLeft)
+                        setIcon(new ImageIcon(left.get(index)));
+                    if (dirRight)
+                        setIcon(new ImageIcon(right.get(index)));
+                    if (dirUp)
+                        setIcon(new ImageIcon(up.get(index)));
+                    if (dirDown)
+                        setIcon(new ImageIcon(down.get(index)));
+                }
+
 
 
             } else {
@@ -250,6 +261,7 @@ public class Ghost extends GameObject {
 
                 index = 0;
             }
+
 
 
             index++;

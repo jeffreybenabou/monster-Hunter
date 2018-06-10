@@ -93,11 +93,13 @@ public class World extends JLabel implements MouseListener {
                         ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
                         ghostArrayList.add(ghost);
                         add(ghost);
-                        System.out.println(ghost.getLocation());
+
                     }
+                    StaticVariables.miniMap.addTheGhostLocationToMap();
                     break;
                 }
                 case 2:{
+                    ghostArrayList=new ArrayList<Ghost>();
                     boolean ok=false;
                     int sum;
                     for (int i = 0; i <15 ; i++) {
@@ -119,9 +121,12 @@ public class World extends JLabel implements MouseListener {
                         ghostArrayList.add(ghost);
                         add(ghost);
                     }
+                    StaticVariables.miniMap.addTheGhostLocationToMap();
+
                     break;
                 }
                 case 3:{
+                    ghostArrayList=new ArrayList<Ghost>();
                     boolean ok=false;
                     int sum;
                     for (int i = 0; i <20 ; i++) {
@@ -143,6 +148,8 @@ public class World extends JLabel implements MouseListener {
                         ghostArrayList.add(ghost);
                         add(ghost);
                     }
+                    StaticVariables.miniMap.addTheGhostLocationToMap();
+
                     break;
                 }
             }

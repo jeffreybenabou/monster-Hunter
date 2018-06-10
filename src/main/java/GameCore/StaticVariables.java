@@ -45,8 +45,9 @@ public class StaticVariables {
     public static MainMenu mainMenu;
     public static MainClass mainClass;
     public static MainPlayer mainPlayer;
+    public static MiniMap miniMap;
 
-    public static int level=2;
+    public static int level=1;
 
     private static Sql sql;
 
@@ -89,14 +90,18 @@ public class StaticVariables {
                         worldBackGround=ImageLoader.loadImage("Photos/world/background.jpg");
                         world.setIcon(new ImageIcon(worldBackGround.getScaledInstance(10000,10000,0)));
 
+
+
                     }
                 }).start();
 
 
 
-        gamePanel=new GamePanel();
         mainClass=new MainClass();
         mainMenu=new MainMenu();
+        miniMap=new MiniMap();
+        gamePanel=new GamePanel();
+        gamePanel.add(miniMap);
 
 //        sql=new Sql();
         MainClass.addTheMainMenu();

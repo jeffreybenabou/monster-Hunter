@@ -32,18 +32,27 @@ public class MainClass extends JFrame  {
 
     }
     public static void addTheWorld(){
-        StaticVariables.mainClass.add(StaticVariables.gamePanel);
-        StaticVariables.mainClass.add(StaticVariables.world);
-        StaticVariables.world.setVisible(true);
-        StaticVariables.gamePanel.setVisible(true);
-        removeTheMainMenu();
+        try{
+            StaticVariables.mainClass.add(StaticVariables.gamePanel);
+            StaticVariables.mainClass.add(StaticVariables.world);
+
+            StaticVariables.world.setVisible(true);
+            StaticVariables.gamePanel.setVisible(true);
+            removeTheMainMenu();
+        }catch (NullPointerException e)
+        {
+
+        }
+
     }
 
     public static void removeTheWorld(){
         StaticVariables.mainClass.repaint();
         if(StaticVariables.world!=null)
         StaticVariables.world.setVisible(false);
+        if(  StaticVariables.gamePanel!=null)
         StaticVariables.gamePanel.setVisible(false);
+
 
     }
 

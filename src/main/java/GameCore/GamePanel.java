@@ -15,6 +15,7 @@ public class GamePanel extends JLabel {
     private JLabel shopIcon;
     private JLabel settingLabel;
     private JLabel moneyIcon;
+
     public GamePanel (){
         setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
         addLifeBar();
@@ -22,6 +23,7 @@ public class GamePanel extends JLabel {
         addShopIcon();
         addSettingIcon();
         addMoneyLabel();
+
     }
 
     private void addLevelLabel(){
