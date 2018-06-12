@@ -87,9 +87,9 @@ public class StaticVariables {
                     public void run() {
                         mainPlayer=new MainPlayer();
                         world=new World();
-                        worldBackGround=ImageLoader.loadImage("Photos/world/background.jpg");
+                       /* worldBackGround=ImageLoader.loadImage("Photos/world/background.jpg");
                         world.setIcon(new ImageIcon(worldBackGround.getScaledInstance(10000,10000,0)));
-
+*/
 
 
                     }

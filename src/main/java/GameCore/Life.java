@@ -47,6 +47,7 @@ public class Life implements ChangeListener {
         {
 
             isAlive=false;
+            Ghost.numberOfDeadGhost++;
 
         }
 

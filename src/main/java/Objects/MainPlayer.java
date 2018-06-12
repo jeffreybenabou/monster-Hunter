@@ -18,7 +18,7 @@ public class MainPlayer extends GameObject {
     private int xSpriteSheet=220,ySprtieSheet=240,index=0,imageFrameRate=0,imageSpeed=3,damgeToGhost;
     public static String nameOfPlayer;
     private  boolean attacking;
-    public static boolean Walking;
+    public static boolean walking;
 
 
 
@@ -206,6 +206,7 @@ public class MainPlayer extends GameObject {
             if(distanceFromPoint<50&&!attacking)
             {
 
+                walking=false;
                 if(is_stand_up)
                     setIcon(new ImageIcon(standUp.get(index)));
                 if(is_stand_down)
@@ -226,6 +227,7 @@ public class MainPlayer extends GameObject {
 
             if(distanceFromPoint>=50&&!attacking)
             {
+                walking=true;
                 changeTheBollen();
                 if(angle<164&&angle>=52)
                 {
@@ -415,11 +417,11 @@ public class MainPlayer extends GameObject {
     }
 
     public static boolean isWalking() {
-        return Walking;
+        return walking;
     }
 
     public static void setWalking(boolean walking) {
-        Walking = walking;
+        MainPlayer.walking = walking;
     }
 
     public static Point getPoint() {

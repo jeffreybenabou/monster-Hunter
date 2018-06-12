@@ -2,6 +2,7 @@ package GameCore;
 
 
 
+import Objects.Ghost;
 import Objects.MainPlayer;
 
 import javax.swing.*;
@@ -15,6 +16,8 @@ public class GamePanel extends JLabel {
     private JLabel shopIcon;
     private JLabel settingLabel;
     private JLabel moneyIcon;
+    private JLabel ghostCounter;
+    private Font font=new Font("Serif", Font.BOLD, 20);
 
     public GamePanel (){
         setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
@@ -23,6 +26,24 @@ public class GamePanel extends JLabel {
         addShopIcon();
         addSettingIcon();
         addMoneyLabel();
+        addGhostCounter();
+
+    }
+
+    private void addGhostCounter() {
+        ghostCounter=new JLabel();
+        ghostCounter.setBounds(570,100,300,40);
+        ghostCounter.setFont(font);
+        add(ghostCounter);
+        new Thread(new Runnable() {
+            public void run() {
+                while (true)
+                {
+                    ghostCounter.setText("total ghost needed to be kill:"+(StaticVariables.world.getGhostArrayList().size()+1-Ghost.numberOfDeadGhost));
+
+                }
+            }
+        }).start();
 
     }
 
@@ -31,7 +52,7 @@ public class GamePanel extends JLabel {
         levelLabel.setBounds(MainClass.dimension.width-150,MainClass.dimension.height-150,170,150);
         levelLabel.setIcon(new ImageIcon(StaticVariables.levelLabel.getScaledInstance(levelLabel.getWidth(),levelLabel.getHeight(),1)));
         levelLabel.setForeground(Color.red);
-        levelLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        levelLabel.setFont(font);
         levelLabel.setHorizontalTextPosition(JLabel.CENTER);
         levelLabel.setText(""+ 1);
         add(levelLabel);

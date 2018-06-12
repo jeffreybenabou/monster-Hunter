@@ -6,7 +6,7 @@ import BackgroundObject.Tree;
 import BackgroundObject.Trunk;
 import Objects.Ghost;
 import Objects.MainPlayer;
-import sun.awt.windows.ThemeReader;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,7 +60,6 @@ public class World extends JLabel implements MouseListener {
                 public void run() {
                     firstGhost=new Ghost(1);
                     firstGhost.setLocation(100,100);
-                    ghostArrayList.add(firstGhost);
                     add(firstGhost);
                     while(firstGhost.getLifeBar().isAlive()){
                         try {
@@ -91,11 +90,12 @@ public class World extends JLabel implements MouseListener {
                         Random random=new Random();
                         Ghost ghost=new Ghost(1);
                         ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                        ghost.setName(""+i);
                         ghostArrayList.add(ghost);
                         add(ghost);
-
+                        StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                     }
-                    StaticVariables.miniMap.addTheGhostLocationToMap();
+
                     break;
                 }
                 case 2:{
@@ -121,7 +121,7 @@ public class World extends JLabel implements MouseListener {
                         ghostArrayList.add(ghost);
                         add(ghost);
                     }
-                    StaticVariables.miniMap.addTheGhostLocationToMap();
+
 
                     break;
                 }
@@ -148,7 +148,7 @@ public class World extends JLabel implements MouseListener {
                         ghostArrayList.add(ghost);
                         add(ghost);
                     }
-                    StaticVariables.miniMap.addTheGhostLocationToMap();
+
 
                     break;
                 }

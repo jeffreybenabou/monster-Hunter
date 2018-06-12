@@ -2,6 +2,7 @@ package Objects;
 
 import GameCore.GameObject;
 import GameCore.Life;
+import GameCore.MiniMap;
 import GameCore.StaticVariables;
 import ImageHandel.ImageLoader;
 import sun.awt.windows.ThemeReader;
@@ -27,10 +28,9 @@ public class Ghost extends GameObject {
             attackRight,
             attackUp,
             attackDown,
-            attackLeftUp,
-            attackLeftDown,
-            attackRightDown,
-            attackRightUp;
+
+    dead;
+    public static int numberOfDeadGhost=0;
 
 
     private Life lifeBar;
@@ -78,14 +78,13 @@ public class Ghost extends GameObject {
         right=new Vector<Image>();
         up=new Vector<Image>();
         down=new Vector<Image>();
+
         attackDown=new Vector<Image>();
         attackLeft=new Vector<Image>();
-        attackLeftDown=new Vector<Image>();
-        attackLeftUp=new Vector<Image>();
         attackRight=new Vector<Image>();
-        attackRightDown=new Vector<Image>();
-        attackRightUp=new Vector<Image>();
         attackUp=new Vector<Image>();
+
+        dead=new Vector<Image>();
 
 
     }
@@ -94,7 +93,9 @@ public class Ghost extends GameObject {
 // TODO: 29/05/2018 add an explotion or something to make the ghost dissaper
 
             StaticVariables.world.remove(this);
-            StaticVariables.world.getGhostArrayList().remove(this);
+
+
+
 
             setVisible(false);
 
@@ -107,11 +108,13 @@ public class Ghost extends GameObject {
             public void run() {
                 while(lifeBar.isAlive())
                 {
+                    stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
+
                     if(notTheFirstGhost)
                     moveTheGhostAroundTheWorld();
                     else
                         changeTheGhostIcon();
-                    stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
+
 
 
 
@@ -125,6 +128,23 @@ public class Ghost extends GameObject {
                         e.printStackTrace();
                     }
                 }
+                index=0;
+                while (index<dead.size())
+                {
+                    setIcon(new ImageIcon(dead.get(index)));
+                    index++;
+                    try {
+                        Thread.sleep(15);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 removeTheGhostWhenDead();
             }
         }).start();
@@ -186,16 +206,11 @@ public class Ghost extends GameObject {
         ImageLoader.addImageOfMainPlayer(DIR_1, attackDown,dimension);
         DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackLeft/");
         ImageLoader.addImageOfMainPlayer(DIR_1, attackLeft,dimension);
-        DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackLeftDown/");
-        ImageLoader.addImageOfMainPlayer(DIR_1, attackLeftDown,dimension);
-        DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackLeftUp/");
-        ImageLoader.addImageOfMainPlayer(DIR_1, attackLeftUp,dimension);
+
         DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackRight/");
         ImageLoader.addImageOfMainPlayer(DIR_1, attackRight,dimension);
-        DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackRightDown/");
-        ImageLoader.addImageOfMainPlayer(DIR_1, attackRightDown,dimension);
-        DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackRightUp/");
-        ImageLoader.addImageOfMainPlayer(DIR_1, attackRightUp,dimension);
+
+
         DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackUp/");
         ImageLoader.addImageOfMainPlayer(DIR_1, attackUp,dimension);
 
@@ -207,6 +222,9 @@ public class Ghost extends GameObject {
         ImageLoader.addImageOfMainPlayer(DIR_1, left,dimension);
         DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/moveDown/");
         ImageLoader.addImageOfMainPlayer(DIR_1, down,dimension);
+        DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/dead/");
+        ImageLoader.addImageOfMainPlayer(DIR_1, dead,dimension);
+
 
 
 
@@ -216,24 +234,33 @@ public class Ghost extends GameObject {
     private void changeTheGhostIcon() {
         try {
             if (index < left.size()) {
-                if (stopMoving){
-                    dirLeft = false; dirDown = false; dirUp = false; dirRight = false;
-                    if (StaticVariables.mainPlayer.isIs_stand_down())
-                        setIcon(new ImageIcon(attackUp.get(index)));
-                    if (StaticVariables.mainPlayer.isIs_stand_left())
+                if (stopMoving) {
+                    dirLeft = false;
+                    dirDown = false;
+                    dirUp = false;
+                    dirRight = false;
+                     if (MainPlayer.isWalking())
+                         setIcon(new ImageIcon(right.get(index)));
+                    else if (StaticVariables.mainPlayer.isIs_stand_left())
                         setIcon(new ImageIcon(attackRight.get(index)));
-                    if (StaticVariables.mainPlayer.isIs_stand_right())
+                    else if (StaticVariables.mainPlayer.isIs_stand_down())
+                        setIcon(new ImageIcon(attackUp.get(index)));
+                    else if (StaticVariables.mainPlayer.isIs_stand_right())
                         setIcon(new ImageIcon(attackLeft.get(index)));
-                    if (StaticVariables.mainPlayer.isIs_stand_up())
+                    else if (StaticVariables.mainPlayer.isIs_stand_up())
                         setIcon(new ImageIcon(attackDown.get(index)));
-                    if (StaticVariables.mainPlayer.isIs_stand_left_down())
-                        setIcon(new ImageIcon(attackRightUp.get(index)));
-                    if (StaticVariables.mainPlayer.isIs_stand_right_up())
-                        setIcon(new ImageIcon(attackLeftDown.get(index)));
-                    if (StaticVariables.mainPlayer.isIs_stand_left_up())
-                        setIcon(new ImageIcon(attackRightDown.get(index)));
-                    if (StaticVariables.mainPlayer.isIs_stand_right_dowb())
-                        setIcon(new ImageIcon(attackLeftUp.get(index)));
+                    else if (StaticVariables.mainPlayer.isIs_stand_left_down())
+                        setIcon(new ImageIcon(attackLeft.get(index)));
+                    else if (StaticVariables.mainPlayer.isIs_stand_right_up())
+                        setIcon(new ImageIcon(attackRight.get(index)));
+                    else if (StaticVariables.mainPlayer.isIs_stand_left_up())
+                        setIcon(new ImageIcon(attackLeft.get(index)));
+                    else if (StaticVariables.mainPlayer.isIs_stand_right_dowb())
+                        setIcon(new ImageIcon(attackRight.get(index)));
+
+
+
+
                 }
                 else
                 {

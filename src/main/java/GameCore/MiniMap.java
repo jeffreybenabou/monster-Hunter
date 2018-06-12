@@ -12,46 +12,100 @@ import java.util.ArrayList;
 public class MiniMap extends JLabel {
 
     private  Border blackline;
-    private ArrayList<JLabel> aghost=new ArrayList<JLabel>();
+    public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
+
     public MiniMap(){
         blackline = BorderFactory. createRaisedBevelBorder();
 
         setBorder(blackline);
-        new Thread(new Runnable() {
+
+        setBounds(0,StaticVariables.mainClass.getHeight()-160,250,160);
+        setBackground(Color.orange);
+
+
+        /*new Thread(new Runnable() {
             public void run() {
                 while (StaticVariables.worldBackGround==null)
                 {
                     setBounds(0,StaticVariables.mainClass.getHeight()-160,250,160);
 
                 }
-                setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(getWidth(),getHeight(),0)));
+//                setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(getWidth(),getHeight(),0)));
 
             }
 
+        }).start();*/
+
+        new Thread(new Runnable() {
+            public void run() {
+                addTheMainPlayerLocationToMap();
+                while (true)
+                {
+                    for (int i = 0; i <aghost.size() ; i++) {
+                        try{
+                            if(!StaticVariables.world.getGhostArrayList().get(i).getLifeBar().isAlive())
+                            {
+                                remove(aghost.get(i));
+                                aghost.get(i).setVisible(false);
+                            }
+                            else
+                            aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX()/40,StaticVariables.world.getGhostArrayList().get(i).getY()/64);
+
+                        }catch (IndexOutOfBoundsException e)
+                        {
+
+                        }
+
+                    }
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }).start();
 
 
 
     }
 
-    public void addTheGhostLocationToMap() {
-        for (int i = 0; i <StaticVariables.world.getGhostArrayList().size() ; i++) {
+    public void addTheMainPlayerLocationToMap(){
+        new Thread(new Runnable() {
+            public void run() {
+                JLabel jLabel=new JLabel();
+                jLabel.setBounds(20,20,5,5);
+                jLabel.setBackground(Color.blue);
+                jLabel.setOpaque(true);
+                add(jLabel);
+                while (true){
+                    int x;
+                    int y;
+                    y=StaticVariables.mainPlayer.getLocation().y/64;
+                    x=StaticVariables.mainPlayer.getLocation().x/40;
+                    jLabel.setLocation(x,y);
+                }
+            }
+        }).start();
+
+
+    }
+
+    public void addTheGhostLocationToMap(int position,Point location) {
+
             JLabel jLabel=new JLabel();
-            jLabel.setBounds(20,20,10,10);
+            jLabel.setBounds(location.x,location.y,5,5);
             jLabel.setBackground(Color.RED);
             jLabel.setOpaque(true);
+        jLabel.setName(""+position);
             add(jLabel);
             aghost.add(jLabel);
-        }
-        while (StaticVariables.world.isVisible()){
-            for (int i = 0; i <StaticVariables.world.getGhostArrayList().size() ; i++) {
-                int x;
-                int y;
-                y=StaticVariables.world.getGhostArrayList().get(i).getLocation().y/32;
-                x=StaticVariables.world.getGhostArrayList().get(i).getLocation().x/50;
-                aghost.get(i).setLocation(x,y);
 
-            }
-        }
+
+
+
+
+
+
     }
 }
