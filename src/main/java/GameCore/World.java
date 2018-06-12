@@ -267,7 +267,12 @@ public class World extends JLabel implements MouseListener {
         }
         if(e.getComponent().getClass().getSimpleName().equals("Ghost")&&!StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds())&&!StaticVariables.mainPlayer.isAttacking())
         {
-
+/*
+* this if statment check if the ghost is not in bound of the main player it check also is the main player is not attacking
+ * and if the main player is pressing on the ghost
+* then the main player wants to move to the ghost location
+*
+* */
             StaticVariables.mainPlayer.calculateTheAngle(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
 
             MainPlayer.point=new Point(e.getComponent().getLocation().x,e.getComponent().getLocation().y);

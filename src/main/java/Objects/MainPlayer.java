@@ -25,19 +25,18 @@ public class MainPlayer extends GameObject {
     public static Point point;
 
 
-    private boolean  is_stand_left, is_stand_right, is_stand_up, is_stand_down,
+    private boolean leftFromTheGhost, rightFromTheGhost, upFromTheGhost, downFromTheGhost,
 
     is_stand_left_up, is_stand_left_down, is_stand_right_dowb, is_stand_right_up;
     private File DIR_1;
 
     private Vector<Image>
             up, down, left, right,
-            leftUp, leftDown, rightUp, rightDown,
-            standUp, standDown, standLeft, standRight,
-            standLefDown, standRightDown, standRightUp, standLeftUp, attack, die;
+             standDown,
+             attack, die;
     private double angle=0;
     private double distanceFromPoint;
-
+    private long speedOfMove=3;
 
 
     public MainPlayer(){
@@ -64,59 +63,64 @@ public class MainPlayer extends GameObject {
         new Thread(new Runnable() {
             public void run() {
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_up/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, up,getSize());
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_up/");
+                        ImageLoader.addImageOfMainPlayer(DIR_1, up,getSize());
+                    }
+                }).start();
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_down/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, down,getSize());
+                new Thread(new Runnable() {
+                    public void run() {
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, left,getSize());
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_down/");
+                        ImageLoader.addImageOfMainPlayer(DIR_1, down,getSize());
+                    }
+                }).start();
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, right,getSize());
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left/");
+                        ImageLoader.addImageOfMainPlayer(DIR_1, left,getSize());
+                    }
+                }).start();
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_up/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standUp,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_right/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standRight,getSize());
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right/");
+                        ImageLoader.addImageOfMainPlayer(DIR_1, right,getSize());
+                    }
+                }).start();
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_down/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standDown,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_left/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standLeft,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_right_down/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standRightDown,getSize());
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_down/");
+                        ImageLoader.addImageOfMainPlayer(DIR_1, standDown,getSize());
+                    }
+                }).start();
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_right_up/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standRightUp,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left_down/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, leftDown,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left_up/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, leftUp,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right_down/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, rightDown,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right_up/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, rightUp,getSize());
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/fall/");
+                        ImageLoader.addImageOfMainPlayer(DIR_1, die,getSize());
+                    }
+                }).start();
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_left_down/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standLefDown,getSize());
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/attack2/");
+                        ImageLoader.addImageOfMainPlayer(DIR_1, attack,getSize());
+                    }
+                }).start();
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_left_up/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, standLeftUp,getSize());
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/fall/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, die,getSize());
-
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/attack2/");
-                ImageLoader.addImageOfMainPlayer(DIR_1, attack,getSize());
                 setTheUserAction();
 
             }
@@ -142,19 +146,11 @@ public class MainPlayer extends GameObject {
         right =  new Vector<Image>();
 
         standDown =  new Vector<Image>();
-        standUp =  new Vector<Image>();
-        standLeft =  new Vector<Image>();
-        standRight =  new Vector<Image>();
 
-        standLefDown =  new Vector<Image>();
-        standLeftUp =  new Vector<Image>();
-        standRightDown =  new Vector<Image>();
-        standRightUp =  new Vector<Image>();
 
-        leftUp =  new Vector<Image>();
-        leftDown =  new Vector<Image>();
-        rightDown =  new Vector<Image>();
-        rightUp =  new Vector<Image>();
+
+
+
 
         attack =  new Vector<Image>();
         die =  new Vector<Image>();
@@ -177,20 +173,27 @@ public class MainPlayer extends GameObject {
     private void setTheUserAction(){
         new Thread(new Runnable() {
             public void run() {
-                while (life.isAlive())
+                try
                 {
+                    while (life.isAlive())
+                    {
 
 
 
-                    changeIcon();
-                    calculateTheDistance();
+                        changeIcon();
+                        calculateTheDistance();
 
-                    try {
-                        Thread.sleep(3);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        try {
+                            Thread.sleep(speedOfMove);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+                }catch (NullPointerException e)
+                {
+                    setTheUserAction();
                 }
+
             }
         }).start();
     }
@@ -203,26 +206,12 @@ public class MainPlayer extends GameObject {
         {
 
 
-            if(distanceFromPoint<50&&!attacking)
-            {
+            if(distanceFromPoint<50&&!attacking) {
 
-                walking=false;
-                if(is_stand_up)
-                    setIcon(new ImageIcon(standUp.get(index)));
-                if(is_stand_down)
-                    setIcon(new ImageIcon(standDown.get(index)));
-                if(is_stand_left)
-                    setIcon(new ImageIcon(standLeft.get(index)));
-                if(is_stand_right)
-                    setIcon(new ImageIcon(standRight.get(index)));
-                if(is_stand_left_down)
-                    setIcon(new ImageIcon(standLefDown.get(index)));
-                if(is_stand_left_up)
-                    setIcon(new ImageIcon(standLeftUp.get(index)));
-                if(is_stand_right_dowb)
-                    setIcon(new ImageIcon(standRightDown.get(index)));
-                if(is_stand_right_up)
-                    setIcon(new ImageIcon(standRightUp.get(index)));
+                walking = false;
+                setIcon(new ImageIcon(standDown.get(index)));
+
+
             }
 
             if(distanceFromPoint>=50&&!attacking)
@@ -240,7 +229,7 @@ public class MainPlayer extends GameObject {
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY()+imageSpeed);
                     setLocation(getX()+imageSpeed,getY()-imageSpeed);
-                    setIcon(new ImageIcon(rightUp.get(index)));
+                    setIcon(new ImageIcon(right.get(index)));
 
                 }
                 if(angle<205&&angle>=183)
@@ -253,7 +242,7 @@ public class MainPlayer extends GameObject {
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY()-imageSpeed);
                     setLocation(getX()+imageSpeed,getY()+imageSpeed);
-                    setIcon(new ImageIcon(rightDown.get(index)));
+                    setIcon(new ImageIcon(right.get(index)));
 
                 }
                 if(angle<281&&angle>=231)
@@ -267,7 +256,7 @@ public class MainPlayer extends GameObject {
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY()-imageSpeed);
                     setLocation(getX()-imageSpeed,getY()+imageSpeed);
-                    setIcon(new ImageIcon(leftDown.get(index)));
+                    setIcon(new ImageIcon(left.get(index)));
                 }
 
                 if(angle>=318)
@@ -281,35 +270,17 @@ public class MainPlayer extends GameObject {
                 {
                     StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY()+imageSpeed);
                     setLocation(getX()-imageSpeed,getY()-imageSpeed);
-                    setIcon(new ImageIcon(leftUp.get(index)));
+                    setIcon(new ImageIcon(left.get(index)));
 
                 }
 
 
             }
-            else if(!attacking)
-            {
-                changeTheBollen();
-                if(angle<164&&angle>=52)
-                    is_stand_up=true;
-                if(angle<183&&angle>=164)
-                    is_stand_right_up=true;
-                if(angle<205&&angle>=183)
-                    is_stand_right=true;
-                if(angle<231&&angle>=205)
-                    is_stand_right_dowb=true;
-                if(angle<281&&angle>=231)
-                    is_stand_down=true;
-                if(angle<318&&angle>=281)
-                    is_stand_left_down=true;
-                if(angle>=318)
-                    is_stand_left=true;
-                if(angle<52&&angle>=0)
-                    is_stand_left_up=true;
-            }
+
 
             if(attacking)
             {
+                speedOfMove=2;
                 setIcon(new ImageIcon(attack.get(index)));
                 if(index==attack.size()-1)
                 {
@@ -319,6 +290,26 @@ public class MainPlayer extends GameObject {
 
 
             }
+            else
+                speedOfMove=3;
+            for (int i = 0; i <StaticVariables.world.getGhostArrayList().size() ; i++) {
+                if(attacking&&getBounds().intersects(StaticVariables.world.getGhostArrayList().get(i).getBounds()))
+                {
+                    calculateTheAngle(StaticVariables.world.getGhostArrayList().get(i).getLocation().x,StaticVariables.world.getGhostArrayList().get(i).getLocation().y);
+                    changeTheBollen();
+                    if(angle<320&&angle>=227)
+                        upFromTheGhost=true;
+                    if(angle>=320||angle<41)
+                        leftFromTheGhost=true;
+                    if(angle>=41&&angle<120)
+                        downFromTheGhost=true;
+                    if(angle>=41&&angle<227)
+                        rightFromTheGhost=true;
+
+
+                }
+            }
+
 
 
             if(index==attack.size()-1)
@@ -331,14 +322,10 @@ public class MainPlayer extends GameObject {
     }
 
     private void changeTheBollen(){
-        is_stand_up=false;
-        is_stand_right_up=false;
-        is_stand_right=false;
-        is_stand_right_dowb=false;
-        is_stand_down=false;
-        is_stand_left_down=false;
-        is_stand_left_up=false;
-        is_stand_left=false;
+        upFromTheGhost =false;
+        rightFromTheGhost =false;
+        downFromTheGhost =false;
+        leftFromTheGhost =false;
     }
 
 
@@ -432,8 +419,8 @@ public class MainPlayer extends GameObject {
         MainPlayer.point = point;
     }
 
-    public boolean isIs_stand_left() {
-        return is_stand_left;
+    public boolean isLeftFromTheGhost() {
+        return leftFromTheGhost;
     }
 
     public int getDamgeToGhost() {
@@ -476,45 +463,7 @@ public class MainPlayer extends GameObject {
         this.right = right;
     }
 
-    public Vector<Image> getLeftUp() {
-        return leftUp;
-    }
 
-    public void setLeftUp(Vector<Image> leftUp) {
-        this.leftUp = leftUp;
-    }
-
-    public Vector<Image> getLeftDown() {
-        return leftDown;
-    }
-
-    public void setLeftDown(Vector<Image> leftDown) {
-        this.leftDown = leftDown;
-    }
-
-    public Vector<Image> getRightUp() {
-        return rightUp;
-    }
-
-    public void setRightUp(Vector<Image> rightUp) {
-        this.rightUp = rightUp;
-    }
-
-    public Vector<Image> getRightDown() {
-        return rightDown;
-    }
-
-    public void setRightDown(Vector<Image> rightDown) {
-        this.rightDown = rightDown;
-    }
-
-    public Vector<Image> getStandUp() {
-        return standUp;
-    }
-
-    public void setStandUp(Vector<Image> standUp) {
-        this.standUp = standUp;
-    }
 
     public Vector<Image> getStandDown() {
         return standDown;
@@ -524,53 +473,7 @@ public class MainPlayer extends GameObject {
         this.standDown = standDown;
     }
 
-    public Vector<Image> getStandLeft() {
-        return standLeft;
-    }
 
-    public void setStandLeft(Vector<Image> standLeft) {
-        this.standLeft = standLeft;
-    }
-
-    public Vector<Image> getStandRight() {
-        return standRight;
-    }
-
-    public void setStandRight(Vector<Image> standRight) {
-        this.standRight = standRight;
-    }
-
-    public Vector<Image> getStandLefDown() {
-        return standLefDown;
-    }
-
-    public void setStandLefDown(Vector<Image> standLefDown) {
-        this.standLefDown = standLefDown;
-    }
-
-    public Vector<Image> getStandRightDown() {
-        return standRightDown;
-    }
-
-    public void setStandRightDown(Vector<Image> standRightDown) {
-        this.standRightDown = standRightDown;
-    }
-
-    public Vector<Image> getStandRightUp() {
-        return standRightUp;
-    }
-
-    public void setStandRightUp(Vector<Image> standRightUp) {
-        this.standRightUp = standRightUp;
-    }
-
-    public Vector<Image> getStandLeftUp() {
-        return standLeftUp;
-    }
-
-    public void setStandLeftUp(Vector<Image> standLeftUp) {
-        this.standLeftUp = standLeftUp;
-    }
 
     public Vector<Image> getAttack() {
         return attack;
@@ -588,32 +491,32 @@ public class MainPlayer extends GameObject {
         this.die = die;
     }
 
-    public void setIs_stand_left(boolean is_stand_left) {
-        this.is_stand_left = is_stand_left;
+    public void setLeftFromTheGhost(boolean leftFromTheGhost) {
+        this.leftFromTheGhost = leftFromTheGhost;
     }
 
-    public boolean isIs_stand_right() {
-        return is_stand_right;
+    public boolean isRightFromTheGhost() {
+        return rightFromTheGhost;
     }
 
-    public void setIs_stand_right(boolean is_stand_right) {
-        this.is_stand_right = is_stand_right;
+    public void setRightFromTheGhost(boolean rightFromTheGhost) {
+        this.rightFromTheGhost = rightFromTheGhost;
     }
 
-    public boolean isIs_stand_up() {
-        return is_stand_up;
+    public boolean isUpFromTheGhost() {
+        return upFromTheGhost;
     }
 
-    public void setIs_stand_up(boolean is_stand_up) {
-        this.is_stand_up = is_stand_up;
+    public void setUpFromTheGhost(boolean upFromTheGhost) {
+        this.upFromTheGhost = upFromTheGhost;
     }
 
-    public boolean isIs_stand_down() {
-        return is_stand_down;
+    public boolean isDownFromTheGhost() {
+        return downFromTheGhost;
     }
 
-    public void setIs_stand_down(boolean is_stand_down) {
-        this.is_stand_down = is_stand_down;
+    public void setDownFromTheGhost(boolean downFromTheGhost) {
+        this.downFromTheGhost = downFromTheGhost;
     }
 
     public boolean isIs_stand_left_up() {

@@ -57,6 +57,7 @@ public class StaticVariables {
                 Ghost.addGhostImage();
             }
         }).start();
+
         mainMenuBackGround=ImageLoader.loadImage("Photos/menubackground.jpg");
         startButton=ImageLoader.loadImage("Photos/menuButton/newGame.png");
         exitButton=ImageLoader.loadImage("Photos/menuButton/exit.png");
@@ -73,17 +74,14 @@ public class StaticVariables {
         houseNum2=ImageLoader.loadImage("Photos/house/house2.png");
         houseNum3=ImageLoader.loadImage("Photos/house/house3.png");
         rock=ImageLoader.loadImage("Photos/rock.png");
-        ghost1=ImageLoader.loadImage("Photos/ghost/ghost1.png");
-        ghost2=ImageLoader.loadImage("Photos/ghost/ghost2.png");
-        ghost3=ImageLoader.loadImage("Photos/ghost/ghost3.png");
-        setTheSpriteSheet();
 
 
 
 
 
 
-                new Thread(new Runnable() {
+
+        new Thread(new Runnable() {
                     public void run() {
                         mainPlayer=new MainPlayer();
                         world=new World();
@@ -95,23 +93,21 @@ public class StaticVariables {
                     }
                 }).start();
 
-
-
         mainClass=new MainClass();
         mainMenu=new MainMenu();
         miniMap=new MiniMap();
         gamePanel=new GamePanel();
         gamePanel.add(miniMap);
-
-//        sql=new Sql();
         MainClass.addTheMainMenu();
 
 
+
+//        sql=new Sql();
+
+
     }
 
-    private void setTheSpriteSheet() {
-        attack1=new SpriteSheet(ImageLoader.loadImage("Photos/character/attack.png"));
-    }
+
 
     public static void main(String[] args) {
         new StaticVariables();

@@ -5,17 +5,17 @@ import Objects.MainPlayer;
 import Server.Sql;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
+
 
 public class MainMenu extends JLabel implements MouseListener {
 
 
     public MainMenu(){
         setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
-        setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(getWidth(),getHeight(), 1)));
+        setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(getWidth(),getHeight(), 0)));
         for (int i = 0; i <4 ; i++) {
             createButton(i);
         }
