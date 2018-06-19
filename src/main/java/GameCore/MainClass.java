@@ -16,6 +16,12 @@ public class MainClass extends JFrame  {
         setTheJFrame();
         addMouseListener(StaticVariables.world);
         setVisible(true);
+        new Thread(new Runnable() {
+            public void run() {
+                while (true)
+                    repaint();
+            }
+        }).start();
     }
 
     public static void addTheMainMenu() {
@@ -61,7 +67,7 @@ public class MainClass extends JFrame  {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
-repaint();
+
     }
 
 

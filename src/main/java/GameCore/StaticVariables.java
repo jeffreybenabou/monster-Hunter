@@ -4,12 +4,9 @@ import ImageHandel.ImageLoader;
 
 import java.awt.*;
 
-import ImageHandel.SpriteSheet;
 import Objects.Ghost;
 import Objects.MainPlayer;
 import Server.*;
-
-import javax.swing.*;
 
 public class StaticVariables {
 
@@ -31,14 +28,10 @@ public class StaticVariables {
     public static Image
     worldBackGround,
     tree,
-    rock,
     trunk,
+    cloud,
     houseNum1,houseNum2,houseNum3;
 
-    public static Image
-    ghost1,ghost2,ghost3;
-
-    public static SpriteSheet attack1;
 
     public static GamePanel gamePanel;
     public static World world;
@@ -59,10 +52,15 @@ public class StaticVariables {
         }).start();
 
         mainMenuBackGround=ImageLoader.loadImage("Photos/menubackground.jpg");
+
         startButton=ImageLoader.loadImage("Photos/menuButton/newGame.png");
         exitButton=ImageLoader.loadImage("Photos/menuButton/exit.png");
         loadFromServerButoon=ImageLoader.loadImage("Photos/menuButton/loadOnline.png");
         loadFromComputerButton=ImageLoader.loadImage("Photos/menuButton/load.png");
+        mainClass=new MainClass();
+        mainMenu=new MainMenu();
+
+        MainClass.addTheMainMenu();
         lifePanel =ImageLoader.loadImage("Photos/worldFrame/lifeBar1.png");
         levelLabel =ImageLoader.loadImage("Photos/worldFrame/level.png");
         shopIcon=ImageLoader.loadImage("Photos/worldFrame/shop_icon.png");
@@ -73,9 +71,7 @@ public class StaticVariables {
         houseNum1=ImageLoader.loadImage("Photos/house/house1.png");
         houseNum2=ImageLoader.loadImage("Photos/house/house2.png");
         houseNum3=ImageLoader.loadImage("Photos/house/house3.png");
-        rock=ImageLoader.loadImage("Photos/rock.png");
-
-
+        cloud=ImageLoader.loadImage("Photos/cloud/cloud122.png");
 
 
 
@@ -93,12 +89,11 @@ public class StaticVariables {
                     }
                 }).start();
 
-        mainClass=new MainClass();
-        mainMenu=new MainMenu();
+
         miniMap=new MiniMap();
         gamePanel=new GamePanel();
         gamePanel.add(miniMap);
-        MainClass.addTheMainMenu();
+
 
 
 

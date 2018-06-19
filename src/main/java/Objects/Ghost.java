@@ -103,8 +103,7 @@ public class Ghost extends GameObject {
                     moveTheGhostAroundTheWorld();
                     else
                         changeTheGhostIcon();
-                    if(StaticVariables.mainClass!=null)
-                        StaticVariables.mainClass.repaint();
+
                     try {
                         Thread.sleep(15);
                     } catch (InterruptedException e) {
@@ -335,7 +334,7 @@ public class Ghost extends GameObject {
            }
            case 2:
            {
-               setIcon(new ImageIcon(StaticVariables.ghost2));
+
                setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
                damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
                damgeFromMainPlayer=2300;
@@ -346,7 +345,7 @@ public class Ghost extends GameObject {
            }
            case 3:
            {
-               setIcon(new ImageIcon(StaticVariables.ghost3));
+
                setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
                damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
                damgeFromMainPlayer=2400;

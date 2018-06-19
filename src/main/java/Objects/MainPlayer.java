@@ -192,6 +192,10 @@ public class MainPlayer extends GameObject {
                 }catch (NullPointerException e)
                 {
                     setTheUserAction();
+
+                }catch (ArrayIndexOutOfBoundsException es)
+                {
+                    setTheUserAction();
                 }
 
             }
@@ -317,7 +321,7 @@ public class MainPlayer extends GameObject {
             else
             index++;
         }
-        StaticVariables.gamePanel.repaint();
+
 
     }
 

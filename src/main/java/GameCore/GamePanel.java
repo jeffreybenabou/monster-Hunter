@@ -28,6 +28,7 @@ public class GamePanel extends JLabel {
         addMoneyLabel();
         addGhostCounter();
 
+
     }
 
     private void addGhostCounter() {

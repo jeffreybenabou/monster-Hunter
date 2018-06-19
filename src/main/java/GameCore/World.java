@@ -1,9 +1,6 @@
 package GameCore;
+import BackgroundObject.*;
 
-import BackgroundObject.House;
-import BackgroundObject.Rock;
-import BackgroundObject.Tree;
-import BackgroundObject.Trunk;
 import Objects.Ghost;
 import Objects.MainPlayer;
 
@@ -25,7 +22,7 @@ public class World extends JLabel implements MouseListener {
     public World(){
         setBounds(0,0,10000,10000);
         setLayout(null);
-        setBackground(Color.cyan);
+        setBackground(Color.GRAY);
         setOpaque(true);
         addMouseListener(this);
 
@@ -162,10 +159,18 @@ public class World extends JLabel implements MouseListener {
 
     private void addBackGroundObjects() {
 
+
+
         new Thread(new Runnable() {
 
             public void run() {
                 random=new Random();
+                for (int i = 0; i <10 ; i++) {
+
+                    Cloud cloud=new Cloud(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                    add(cloud);
+                }
+
                 addGhost();
 
                 for (int i = 0; i < 3; ) {
@@ -192,17 +197,7 @@ public class World extends JLabel implements MouseListener {
                 }
                 add(StaticVariables.mainPlayer);
 
-                for (int i = 0; i <10 ; ) {
-                    Rock rock=new Rock();
-                    rock.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                    if(!checkIfInetrcet(rock))
-                    {
-                        backGroundObjects.add(rock);
-                        add(rock);
-                        i++;
 
-                    }
-                }
 
 
 
@@ -221,6 +216,7 @@ public class World extends JLabel implements MouseListener {
                 }
 
                 addMouseLisenersToObject();
+
 
             }
         }).start();
