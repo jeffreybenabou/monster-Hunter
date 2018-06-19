@@ -170,6 +170,10 @@ public class World extends JLabel implements MouseListener {
                     Cloud cloud=new Cloud(random.nextInt(getWidth()),random.nextInt(getHeight()));
                     add(cloud);
                 }
+                for (int i = 0; i <50 ; i++) {
+                    Bird bird=new Bird(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                    add(bird);
+                }
 
                 addGhost();
 

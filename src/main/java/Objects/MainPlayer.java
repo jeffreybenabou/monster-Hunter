@@ -66,7 +66,7 @@ public class MainPlayer extends GameObject {
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_up/");
-                        ImageLoader.addImageOfMainPlayer(DIR_1, up,getSize());
+                        ImageLoader.addImageOfObject(DIR_1, up,getSize());
                     }
                 }).start();
 
@@ -74,14 +74,14 @@ public class MainPlayer extends GameObject {
                     public void run() {
 
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_down/");
-                        ImageLoader.addImageOfMainPlayer(DIR_1, down,getSize());
+                        ImageLoader.addImageOfObject(DIR_1, down,getSize());
                     }
                 }).start();
 
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left/");
-                        ImageLoader.addImageOfMainPlayer(DIR_1, left,getSize());
+                        ImageLoader.addImageOfObject(DIR_1, left,getSize());
                     }
                 }).start();
 
@@ -89,7 +89,7 @@ public class MainPlayer extends GameObject {
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right/");
-                        ImageLoader.addImageOfMainPlayer(DIR_1, right,getSize());
+                        ImageLoader.addImageOfObject(DIR_1, right,getSize());
                     }
                 }).start();
 
@@ -98,7 +98,7 @@ public class MainPlayer extends GameObject {
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_down/");
-                        ImageLoader.addImageOfMainPlayer(DIR_1, standDown,getSize());
+                        ImageLoader.addImageOfObject(DIR_1, standDown,getSize());
                     }
                 }).start();
 
@@ -109,14 +109,14 @@ public class MainPlayer extends GameObject {
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/fall/");
-                        ImageLoader.addImageOfMainPlayer(DIR_1, die,getSize());
+                        ImageLoader.addImageOfObject(DIR_1, die,getSize());
                     }
                 }).start();
 
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/attack2/");
-                        ImageLoader.addImageOfMainPlayer(DIR_1, attack,getSize());
+                        ImageLoader.addImageOfObject(DIR_1, attack,getSize());
                     }
                 }).start();
 

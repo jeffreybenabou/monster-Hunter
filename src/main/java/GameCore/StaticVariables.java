@@ -1,8 +1,12 @@
 package GameCore;
 
+import BackgroundObject.Bird;
 import ImageHandel.ImageLoader;
 
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import Objects.Ghost;
 import Objects.MainPlayer;
@@ -51,6 +55,11 @@ public class StaticVariables {
             }
         }).start();
 
+        Bird.birdLeft=new Vector<Image>();
+        Bird.birdRight=new Vector<Image>();
+        ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/left/"),Bird.birdLeft,new Dimension(200,200));
+        ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),Bird.birdRight,new Dimension(200,200));
+
         mainMenuBackGround=ImageLoader.loadImage("Photos/menubackground.jpg");
 
         startButton=ImageLoader.loadImage("Photos/menuButton/newGame.png");
@@ -59,6 +68,7 @@ public class StaticVariables {
         loadFromComputerButton=ImageLoader.loadImage("Photos/menuButton/load.png");
         mainClass=new MainClass();
         mainMenu=new MainMenu();
+
 
         MainClass.addTheMainMenu();
         lifePanel =ImageLoader.loadImage("Photos/worldFrame/lifeBar1.png");
