@@ -285,6 +285,13 @@ public class Ghost extends GameObject {
                     if(!dirUp&&!dirDown&&!dirLeft&&!dirRight)
                         setTheDir();
 
+                    for (GameObject house:StaticVariables.world.getBackGroundObjects()) {
+                        if(house.getClass().getSimpleName().equals("House"))
+                        {
+
+                        }
+                    }
+
                     if (dirLeft)
                         setIcon(new ImageIcon(moveLeft.get(index)));
                     if (dirRight)

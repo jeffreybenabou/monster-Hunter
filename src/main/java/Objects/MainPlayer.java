@@ -158,7 +158,7 @@ public class MainPlayer extends GameObject {
     }
 
     private void checkifMainPlayerIntercetWithMonster() {
-        if(StaticVariables.world.getFirstGhost().getBounds().intersects(getBounds()))
+        if(StaticVariables.world.getFirstGhost()!=null&&StaticVariables.world.getFirstGhost().getBounds().intersects(getBounds()))
         {
             walking=false;
             if(!attacking)
@@ -166,7 +166,7 @@ public class MainPlayer extends GameObject {
 
         }
         for (Ghost g:StaticVariables.world.getGhostArrayList()) {
-            if(g.getBounds().intersects(g.getBounds()))
+            if(g.getBounds().intersects(getBounds()))
             {
                 walking=false;
                 if(!attacking)
@@ -261,6 +261,20 @@ public class MainPlayer extends GameObject {
                 if (index == standDown.size())
                     index = 0;
                 setIcon(new ImageIcon(standDown.get(index)));
+
+            }
+
+            else if(attacking)
+            {
+                index++;
+                if (index == attack.size())
+                {
+                    attacking=false;
+                    stand=true;
+                    index = 0;
+                }
+
+                setIcon(new ImageIcon(attack.get(index)));
 
 
             }

@@ -327,6 +327,8 @@ public class World extends JLabel implements MouseListener {
         {
             MainPlayer.point=new Point(e.getPoint().x,e.getPoint().y);
             MainPlayer.walking=true;
+            MainPlayer.stand=false;
+
 
 
         }
