@@ -19,6 +19,7 @@ public class World extends JLabel implements MouseListener {
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
     private Random random;
     private Ghost firstGhost;
+
     public World(){
         setBounds(0,0,10000,10000);
         setLayout(null);
@@ -45,113 +46,116 @@ public class World extends JLabel implements MouseListener {
         }
     }
     public void addGhost(){
-        if(!Ghost.notTheFirstGhost)
-        {
-            /*
-            *  first ghost will apper to the player and when the player kill the ghost
-            *  then the method will be called again but with Ghost.notTheFirstGhost=true
-            *  and will add ghosts and house to the world
-            *
-            * */
-            new Thread(new Runnable() {
-                public void run() {
-                    firstGhost=new Ghost(1);
-                    firstGhost.setLocation(100,100);
-                    add(firstGhost);
-                    while(firstGhost.getLifeBar().isAlive()){
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+        new Thread(new Runnable() {
+            public void run() {
+                if(!Ghost.notTheFirstGhost)
+                {
+                    /*
+                     *  first ghost will apper to the player and when the player kill the ghost
+                     *  then the method will be called again but with Ghost.notTheFirstGhost=true
+                     *  and will add ghosts and house to the world
+                     *
+                     * */
+
+                            firstGhost=new Ghost(1);
+                            firstGhost.setLocation(1000,1000);
+                            add(firstGhost);
+                            while(firstGhost.getLifeBar().isAlive()){
+                                try {
+                                    Thread.sleep(1);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            firstGhost=null;
+                            Ghost.notTheFirstGhost=true;
+                            addGhost();
+
+
+
+                }
+                else
+                {
+                    for (GameObject house:backGroundObjects) {
+                        if(house.getClass().getSimpleName().equals("House"))
+                            house.setVisible(true);
+                    }
+                    switch (StaticVariables.level)
+                    {
+                        case 1:{
+
+                            for (int i = 0; i <10 ; i++) {
+                                Random random=new Random();
+                                Ghost ghost=new Ghost(1);
+                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghost.setName(""+i);
+                                ghostArrayList.add(ghost);
+                                add(ghost);
+                                StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
+                            }
+
+                            break;
+                        }
+                        case 2:{
+                            ghostArrayList=new ArrayList<Ghost>();
+                            boolean ok=false;
+                            int sum;
+                            for (int i = 0; i <15 ; i++) {
+                                Random random=new Random();
+                                sum=random.nextInt(2);
+                                if(sum==2)
+                                    ok=true;
+
+                                Ghost ghost=new Ghost(sum);
+                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghostArrayList.add(ghost);
+                                add(ghost);
+                            }
+                            if(!ok)
+                            {
+                                Random random=new Random();
+                                Ghost ghost=new Ghost(2);
+                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghostArrayList.add(ghost);
+                                add(ghost);
+                            }
+
+
+                            break;
+                        }
+                        case 3:{
+                            ghostArrayList=new ArrayList<Ghost>();
+                            boolean ok=false;
+                            int sum;
+                            for (int i = 0; i <20 ; i++) {
+                                Random random=new Random();
+                                sum=random.nextInt(3);
+                                if(sum>2)
+                                    ok=true;
+                                Ghost ghost=new Ghost(random.nextInt(3));
+                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghostArrayList.add(ghost);
+                                add(ghost);
+                            }
+                            if(!ok)
+                            {
+                                Random random=new Random();
+
+                                Ghost ghost=new Ghost(3);
+                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghostArrayList.add(ghost);
+                                add(ghost);
+                            }
+
+
+                            break;
                         }
                     }
-                    firstGhost=null;
-                    Ghost.notTheFirstGhost=true;
-                    addGhost();
 
-                }
-            }).start();
-
-        }
-        else
-        {
-            for (GameObject house:backGroundObjects) {
-                if(house.getClass().getSimpleName().equals("House"))
-                    house.setVisible(true);
-            }
-            switch (StaticVariables.level)
-            {
-                case 1:{
-
-                    for (int i = 0; i <10 ; i++) {
-                        Random random=new Random();
-                        Ghost ghost=new Ghost(1);
-                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                        ghost.setName(""+i);
-                        ghostArrayList.add(ghost);
-                        add(ghost);
-                        StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
-                    }
-
-                    break;
-                }
-                case 2:{
-                    ghostArrayList=new ArrayList<Ghost>();
-                    boolean ok=false;
-                    int sum;
-                    for (int i = 0; i <15 ; i++) {
-                        Random random=new Random();
-                        sum=random.nextInt(2);
-                        if(sum==2)
-                            ok=true;
-
-                        Ghost ghost=new Ghost(sum);
-                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                        ghostArrayList.add(ghost);
-                        add(ghost);
-                    }
-                    if(!ok)
-                    {
-                        Random random=new Random();
-                        Ghost ghost=new Ghost(2);
-                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                        ghostArrayList.add(ghost);
-                        add(ghost);
-                    }
-
-
-                    break;
-                }
-                case 3:{
-                    ghostArrayList=new ArrayList<Ghost>();
-                    boolean ok=false;
-                    int sum;
-                    for (int i = 0; i <20 ; i++) {
-                        Random random=new Random();
-                        sum=random.nextInt(3);
-                        if(sum>2)
-                            ok=true;
-                        Ghost ghost=new Ghost(random.nextInt(3));
-                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                        ghostArrayList.add(ghost);
-                        add(ghost);
-                    }
-                    if(!ok)
-                    {
-                        Random random=new Random();
-
-                        Ghost ghost=new Ghost(3);
-                        ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                        ghostArrayList.add(ghost);
-                        add(ghost);
-                    }
-
-
-                    break;
                 }
             }
+        }).start();
 
-        }
 
 
 
@@ -164,38 +168,52 @@ public class World extends JLabel implements MouseListener {
         new Thread(new Runnable() {
 
             public void run() {
-                random=new Random();
-                for (int i = 0; i <10 ; i++) {
 
-                    Cloud cloud=new Cloud(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                    add(cloud);
-                }
-                for (int i = 0; i <50 ; i++) {
-                    Bird bird=new Bird(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                    add(bird);
-                }
+                random=new Random();
+
+                        for (int i = 0; i <10 ; i++) {
+
+                            {
+
+                                        Cloud cloud=new Cloud(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                        add(cloud);
+
+
+                            }
+
+
+
+                        }
+                        for (int i = 0; i <30 ; i++) {
+                            Bird bird=new Bird(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                            add(bird);
+
+                        }
+
+
+
 
                 addGhost();
 
                 for (int i = 0; i < 3; ) {
                     House house = new House(i);
-                    if (!checkIfInetrcet(house)) {
+
                         backGroundObjects.add(house);
                         house.setVisible(false);
                         add(house);
                         i++;
-                    }
+
                 }
 
-                for (int i = 0; i <140 ; ) {
+                for (int i = 0; i <120 ; ) {
                     Tree tree=new Tree();
                     tree.setBounds(random.nextInt(getWidth()),random.nextInt(getHeight()),400,600);
                     if(!checkIfInetrcet(tree))
                     {
-
                         backGroundObjects.add(tree);
                         add(tree);
                         i++;
+
                     }
 
                 }
@@ -240,22 +258,13 @@ public class World extends JLabel implements MouseListener {
         return false;
     }
 
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    public void mousePressed(MouseEvent e) {
-        
-        StaticVariables.mainPlayer.calculateTheAngle(e.getX(),e.getY());
-        MainPlayer.point=new Point(StaticVariables.mainPlayer.getX(),StaticVariables.mainPlayer.getY());
-
-        if(e.getSource().equals(this))
+    public void checkIfMainPlayerFightTheGhost(MouseEvent e){
+        if(e.getComponent().getClass().getSimpleName().equals("Ghost")
+                &&StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds())
+                &&!StaticVariables.mainPlayer.isAttacking())
         {
-
-            MainPlayer.point=new Point(e.getPoint().x,e.getPoint().y);
-        }
-        if(e.getComponent().getClass().getSimpleName().equals("Ghost")&&StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds())&&!StaticVariables.mainPlayer.isAttacking())
-        {
+            MainPlayer.walking=false;
+            MainPlayer.stand=false;
 
             Random random=new Random();
             StaticVariables.mainPlayer.setDamgeToGhost((random.nextInt(700)+400));
@@ -265,21 +274,62 @@ public class World extends JLabel implements MouseListener {
             StaticVariables.mainPlayer.setAttacking(true);
             StaticVariables.mainPlayer.setIndex(0);
         }
-        if(e.getComponent().getClass().getSimpleName().equals("Ghost")&&!StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds())&&!StaticVariables.mainPlayer.isAttacking())
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+        
+        StaticVariables.mainPlayer.calculateTheAngle(e.getX(),e.getY());
+        MainPlayer.point=new Point(StaticVariables.mainPlayer.getX(),StaticVariables.mainPlayer.getY());
+
+        if(e.getButton()==MouseEvent.BUTTON1)
         {
-/*
-* this if statment check if the ghost is not in bound of the main player it check also is the main player is not attacking
- * and if the main player is pressing on the ghost
-* then the main player wants to move to the ghost location
-*
-* */
-            StaticVariables.mainPlayer.calculateTheAngle(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
-
-            MainPlayer.point=new Point(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
-
+            MainPlayer.stand=false;
+            checkIfPlayerPreesTheWorld(e);
+            checkIfMainPlayerFightTheGhost(e);
+            checkIfMainPlayerPreesAGhost(e);
+        }
+        if(e.getButton()==MouseEvent.BUTTON3)
+        {
+            MainPlayer.walking=false;
+            MainPlayer.stand=true;
         }
 
 
+
+
+    }
+
+    private void checkIfMainPlayerPreesAGhost(MouseEvent e) {
+        if(e.getComponent().getClass().getSimpleName().equals("Ghost")&&!StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds()))
+        {
+            /*
+             * this if statement check if the ghost is not in bound of the main
+             * player it check also if the main player is not attacking
+             * and if the main player is pressing on the ghost
+             * then the main player wants to move to the ghost location
+             *
+             * */
+            MainPlayer.walking=false;
+            StaticVariables.mainPlayer.calculateTheAngle(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
+            MainPlayer.point=new Point(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
+            MainPlayer.walking=true;
+
+
+        }
+    }
+
+    private void checkIfPlayerPreesTheWorld(MouseEvent e) {
+        if(e.getSource().equals(this))
+        {
+            MainPlayer.point=new Point(e.getPoint().x,e.getPoint().y);
+            MainPlayer.walking=true;
+
+
+        }
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -326,4 +376,6 @@ public class World extends JLabel implements MouseListener {
     public void setFirstGhost(Ghost firstGhost) {
         this.firstGhost = firstGhost;
     }
+
+
 }

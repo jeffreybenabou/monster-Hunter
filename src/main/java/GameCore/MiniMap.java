@@ -16,25 +16,10 @@ public class MiniMap extends JLabel {
 
     public MiniMap(){
         blackline = BorderFactory. createRaisedBevelBorder();
-
         setBorder(blackline);
-
         setBounds(0,StaticVariables.mainClass.getHeight()-160,250,160);
-        setBackground(Color.orange);
+        setBackground(Color.black);
 
-
-        /*new Thread(new Runnable() {
-            public void run() {
-                while (StaticVariables.worldBackGround==null)
-                {
-                    setBounds(0,StaticVariables.mainClass.getHeight()-160,250,160);
-
-                }
-//                setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(getWidth(),getHeight(),0)));
-
-            }
-
-        }).start();*/
 
         new Thread(new Runnable() {
             public void run() {
@@ -58,7 +43,7 @@ public class MiniMap extends JLabel {
 
                     }
                     try {
-                        Thread.sleep(1);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -81,9 +66,19 @@ public class MiniMap extends JLabel {
                 while (true){
                     int x;
                     int y;
-                    y=StaticVariables.mainPlayer.getLocation().y/64;
-                    x=StaticVariables.mainPlayer.getLocation().x/40;
-                    jLabel.setLocation(x,y);
+                    try{
+                        y=StaticVariables.mainPlayer.getLocation().y/64;
+                        x=StaticVariables.mainPlayer.getLocation().x/40;
+                        jLabel.setLocation(x,y);
+                        Thread.sleep(1000);
+                    }catch (NullPointerException e)
+                    {
+
+                        addTheMainPlayerLocationToMap();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         }).start();

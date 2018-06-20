@@ -19,7 +19,11 @@ public class MainClass extends JFrame  {
         new Thread(new Runnable() {
             public void run() {
                 while (true)
+                {
                     repaint();
+
+                }
+
             }
         }).start();
     }

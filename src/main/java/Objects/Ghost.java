@@ -31,7 +31,7 @@ public class Ghost extends GameObject {
 
 
     private Life lifeBar;
-    private boolean stopMoving=false,changeDir=false;
+    private boolean stopMoving=false;
 
     private boolean
 

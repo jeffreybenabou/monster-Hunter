@@ -23,7 +23,7 @@ public class ImageLoader {
     return null;
     }
 
-    public static void addImageOfObject(File dir, Vector<Image> linkedList, Dimension size) {
+    public synchronized static void addImageOfObject(File dir, Vector<Image> linkedList, Dimension size) {
         String ImagePath;
         for (int i = 0; dir.listFiles().length > i; i++)
         {

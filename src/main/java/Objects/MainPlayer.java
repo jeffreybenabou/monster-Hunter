@@ -1,5 +1,6 @@
 package Objects;
 
+import BackgroundObject.FootStep;
 import GameCore.GameObject;
 import GameCore.Life;
 import GameCore.StaticVariables;
@@ -15,11 +16,13 @@ public class MainPlayer extends GameObject {
 
     public static int sumOfLife=35000;
     public static Life life;
-    private int xSpriteSheet=220,ySprtieSheet=240,index=0,imageFrameRate=0,imageSpeed=3,damgeToGhost;
+
+    public static int imageFrameRate=0;
+    private int xSpriteSheet=220,ySprtieSheet=240,index=0,imageSpeed=3,damgeToGhost;
     public static String nameOfPlayer;
     private  boolean attacking;
-    public static boolean walking;
-
+    public static boolean walking=false;
+    public static boolean stand=true;
 
 
     public static Point point;
@@ -36,7 +39,8 @@ public class MainPlayer extends GameObject {
              attack, die;
     private double angle=0;
     private double distanceFromPoint;
-    private long speedOfMove=3;
+    private long speedOfMove=20;
+    private FootStep footStep;
 
 
     public MainPlayer(){
@@ -44,9 +48,6 @@ public class MainPlayer extends GameObject {
         point=new Point(getX(),getY());
         makeNewElements();
         addMainPlayerPosition();
-
-
-
     }
 
 
@@ -55,7 +56,10 @@ public class MainPlayer extends GameObject {
         float yDistance =  getY()-y ;
 
         angle= (360 + Math.toDegrees(Math.atan2(yDistance, xDistance)))%360 ;
-
+/*
+* calculate the angle of main player position in order to
+ * know what is the diriction that the main player wants to move
+* */
     }
 
     private void addMainPlayerPosition() {
@@ -63,65 +67,32 @@ public class MainPlayer extends GameObject {
         new Thread(new Runnable() {
             public void run() {
 
-                new Thread(new Runnable() {
-                    public void run() {
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_down/");
+                ImageLoader.addImageOfObject(DIR_1, standDown,getSize());
+                setTheUserAction();
+
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_up/");
                         ImageLoader.addImageOfObject(DIR_1, up,getSize());
-                    }
-                }).start();
-
-                new Thread(new Runnable() {
-                    public void run() {
 
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_down/");
                         ImageLoader.addImageOfObject(DIR_1, down,getSize());
-                    }
-                }).start();
 
-                new Thread(new Runnable() {
-                    public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left/");
                         ImageLoader.addImageOfObject(DIR_1, left,getSize());
-                    }
-                }).start();
 
-
-                new Thread(new Runnable() {
-                    public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right/");
                         ImageLoader.addImageOfObject(DIR_1, right,getSize());
-                    }
-                }).start();
 
-
-
-                new Thread(new Runnable() {
-                    public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_down/");
-                        ImageLoader.addImageOfObject(DIR_1, standDown,getSize());
-                    }
-                }).start();
-
-
-
-
-
-                new Thread(new Runnable() {
-                    public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/fall/");
                         ImageLoader.addImageOfObject(DIR_1, die,getSize());
-                    }
-                }).start();
 
-                new Thread(new Runnable() {
-                    public void run() {
+
+
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/attack2/");
                         ImageLoader.addImageOfObject(DIR_1, attack,getSize());
-                    }
-                }).start();
 
 
-                setTheUserAction();
+
 
             }
         }).start();
@@ -137,7 +108,6 @@ public class MainPlayer extends GameObject {
 
 
     }
-
 
     private void makeNewElements() {
         up = new Vector<Image>();
@@ -158,179 +128,170 @@ public class MainPlayer extends GameObject {
 
     }
 
-    public void calculateTheDistance(){
-       distanceFromPoint = Math.hypot(getX() - point.getLocation().getX(), getY() -point.getLocation().getY());
-        distanceFromPoint-=100;
-
-
-
-
-
-
-    }
-
-
-    private void setTheUserAction(){
+    private void setTheUserAction() {
         new Thread(new Runnable() {
             public void run() {
-                try
-                {
-                    while (life.isAlive())
-                    {
+
+                while (true) {
 
 
+                    imageFrameRate++;
+                    setPlace();
+                    checkIfMainPlayerOutOfBound();
+                    checkifMainPlayerIntercetWithMonster();
 
-                        changeIcon();
-                        calculateTheDistance();
 
-                        try {
-                            Thread.sleep(speedOfMove);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        Thread.sleep(speedOfMove);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (NullPointerException e) {
+                        setTheUserAction();
+
+                        break;
                     }
-                }catch (NullPointerException e)
-                {
-                    setTheUserAction();
-
-                }catch (ArrayIndexOutOfBoundsException es)
-                {
-                    setTheUserAction();
                 }
+
 
             }
         }).start();
     }
 
-    private void changeIcon()
-    {
-
-        imageFrameRate++;
-        if(imageFrameRate%5==0)
+    private void checkifMainPlayerIntercetWithMonster() {
+        if(StaticVariables.world.getFirstGhost().getBounds().intersects(getBounds()))
         {
+            walking=false;
+            if(!attacking)
+                stand=true;
 
+        }
+        for (Ghost g:StaticVariables.world.getGhostArrayList()) {
+            if(g.getBounds().intersects(g.getBounds()))
+            {
+                walking=false;
+                if(!attacking)
+                stand=true;
+                break;
+            }
+        }
 
-            if(distanceFromPoint<50&&!attacking) {
+    }
 
-                walking = false;
+    private void setPlace() {
+        try {
+
+            if(imageFrameRate%20==0)
+             footStep = new FootStep();
+            if (walking) {
+                if (angle < 164 && angle >= 52) {
+                    StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() + imageSpeed);
+                    setLocation(getX(), getY() - imageSpeed);
+                    setIcon(new ImageIcon(up.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(3);
+// up
+
+                }
+                if (angle < 183 && angle >= 164) {
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() + imageSpeed);
+                    setLocation(getX() + imageSpeed, getY() - imageSpeed);
+                    setIcon(new ImageIcon(right.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(4);
+//                    rightup
+                }
+                if (angle < 205 && angle >= 183) {
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY());
+                    setLocation(getX() + imageSpeed, getY());
+                    setIcon(new ImageIcon(right.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(5);
+//                    right
+
+                }
+                if (angle < 231 && angle >= 205) {
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() - imageSpeed);
+                    setLocation(getX() + imageSpeed, getY() + imageSpeed);
+                    setIcon(new ImageIcon(right.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(6);
+//right down
+                }
+                if (angle < 281 && angle >= 231) {
+//                    down
+                    StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() - imageSpeed);
+                    setLocation(getX(), getY() + imageSpeed);
+                    setIcon(new ImageIcon(down.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(7);
+                }
+                if (angle < 318 && angle >= 281) {
+//                    left up
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() - imageSpeed);
+                    setLocation(getX() - imageSpeed, getY() + imageSpeed);
+                    setIcon(new ImageIcon(left.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(2);
+
+                }
+
+                if (angle >= 318) {
+//                    left
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY());
+                    setLocation(getX() - imageSpeed, getY());
+                    setIcon(new ImageIcon(left.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(1);
+
+                }
+                if (angle < 52 && angle >= 0) {
+//                    left down
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() + imageSpeed);
+                    setLocation(getX() - imageSpeed, getY() - imageSpeed);
+                    setIcon(new ImageIcon(left.get(index)));
+                    if(imageFrameRate%20==0)
+                    footStep.setTheImage(8);
+                }
+                index++;
+                if (index == left.size())
+                    index = 0;
+
+            } else if (stand) {
+                index++;
+                if (index == standDown.size())
+                    index = 0;
                 setIcon(new ImageIcon(standDown.get(index)));
 
 
             }
-
-            if(distanceFromPoint>=50&&!attacking)
-            {
-                walking=true;
-                changeTheBollen();
-                if(angle<164&&angle>=52)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX(),StaticVariables.world.getY()+imageSpeed);
-                    setLocation(getX(),getY()-imageSpeed);
-                    setIcon(new ImageIcon(up.get(index)));
-
-                }
-                if(angle<183&&angle>=164)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY()+imageSpeed);
-                    setLocation(getX()+imageSpeed,getY()-imageSpeed);
-                    setIcon(new ImageIcon(right.get(index)));
-
-                }
-                if(angle<205&&angle>=183)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY());
-                    setLocation(getX()+imageSpeed,getY());
-                    setIcon(new ImageIcon(right.get(index)));
-                }
-                if(angle<231&&angle>=205)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX()-imageSpeed,StaticVariables.world.getY()-imageSpeed);
-                    setLocation(getX()+imageSpeed,getY()+imageSpeed);
-                    setIcon(new ImageIcon(right.get(index)));
-
-                }
-                if(angle<281&&angle>=231)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX(),StaticVariables.world.getY()-imageSpeed);
-                    setLocation(getX(),getY()+imageSpeed);
-                    setIcon(new ImageIcon(down.get(index)));
-
-                }
-                if(angle<318&&angle>=281)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY()-imageSpeed);
-                    setLocation(getX()-imageSpeed,getY()+imageSpeed);
-                    setIcon(new ImageIcon(left.get(index)));
-                }
-
-                if(angle>=318)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY());
-                    setLocation(getX()-imageSpeed,getY());
-                    setIcon(new ImageIcon(left.get(index)));
-
-                }
-                if(angle<52&&angle>=0)
-                {
-                    StaticVariables.world.setLocation(StaticVariables.world.getX()+imageSpeed,StaticVariables.world.getY()+imageSpeed);
-                    setLocation(getX()-imageSpeed,getY()-imageSpeed);
-                    setIcon(new ImageIcon(left.get(index)));
-
-                }
+        } catch (NullPointerException e) {
 
 
-            }
+        } catch (IndexOutOfBoundsException ea) {
 
 
-            if(attacking)
-            {
-                speedOfMove=2;
-                setIcon(new ImageIcon(attack.get(index)));
-                if(index==attack.size()-1)
-                {
-                    attacking=false;
-                    index=0;
-                }
-
-
-            }
-            else
-                speedOfMove=3;
-            for (int i = 0; i <StaticVariables.world.getGhostArrayList().size() ; i++) {
-                if(attacking&&getBounds().intersects(StaticVariables.world.getGhostArrayList().get(i).getBounds()))
-                {
-                    calculateTheAngle(StaticVariables.world.getGhostArrayList().get(i).getLocation().x,StaticVariables.world.getGhostArrayList().get(i).getLocation().y);
-                    changeTheBollen();
-                    if(angle<320&&angle>=227)
-                        upFromTheGhost=true;
-                    if(angle>=320||angle<41)
-                        leftFromTheGhost=true;
-                    if(angle>=41&&angle<120)
-                        downFromTheGhost=true;
-                    if(angle>=41&&angle<227)
-                        rightFromTheGhost=true;
-
-
-                }
-            }
-
-
-
-            if(index==attack.size()-1)
-                index=0;
-            else
-            index++;
         }
 
 
     }
 
-    private void changeTheBollen(){
-        upFromTheGhost =false;
-        rightFromTheGhost =false;
-        downFromTheGhost =false;
-        leftFromTheGhost =false;
+    private void checkIfMainPlayerOutOfBound(){
+        try
+        {
+            if(getX()<=getWidth()||getY()<=getHeight()||getX()>=StaticVariables.world.getWidth()||getY()>=StaticVariables.world.getHeight())
+            {
+                stand=true;
+                walking=false;
+
+            }
+        }catch (NullPointerException e)
+        {
+
+        }
+
     }
+
+
 
 
     public static int getSumOfLife() {

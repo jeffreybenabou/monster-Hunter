@@ -23,12 +23,14 @@ public class Bird extends GameObject  {
             public void run() {
                 while (true)
                 {
+
                     if(left)
                         setIcon(new ImageIcon(birdLeft.get(index)));
                     else
                         setIcon(new ImageIcon(birdRight.get(index)));
+                    repaint();
                     index++;
-                    if(index==birdRight.size())
+                    if(index==birdRight.size()-1)
                         index=0;
                     try {
 
@@ -63,7 +65,7 @@ public class Bird extends GameObject  {
 
                     try {
                         Thread.sleep(20);
-                        repaint();
+
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();

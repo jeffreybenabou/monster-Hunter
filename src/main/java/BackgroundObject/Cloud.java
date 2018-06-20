@@ -25,31 +25,34 @@ public class Cloud extends GameObject {
             public void run() {
 
 
-
-                while (true)
-                {
-
-                    if(left)
-                    setLocation(getX()-1,getY());
-                    else
-                        setLocation(getX()+1,getY());
-                    if(down)
-                        setLocation(getX(),getY()+1);
-                    else
-                        setLocation(getX(),getY()-1);
-                    checkIfIntercet();
+                while (true) {
 
                     try {
+                        if (left)
+                            setLocation(getX() - 1, getY());
+                        else
+                            setLocation(getX() + 1, getY());
+                        if (down)
+                            setLocation(getX(), getY() + 1);
+                        else
+                            setLocation(getX(), getY() - 1);
+                        checkIfIntercet();
+
+
                         Thread.sleep(10);
 
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                    } catch (Exception ee) {
+
                     }
 
 
-                }
+
+
             }
+        }
         }).start();
     }
 
