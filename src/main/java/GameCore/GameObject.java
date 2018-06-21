@@ -8,4 +8,5 @@ public class GameObject extends JLabel {
  * in order to know who is an object of the world and who is other object
 * */
 
+
 }
