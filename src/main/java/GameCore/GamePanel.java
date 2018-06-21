@@ -35,6 +35,7 @@ public class GamePanel extends JLabel {
         ghostCounter=new JLabel();
         ghostCounter.setBounds(570,100,300,40);
         ghostCounter.setFont(font);
+        ghostCounter.setForeground(Color.black);
         add(ghostCounter);
         new Thread(new Runnable() {
             public void run() {
@@ -101,8 +102,12 @@ public class GamePanel extends JLabel {
         add(lifeBar);
 
         MainPlayer.life=new Life(MainPlayer.sumOfLife,null);
+
         MainPlayer.life.getjProgressBar().setBounds(108,35,543,12);
+        MainPlayer.life.getjProgressBar().setBackground(Color.BLACK);
+        MainPlayer.life.getjProgressBar().setForeground(Color.RED);
         lifeBar.add(MainPlayer.life.getjProgressBar());
+
 
     }
 

@@ -1,6 +1,7 @@
 package Objects;
 
 import GameCore.GameObject;
+import GameCore.GamePanel;
 import GameCore.Life;
 import GameCore.StaticVariables;
 import ImageHandel.ImageLoader;
@@ -15,6 +16,8 @@ import java.util.Vector;
 public class Ghost extends GameObject {
 
     private int ghostType,damgeToMainPlayer,damgeFromMainPlayer,speedOfAttack,life;
+
+    private static String pathOfFile;
 
     public static Vector<Image>
             moveLeft,
@@ -55,6 +58,7 @@ public class Ghost extends GameObject {
 
     public Ghost(int ghostType){
         this.ghostType=ghostType;
+        setHorizontalAlignment(JLabel.CENTER);
         checkTheGhostType();
         setTheDir();
         setTheActionToGhost();
@@ -183,34 +187,54 @@ public class Ghost extends GameObject {
     }
     public static   void addGhostImage(){
         addTheVector();
-        final Dimension dimension=new Dimension(300,320);
+        final Dimension dimension=new Dimension(500,320);
 
+        switch (StaticVariables.level)
+        {
+            case 1:
+            {
+                pathOfFile="firstGhost";
 
+                break;
+            }
+            case 2:
+            {
+                pathOfFile="secondeGhost";
+
+                break;
+            }
+            case 3:
+            {
+                pathOfFile="thirdGhost";
+
+                break;
+            }
+        }
 
 
         new Thread(new Runnable() {
             public void run() {
-                File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackDown/");
+                File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_down/");
                 ImageLoader.addImageOfObject(DIR_1, attackDown,dimension);
             }
         }).start();
         new Thread(new Runnable() {
             public void run() {
-                File  DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackLeft/");
+                File  DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_left/");
                 ImageLoader.addImageOfObject(DIR_1, attackLeft,dimension);
             }
         }).start();
 
         new Thread(new Runnable() {
             public void run() {
-                File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackRight/");
+                File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_right/");
                 ImageLoader.addImageOfObject(DIR_1, attackRight,dimension);
             }
         }).start();
 
         new Thread(new Runnable() {
             public void run() {
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/attackUp/");
+                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_up/");
                 ImageLoader.addImageOfObject(DIR_1, attackUp,dimension);
 
             }
@@ -218,27 +242,28 @@ public class Ghost extends GameObject {
 
         new Thread(new Runnable() {
             public void run() {
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/moveUp/");
+
+                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_up/");
                 ImageLoader.addImageOfObject(DIR_1, moveUp,dimension);
             }
         }).start();
         new Thread(new Runnable() {
             public void run() {
-                File      DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/moveRight/");
+                File      DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_right/");
                 ImageLoader.addImageOfObject(DIR_1, moveRight,dimension);
             }
         }).start();
 
         new Thread(new Runnable() {
             public void run() {
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/moveLeft/");
+                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_left/");
                 ImageLoader.addImageOfObject(DIR_1, moveLeft,dimension);
             }
         }).start();
 
         new Thread(new Runnable() {
             public void run() {
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/moveDown/");
+                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_down/");
                 ImageLoader.addImageOfObject(DIR_1, moveDown,dimension);
             }
         }).start();
@@ -246,7 +271,7 @@ public class Ghost extends GameObject {
 
 
 
-        File     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/dead/");
+        File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/dead/");
         ImageLoader.addImageOfObject(DIR_1, dead,dimension);
 
 
@@ -284,13 +309,6 @@ public class Ghost extends GameObject {
 
                     if(!dirUp&&!dirDown&&!dirLeft&&!dirRight)
                         setTheDir();
-
-                    for (GameObject house:StaticVariables.world.getBackGroundObjects()) {
-                        if(house.getClass().getSimpleName().equals("House"))
-                        {
-
-                        }
-                    }
 
                     if (dirLeft)
                         setIcon(new ImageIcon(moveLeft.get(index)));
@@ -330,8 +348,7 @@ public class Ghost extends GameObject {
        {
            case 1:
            {
-
-               setSize(300,320);
+               setSize(250,300);
                damgeToMainPlayer=20*random.nextInt(3)+1;
                damgeFromMainPlayer=2200;
                speedOfAttack=2000;
@@ -341,6 +358,7 @@ public class Ghost extends GameObject {
            }
            case 2:
            {
+
 
                setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
                damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;

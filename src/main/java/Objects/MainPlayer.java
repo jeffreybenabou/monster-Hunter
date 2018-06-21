@@ -17,8 +17,8 @@ public class MainPlayer extends GameObject {
     public static int sumOfLife=35000;
     public static Life life;
 
-    public static int imageFrameRate=0;
-    private int xSpriteSheet=220,ySprtieSheet=240,index=0,imageSpeed=3,damgeToGhost;
+    public static int imageFrameRate=0,addLifeToMainPlayer=0;
+    private int xSpriteSheet=350,ySprtieSheet=320,index=0,imageSpeed=3,damgeToGhost;
     public static String nameOfPlayer;
     private  boolean attacking;
     public static boolean walking=false;
@@ -48,6 +48,8 @@ public class MainPlayer extends GameObject {
         point=new Point(getX(),getY());
         makeNewElements();
         addMainPlayerPosition();
+        setOpaque(true);
+
     }
 
 
@@ -67,29 +69,30 @@ public class MainPlayer extends GameObject {
         new Thread(new Runnable() {
             public void run() {
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/stand_down/");
-                ImageLoader.addImageOfObject(DIR_1, standDown,getSize());
+                Dimension dimension=new Dimension(400,380);
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/stand/");
+                ImageLoader.addImageOfObject(DIR_1, standDown,dimension);
                 setTheUserAction();
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_up/");
-                        ImageLoader.addImageOfObject(DIR_1, up,getSize());
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/up");
+                        ImageLoader.addImageOfObject(DIR_1, up,dimension);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_down/");
-                        ImageLoader.addImageOfObject(DIR_1, down,getSize());
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/down");
+                        ImageLoader.addImageOfObject(DIR_1, down,dimension);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_left/");
-                        ImageLoader.addImageOfObject(DIR_1, left,getSize());
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/left");
+                        ImageLoader.addImageOfObject(DIR_1, left,dimension);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/walk_right/");
-                        ImageLoader.addImageOfObject(DIR_1, right,getSize());
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/right");
+                        ImageLoader.addImageOfObject(DIR_1, right,dimension);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/fall/");
-                        ImageLoader.addImageOfObject(DIR_1, die,getSize());
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/die");
+                        ImageLoader.addImageOfObject(DIR_1, die,dimension);
 
 
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/attack2/");
-                        ImageLoader.addImageOfObject(DIR_1, attack,getSize());
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/right");
+                        ImageLoader.addImageOfObject(DIR_1, attack,dimension);
 
 
 
@@ -139,6 +142,7 @@ public class MainPlayer extends GameObject {
                     setPlace();
                     checkIfMainPlayerOutOfBound();
                     checkifMainPlayerIntercetWithMonster();
+                    addLifeToPlayer();
 
 
                     try {
@@ -157,6 +161,18 @@ public class MainPlayer extends GameObject {
         }).start();
     }
 
+    private void addLifeToPlayer() {
+        if(!attacking&&walking)
+        {
+            if(addLifeToMainPlayer++==15&&life.getjProgressBar().getValue()<life.getjProgressBar().getMaximum())
+            {
+                addLifeToMainPlayer=0;
+                life.getjProgressBar().setValue(life.getjProgressBar().getValue()+1);
+                life.getjProgressBar().setString(""+life.getjProgressBar().getValue());
+            }
+        }
+    }
+
     private void checkifMainPlayerIntercetWithMonster() {
         if(StaticVariables.world.getFirstGhost()!=null&&StaticVariables.world.getFirstGhost().getBounds().intersects(getBounds()))
         {
@@ -168,10 +184,14 @@ public class MainPlayer extends GameObject {
         for (Ghost g:StaticVariables.world.getGhostArrayList()) {
             if(g.getBounds().intersects(getBounds()))
             {
-                walking=false;
-                if(!attacking)
-                stand=true;
-                break;
+                if(g.getLifeBar().isAlive())
+                {
+                    walking=false;
+                    if(!attacking)
+                        stand=true;
+                    break;
+                }
+
             }
         }
 
