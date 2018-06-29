@@ -5,6 +5,7 @@ import Objects.Ghost;
 import Objects.MainPlayer;
 
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -15,7 +16,7 @@ import java.util.Random;
 public class World extends JLabel implements MouseListener {
 
 
-    private ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
+    public static ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
     private Random random;
     private Ghost firstGhost;
@@ -60,13 +61,15 @@ public class World extends JLabel implements MouseListener {
                             firstGhost=new Ghost(1);
                             firstGhost.setLocation(1000,1000);
                             add(firstGhost);
+                            ghostArrayList.add(firstGhost);
                             while(firstGhost.getLifeBar().isAlive()){
                                 try {
-                                    Thread.sleep(1);
+                                    Thread.sleep(20);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             }
+                    ghostArrayList.remove(firstGhost);
                             firstGhost=null;
                             Ghost.notTheFirstGhost=true;
                             addGhost();
@@ -88,6 +91,7 @@ public class World extends JLabel implements MouseListener {
                                 Random random=new Random();
                                 Ghost ghost=new Ghost(1);
                                 ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                System.out.println(ghost.getLocation());
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -259,20 +263,20 @@ public class World extends JLabel implements MouseListener {
     }
 
     public void checkIfMainPlayerFightTheGhost(MouseEvent e){
-        if(e.getComponent().getClass().getSimpleName().equals("Ghost")
-                &&StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds())
-                &&!StaticVariables.mainPlayer.isAttacking())
+
+        if(
+                MainPlayer.intersect
+                &&!StaticVariables.mainPlayer.isAttacking()&&e.getComponent().getClass().getSimpleName().equals("Ghost"))
         {
+            Ghost ghost=(Ghost)e.getComponent();
             MainPlayer.walking=false;
             MainPlayer.stand=false;
-
-            Random random=new Random();
-            StaticVariables.mainPlayer.setDamgeToGhost((random.nextInt(700)+400));
-            Ghost ghost=(Ghost) (e.getComponent());
-            ghost.getLifeBar().getjProgressBar().setValue(ghost.getLifeBar().getjProgressBar().getValue()-StaticVariables.mainPlayer.getDamgeToGhost());
-            ghost.getLifeBar().getjProgressBar().setString(""+ghost.getLifeBar().getjProgressBar().getValue());
-            StaticVariables.mainPlayer.setAttacking(true);
+            StaticVariables.mainPlayer.calculateTheAngle(ghost.getX(),ghost.getY());
+            StaticVariables.mainPlayer.setDamgeToGhost(10);
             StaticVariables.mainPlayer.setIndex(0);
+            // TODO: 29/06/2018 work on upgrade
+            StaticVariables.mainPlayer.setAttacking(true);
+
         }
     }
 
@@ -282,15 +286,12 @@ public class World extends JLabel implements MouseListener {
 
     public void mousePressed(MouseEvent e) {
         
-        StaticVariables.mainPlayer.calculateTheAngle(e.getX(),e.getY());
-        MainPlayer.point=new Point(StaticVariables.mainPlayer.getX(),StaticVariables.mainPlayer.getY());
 
         if(e.getButton()==MouseEvent.BUTTON1)
         {
-            MainPlayer.stand=false;
-            checkIfPlayerPreesTheWorld(e);
+            checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
-            checkIfMainPlayerPreesAGhost(e);
+
         }
         if(e.getButton()==MouseEvent.BUTTON3)
         {
@@ -303,35 +304,31 @@ public class World extends JLabel implements MouseListener {
 
     }
 
-    private void checkIfMainPlayerPreesAGhost(MouseEvent e) {
-        if(e.getComponent().getClass().getSimpleName().equals("Ghost")&&!StaticVariables.mainPlayer.getBounds().intersects(e.getComponent().getBounds()))
+
+
+    private void checkIfPlayerPreesTheWorldOrGhost(MouseEvent e) {
+        if(e.getSource().equals(this)
+                ||e.getSource().getClass().getSimpleName().equals("Ghost")&&!e.getComponent().getBounds().intersects(StaticVariables.mainPlayer.getBounds()))
         {
-            /*
-             * this if statement check if the ghost is not in bound of the main
-             * player it check also if the main player is not attacking
-             * and if the main player is pressing on the ghost
-             * then the main player wants to move to the ghost location
-             *
-             * */
-            MainPlayer.walking=false;
-            StaticVariables.mainPlayer.calculateTheAngle(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
-            MainPlayer.point=new Point(e.getComponent().getLocation().x,e.getComponent().getLocation().y);
-            MainPlayer.walking=true;
+            Ghost ghost;
+            if(e.getSource().getClass().getSimpleName().equals("Ghost"))
+            {
+                ghost=((Ghost)e.getSource());
+                StaticVariables.mainPlayer.calculateTheAngle(ghost.getX(),ghost.getY());
+                MainPlayer.point=new Point(ghost.getX(),ghost.getY());
 
+            }
+            else
+            {
+                StaticVariables.mainPlayer.calculateTheAngle(e.getX(),e.getY());
+                MainPlayer.point=new Point(e.getX(),e.getY());
+            }
 
-        }
-    }
-
-    private void checkIfPlayerPreesTheWorld(MouseEvent e) {
-        if(e.getSource().equals(this))
-        {
-            MainPlayer.point=new Point(e.getPoint().x,e.getPoint().y);
-            MainPlayer.walking=true;
             MainPlayer.stand=false;
-
-
+            MainPlayer.walking=true;
 
         }
+
     }
 
     public void mouseReleased(MouseEvent e) {

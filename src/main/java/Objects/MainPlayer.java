@@ -18,6 +18,7 @@ public class MainPlayer extends GameObject {
     public static Life life;
 
     public static int imageFrameRate=0,addLifeToMainPlayer=0;
+    public static boolean intersect=false;
     private int xSpriteSheet=350,ySprtieSheet=320,index=0,imageSpeed=3,damgeToGhost;
     public static String nameOfPlayer;
     private  boolean attacking;
@@ -36,7 +37,7 @@ public class MainPlayer extends GameObject {
     private Vector<Image>
             up, down, left, right,
              standDown,
-             attack, die;
+            attackLeft,attackRight,attackDown,attackUp, die;
     private double angle=0;
     private double distanceFromPoint;
     private long speedOfMove=20;
@@ -48,7 +49,7 @@ public class MainPlayer extends GameObject {
         point=new Point(getX(),getY());
         makeNewElements();
         addMainPlayerPosition();
-        setOpaque(true);
+
 
     }
 
@@ -92,9 +93,16 @@ public class MainPlayer extends GameObject {
 
 
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/right");
-                        ImageLoader.addImageOfObject(DIR_1, attack,dimension);
+                        ImageLoader.addImageOfObject(DIR_1, attackRight,dimension);
 
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/down");
+                ImageLoader.addImageOfObject(DIR_1, attackDown,dimension);
 
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/up");
+                ImageLoader.addImageOfObject(DIR_1, attackUp,dimension);
+
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/left");
+                ImageLoader.addImageOfObject(DIR_1, attackLeft,dimension);
 
 
             }
@@ -125,7 +133,10 @@ public class MainPlayer extends GameObject {
 
 
 
-        attack =  new Vector<Image>();
+        attackLeft =  new Vector<Image>();
+        attackDown =  new Vector<Image>();
+        attackRight =  new Vector<Image>();
+        attackUp =  new Vector<Image>();
         die =  new Vector<Image>();
 
 
@@ -142,6 +153,7 @@ public class MainPlayer extends GameObject {
                     setPlace();
                     checkIfMainPlayerOutOfBound();
                     checkifMainPlayerIntercetWithMonster();
+                    setLocationOfMainPlayerWhenFightTheGhost();
                     addLifeToPlayer();
 
 
@@ -151,7 +163,6 @@ public class MainPlayer extends GameObject {
                         e.printStackTrace();
                     } catch (NullPointerException e) {
                         setTheUserAction();
-
                         break;
                     }
                 }
@@ -162,41 +173,97 @@ public class MainPlayer extends GameObject {
     }
 
     private void addLifeToPlayer() {
+
         if(!attacking&&walking)
         {
-            if(addLifeToMainPlayer++==15&&life.getjProgressBar().getValue()<life.getjProgressBar().getMaximum())
+            addLifeToMainPlayer++;
+            if(addLifeToMainPlayer==15&&life.getjProgressBar().getValue()<life.getjProgressBar().getMaximum())
             {
                 addLifeToMainPlayer=0;
                 life.getjProgressBar().setValue(life.getjProgressBar().getValue()+1);
                 life.getjProgressBar().setString(""+life.getjProgressBar().getValue());
             }
+            if(addLifeToMainPlayer>15)
+                addLifeToMainPlayer=0;
         }
     }
 
     private void checkifMainPlayerIntercetWithMonster() {
-        if(StaticVariables.world.getFirstGhost()!=null&&StaticVariables.world.getFirstGhost().getBounds().intersects(getBounds()))
-        {
-            walking=false;
-            if(!attacking)
-                stand=true;
 
-        }
-        for (Ghost g:StaticVariables.world.getGhostArrayList()) {
-            if(g.getBounds().intersects(getBounds()))
-            {
-                if(g.getLifeBar().isAlive())
-                {
-                    walking=false;
-                    if(!attacking)
-                        stand=true;
-                    break;
-                }
 
-            }
+        for (Ghost g : StaticVariables.world.getGhostArrayList()) {
+
+            if(g.isStopMoving())
+            intersect = g.isStopMoving();
+            else
+                intersect=false;
+            if (intersect)
+                break;
+
         }
 
     }
 
+    private void setLocationOfMainPlayerWhenFightTheGhost(){
+        if(attacking)
+        {
+            if (angle < 164 && angle >= 52) {
+                downFromTheGhost = true;
+                leftFromTheGhost = false;
+                rightFromTheGhost = false;
+                upFromTheGhost = false;
+            }
+            if (angle < 183 && angle >= 164) {
+                leftFromTheGhost = true;
+                downFromTheGhost = false;
+                rightFromTheGhost = false;
+                upFromTheGhost = false;
+            }
+            if (angle < 205 && angle >= 183) {
+                leftFromTheGhost = true;
+                downFromTheGhost = false;
+                rightFromTheGhost = false;
+                upFromTheGhost = false;
+            }
+            if (angle < 231 && angle >= 205) {
+                leftFromTheGhost = true;
+                downFromTheGhost = false;
+                rightFromTheGhost = false;
+                upFromTheGhost = false;
+            }
+            if (angle < 281 && angle >= 231) {
+//                    down
+                upFromTheGhost = true;
+                leftFromTheGhost = false;
+                downFromTheGhost = false;
+                rightFromTheGhost = false;
+            }
+            if (angle < 318 && angle >= 281) {
+//                    left up
+                rightFromTheGhost = true;
+                upFromTheGhost = false;
+                leftFromTheGhost = false;
+                downFromTheGhost = false;
+            }
+            if (angle >= 318) {
+//                    left
+                rightFromTheGhost = true;
+                upFromTheGhost = false;
+                leftFromTheGhost = false;
+                downFromTheGhost = false;
+            }
+            if (angle < 52 && angle >= 0) {
+//                    left down
+                rightFromTheGhost = true;
+                upFromTheGhost = false;
+                leftFromTheGhost = false;
+                downFromTheGhost = false;
+            }
+
+
+        }
+
+    }
     private void setPlace() {
         try {
 
@@ -221,6 +288,7 @@ public class MainPlayer extends GameObject {
 //                    rightup
                 }
                 if (angle < 205 && angle >= 183) {
+
                     StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY());
                     setLocation(getX() + imageSpeed, getY());
                     setIcon(new ImageIcon(right.get(index)));
@@ -230,6 +298,7 @@ public class MainPlayer extends GameObject {
 
                 }
                 if (angle < 231 && angle >= 205) {
+
                     StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() - imageSpeed);
                     setLocation(getX() + imageSpeed, getY() + imageSpeed);
                     setIcon(new ImageIcon(right.get(index)));
@@ -239,6 +308,8 @@ public class MainPlayer extends GameObject {
                 }
                 if (angle < 281 && angle >= 231) {
 //                    down
+
+
                     StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() - imageSpeed);
                     setLocation(getX(), getY() + imageSpeed);
                     setIcon(new ImageIcon(down.get(index)));
@@ -247,6 +318,8 @@ public class MainPlayer extends GameObject {
                 }
                 if (angle < 318 && angle >= 281) {
 //                    left up
+
+
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() - imageSpeed);
                     setLocation(getX() - imageSpeed, getY() + imageSpeed);
                     setIcon(new ImageIcon(left.get(index)));
@@ -257,6 +330,7 @@ public class MainPlayer extends GameObject {
 
                 if (angle >= 318) {
 //                    left
+
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY());
                     setLocation(getX() - imageSpeed, getY());
                     setIcon(new ImageIcon(left.get(index)));
@@ -266,6 +340,7 @@ public class MainPlayer extends GameObject {
                 }
                 if (angle < 52 && angle >= 0) {
 //                    left down
+
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() + imageSpeed);
                     setLocation(getX() - imageSpeed, getY() - imageSpeed);
                     setIcon(new ImageIcon(left.get(index)));
@@ -275,26 +350,46 @@ public class MainPlayer extends GameObject {
                 index++;
                 if (index == left.size())
                     index = 0;
+                attacking=false;
+                stand=false;
 
             } else if (stand) {
                 index++;
                 if (index == standDown.size())
                     index = 0;
                 setIcon(new ImageIcon(standDown.get(index)));
-
+                attacking=false;
+                walking=false;
             }
 
             else if(attacking)
             {
                 index++;
-                if (index == attack.size())
-                {
-                    attacking=false;
-                    stand=true;
-                    index = 0;
-                }
 
-                setIcon(new ImageIcon(attack.get(index)));
+
+                if(leftFromTheGhost)
+                {
+                    checkIndexOutOfBound(attackRight);
+                    setIcon(new ImageIcon(attackRight.get(index)));
+                }
+                else if (rightFromTheGhost)
+                {
+                    checkIndexOutOfBound(attackLeft);
+                    setIcon(new ImageIcon(attackLeft.get(index)));
+
+                }
+                else if (downFromTheGhost)
+                {
+                    checkIndexOutOfBound(attackUp);
+                    setIcon(new ImageIcon(attackUp.get(index)));
+
+                }
+                else if (upFromTheGhost)
+                {
+                    checkIndexOutOfBound(attackDown);
+                    setIcon(new ImageIcon(attackDown.get(index)));
+
+                }
 
 
             }
@@ -304,15 +399,29 @@ public class MainPlayer extends GameObject {
         } catch (IndexOutOfBoundsException ea) {
 
 
+
+
         }
 
 
     }
 
+    private void checkIndexOutOfBound(Vector<Image> arralist) {
+
+
+        if (index == arralist.size()-1)
+        {
+            attacking=false;
+            stand=true;
+            walking=false;
+            index = 0;
+        }
+    }
+
     private void checkIfMainPlayerOutOfBound(){
         try
         {
-            if(getX()<=getWidth()||getY()<=getHeight()||getX()>=StaticVariables.world.getWidth()||getY()>=StaticVariables.world.getHeight())
+            if(getX()<=0||getY()<=0||getX()>=StaticVariables.world.getWidth()||getY()>=StaticVariables.world.getHeight())
             {
                 stand=true;
                 walking=false;
@@ -474,12 +583,12 @@ public class MainPlayer extends GameObject {
 
 
 
-    public Vector<Image> getAttack() {
-        return attack;
+    public Vector<Image> getAttackLeft() {
+        return attackLeft;
     }
 
-    public void setAttack(Vector<Image> attack) {
-        this.attack = attack;
+    public void setAttackLeft(Vector<Image> attackLeft) {
+        this.attackLeft = attackLeft;
     }
 
     public Vector<Image> getDie() {

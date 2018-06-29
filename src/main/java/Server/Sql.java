@@ -25,7 +25,6 @@ public class Sql {
 
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -46,7 +45,6 @@ public class Sql {
 
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -65,7 +63,6 @@ public class Sql {
 
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -88,7 +85,6 @@ public class Sql {
             }
             return arrayList;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -163,7 +159,6 @@ return list;
 
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -190,7 +185,6 @@ return list;
             }
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return false;
@@ -214,7 +208,6 @@ return list;
             }
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 return false;
@@ -229,7 +222,6 @@ return false;
             Class.forName("com.mysql.jdbc.Driver").newInstance();
 
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -254,7 +246,6 @@ return false;
         } catch (SQLException e) {
             System.out.println( e.getCause().getMessage());
 
-            // TODO Auto-generated catch block
 
         }
 

@@ -1,10 +1,8 @@
 package Objects;
 
-import GameCore.GameObject;
-import GameCore.GamePanel;
-import GameCore.Life;
-import GameCore.StaticVariables;
+import GameCore.*;
 import ImageHandel.ImageLoader;
+
 
 
 import javax.swing.*;
@@ -62,6 +60,8 @@ public class Ghost extends GameObject {
         checkTheGhostType();
         setTheDir();
         setTheActionToGhost();
+        addMouseListener(StaticVariables.world);
+
 
     }
 
@@ -93,8 +93,8 @@ public class Ghost extends GameObject {
     public void removeTheGhostWhenDead(){
             StaticVariables.world.remove(this);
             setVisible(false);
-
     }
+
 
 
     public void setTheActionToGhost(){
@@ -103,10 +103,14 @@ public class Ghost extends GameObject {
                 while(lifeBar.isAlive())
                 {
                     stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
+
                     if(notTheFirstGhost)
                     moveTheGhostAroundTheWorld();
                     else
                         changeTheGhostIcon();
+                    decreaseLife();
+
+
 
                     try {
                         Thread.sleep(15);
@@ -114,26 +118,46 @@ public class Ghost extends GameObject {
                         e.printStackTrace();
                     }
                 }
-                index=0;
-                while (index<dead.size())
-                {
-                    setIcon(new ImageIcon(dead.get(index)));
-                    index++;
-                    try {
-                        Thread.sleep(15);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    Thread.sleep(2500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                setTheGhostDeadAnimation();
 
                 removeTheGhostWhenDead();
             }
         }).start();
+    }
+
+    private void decreaceMainPlayerLife() {
+        MainPlayer.life.getjProgressBar().setValue(MainPlayer.life.getjProgressBar().getValue()-damgeToMainPlayer);
+        MainPlayer.life.getjProgressBar().setString(""+(MainPlayer.life.getjProgressBar().getValue()-damgeToMainPlayer));
+
+    }
+
+    private void decreaseLife() {
+        if(getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&StaticVariables.mainPlayer.isAttacking())
+        {
+
+
+            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue()-StaticVariables.mainPlayer.getDamgeToGhost());
+            getLifeBar().getjProgressBar().setString(""+getLifeBar().getjProgressBar().getValue());
+        }
+    }
+
+    private void setTheGhostDeadAnimation() {
+        index=0;
+        while (index<dead.size())
+        {
+            setIcon(new ImageIcon(dead.get(index)));
+            index++;
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void moveTheGhostAroundTheWorld() {
@@ -291,13 +315,16 @@ public class Ghost extends GameObject {
                      if (MainPlayer.isWalking())
                          setIcon(new ImageIcon(moveRight.get(index)));
                     else if (StaticVariables.mainPlayer.isLeftFromTheGhost())
-                        setIcon(new ImageIcon(attackRight.get(index)));
+                        setIcon(new ImageIcon(attackLeft.get(index)));
                     else if (StaticVariables.mainPlayer.isDownFromTheGhost())
                          setIcon(new ImageIcon(attackDown.get(index)));
                     else if (StaticVariables.mainPlayer.isRightFromTheGhost())
-                        setIcon(new ImageIcon(attackLeft.get(index)));
+                        setIcon(new ImageIcon(attackRight.get(index)));
                     else if (StaticVariables.mainPlayer.isUpFromTheGhost())
                          setIcon(new ImageIcon(attackUp.get(index)));
+
+                    decreaceMainPlayerLife();
+
 
 
 
@@ -323,11 +350,6 @@ public class Ghost extends GameObject {
 
 
             } else {
-                if (getBounds().intersects(StaticVariables.mainPlayer.getBounds())) {
-                    MainPlayer.getLife().getjProgressBar().setValue(MainPlayer.getLife().getjProgressBar().getValue() - damgeToMainPlayer);
-                    MainPlayer.getLife().getjProgressBar().setString("" + MainPlayer.getLife().getjProgressBar().getValue());
-                }
-
                 index = 0;
             }
 
@@ -349,7 +371,7 @@ public class Ghost extends GameObject {
            case 1:
            {
                setSize(250,300);
-               damgeToMainPlayer=20*random.nextInt(3)+1;
+               damgeToMainPlayer=2*random.nextInt(2)+1;
                damgeFromMainPlayer=2200;
                speedOfAttack=2000;
                life=10000;
@@ -383,7 +405,7 @@ public class Ghost extends GameObject {
        }
         lifeBar=new Life(life,this);
        add(lifeBar.getjProgressBar());
-        addMouseListener(StaticVariables.world);
+
 
 
 
@@ -411,6 +433,174 @@ public class Ghost extends GameObject {
 
     public void setStopMoving(boolean stopMoving) {
         this.stopMoving = stopMoving;
+    }
+
+    public static String getPathOfFile() {
+        return pathOfFile;
+    }
+
+    public static void setPathOfFile(String pathOfFile) {
+        Ghost.pathOfFile = pathOfFile;
+    }
+
+    public static Vector<Image> getMoveLeft() {
+        return moveLeft;
+    }
+
+    public static void setMoveLeft(Vector<Image> moveLeft) {
+        Ghost.moveLeft = moveLeft;
+    }
+
+    public static Vector<Image> getMoveRight() {
+        return moveRight;
+    }
+
+    public static void setMoveRight(Vector<Image> moveRight) {
+        Ghost.moveRight = moveRight;
+    }
+
+    public static Vector<Image> getMoveUp() {
+        return moveUp;
+    }
+
+    public static void setMoveUp(Vector<Image> moveUp) {
+        Ghost.moveUp = moveUp;
+    }
+
+    public static Vector<Image> getMoveDown() {
+        return moveDown;
+    }
+
+    public static void setMoveDown(Vector<Image> moveDown) {
+        Ghost.moveDown = moveDown;
+    }
+
+    public static Vector<Image> getAttackLeft() {
+        return attackLeft;
+    }
+
+    public static void setAttackLeft(Vector<Image> attackLeft) {
+        Ghost.attackLeft = attackLeft;
+    }
+
+    public static Vector<Image> getAttackRight() {
+        return attackRight;
+    }
+
+    public static void setAttackRight(Vector<Image> attackRight) {
+        Ghost.attackRight = attackRight;
+    }
+
+    public static Vector<Image> getAttackUp() {
+        return attackUp;
+    }
+
+    public static void setAttackUp(Vector<Image> attackUp) {
+        Ghost.attackUp = attackUp;
+    }
+
+    public static Vector<Image> getAttackDown() {
+        return attackDown;
+    }
+
+    public static void setAttackDown(Vector<Image> attackDown) {
+        Ghost.attackDown = attackDown;
+    }
+
+    public static Vector<Image> getDead() {
+        return dead;
+    }
+
+    public static void setDead(Vector<Image> dead) {
+        Ghost.dead = dead;
+    }
+
+    public static int getNumberOfDeadGhost() {
+        return numberOfDeadGhost;
+    }
+
+    public static void setNumberOfDeadGhost(int numberOfDeadGhost) {
+        Ghost.numberOfDeadGhost = numberOfDeadGhost;
+    }
+
+    public boolean isAttackLeft() {
+        return isAttackLeft;
+    }
+
+    public void setAttackLeft(boolean attackLeft) {
+        isAttackLeft = attackLeft;
+    }
+
+    public boolean isAttackRight() {
+        return isAttackRight;
+    }
+
+    public void setAttackRight(boolean attackRight) {
+        isAttackRight = attackRight;
+    }
+
+    public boolean isAttackUp() {
+        return isAttackUp;
+    }
+
+    public void setAttackUp(boolean attackUp) {
+        isAttackUp = attackUp;
+    }
+
+    public boolean isAttackDown() {
+        return isAttackDown;
+    }
+
+    public void setAttackDown(boolean attackDown) {
+        isAttackDown = attackDown;
+    }
+
+    public boolean isAttackLeftDown() {
+        return isAttackLeftDown;
+    }
+
+    public void setAttackLeftDown(boolean attackLeftDown) {
+        isAttackLeftDown = attackLeftDown;
+    }
+
+    public boolean isAttackLeftUp() {
+        return isAttackLeftUp;
+    }
+
+    public void setAttackLeftUp(boolean attackLeftUp) {
+        isAttackLeftUp = attackLeftUp;
+    }
+
+    public boolean isAttackRightUp() {
+        return isAttackRightUp;
+    }
+
+    public void setAttackRightUp(boolean attackRightUp) {
+        isAttackRightUp = attackRightUp;
+    }
+
+    public boolean isAttackRightDown() {
+        return isAttackRightDown;
+    }
+
+    public void setAttackRightDown(boolean attackRightDown) {
+        isAttackRightDown = attackRightDown;
+    }
+
+    public static boolean isNotTheFirstGhost() {
+        return notTheFirstGhost;
+    }
+
+    public static void setNotTheFirstGhost(boolean notTheFirstGhost) {
+        Ghost.notTheFirstGhost = notTheFirstGhost;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public boolean isDirLeft() {

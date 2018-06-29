@@ -43,7 +43,7 @@ public class GamePanel extends JLabel {
                 {
 
                     if(StaticVariables.world!=null&&StaticVariables.world.getGhostArrayList()!=null)
-                    ghostCounter.setText("total ghost needed to be kill:"+(StaticVariables.world.getGhostArrayList().size()+1-Ghost.numberOfDeadGhost));
+                    ghostCounter.setText("total ghost needed to be kill:"+(StaticVariables.world.getGhostArrayList().size()-Ghost.numberOfDeadGhost));
 
                     try {
                         Thread.sleep(10);
