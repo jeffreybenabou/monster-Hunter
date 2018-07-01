@@ -79,15 +79,8 @@ public class StaticVariables {
                 Ghost.addGhostImage();
             }
         }).start();
-        new Thread(new Runnable() {
-            public void run() {
-                Bird.birdLeft=new Vector<Image>();
-                Bird.birdRight=new Vector<Image>();
-                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/left/"),Bird.birdLeft,new Dimension(200,200));
-                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),Bird.birdRight,new Dimension(200,200));
 
-            }
-        }).start();
+
 
 
 

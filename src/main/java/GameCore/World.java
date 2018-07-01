@@ -87,11 +87,10 @@ public class World extends JLabel implements MouseListener {
                     {
                         case 1:{
 
-                            for (int i = 0; i <5 ; i++) {
+                            for (int i = 0; i <1 ; i++) {
                                 Random random=new Random();
                                 Ghost ghost=new Ghost(1);
                                 ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                                System.out.println(ghost.getLocation());
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -101,13 +100,13 @@ public class World extends JLabel implements MouseListener {
                             break;
                         }
                         case 2:{
+
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <5 ; i++) {
+                            for (int i = 0; i <2 ; i++) {
                                 Random random=new Random();
                                 Ghost ghost=new Ghost(2);
                                 ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                                System.out.println(ghost.getLocation());
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -121,7 +120,7 @@ public class World extends JLabel implements MouseListener {
                             ghostArrayList=new ArrayList<Ghost>();
                             boolean ok=false;
                             int sum;
-                            for (int i = 0; i <10 ; i++) {
+                            for (int i = 0; i <2 ; i++) {
                                 Random random=new Random();
                                 sum=random.nextInt(3);
                                 if(sum>2)
@@ -156,21 +155,23 @@ public class World extends JLabel implements MouseListener {
     }
 
     private void addBackGroundObjects() {
-
+        random=new Random();
 
 
         new Thread(new Runnable() {
 
             public void run() {
 
-                random=new Random();
 
-                        for (int i = 0; i <10 ; i++) {
+
+                        for (int i = 0; i <20 ; i++) {
 
                             {
 
                                         Cloud cloud=new Cloud(random.nextInt(getWidth()),random.nextInt(getHeight()));
                                         add(cloud);
+                                Bird bird=new Bird(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                add(bird);
 
 
                             }
@@ -178,11 +179,7 @@ public class World extends JLabel implements MouseListener {
 
 
                         }
-                        for (int i = 0; i <30 ; i++) {
-                            Bird bird=new Bird(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                            add(bird);
 
-                        }
 
 
 

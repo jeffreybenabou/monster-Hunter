@@ -49,9 +49,13 @@ public class MiniMap extends JLabel {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(aghost.size()==0&&Ghost.notTheFirstGhost)
+
+
+                    if(World.ghostArrayList.size()==0&&Ghost.notTheFirstGhost)
                     {
+
                         StaticVariables.level++;
+                        aghost.clear();
                         StaticVariables.world.addGhost();
                     }
 

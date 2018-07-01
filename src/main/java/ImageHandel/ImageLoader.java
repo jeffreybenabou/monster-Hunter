@@ -27,9 +27,11 @@ public class ImageLoader {
         String ImagePath;
         for (int i = 0; dir.listFiles().length > i; i++)
         {
+
             ImagePath = dir.getPath() + "\\" + i + ".png";
             ImagePath = ImagePath.replace("\\", "/");
-            linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH));
+            linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_FAST));
+
         }
     }
 

@@ -92,6 +92,7 @@ public class Ghost extends GameObject {
 
     public void removeTheGhostWhenDead(){
             StaticVariables.world.remove(this);
+            World.ghostArrayList.remove(this);
             setVisible(false);
     }
 
@@ -381,7 +382,7 @@ public class Ghost extends GameObject {
            {
 
 
-               setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
+               setSize(250,300);
                damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
                damgeFromMainPlayer=2300;
                life=13000;
