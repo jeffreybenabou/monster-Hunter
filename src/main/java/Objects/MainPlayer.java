@@ -20,7 +20,7 @@ public class MainPlayer extends GameObject {
     public static int imageFrameRate=0,addLifeToMainPlayer=0;
     public static boolean intersect=false;
     private int xSpriteSheet=350,ySprtieSheet=320,index=0,imageSpeed=3,damgeToGhost;
-    public static String nameOfPlayer;
+    public static String nameOfPlayer,type;
     private  boolean attacking;
     public static boolean walking=false;
     public static boolean stand=true;
@@ -32,9 +32,9 @@ public class MainPlayer extends GameObject {
     private boolean leftFromTheGhost, rightFromTheGhost, upFromTheGhost, downFromTheGhost,
 
     is_stand_left_up, is_stand_left_down, is_stand_right_dowb, is_stand_right_up;
-    private File DIR_1;
+    private static File DIR_1;
 
-    private Vector<Image>
+    public static Vector<Image>
             up, down, left, right,
              standDown,
             attackLeft,attackRight,attackDown,attackUp, die;
@@ -47,8 +47,7 @@ public class MainPlayer extends GameObject {
     public MainPlayer(){
         setBounds(550,250,xSpriteSheet,ySprtieSheet);
         point=new Point(getX(),getY());
-        makeNewElements();
-        addMainPlayerPosition();
+        setTheUserAction();
 
 
     }
@@ -65,62 +64,84 @@ public class MainPlayer extends GameObject {
 * */
     }
 
-    private void addMainPlayerPosition() {
+    public static void addMainPlayerPosition(final String type) {
 
         new Thread(new Runnable() {
             public void run() {
 
-                Dimension dimension=new Dimension(400,380);
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/stand/");
-                ImageLoader.addImageOfObject(DIR_1, standDown,dimension);
-                setTheUserAction();
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/up");
-                        ImageLoader.addImageOfObject(DIR_1, up,dimension);
+                final Dimension stand = new Dimension(350,330);
+                final Dimension side = new Dimension(400, 350);
+                final Dimension upDown = new Dimension(400, 380);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/down");
-                        ImageLoader.addImageOfObject(DIR_1, down,dimension);
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/stand/");
+                ImageLoader.addImageOfObject(DIR_1, standDown, stand);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/left");
-                        ImageLoader.addImageOfObject(DIR_1, left,dimension);
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/left");
+                        ImageLoader.addImageOfObject(DIR_1, attackLeft, side);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/up");
+                        ImageLoader.addImageOfObject(DIR_1, attackUp, upDown);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/down");
+                        ImageLoader.addImageOfObject(DIR_1, attackDown, side);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/right");
+                        ImageLoader.addImageOfObject(DIR_1, attackRight, upDown);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/die");
+                        ImageLoader.addImageOfObject(DIR_1, die, upDown);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/walk/right");
-                        ImageLoader.addImageOfObject(DIR_1, right,dimension);
-
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/die");
-                        ImageLoader.addImageOfObject(DIR_1, die,dimension);
-
-
-
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/right");
-                        ImageLoader.addImageOfObject(DIR_1, attackRight,dimension);
-
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/down");
-                ImageLoader.addImageOfObject(DIR_1, attackDown,dimension);
-
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/up");
-                ImageLoader.addImageOfObject(DIR_1, attackUp,dimension);
-
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/female/attack/left");
-                ImageLoader.addImageOfObject(DIR_1, attackLeft,dimension);
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/right");
+                        ImageLoader.addImageOfObject(DIR_1, right, side);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/left");
+                        ImageLoader.addImageOfObject(DIR_1, left, side);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/down");
+                        ImageLoader.addImageOfObject(DIR_1, down, upDown);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/up");
+                        ImageLoader.addImageOfObject(DIR_1, up, upDown);
+                    }
+                }).start();
 
 
             }
         }).start();
 
 
-
-
-
-
-
-
-
-
-
     }
 
-    private void makeNewElements() {
+    public static void makeNewElements(String type) {
+
         up = new Vector<Image>();
         down =  new Vector<Image>();
         left =  new Vector<Image>();
@@ -138,7 +159,7 @@ public class MainPlayer extends GameObject {
         attackRight =  new Vector<Image>();
         attackUp =  new Vector<Image>();
         die =  new Vector<Image>();
-
+        addMainPlayerPosition(type);
 
     }
 
@@ -163,6 +184,13 @@ public class MainPlayer extends GameObject {
                         e.printStackTrace();
                     } catch (NullPointerException e) {
                         setTheUserAction();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        System.out.println("null pointer on setTheUserAction  "+e.getCause());
+
                         break;
                     }
                 }
@@ -190,17 +218,23 @@ public class MainPlayer extends GameObject {
 
     private void checkifMainPlayerIntercetWithMonster() {
 
+        try {
+            for (Ghost g : StaticVariables.world.getGhostArrayList()) {
 
-        for (Ghost g : StaticVariables.world.getGhostArrayList()) {
 
-            if(g.isStopMoving())
-            intersect = g.isStopMoving();
-            else
-                intersect=false;
-            if (intersect)
-                break;
+                if (g.isStopMoving())
+                    intersect = g.isStopMoving();
+                else
+                    intersect = false;
+                if (intersect)
+                    break;
+
+
+            }
+        } catch (NullPointerException e) {
 
         }
+
 
     }
 
@@ -270,6 +304,10 @@ public class MainPlayer extends GameObject {
             if(imageFrameRate%20==0)
              footStep = new FootStep();
             if (walking) {
+                if (index >= left.size())
+                    index = 0;
+                attacking=false;
+                stand=false;
                 if (angle < 164 && angle >= 52) {
                     StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() + imageSpeed);
                     setLocation(getX(), getY() - imageSpeed);
@@ -280,6 +318,7 @@ public class MainPlayer extends GameObject {
 
                 }
                 if (angle < 183 && angle >= 164) {
+
                     StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() + imageSpeed);
                     setLocation(getX() + imageSpeed, getY() - imageSpeed);
                     setIcon(new ImageIcon(right.get(index)));
@@ -347,15 +386,12 @@ public class MainPlayer extends GameObject {
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(8);
                 }
-                index++;
-                if (index == left.size())
-                    index = 0;
-                attacking=false;
-                stand=false;
+
+
 
             } else if (stand) {
-                index++;
-                if (index == standDown.size())
+
+                if (index >= standDown.size())
                     index = 0;
                 setIcon(new ImageIcon(standDown.get(index)));
                 attacking=false;
@@ -364,7 +400,15 @@ public class MainPlayer extends GameObject {
 
             else if(attacking)
             {
-                index++;
+
+
+                if(index>=attackRight.size())
+                {
+
+                    attacking=false;
+                    stand=true;
+                    index=0;
+                }
 
 
                 if(leftFromTheGhost)
@@ -390,17 +434,25 @@ public class MainPlayer extends GameObject {
                     setIcon(new ImageIcon(attackDown.get(index)));
 
                 }
+                Thread.sleep(10);
 
 
             }
+            index++;
+
         } catch (NullPointerException e) {
 
 
         } catch (IndexOutOfBoundsException ea) {
 
+//            System.out.println("IndexOutOfBoundsException on main player setplace "+ea.getMessage());
 
 
 
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
 

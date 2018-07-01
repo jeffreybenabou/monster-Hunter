@@ -87,7 +87,7 @@ public class World extends JLabel implements MouseListener {
                     {
                         case 1:{
 
-                            for (int i = 0; i <10 ; i++) {
+                            for (int i = 0; i <5 ; i++) {
                                 Random random=new Random();
                                 Ghost ghost=new Ghost(1);
                                 ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
@@ -102,26 +102,16 @@ public class World extends JLabel implements MouseListener {
                         }
                         case 2:{
                             ghostArrayList=new ArrayList<Ghost>();
-                            boolean ok=false;
-                            int sum;
-                            for (int i = 0; i <15 ; i++) {
-                                Random random=new Random();
-                                sum=random.nextInt(2);
-                                if(sum==2)
-                                    ok=true;
-
-                                Ghost ghost=new Ghost(sum);
-                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                                ghostArrayList.add(ghost);
-                                add(ghost);
-                            }
-                            if(!ok)
-                            {
+                            Ghost.addGhostImage();
+                            for (int i = 0; i <5 ; i++) {
                                 Random random=new Random();
                                 Ghost ghost=new Ghost(2);
                                 ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                System.out.println(ghost.getLocation());
+                                ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
+                                StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
 
 
@@ -131,7 +121,7 @@ public class World extends JLabel implements MouseListener {
                             ghostArrayList=new ArrayList<Ghost>();
                             boolean ok=false;
                             int sum;
-                            for (int i = 0; i <20 ; i++) {
+                            for (int i = 0; i <10 ; i++) {
                                 Random random=new Random();
                                 sum=random.nextInt(3);
                                 if(sum>2)

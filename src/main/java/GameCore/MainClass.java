@@ -15,7 +15,7 @@ public class MainClass extends JFrame  {
 
         setTheJFrame();
         addMouseListener(StaticVariables.world);
-        setVisible(true);
+
         new Thread(new Runnable() {
             public void run() {
                 while (true)
@@ -26,6 +26,7 @@ public class MainClass extends JFrame  {
 
             }
         }).start();
+        setVisible(true);
     }
 
     public static void addTheMainMenu() {
@@ -38,6 +39,7 @@ public class MainClass extends JFrame  {
     public static void removeTheMainMenu(){
         StaticVariables.mainClass.repaint();
         StaticVariables.mainMenu.setVisible(false);
+
 
 
     }

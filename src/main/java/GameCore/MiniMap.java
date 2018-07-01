@@ -4,6 +4,8 @@ package GameCore;
 
 
 
+import Objects.Ghost;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -43,10 +45,16 @@ public class MiniMap extends JLabel {
 
                     }
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    if(aghost.size()==0&&Ghost.notTheFirstGhost)
+                    {
+                        StaticVariables.level++;
+                        StaticVariables.world.addGhost();
+                    }
+
                 }
             }
         }).start();

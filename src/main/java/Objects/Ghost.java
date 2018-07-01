@@ -13,7 +13,7 @@ import java.util.Vector;
 
 public class Ghost extends GameObject {
 
-    private int ghostType,damgeToMainPlayer,damgeFromMainPlayer,speedOfAttack,life;
+    private int ghostType,damgeToMainPlayer,damgeFromMainPlayer,life;
 
     private static String pathOfFile;
 
@@ -373,7 +373,6 @@ public class Ghost extends GameObject {
                setSize(250,300);
                damgeToMainPlayer=2*random.nextInt(2)+1;
                damgeFromMainPlayer=2200;
-               speedOfAttack=2000;
                life=10000;
                speed=1;
                break;
@@ -385,7 +384,6 @@ public class Ghost extends GameObject {
                setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
                damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
                damgeFromMainPlayer=2300;
-               speedOfAttack=1800;
                life=13000;
                speed=2;
                break;
@@ -396,7 +394,6 @@ public class Ghost extends GameObject {
                setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
                damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
                damgeFromMainPlayer=2400;
-               speedOfAttack=1500;
                life=15000;
                speed=3;
 
@@ -649,14 +646,6 @@ public class Ghost extends GameObject {
 
     public void setDamgeFromMainPlayer(int damgeFromMainPlayer) {
         this.damgeFromMainPlayer = damgeFromMainPlayer;
-    }
-
-    public int getSpeedOfAttack() {
-        return speedOfAttack;
-    }
-
-    public void setSpeedOfAttack(int speedOfAttack) {
-        this.speedOfAttack = speedOfAttack;
     }
 
     public int getLife() {
