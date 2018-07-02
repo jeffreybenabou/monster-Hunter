@@ -22,7 +22,7 @@ public class World extends JLabel implements MouseListener {
     private Ghost firstGhost;
 
     public World(){
-        setBounds(0,0,10000,10000);
+        setBounds(0,0,5000,5000);
         setLayout(null);
         setBackground(Color.GRAY);
         setOpaque(true);
@@ -118,26 +118,15 @@ public class World extends JLabel implements MouseListener {
                         }
                         case 3:{
                             ghostArrayList=new ArrayList<Ghost>();
-                            boolean ok=false;
-                            int sum;
+                            Ghost.addGhostImage();
                             for (int i = 0; i <2 ; i++) {
                                 Random random=new Random();
-                                sum=random.nextInt(3);
-                                if(sum>2)
-                                    ok=true;
-                                Ghost ghost=new Ghost(random.nextInt(3));
-                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
-                                ghostArrayList.add(ghost);
-                                add(ghost);
-                            }
-                            if(!ok)
-                            {
-                                Random random=new Random();
-
                                 Ghost ghost=new Ghost(3);
                                 ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
+                                StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
 
 
@@ -196,7 +185,7 @@ public class World extends JLabel implements MouseListener {
 
                 }
 
-                for (int i = 0; i <120 ; ) {
+                for (int i = 0; i <30 ; ) {
                     Tree tree=new Tree();
                     tree.setBounds(random.nextInt(getWidth()),random.nextInt(getHeight()),400,600);
                     if(!checkIfInetrcet(tree))
@@ -217,9 +206,10 @@ public class World extends JLabel implements MouseListener {
 
 
 
-                for (int i = 0; i <80 ; ) {
+                for (int i = 0; i <20 ; ) {
                     Trunk trunk=new Trunk();
                     trunk.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+
                     if(!checkIfInetrcet(trunk))
                     {
                         backGroundObjects.add(trunk);

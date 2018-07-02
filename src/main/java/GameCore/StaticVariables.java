@@ -17,6 +17,9 @@ import javax.swing.*;
 
 public class StaticVariables {
 
+
+    public static Dimension dimension= Toolkit.getDefaultToolkit().getScreenSize();
+
     public static Image
             mainMenuBackGround,
             exitButton,
@@ -53,6 +56,8 @@ public class StaticVariables {
     private static Sql sql;
 
     public StaticVariables(){
+        mainClass=new MainClass();
+        mainClass.add(new Opening());
         mainMenuBackGround=ImageLoader.loadImage("Photos/menu.jpg");
 
         new Thread(new Runnable() {
@@ -63,9 +68,9 @@ public class StaticVariables {
                 exitButton=ImageLoader.loadImage("Photos/menuButton/exit.png");
                 loadFromServerButoon=ImageLoader.loadImage("Photos/menuButton/loadOnline.png");
                 loadFromComputerButton=ImageLoader.loadImage("Photos/menuButton/load.png");
-                mainClass=new MainClass();
+
                 mainMenu=new MainMenu();
-                MainClass.addTheMainMenu();
+                mainMenu.setVisible(false);
             }
         }).start();
         new Thread(new Runnable() {

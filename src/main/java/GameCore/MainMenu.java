@@ -66,13 +66,27 @@ public class MainMenu extends JLabel implements MouseListener {
                 aFemale=new Vector<Image>();
                 female=new JLabel();
                 male=new JLabel();
-
+                addPlayerLabel();
                 new Thread(new Runnable() {
                     public void run() {
-                        ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/stand/"),aMale,new Dimension(500,400));
-                        ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/female/stand/"),aFemale,new Dimension(500,450));
-                        female.setIcon(new ImageIcon(aFemale.get(0)));
-                        male.setIcon(new ImageIcon(aMale.get(0)));
+
+                        new Thread(new Runnable() {
+                            public void run() {
+
+                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/stand/"),aMale,new Dimension(500,400));
+                                male.setIcon(new ImageIcon(aMale.get(0)));
+
+
+                            }
+                        }).start();
+                        new Thread(new Runnable() {
+                            public void run() {
+                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/female/stand/"),aFemale,new Dimension(500,450));
+                                female.setIcon(new ImageIcon(aFemale.get(0)));
+
+
+                            }
+                        }).start();
                     }
                 }).start();
 
@@ -87,7 +101,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 chooseThePlayer.setBorder(border);
                 chooseThePlayer.setForeground(Color.red);
 
-                addPlayerLabel();
+
             }
         }).start();
 

@@ -182,7 +182,7 @@ public class Ghost extends GameObject {
             setLocation(getX() + speed, getY());
 
 
-        if(getX()> StaticVariables.world.getWidth())
+        if(getX()> StaticVariables.world.getWidth()-getWidth())
         {
             dirRight=false;
             dirLeft=true;
@@ -192,7 +192,7 @@ public class Ghost extends GameObject {
             dirRight=true;
             dirLeft=false;
         }
-        if(getY()> StaticVariables.world.getHeight())
+        if(getY()> StaticVariables.world.getHeight()-getHeight())
         {
             dirDown=false;
             dirUp=true;
@@ -202,6 +202,20 @@ public class Ghost extends GameObject {
             dirDown=true;
             dirUp=false;
         }
+
+        for (GameObject house:StaticVariables.world.getBackGroundObjects()) {
+            if(house.getClass().getSimpleName().equals("House"))
+            {
+                if(getBounds().intersects(house.getBounds()))
+                {
+                    dirUp=!dirUp;
+                    dirDown=!dirDown;
+                    dirLeft=!dirLeft;
+                    dirRight=!dirRight;
+                }
+            }
+        }
+
 
 
         changeTheGhostIcon();
@@ -305,6 +319,7 @@ public class Ghost extends GameObject {
 
     }
 
+
     private void changeTheGhostIcon() {
         try {
             if (index < moveLeft.size()) {
@@ -373,7 +388,6 @@ public class Ghost extends GameObject {
            {
                setSize(250,300);
                damgeToMainPlayer=2*random.nextInt(2)+1;
-               damgeFromMainPlayer=2200;
                life=10000;
                speed=1;
                break;
@@ -382,9 +396,8 @@ public class Ghost extends GameObject {
            {
 
 
-               setSize(250,300);
-               damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
-               damgeFromMainPlayer=2300;
+               setSize(300,350);
+               damgeToMainPlayer=3*random.nextInt(2)+1;
                life=13000;
                speed=2;
                break;
@@ -392,9 +405,8 @@ public class Ghost extends GameObject {
            case 3:
            {
 
-               setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
-               damgeToMainPlayer=1000*random.nextInt(3)*StaticVariables.level;
-               damgeFromMainPlayer=2400;
+               setSize(400,450);
+               damgeToMainPlayer=4*random.nextInt(2)+1;
                life=15000;
                speed=3;
 

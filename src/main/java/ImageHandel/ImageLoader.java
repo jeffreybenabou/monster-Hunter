@@ -28,9 +28,16 @@ public class ImageLoader {
         for (int i = 0; dir.listFiles().length > i; i++)
         {
 
-            ImagePath = dir.getPath() + "\\" + i + ".png";
-            ImagePath = ImagePath.replace("\\", "/");
-            linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_FAST));
+            try
+            {
+                ImagePath = dir.getPath() + "\\" + i + ".png";
+                ImagePath = ImagePath.replace("\\", "/");
+                linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_FAST));
+
+            }catch (NullPointerException e)
+            {
+                e.printStackTrace();
+            }
 
         }
     }

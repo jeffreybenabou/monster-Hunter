@@ -77,12 +77,14 @@ public class MainPlayer extends GameObject {
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/stand/");
                 ImageLoader.addImageOfObject(DIR_1, standDown, stand);
 
+
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/left");
                         ImageLoader.addImageOfObject(DIR_1, attackLeft, side);
                     }
                 }).start();
+
                 new Thread(new Runnable() {
                     public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/up");
@@ -170,6 +172,7 @@ public class MainPlayer extends GameObject {
                 while (true) {
 
 
+
                     imageFrameRate++;
                     setPlace();
                     checkIfMainPlayerOutOfBound();
@@ -183,6 +186,7 @@ public class MainPlayer extends GameObject {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (NullPointerException e) {
+                        e.printStackTrace();
                         setTheUserAction();
                         try {
                             Thread.sleep(1000);
@@ -220,16 +224,22 @@ public class MainPlayer extends GameObject {
 
         try {
             for (Ghost g : StaticVariables.world.getGhostArrayList()) {
+                try {
+
+                    if (g.isStopMoving())
+                        intersect = g.isStopMoving();
+                    else
+                        intersect = false;
+                    if (intersect)
+                        break;
 
 
-                if (g.isStopMoving())
-                    intersect = g.isStopMoving();
-                else
-                    intersect = false;
-                if (intersect)
+                }
+                catch (NullPointerException e) {
+                    e.printStackTrace();
                     break;
 
-
+                }
             }
         } catch (NullPointerException e) {
 
@@ -441,15 +451,10 @@ public class MainPlayer extends GameObject {
             index++;
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
 
-
-        } catch (IndexOutOfBoundsException ea) {
-
-//            System.out.println("IndexOutOfBoundsException on main player setplace "+ea.getMessage());
-
-
-
-
+        } catch (ArrayIndexOutOfBoundsException ea) {
+            ea.printStackTrace();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -473,14 +478,18 @@ public class MainPlayer extends GameObject {
     private void checkIfMainPlayerOutOfBound(){
         try
         {
-            if(getX()<=0||getY()<=0||getX()>=StaticVariables.world.getWidth()||getY()>=StaticVariables.world.getHeight())
-            {
-                stand=true;
-                walking=false;
 
-            }
+
+            if(getX()<=0||getY()<=0||getX()>=StaticVariables.world.getWidth()-getWidth()||getY()>=StaticVariables.world.getHeight()-getHeight())
+            {
+
+            stand=true;
+            walking=false;
+
+        }
         }catch (NullPointerException e)
         {
+
 
         }
 

@@ -13,13 +13,14 @@ import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
 
+    private Thread thread;
     private  Border blackline;
     public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
 
     public MiniMap(){
         blackline = BorderFactory. createRaisedBevelBorder();
         setBorder(blackline);
-        setBounds(0,StaticVariables.mainClass.getHeight()-160,250,160);
+        setBounds(10,StaticVariables.mainClass.getHeight()-170,250,160);
         setBackground(Color.black);
 
 
@@ -28,18 +29,22 @@ public class MiniMap extends JLabel {
                 addTheMainPlayerLocationToMap();
                 while (true)
                 {
+                    // TODO: 03/07/2018 fix the mini map
                     for (int i = 0; i <aghost.size() ; i++) {
                         try{
                             if(!StaticVariables.world.getGhostArrayList().get(i).getLifeBar().isAlive())
                             {
                                 remove(aghost.get(i));
                                 aghost.get(i).setVisible(false);
+
                             }
                             else
-                            aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX()/40,StaticVariables.world.getGhostArrayList().get(i).getY()/64);
+                            aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX()/20,StaticVariables.world.getGhostArrayList().get(i).getY()/32);
 
                         }catch (IndexOutOfBoundsException e)
                         {
+                            e.printStackTrace();
+                            break;
 
                         }
 
@@ -51,12 +56,29 @@ public class MiniMap extends JLabel {
                     }
 
 
+
                     if(World.ghostArrayList.size()==0&&Ghost.notTheFirstGhost)
                     {
 
-                        StaticVariables.level++;
-                        aghost.clear();
-                        StaticVariables.world.addGhost();
+
+                        // TODO: 02/07/2018 add the key to the world
+                        thread=new Thread(new Runnable() {
+                            public void run() {
+                                Ghost.numberOfDeadGhost=0;
+                                StaticVariables.level++;
+                                aghost.clear();
+                                StaticVariables.world.addGhost();
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                       if(!thread.isAlive())
+                       {
+                           thread.start();
+                       }
                     }
 
                 }
@@ -79,10 +101,10 @@ public class MiniMap extends JLabel {
                     int x;
                     int y;
                     try{
-                        y=StaticVariables.mainPlayer.getLocation().y/64;
-                        x=StaticVariables.mainPlayer.getLocation().x/40;
+                        y=StaticVariables.mainPlayer.getLocation().y/32;
+                        x=StaticVariables.mainPlayer.getLocation().x/20;
                         jLabel.setLocation(x,y);
-                        Thread.sleep(1000);
+                        Thread.sleep(200);
                     }catch (NullPointerException e)
                     {
 
