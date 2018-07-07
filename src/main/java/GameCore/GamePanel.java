@@ -62,12 +62,14 @@ public class GamePanel extends JLabel {
 
     private void addLevelLabel(){
          levelLabel=new JLabel();
-        levelLabel.setBounds(MainClass.dimension.width-150,MainClass.dimension.height-150,170,150);
+        levelLabel.setBounds(MainClass.dimension.width-220,MainClass.dimension.height-220,230,250);
         levelLabel.setIcon(new ImageIcon(StaticVariables.levelLabel.getScaledInstance(levelLabel.getWidth(),levelLabel.getHeight(),1)));
-        levelLabel.setForeground(Color.red);
-        levelLabel.setFont(font);
-        levelLabel.setHorizontalTextPosition(JLabel.CENTER);
-        levelLabel.setText(""+ 1);
+
+        JLabel label=new JLabel(""+1);
+        label.setBounds(95,0,levelLabel.getWidth(),levelLabel.getHeight()-20);
+        label.setForeground(Color.red);
+        label.setFont(font);
+        levelLabel.add(label);
         add(levelLabel);
     }
 

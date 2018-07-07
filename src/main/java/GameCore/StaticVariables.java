@@ -58,7 +58,7 @@ public class StaticVariables {
     public StaticVariables(){
         mainClass=new MainClass();
         mainClass.add(new Opening());
-        mainMenuBackGround=ImageLoader.loadImage("Photos/menu.jpg");
+        mainMenuBackGround=ImageLoader.loadImage("Photos/menu.png");
 
         new Thread(new Runnable() {
             public void run() {

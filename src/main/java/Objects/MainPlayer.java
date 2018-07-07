@@ -5,6 +5,7 @@ import GameCore.GameObject;
 import GameCore.Life;
 import GameCore.StaticVariables;
 import ImageHandel.ImageLoader;
+import sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class MainPlayer extends GameObject {
     public static int sumOfLife=35000;
     public static Life life;
 
+    private Sound sound;
     public static int imageFrameRate=0,addLifeToMainPlayer=0;
     public static boolean intersect=false;
     private int xSpriteSheet=350,ySprtieSheet=320,index=0,imageSpeed=3,damgeToGhost;
@@ -45,6 +47,7 @@ public class MainPlayer extends GameObject {
 
 
     public MainPlayer(){
+        sound=new Sound();
         setBounds(550,250,xSpriteSheet,ySprtieSheet);
         point=new Point(getX(),getY());
         setTheUserAction();
@@ -314,6 +317,7 @@ public class MainPlayer extends GameObject {
             if(imageFrameRate%20==0)
              footStep = new FootStep();
             if (walking) {
+                sound.playSound(Sound.path.get(0),false);
                 if (index >= left.size())
                     index = 0;
                 attacking=false;

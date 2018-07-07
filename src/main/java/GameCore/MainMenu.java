@@ -2,7 +2,7 @@ package GameCore;
 
 import ImageHandel.ImageLoader;
 import Objects.MainPlayer;
-
+import sound.Sound;
 
 
 import javax.swing.*;
@@ -20,6 +20,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
 
+    private Sound backgroundSound;
     private JLabel watingLabel;
     private TextField textField;
     private JButton confirm,start,load,loadFromServer,exit;
@@ -41,7 +42,8 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
     public MainMenu(){
-
+        backgroundSound=new Sound();
+        backgroundSound.playSound(Sound.path.get(2),true);
         setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height, 0)));
         setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
         ChooseThePlayer();
@@ -248,7 +250,7 @@ public class MainMenu extends JLabel implements MouseListener {
         new Thread(new Runnable() {
             public void run() {
                 startTime = System.currentTimeMillis();
-                  watingLabel =new JLabel(new ImageIcon(ImageLoader.loadImage("Photos/Untitled-1.png").getScaledInstance(getWidth(),getHeight(),0)));
+                  watingLabel =new JLabel(new ImageIcon(ImageLoader.loadImage("Photos/load.png").getScaledInstance(getWidth(),getHeight(),0)));
                 watingLabel.setBounds(0,0,getWidth(),getHeight());
                   StaticVariables.mainClass.add(watingLabel);
                 MainClass.removeTheMainMenu();

@@ -15,6 +15,7 @@ public class ImageLoader {
     public static BufferedImage loadImage(String path){
         try {
 
+
             return ImageIO.read(ImageLoader.class.getResourceAsStream(path));
         } catch (IOException e) {
             e.printStackTrace();
@@ -23,7 +24,7 @@ public class ImageLoader {
     return null;
     }
 
-    public  static void addImageOfObject(File dir, Vector<Image> linkedList, Dimension size) {
+    public synchronized   static void addImageOfObject(File dir, Vector<Image> linkedList, Dimension size) {
         String ImagePath;
         for (int i = 0; dir.listFiles().length > i; i++)
         {
@@ -32,7 +33,7 @@ public class ImageLoader {
             {
                 ImagePath = dir.getPath() + "\\" + i + ".png";
                 ImagePath = ImagePath.replace("\\", "/");
-                linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_FAST));
+                linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH));
 
             }catch (NullPointerException e)
             {
