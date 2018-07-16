@@ -53,7 +53,7 @@ public class Ghost extends GameObject {
     private int speed;
     public static boolean notTheFirstGhost=false;
     private int index=0;
-    private int width,hight;
+    private int width, height;
 
 
     public Ghost(int ghostType){
@@ -67,30 +67,30 @@ public class Ghost extends GameObject {
 
     }
 
-    public void checkIfGhostIntercectHouse(ArrayList<GameObject> backGroundObjects,Ghost ghost){
+    public void checkIfGhostIntersectHouse(ArrayList<GameObject> backGroundObjects, Ghost ghost){
         Random random=new Random();
         for (GameObject house:backGroundObjects) {
             if (house.getClass().getSimpleName().equals("House")) {
                 switch (StaticVariables.level) {
                     case 1: {
                         width = 250;
-                        hight = 300;
+                        height = 300;
                         break;
                     }
                     case 2: {
                         width = 300;
-                        hight = 350;
+                        height = 350;
                         break;
                     }
                     case 3: {
                         width = 400;
-                        hight = 450;
+                        height = 450;
                         break;
                     }
                 }
-                ghost.setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width, hight));
+                ghost.setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width, height));
                 if (house.getBounds().intersects(ghost.getBounds())) {
-                    ghost.setBounds(new Rectangle(1000, 1000, width, hight));
+                    ghost.setBounds(new Rectangle(random.nextInt(3000)+2000, 1000, width, height));
                 }
 
             }
@@ -437,6 +437,8 @@ public class Ghost extends GameObject {
 
 
     }
+
+
 
     public int getGhostType() {
         return ghostType;

@@ -102,7 +102,7 @@ public class World extends JLabel implements MouseListener {
                             for (int i = 0; i <5 ; i++) {
 
                                 Ghost ghost=new Ghost(1);
-                                ghost.checkIfGhostIntercectHouse(backGroundObjects,ghost);
+                                ghost.checkIfGhostIntersectHouse(backGroundObjects,ghost);
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -117,7 +117,7 @@ public class World extends JLabel implements MouseListener {
                             Ghost.addGhostImage();
                             for (int i = 0; i <6 ; i++) {
                                 Ghost ghost=new Ghost(2);
-                                ghost.checkIfGhostIntercectHouse(backGroundObjects,ghost);
+                                ghost.checkIfGhostIntersectHouse(backGroundObjects,ghost);
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -132,7 +132,7 @@ public class World extends JLabel implements MouseListener {
                             Ghost.addGhostImage();
                             for (int i = 0; i <7 ; i++) {
                                 Ghost ghost=new Ghost(3);
-                                ghost.checkIfGhostIntercectHouse(backGroundObjects,ghost);
+                                ghost.checkIfGhostIntersectHouse(backGroundObjects,ghost);
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);

@@ -6,6 +6,7 @@ import Objects.Ghost;
 import Objects.MainPlayer;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 
 public class GamePanel extends JLabel {
@@ -16,7 +17,8 @@ public class GamePanel extends JLabel {
     private JLabel shopIcon;
     private JLabel settingLabel;
     private JLabel moneyIcon;
-    private JLabel ghostCounter;
+    private JProgressBar jProgressBar;
+
     private Font font=new Font("Serif", Font.BOLD, 20);
 
     public GamePanel (){
@@ -26,39 +28,29 @@ public class GamePanel extends JLabel {
         addShopIcon();
         addSettingIcon();
         addMoneyLabel();
-        addGhostCounter();
-
-
-    }
-
-    private void addGhostCounter() {
-        ghostCounter=new JLabel();
-        ghostCounter.setBounds(570,100,300,40);
-        ghostCounter.setFont(font);
-        ghostCounter.setForeground(Color.black);
-        add(ghostCounter);
-        new Thread(new Runnable() {
-            public void run() {
-                while (true)
-                {
-
-                    if(StaticVariables.world!=null&&StaticVariables.world.getGhostArrayList()!=null)
-                    ghostCounter.setText("total ghost needed to be kill:"+(StaticVariables.world.getGhostArrayList().size()-Ghost.numberOfDeadGhost));
-
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }catch (NullPointerException e)
-                    {
-                        addGhostCounter();
-                        break;
-                    }
-                }
-            }
-        }).start();
+        addSpacialAttack();
 
     }
+    private void addSpacialAttack() {
+        JLabel jLabel=new JLabel();
+        jLabel.setBounds(50,0,345,11);
+        jLabel.setForeground(Color.black);
+        jProgressBar=new JProgressBar();
+        jProgressBar.  setUI(new BasicProgressBarUI() {
+            protected Color getSelectionBackground() { return Color.white; }
+            protected Color getSelectionForeground() { return Color.white; }
+        });
+        jProgressBar.setStringPainted(true);
+        jProgressBar.setValue(0);
+        jProgressBar.setMaximum(100);
+        jProgressBar.setBackground(Color.gray);
+        jProgressBar.setForeground(Color.yellow);
+        jProgressBar.setBounds(222,75,345,11);
+        jProgressBar.setFont(new Font("Verdana", Font.BOLD, 12));
+        jProgressBar.add(jLabel);
+        lifeBar.add(jProgressBar);
+    }
+
 
     private void addLevelLabel(){
          levelLabel=new JLabel();

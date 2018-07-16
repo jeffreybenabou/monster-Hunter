@@ -43,14 +43,21 @@ public class MiniMap extends JLabel {
                                 aghost.get(i).setVisible(false);
 
 
-                        } catch (IndexOutOfBoundsException e) {
+                        }
+
+
+                        catch (IndexOutOfBoundsException e)
+                        {
                             e.printStackTrace();
                             break;
 
-
-                        } catch (NullPointerException e) {
+                        }
+                        catch (NullPointerException e)
+                        {
                             e.printStackTrace();
-                        } catch (Exception e) {
+
+                        }
+                        catch (Exception e) {
                             e.printStackTrace();
                         }
 
