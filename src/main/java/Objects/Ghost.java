@@ -8,6 +8,7 @@ import ImageHandel.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
@@ -52,6 +53,7 @@ public class Ghost extends GameObject {
     private int speed;
     public static boolean notTheFirstGhost=false;
     private int index=0;
+    private int width,hight;
 
 
     public Ghost(int ghostType){
@@ -65,6 +67,35 @@ public class Ghost extends GameObject {
 
     }
 
+    public void checkIfGhostIntercectHouse(ArrayList<GameObject> backGroundObjects,Ghost ghost){
+        Random random=new Random();
+        for (GameObject house:backGroundObjects) {
+            if (house.getClass().getSimpleName().equals("House")) {
+                switch (StaticVariables.level) {
+                    case 1: {
+                        width = 250;
+                        hight = 300;
+                        break;
+                    }
+                    case 2: {
+                        width = 300;
+                        hight = 350;
+                        break;
+                    }
+                    case 3: {
+                        width = 400;
+                        hight = 450;
+                        break;
+                    }
+                }
+                ghost.setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width, hight));
+                if (house.getBounds().intersects(ghost.getBounds())) {
+                    ghost.setBounds(new Rectangle(1000, 1000, width, hight));
+                }
+
+            }
+        }
+    }
     public void setTheDir(){
         Random random=new Random();
         dirLeft=random.nextBoolean();
@@ -92,7 +123,7 @@ public class Ghost extends GameObject {
 
     public void removeTheGhostWhenDead(){
             StaticVariables.world.remove(this);
-            World.ghostArrayList.remove(this);
+
             setVisible(false);
     }
 
@@ -224,6 +255,7 @@ public class Ghost extends GameObject {
 
 
     }
+
     public static   void addGhostImage(){
         addTheVector();
         final Dimension dimension=new Dimension(500,320);
@@ -251,66 +283,51 @@ public class Ghost extends GameObject {
         }
 
 
-        new Thread(new Runnable() {
-            public void run() {
+
                 File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_down/");
                 ImageLoader.addImageOfObject(DIR_1, attackDown,dimension);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            public void run() {
-                File  DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_left/");
+
+
+                  DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_left/");
                 ImageLoader.addImageOfObject(DIR_1, attackLeft,dimension);
-            }
-        }).start();
 
-        new Thread(new Runnable() {
-            public void run() {
-                File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_right/");
+
+
+
+                   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_right/");
                 ImageLoader.addImageOfObject(DIR_1, attackRight,dimension);
-            }
-        }).start();
 
-        new Thread(new Runnable() {
-            public void run() {
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_up/");
+
+
+                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_up/");
                 ImageLoader.addImageOfObject(DIR_1, attackUp,dimension);
 
-            }
-        }).start();
 
-        new Thread(new Runnable() {
-            public void run() {
 
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_up/");
+
+
+                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_up/");
                 ImageLoader.addImageOfObject(DIR_1, moveUp,dimension);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            public void run() {
-                File      DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_right/");
+
+
+                      DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_right/");
                 ImageLoader.addImageOfObject(DIR_1, moveRight,dimension);
-            }
-        }).start();
 
-        new Thread(new Runnable() {
-            public void run() {
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_left/");
+
+
+                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_left/");
                 ImageLoader.addImageOfObject(DIR_1, moveLeft,dimension);
-            }
-        }).start();
 
-        new Thread(new Runnable() {
-            public void run() {
-                File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_down/");
+
+
+                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_down/");
                 ImageLoader.addImageOfObject(DIR_1, moveDown,dimension);
-            }
-        }).start();
 
 
 
 
-        File    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/dead/");
+
+            DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/dead/");
         ImageLoader.addImageOfObject(DIR_1, dead,dimension);
 
 
@@ -388,7 +405,7 @@ public class Ghost extends GameObject {
            {
                setSize(250,300);
                damgeToMainPlayer=2*random.nextInt(2)+1;
-               life=10000;
+               life=5000;
                speed=1;
                break;
            }
@@ -398,7 +415,7 @@ public class Ghost extends GameObject {
 
                setSize(300,350);
                damgeToMainPlayer=3*random.nextInt(2)+1;
-               life=13000;
+               life=10000;
                speed=2;
                break;
            }

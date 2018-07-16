@@ -11,14 +11,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+import java.util.ConcurrentModificationException;
 import java.util.Vector;
 
 public class MainPlayer extends GameObject {
 
-    public static int sumOfLife=35000;
+    public static int sumOfLife=20000;
     public static Life life;
 
-    private Sound sound;
+    private Sound walkingSound,attackingSound;
     public static int imageFrameRate=0,addLifeToMainPlayer=0;
     public static boolean intersect=false;
     private int xSpriteSheet=350,ySprtieSheet=320,index=0,imageSpeed=3,damgeToGhost;
@@ -47,8 +48,10 @@ public class MainPlayer extends GameObject {
 
 
     public MainPlayer(){
-        sound=new Sound();
-        setBounds(550,250,xSpriteSheet,ySprtieSheet);
+        walkingSound =new Sound();
+        attackingSound=new Sound();
+
+        setBounds(1000,1000,xSpriteSheet,ySprtieSheet);
         point=new Point(getX(),getY());
         setTheUserAction();
 
@@ -67,73 +70,76 @@ public class MainPlayer extends GameObject {
 * */
     }
 
-    public static void addMainPlayerPosition(final String type) {
+    public static void addMainPlayerPosition(final String type2) {
 
+        type=type2;
         new Thread(new Runnable() {
             public void run() {
+
+
 
 
                 final Dimension stand = new Dimension(350,330);
                 final Dimension side = new Dimension(400, 350);
                 final Dimension upDown = new Dimension(400, 380);
 
-                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/stand/");
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/stand/");
                 ImageLoader.addImageOfObject(DIR_1, standDown, stand);
 
 
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/left");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/attack/left");
                         ImageLoader.addImageOfObject(DIR_1, attackLeft, side);
                     }
                 }).start();
 
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/up");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/attack/up");
                         ImageLoader.addImageOfObject(DIR_1, attackUp, upDown);
                     }
                 }).start();
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/down");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/attack/down");
                         ImageLoader.addImageOfObject(DIR_1, attackDown, side);
                     }
                 }).start();
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/attack/right");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/attack/right");
                         ImageLoader.addImageOfObject(DIR_1, attackRight, upDown);
                     }
                 }).start();
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/die");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/die");
                         ImageLoader.addImageOfObject(DIR_1, die, upDown);
                     }
                 }).start();
                 new Thread(new Runnable() {
                     public void run() {
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/right");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/walk/right");
                         ImageLoader.addImageOfObject(DIR_1, right, side);
                     }
                 }).start();
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/left");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/walk/left");
                         ImageLoader.addImageOfObject(DIR_1, left, side);
                     }
                 }).start();
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/down");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/walk/down");
                         ImageLoader.addImageOfObject(DIR_1, down, upDown);
                     }
                 }).start();
                 new Thread(new Runnable() {
                     public void run() {
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type+"/walk/up");
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/"+type2+"/walk/up");
                         ImageLoader.addImageOfObject(DIR_1, up, upDown);
                     }
                 }).start();
@@ -142,6 +148,22 @@ public class MainPlayer extends GameObject {
             }
         }).start();
 
+
+    }
+
+    private void setTheMainPlayerAttackSound() {
+        if(type.equals("male"))
+        {
+            attackingSound.playSound(Sound.path.get(1),false);
+            attackingSound.setVolume(-15);
+        }
+
+        else
+        {
+            attackingSound.playSound(Sound.path.get(3),false);
+
+            attackingSound.setVolume(-15);
+        }
 
     }
 
@@ -191,13 +213,6 @@ public class MainPlayer extends GameObject {
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                         setTheUserAction();
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
-                        System.out.println("null pointer on setTheUserAction  "+e.getCause());
-
                         break;
                     }
                 }
@@ -317,7 +332,8 @@ public class MainPlayer extends GameObject {
             if(imageFrameRate%20==0)
              footStep = new FootStep();
             if (walking) {
-                sound.playSound(Sound.path.get(0),false);
+                attackingSound.stopSound();
+                walkingSound.playSound(Sound.path.get(0),false);
                 if (index >= left.size())
                     index = 0;
                 attacking=false;
@@ -325,6 +341,7 @@ public class MainPlayer extends GameObject {
                 if (angle < 164 && angle >= 52) {
                     StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() + imageSpeed);
                     setLocation(getX(), getY() - imageSpeed);
+                    if(up.size()>0&&index<=up.size())
                     setIcon(new ImageIcon(up.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(3);
@@ -335,6 +352,7 @@ public class MainPlayer extends GameObject {
 
                     StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() + imageSpeed);
                     setLocation(getX() + imageSpeed, getY() - imageSpeed);
+                    if(right.size()>0&&index<=right.size())
                     setIcon(new ImageIcon(right.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(4);
@@ -344,6 +362,7 @@ public class MainPlayer extends GameObject {
 
                     StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY());
                     setLocation(getX() + imageSpeed, getY());
+                    if(right.size()>0&&index<=right.size())
                     setIcon(new ImageIcon(right.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(5);
@@ -354,6 +373,7 @@ public class MainPlayer extends GameObject {
 
                     StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() - imageSpeed);
                     setLocation(getX() + imageSpeed, getY() + imageSpeed);
+                    if(right.size()>0&&index<=right.size())
                     setIcon(new ImageIcon(right.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(6);
@@ -365,6 +385,7 @@ public class MainPlayer extends GameObject {
 
                     StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() - imageSpeed);
                     setLocation(getX(), getY() + imageSpeed);
+                    if(down.size()>0&&index<=down.size())
                     setIcon(new ImageIcon(down.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(7);
@@ -375,6 +396,7 @@ public class MainPlayer extends GameObject {
 
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() - imageSpeed);
                     setLocation(getX() - imageSpeed, getY() + imageSpeed);
+                    if(left.size()>0&&index<=left.size())
                     setIcon(new ImageIcon(left.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(2);
@@ -386,6 +408,7 @@ public class MainPlayer extends GameObject {
 
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY());
                     setLocation(getX() - imageSpeed, getY());
+                    if(left.size()>0&&index<=left.size())
                     setIcon(new ImageIcon(left.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(1);
@@ -396,7 +419,8 @@ public class MainPlayer extends GameObject {
 
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() + imageSpeed);
                     setLocation(getX() - imageSpeed, getY() - imageSpeed);
-                    setIcon(new ImageIcon(left.get(index)));
+                    if(left.size()>0&&index<=left.size())
+                        setIcon(new ImageIcon(left.get(index)));
                     if(imageFrameRate%20==0)
                     footStep.setTheImage(8);
                 }
@@ -405,8 +429,11 @@ public class MainPlayer extends GameObject {
 
             } else if (stand) {
 
+attackingSound.stopSound();
+                walkingSound.stopSound();
                 if (index >= standDown.size())
                     index = 0;
+                if(standDown.size()>0)
                 setIcon(new ImageIcon(standDown.get(index)));
                 attacking=false;
                 walking=false;
@@ -414,15 +441,9 @@ public class MainPlayer extends GameObject {
 
             else if(attacking)
             {
+                setTheMainPlayerAttackSound();
 
 
-                if(index>=attackRight.size())
-                {
-
-                    attacking=false;
-                    stand=true;
-                    index=0;
-                }
 
 
                 if(leftFromTheGhost)
@@ -460,6 +481,8 @@ public class MainPlayer extends GameObject {
         } catch (ArrayIndexOutOfBoundsException ea) {
             ea.printStackTrace();
 
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -473,9 +496,18 @@ public class MainPlayer extends GameObject {
         if (index == arralist.size()-1)
         {
             attacking=false;
-            stand=true;
-            walking=false;
             index = 0;
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Thread.sleep(500);
+                        if(index!=0&&!attacking)
+                            stand=true;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
     }
 
@@ -483,6 +515,16 @@ public class MainPlayer extends GameObject {
         try
         {
 
+            for (GameObject house:StaticVariables.world.getBackGroundObjects()) {
+                if(house.getClass().getSimpleName().equals("House"))
+                {
+                    if(house.getBounds().intersects(getBounds()))
+                    {
+                        stand=true;
+                        walking=false;
+                    }
+                }
+            }
 
             if(getX()<=0||getY()<=0||getX()>=StaticVariables.world.getWidth()-getWidth()||getY()>=StaticVariables.world.getHeight()-getHeight())
             {
@@ -494,6 +536,9 @@ public class MainPlayer extends GameObject {
         }catch (NullPointerException e)
         {
 
+
+        }catch (ConcurrentModificationException e)
+        {
 
         }
 

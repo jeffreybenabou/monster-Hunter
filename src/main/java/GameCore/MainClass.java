@@ -32,13 +32,14 @@ public class MainClass extends JFrame  {
     public static void addTheMainMenu() {
         StaticVariables.mainClass.add(StaticVariables.mainMenu);
         StaticVariables.mainMenu.setVisible(true);
-
         removeTheWorld();
 
     }
     public static void removeTheMainMenu(){
+        StaticVariables.mainMenu.getBackgroundSound().stopSound();
         StaticVariables.mainClass.repaint();
         StaticVariables.mainMenu.setVisible(false);
+        StaticVariables.mainClass.remove(StaticVariables.mainMenu);
 
 
 

@@ -3,7 +3,7 @@ import BackgroundObject.*;
 
 import Objects.Ghost;
 import Objects.MainPlayer;
-
+import sound.Sound;
 
 
 import javax.swing.*;
@@ -17,14 +17,20 @@ public class World extends JLabel implements MouseListener {
 
 
     public static ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
+    public static boolean ghostAreBeingAdd=false;
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
     private Random random;
     private Ghost firstGhost;
+    private Sound backGroundWorld;
 
     public World(){
-        setBounds(0,0,5000,5000);
+        setBounds(-500,-750,5000,5000);
         setLayout(null);
         setBackground(Color.GRAY);
+        backGroundWorld=new Sound();
+
+        backGroundWorld.playSound(Sound.path.get(4),true);
+        backGroundWorld.setVolume(-10);
         setOpaque(true);
         addMouseListener(this);
 
@@ -46,6 +52,7 @@ public class World extends JLabel implements MouseListener {
             gameObject.addMouseListener(this);
         }
     }
+
     public void addGhost(){
         new Thread(new Runnable() {
             public void run() {
@@ -59,18 +66,22 @@ public class World extends JLabel implements MouseListener {
                      * */
 
                             firstGhost=new Ghost(1);
-                            firstGhost.setLocation(1000,1000);
-                            add(firstGhost);
-                            ghostArrayList.add(firstGhost);
+                            firstGhost.setLocation(2500,2500);
+                    firstGhost.setName(""+0);
+                    ghostArrayList.add(firstGhost);
+                    add(firstGhost);
+                    StaticVariables.miniMap.addTheGhostLocationToMap(0,firstGhost.getLocation());
                             while(firstGhost.getLifeBar().isAlive()){
                                 try {
-                                    Thread.sleep(20);
+                                    Thread.sleep(1);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
+                                }catch (NullPointerException e)
+                                {
+
                                 }
                             }
-                    ghostArrayList.remove(firstGhost);
-                            firstGhost=null;
+
                             Ghost.notTheFirstGhost=true;
                             addGhost();
 
@@ -79,18 +90,19 @@ public class World extends JLabel implements MouseListener {
                 }
                 else
                 {
+                    ghostAreBeingAdd=true;
                     for (GameObject house:backGroundObjects) {
                         if(house.getClass().getSimpleName().equals("House"))
                             house.setVisible(true);
                     }
+                    ghostArrayList.clear();
                     switch (StaticVariables.level)
                     {
                         case 1:{
+                            for (int i = 0; i <5 ; i++) {
 
-                            for (int i = 0; i <1 ; i++) {
-                                Random random=new Random();
                                 Ghost ghost=new Ghost(1);
-                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghost.checkIfGhostIntercectHouse(backGroundObjects,ghost);
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -103,10 +115,9 @@ public class World extends JLabel implements MouseListener {
 
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <2 ; i++) {
-                                Random random=new Random();
+                            for (int i = 0; i <6 ; i++) {
                                 Ghost ghost=new Ghost(2);
-                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghost.checkIfGhostIntercectHouse(backGroundObjects,ghost);
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -119,10 +130,9 @@ public class World extends JLabel implements MouseListener {
                         case 3:{
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <2 ; i++) {
-                                Random random=new Random();
+                            for (int i = 0; i <7 ; i++) {
                                 Ghost ghost=new Ghost(3);
-                                ghost.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                ghost.checkIfGhostIntercectHouse(backGroundObjects,ghost);
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -133,7 +143,9 @@ public class World extends JLabel implements MouseListener {
                             break;
                         }
                     }
-
+                    ghostArrayList.remove(firstGhost);
+                    firstGhost=null;
+                    ghostAreBeingAdd=false;
                 }
             }
         }).start();
@@ -153,7 +165,7 @@ public class World extends JLabel implements MouseListener {
 
 
 
-                        for (int i = 0; i <20 ; i++) {
+                        for (int i = 0; i <15 ; i++) {
 
                             {
 

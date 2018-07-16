@@ -44,7 +44,7 @@ public class MainMenu extends JLabel implements MouseListener {
     public MainMenu(){
         backgroundSound=new Sound();
         backgroundSound.playSound(Sound.path.get(2),true);
-        setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height, 0)));
+        setIcon(new ImageIcon(StaticVariables.mainMenuBackGround));
         setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
         ChooseThePlayer();
         for (int i = 0; i <4 ; i++) {
@@ -149,15 +149,15 @@ public class MainMenu extends JLabel implements MouseListener {
                     catch (NullPointerException e)
                     {
 
-//                        System.out.println("NullPointerException on addplayer lebel"+e.getCause());
-                        break;
+e.printStackTrace();
+break;
 
                     }
                     catch (ArrayIndexOutOfBoundsException e)
                     {
 
-//                        System.out.println("ArrayIndexOutOfBoundsException on addplayerlebel  "+e.getCause());
-                        break;
+e.printStackTrace();
+break;
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -203,7 +203,7 @@ public class MainMenu extends JLabel implements MouseListener {
             case 0:{
 
                 start=new JButton(new ImageIcon(StaticVariables.startButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                start.setBounds(300, 100, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
+                start.setBounds(550, 100, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
                 start.setName("start");
                 add(start);
                 button=start;
@@ -211,7 +211,7 @@ public class MainMenu extends JLabel implements MouseListener {
         }
             case 1:{
                 exit=new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                exit.setBounds(800, 500, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
+                exit.setBounds(550, 550, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
                 exit.setName("exit");
                 add(exit);
                 button=exit;
@@ -219,7 +219,7 @@ public class MainMenu extends JLabel implements MouseListener {
             }
             case 2:{
                 loadFromServer=new JButton(new ImageIcon(StaticVariables.loadFromServerButoon.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                loadFromServer.setBounds(300, 500, loadFromServer.getIcon().getIconWidth(), loadFromServer.getIcon().getIconHeight());
+                loadFromServer.setBounds(550, 400, loadFromServer.getIcon().getIconWidth(), loadFromServer.getIcon().getIconHeight());
                 loadFromServer.setName("loadServer");
                 add(loadFromServer);
                 button=loadFromServer;
@@ -228,7 +228,7 @@ public class MainMenu extends JLabel implements MouseListener {
             case 3:{
 
                 load=new JButton(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                load.setBounds(800, 100, load.getIcon().getIconWidth(), load.getIcon().getIconHeight());
+                load.setBounds(550, 250, load.getIcon().getIconWidth(), load.getIcon().getIconHeight());
                 load.setName("load");
                 add(load);
                 button=load;
@@ -285,7 +285,7 @@ public class MainMenu extends JLabel implements MouseListener {
                                 StaticVariables.gamePanel.add(StaticVariables.miniMap);
                                 MainClass.addTheWorld();
                                 watingLabel.setVisible(false);
-                                stopTime = System.currentTimeMillis();
+                                StaticVariables.miniMap.addActionOfMiniMap();
 
 
                                 break;
@@ -403,5 +403,176 @@ public class MainMenu extends JLabel implements MouseListener {
 
     public void mouseExited(MouseEvent e) {
         hover=false;
+    }
+
+
+    public Sound getBackgroundSound() {
+        return backgroundSound;
+    }
+
+    public void setBackgroundSound(Sound backgroundSound) {
+        this.backgroundSound = backgroundSound;
+    }
+
+    public JLabel getWatingLabel() {
+        return watingLabel;
+    }
+
+    public void setWatingLabel(JLabel watingLabel) {
+        this.watingLabel = watingLabel;
+    }
+
+    public TextField getTextField() {
+        return textField;
+    }
+
+    public void setTextField(TextField textField) {
+        this.textField = textField;
+    }
+
+    public JButton getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(JButton confirm) {
+        this.confirm = confirm;
+    }
+
+    public JButton getStart() {
+        return start;
+    }
+
+    public void setStart(JButton start) {
+        this.start = start;
+    }
+
+    public JButton getLoad() {
+        return load;
+    }
+
+    public void setLoad(JButton load) {
+        this.load = load;
+    }
+
+    public JButton getLoadFromServer() {
+        return loadFromServer;
+    }
+
+    public void setLoadFromServer(JButton loadFromServer) {
+        this.loadFromServer = loadFromServer;
+    }
+
+    public JButton getExit() {
+        return exit;
+    }
+
+    public void setExit(JButton exit) {
+        this.exit = exit;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isHover() {
+        return hover;
+    }
+
+    public void setHover(boolean hover) {
+        this.hover = hover;
+    }
+
+    public Vector<Image> getaMale() {
+        return aMale;
+    }
+
+    public void setaMale(Vector<Image> aMale) {
+        this.aMale = aMale;
+    }
+
+    public Vector<Image> getaFemale() {
+        return aFemale;
+    }
+
+    public void setaFemale(Vector<Image> aFemale) {
+        this.aFemale = aFemale;
+    }
+
+    public JLabel getMale() {
+        return male;
+    }
+
+    public void setMale(JLabel male) {
+        this.male = male;
+    }
+
+    public JLabel getFemale() {
+        return female;
+    }
+
+    public void setFemale(JLabel female) {
+        this.female = female;
+    }
+
+    @Override
+    public Border getBorder() {
+        return border;
+    }
+
+    @Override
+    public void setBorder(Border border) {
+        this.border = border;
+    }
+
+    public JLabel getChooseThePlayer() {
+        return chooseThePlayer;
+    }
+
+    public void setChooseThePlayer(JLabel chooseThePlayer) {
+        this.chooseThePlayer = chooseThePlayer;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
+    }
+
+    public long getStopTime() {
+        return stopTime;
+    }
+
+    public void setStopTime(long stopTime) {
+        this.stopTime = stopTime;
+    }
+
+    public long getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(long elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 }

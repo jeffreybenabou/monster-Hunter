@@ -13,80 +13,101 @@ import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
 
-    private Thread thread;
+    private Thread thread=new Thread();
     private  Border blackline;
     public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
 
-    public MiniMap(){
-        blackline = BorderFactory. createRaisedBevelBorder();
+    public MiniMap() {
+        blackline = BorderFactory.createRaisedBevelBorder();
         setBorder(blackline);
-        setBounds(10,StaticVariables.mainClass.getHeight()-170,250,160);
+        setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
         setBackground(Color.black);
 
+    }
 
+    public void addActionOfMiniMap()
+    {
         new Thread(new Runnable() {
             public void run() {
                 addTheMainPlayerLocationToMap();
-                while (true)
-                {
+                while (true) {
+
+
                     // TODO: 03/07/2018 fix the mini map
-                    for (int i = 0; i <aghost.size() ; i++) {
-                        try{
-                            if(!StaticVariables.world.getGhostArrayList().get(i).getLifeBar().isAlive())
-                            {
-                                remove(aghost.get(i));
+                    for (int i = 0; i < StaticVariables.world.getGhostArrayList().size(); i++) {
+                        try {
+
+                            if(StaticVariables.world.getGhostArrayList().get(i).isVisible())
+                                aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX() / 20, StaticVariables.world.getGhostArrayList().get(i).getY() / 32);
+                                else
                                 aghost.get(i).setVisible(false);
 
-                            }
-                            else
-                            aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX()/20,StaticVariables.world.getGhostArrayList().get(i).getY()/32);
 
-                        }catch (IndexOutOfBoundsException e)
-                        {
+                        } catch (IndexOutOfBoundsException e) {
                             e.printStackTrace();
                             break;
 
+
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                     }
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
+boolean addGhost=false;
+                    for (Ghost ghost:World.ghostArrayList) {
+                        if(ghost.isVisible())
+                        {
+                            addGhost=false;
+                            break;
+                        }
+
+                        else
+                            addGhost=true;
+
+                    }
+
+                    if (!World.ghostAreBeingAdd) {
+
+                        if (addGhost && Ghost.notTheFirstGhost) {
+
+                            Ghost.numberOfDeadGhost = 0;
+
+                            StaticVariables.level++;
+                            aghost.clear();
+                            StaticVariables.world.addGhost();
+                            try {
 
 
-                    if(World.ghostArrayList.size()==0&&Ghost.notTheFirstGhost)
-                    {
 
+                                Thread.sleep(3000);
+                                addActionOfMiniMap();
+                                break;
 
-                        // TODO: 02/07/2018 add the key to the world
-                        thread=new Thread(new Runnable() {
-                            public void run() {
-                                Ghost.numberOfDeadGhost=0;
-                                StaticVariables.level++;
-                                aghost.clear();
-                                StaticVariables.world.addGhost();
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
-                        });
-                       if(!thread.isAlive())
-                       {
-                           thread.start();
-                       }
+
+
+
+
+
+                        }
+
+
                     }
 
                 }
+
             }
         }).start();
-
-
-
     }
 
     public void addTheMainPlayerLocationToMap(){
