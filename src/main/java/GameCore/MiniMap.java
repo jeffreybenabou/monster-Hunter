@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
 
-    private Thread thread=new Thread();
+    private boolean loadFuncation=false;
     private  Border blackline;
     public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
 
@@ -29,17 +29,18 @@ public class MiniMap extends JLabel {
     {
         new Thread(new Runnable() {
             public void run() {
+                loadFuncation=false;
                 addTheMainPlayerLocationToMap();
-                while (true) {
+                while (!loadFuncation) {
 
 
                     // TODO: 03/07/2018 fix the mini map
                     for (int i = 0; i < StaticVariables.world.getGhostArrayList().size(); i++) {
                         try {
 
-                            if(StaticVariables.world.getGhostArrayList().get(i).isVisible())
+                            if (StaticVariables.world.getGhostArrayList().get(i).isVisible())
                                 aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX() / 20, StaticVariables.world.getGhostArrayList().get(i).getY() / 32);
-                                else
+                            else
                                 aghost.get(i).setVisible(false);
 
 
@@ -68,53 +69,55 @@ public class MiniMap extends JLabel {
                         e.printStackTrace();
                     }
 
-boolean addGhost=false;
-                    for (Ghost ghost:World.ghostArrayList) {
-                        if(ghost.isVisible())
-                        {
-                            addGhost=false;
-                            break;
-                        }
-
-                        else
-                            addGhost=true;
-
-                    }
-
-                    if (!World.ghostAreBeingAdd) {
-
-                        if (addGhost && Ghost.notTheFirstGhost) {
-
-                            Ghost.numberOfDeadGhost = 0;
-
-                            StaticVariables.level++;
-                            aghost.clear();
-                            StaticVariables.world.addGhost();
-                            try {
 
 
-
-                                Thread.sleep(3000);
-                                addActionOfMiniMap();
-                                break;
-
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-
-
-
-
-                        }
-
-
-                    }
+                    levelUp();
 
                 }
 
             }
         }).start();
+    }
+
+    private void levelUp() {
+        boolean addGhost = false;
+        for (Ghost ghost : World.ghostArrayList) {
+            if (ghost.isVisible()) {
+                addGhost = false;
+                break;
+            } else
+                addGhost = true;
+
+        }
+        if (!World.ghostAreBeingAdd) {
+
+            if (addGhost && Ghost.notTheFirstGhost) {
+
+                Ghost.numberOfDeadGhost = 0;
+
+                StaticVariables.level++;
+                for (JLabel label:aghost) {
+                    label.setVisible(false);
+                }
+                aghost.clear();
+                StaticVariables.world.addGhost();
+                try {
+
+                    loadFuncation=true;
+                    Thread.sleep(3000);
+
+                    addActionOfMiniMap();
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+
+        }
     }
 
     public void addTheMainPlayerLocationToMap(){

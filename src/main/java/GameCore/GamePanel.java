@@ -17,7 +17,7 @@ public class GamePanel extends JLabel {
     private JLabel shopIcon;
     private JLabel settingLabel;
     private JLabel moneyIcon;
-    private JProgressBar jProgressBar;
+    public static JProgressBar jProgressBar;
 
     private Font font=new Font("Serif", Font.BOLD, 20);
 

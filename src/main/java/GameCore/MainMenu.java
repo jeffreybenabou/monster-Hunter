@@ -75,7 +75,7 @@ public class MainMenu extends JLabel implements MouseListener {
                         new Thread(new Runnable() {
                             public void run() {
 
-                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/stand/"),aMale,new Dimension(500,400));
+                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/stand/"),null,aMale,new Dimension(500,400));
                                 male.setIcon(new ImageIcon(aMale.get(0)));
 
 
@@ -83,7 +83,7 @@ public class MainMenu extends JLabel implements MouseListener {
                         }).start();
                         new Thread(new Runnable() {
                             public void run() {
-                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/female/stand/"),aFemale,new Dimension(500,450));
+                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/female/stand/"),null,aFemale,new Dimension(500,450));
                                 female.setIcon(new ImageIcon(aFemale.get(0)));
 
 
@@ -149,14 +149,14 @@ public class MainMenu extends JLabel implements MouseListener {
                     catch (NullPointerException e)
                     {
 
-e.printStackTrace();
+
 break;
 
                     }
                     catch (ArrayIndexOutOfBoundsException e)
                     {
 
-e.printStackTrace();
+
 break;
 
                     } catch (InterruptedException e) {

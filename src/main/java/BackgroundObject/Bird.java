@@ -7,6 +7,7 @@ import ImageHandel.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -14,23 +15,23 @@ public class Bird extends GameObject  {
 
     private static   boolean firstLoad=true;
     private int index=0;
-    public static Vector<Image> birdLeft,birdRight;
+    public static ArrayList<Image> birdLeft,birdRight;
     private boolean left,down;
 
     public Bird(int x ,int y){
-        /*if(firstLoad)
+        if(firstLoad)
         {
-            birdLeft=new Vector<Image>();
-            birdRight=new Vector<Image>();
-            ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/left/"),birdLeft,new Dimension(200,200));
-            ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),birdRight,new Dimension(200,200));
+            birdLeft=new ArrayList<Image>();
+            birdRight=new ArrayList<Image>();
+            ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/left/"),birdLeft,null,new Dimension(200,200));
+            ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),birdRight,null,new Dimension(200,200));
             firstLoad=false;
 
         }
 
         setBounds(x,y,200,200);
         setIcon(new ImageIcon(birdLeft.get(0)));
-        moveTheBird();*/
+        moveTheBird();
     }
     @SuppressWarnings("InfiniteLoopStatement")
     private void moveTheBird() {
@@ -58,7 +59,7 @@ public class Bird extends GameObject  {
                     else
                         setLocation(getX(),getY()-1);
                     index++;
-                    if (index == birdRight.size())
+                    if (index >= birdRight.size()-1)
                         index = 0;
                     checkIfIntercet();
 
@@ -68,9 +69,9 @@ public class Bird extends GameObject  {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (NullPointerException e) {
-                        System.out.println("bird null");
+                        e.printStackTrace();
                     } catch (IndexOutOfBoundsException e) {
-                        System.out.println("out of bound bird");
+                        e.printStackTrace();
                     }catch (Exception e)
                     {
                         System.out.println(Arrays.toString(e.getStackTrace()));

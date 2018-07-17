@@ -140,7 +140,7 @@ public class Ghost extends GameObject {
                     moveTheGhostAroundTheWorld();
                     else
                         changeTheGhostIcon();
-                    decreaseLife();
+                    decreaseLife(StaticVariables.mainPlayer.getDamgeToGhost());
 
 
 
@@ -163,12 +163,12 @@ public class Ghost extends GameObject {
 
     }
 
-    private void decreaseLife() {
-        if(getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&StaticVariables.mainPlayer.isAttacking())
+    public void decreaseLife(int damge) {
+        if(getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&(StaticVariables.mainPlayer.isAttacking()||MainPlayer.spacielAttack))
         {
 
 
-            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue()-StaticVariables.mainPlayer.getDamgeToGhost());
+            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue()-damge);
             getLifeBar().getjProgressBar().setString(""+getLifeBar().getjProgressBar().getValue());
         }
     }
@@ -285,50 +285,50 @@ public class Ghost extends GameObject {
 
 
                 File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_down/");
-                ImageLoader.addImageOfObject(DIR_1, attackDown,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, attackDown,dimension);
 
 
                   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_left/");
-                ImageLoader.addImageOfObject(DIR_1, attackLeft,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, attackLeft,dimension);
 
 
 
 
                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_right/");
-                ImageLoader.addImageOfObject(DIR_1, attackRight,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, attackRight,dimension);
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_up/");
-                ImageLoader.addImageOfObject(DIR_1, attackUp,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, attackUp,dimension);
 
 
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_up/");
-                ImageLoader.addImageOfObject(DIR_1, moveUp,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, moveUp,dimension);
 
 
                       DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_right/");
-                ImageLoader.addImageOfObject(DIR_1, moveRight,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, moveRight,dimension);
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_left/");
-                ImageLoader.addImageOfObject(DIR_1, moveLeft,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, moveLeft,dimension);
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_down/");
-                ImageLoader.addImageOfObject(DIR_1, moveDown,dimension);
+                ImageLoader.addImageOfObject(DIR_1,null, moveDown,dimension);
 
 
 
 
 
             DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/dead/");
-        ImageLoader.addImageOfObject(DIR_1, dead,dimension);
+        ImageLoader.addImageOfObject(DIR_1,null, dead,dimension);
 
 
 

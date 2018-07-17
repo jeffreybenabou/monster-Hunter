@@ -6,6 +6,7 @@ import Objects.MainPlayer;
 import sound.Sound;
 
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -73,7 +74,7 @@ public class World extends JLabel implements MouseListener {
                     StaticVariables.miniMap.addTheGhostLocationToMap(0,firstGhost.getLocation());
                             while(firstGhost.getLifeBar().isAlive()){
                                 try {
-                                    Thread.sleep(1);
+                                    Thread.sleep(100);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }catch (NullPointerException e)
@@ -276,13 +277,24 @@ public class World extends JLabel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         
 
-        if(e.getButton()==MouseEvent.BUTTON1)
+        if(e.getButton()==MouseEvent.BUTTON2)
+        {
+            if(GamePanel.jProgressBar.getValue()==GamePanel.jProgressBar.getMaximum()&&MainPlayer.intersect)
+            {
+
+                StaticVariables.mainPlayer.setIndex(0);
+                MainPlayer.spacielAttack=true;
+
+            }
+
+        }
+        if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacielAttack)
         {
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
 
         }
-        if(e.getButton()==MouseEvent.BUTTON3)
+        if(e.getButton()==MouseEvent.BUTTON3&&!MainPlayer.spacielAttack)
         {
             MainPlayer.walking=false;
             MainPlayer.stand=true;

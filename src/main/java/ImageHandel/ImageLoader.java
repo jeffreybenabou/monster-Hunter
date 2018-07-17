@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Vector;
 
 public class ImageLoader {
@@ -24,7 +26,7 @@ public class ImageLoader {
     return null;
     }
 
-    public synchronized   static void addImageOfObject(File dir, Vector<Image> linkedList, Dimension size) {
+    public    static void addImageOfObject(File dir, ArrayList<Image> linkedList,Vector<Image>vector, Dimension size) {
         String ImagePath;
         for (int i = 0; dir.listFiles().length > i; i++)
         {
@@ -33,7 +35,10 @@ public class ImageLoader {
             {
                 ImagePath = dir.getPath() + "\\" + i + ".png";
                 ImagePath = ImagePath.replace("\\", "/");
+                if(vector==null)
                 linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH));
+                else
+                    vector.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH));
 
             }catch (NullPointerException e)
             {
