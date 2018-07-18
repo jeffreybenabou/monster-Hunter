@@ -26,7 +26,7 @@ public class ImageLoader {
     return null;
     }
 
-    public    static void addImageOfObject(File dir, ArrayList<Image> linkedList,Vector<Image>vector, Dimension size) {
+    public    static void addImageOfObject(File dir, ArrayList<ImageIcon> linkedList,Vector<Image>vector, Dimension size) {
         String ImagePath;
         for (int i = 0; dir.listFiles().length > i; i++)
         {
@@ -36,7 +36,7 @@ public class ImageLoader {
                 ImagePath = dir.getPath() + "\\" + i + ".png";
                 ImagePath = ImagePath.replace("\\", "/");
                 if(vector==null)
-                linkedList.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH));
+                linkedList.add(new ImageIcon(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH)));
                 else
                     vector.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH));
 

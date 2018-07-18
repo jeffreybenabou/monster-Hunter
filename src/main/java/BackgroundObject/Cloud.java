@@ -4,6 +4,7 @@ import GameCore.GameObject;
 import GameCore.StaticVariables;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Random;
 
 public class Cloud extends GameObject {
@@ -14,7 +15,7 @@ public class Cloud extends GameObject {
         Random random=new Random();
         left=random.nextBoolean();
         down=random.nextBoolean();
-        setIcon(new ImageIcon(new ImageIcon(StaticVariables.cloud).getImage().getScaledInstance(1100,700,0)));
+        setIcon(new ImageIcon(new ImageIcon(StaticVariables.cloud).getImage().getScaledInstance(1100,700,Image.SCALE_SMOOTH)));
         setBounds(x,y,getIcon().getIconWidth(),getIcon().getIconHeight());
         moveTheCloud();
     }

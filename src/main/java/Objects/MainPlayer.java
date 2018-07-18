@@ -11,7 +11,6 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.Vector;
 
 public class MainPlayer extends GameObject {
 
@@ -38,7 +37,7 @@ public class MainPlayer extends GameObject {
     is_stand_left_up, is_stand_left_down, is_stand_right_dowb, is_stand_right_up;
     private static File DIR_1;
 
-    public static ArrayList<Image>
+    public static ArrayList<ImageIcon>
             up, down, left, right,
             standDown,
             attackLeft, attackRight, attackDown, attackUp, die,spacielAttackA;
@@ -46,6 +45,15 @@ public class MainPlayer extends GameObject {
     private double distanceFromPoint;
     private long speedOfMove = 20;
     private FootStep footStep;
+
+
+
+    float startTime;
+
+
+
+
+    float stopTime ;
 
 
     public MainPlayer() {
@@ -145,19 +153,19 @@ public class MainPlayer extends GameObject {
 
     public static void makeNewElements(String type) {
 
-        up = new ArrayList<Image>();
-        down = new ArrayList<Image>();
-        left = new ArrayList<Image>();
-        right = new ArrayList<Image>();
+        up = new ArrayList<ImageIcon>();
+        down = new ArrayList<ImageIcon>();
+        left = new ArrayList<ImageIcon>();
+        right = new ArrayList<ImageIcon>();
 
-        standDown = new ArrayList<Image>();
-        spacielAttackA=new ArrayList<Image>();
+        standDown = new ArrayList<ImageIcon>();
+        spacielAttackA=new ArrayList<ImageIcon>();
 
-        attackLeft = new ArrayList<Image>();
-        attackDown = new ArrayList<Image>();
-        attackRight = new ArrayList<Image>();
-        attackUp = new ArrayList<Image>();
-        die = new ArrayList<Image>();
+        attackLeft = new ArrayList<ImageIcon>();
+        attackDown = new ArrayList<ImageIcon>();
+        attackRight = new ArrayList<ImageIcon>();
+        attackUp = new ArrayList<ImageIcon>();
+        die = new ArrayList<ImageIcon>();
         addMainPlayerPosition(type);
 
     }
@@ -169,16 +177,19 @@ public class MainPlayer extends GameObject {
                 while (true) {
 
 
-                    imageFrameRate++;
+                    setImageFrameRate(getImageFrameRate()+1);
+
                     setPlace();
+
                     checkIfMainPlayerOutOfBound();
-                    checkifMainPlayerIntercetWithMonster();
+                    checkedMainPlayerInteractWithMonster();
                     setLocationOfMainPlayerWhenFightTheGhost();
                     addLifeToPlayer();
 
 
+
                     try {
-                        Thread.sleep(speedOfMove);
+                        Thread.sleep(getSpeedOfMove());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (NullPointerException e) {
@@ -195,29 +206,32 @@ public class MainPlayer extends GameObject {
 
     private void addLifeToPlayer() {
 
-        if (!attacking && walking) {
-            addLifeToMainPlayer++;
-            if (addLifeToMainPlayer == 15 && life.getjProgressBar().getValue() < life.getjProgressBar().getMaximum()) {
-                addLifeToMainPlayer = 0;
-                life.getjProgressBar().setValue(life.getjProgressBar().getValue() + 1);
-                life.getjProgressBar().setString("" + life.getjProgressBar().getValue());
+        if (!isAttacking() && isWalking()) {
+            setAddLifeToMainPlayer(getAddLifeToMainPlayer()+1);
+            if (getAddLifeToMainPlayer() == 15 && getLife().getjProgressBar().getValue() < getLife().getjProgressBar().getMaximum()) {
+                setAddLifeToMainPlayer(0);
+
+                getLife().getjProgressBar().setValue(getLife().getjProgressBar().getValue() + 1);
+                getLife().getjProgressBar().setString("" + getLife().getjProgressBar().getValue());
             }
-            if (addLifeToMainPlayer > 15)
-                addLifeToMainPlayer = 0;
+            if (getAddLifeToMainPlayer() > 15)
+                setAddLifeToMainPlayer(0);
         }
     }
 
-    private void checkifMainPlayerIntercetWithMonster() {
+    private void checkedMainPlayerInteractWithMonster() {
 
         try {
             for (Ghost g : StaticVariables.world.getGhostArrayList()) {
                 try {
 
                     if (g.isStopMoving()&&g.getLifeBar().isAlive())
-                        intersect = g.isStopMoving();
+                        setIntersect(g.isStopMoving());
+
                     else
-                        intersect = false;
-                    if (intersect)
+                        setIntersect(false);
+
+                    if (isIntersect())
                         break;
 
 
@@ -235,58 +249,59 @@ public class MainPlayer extends GameObject {
     }
 
     private void setLocationOfMainPlayerWhenFightTheGhost() {
-        if (attacking) {
-            if (angle < 164 && angle >= 52) {
-                downFromTheGhost = true;
-                leftFromTheGhost = false;
-                rightFromTheGhost = false;
-                upFromTheGhost = false;
+        if (isAttacking()) {
+            if (getAngle() < 164 && getAngle() >= 52) {
+                setDownFromTheGhost(true);
+                setLeftFromTheGhost(false);
+                setRightFromTheGhost(false);
+                setUpFromTheGhost(false);
             }
-            if (angle < 183 && angle >= 164) {
-                leftFromTheGhost = true;
-                downFromTheGhost = false;
-                rightFromTheGhost = false;
-                upFromTheGhost = false;
+            if (getAngle() < 183 && getAngle() >= 164) {
+                setDownFromTheGhost(false);
+                setLeftFromTheGhost(true);
+                setRightFromTheGhost(false);
+                setUpFromTheGhost(false);
+
             }
-            if (angle < 205 && angle >= 183) {
-                leftFromTheGhost = true;
-                downFromTheGhost = false;
-                rightFromTheGhost = false;
-                upFromTheGhost = false;
+            if (getAngle() < 205 && getAngle() >= 183) {
+                setDownFromTheGhost(false);
+                setLeftFromTheGhost(true);
+                setRightFromTheGhost(false);
+                setUpFromTheGhost(false);
             }
-            if (angle < 231 && angle >= 205) {
-                leftFromTheGhost = true;
-                downFromTheGhost = false;
-                rightFromTheGhost = false;
-                upFromTheGhost = false;
+            if (getAngle() < 231 && getAngle() >= 205) {
+                setDownFromTheGhost(false);
+                setLeftFromTheGhost(true);
+                setRightFromTheGhost(false);
+                setUpFromTheGhost(false);
             }
-            if (angle < 281 && angle >= 231) {
+            if (getAngle() < 281 && getAngle() >= 231) {
 //                    down
-                upFromTheGhost = true;
-                leftFromTheGhost = false;
-                downFromTheGhost = false;
-                rightFromTheGhost = false;
+                setDownFromTheGhost(false);
+                setLeftFromTheGhost(false);
+                setRightFromTheGhost(false);
+                setUpFromTheGhost(true);
             }
-            if (angle < 318 && angle >= 281) {
+            if (getAngle() < 318 && getAngle() >= 281) {
 //                    left up
-                rightFromTheGhost = true;
-                upFromTheGhost = false;
-                leftFromTheGhost = false;
-                downFromTheGhost = false;
+                setDownFromTheGhost(false);
+                setLeftFromTheGhost(false);
+                setRightFromTheGhost(true);
+                setUpFromTheGhost(false);
             }
-            if (angle >= 318) {
+            if (getAngle() >= 318) {
 //                    left
-                rightFromTheGhost = true;
-                upFromTheGhost = false;
-                leftFromTheGhost = false;
-                downFromTheGhost = false;
+                setDownFromTheGhost(false);
+                setLeftFromTheGhost(false);
+                setRightFromTheGhost(true);
+                setUpFromTheGhost(false);
             }
-            if (angle < 52 && angle >= 0) {
+            if (getAngle() < 52 && getAngle() >= 0) {
 //                    left down
-                rightFromTheGhost = true;
-                upFromTheGhost = false;
-                leftFromTheGhost = false;
-                downFromTheGhost = false;
+                setDownFromTheGhost(false);
+                setLeftFromTheGhost(false);
+                setRightFromTheGhost(true);
+                setUpFromTheGhost(false);
             }
 
 
@@ -297,7 +312,7 @@ public class MainPlayer extends GameObject {
     private void setPlace() {
 
 
-        if (imageFrameRate % 20 == 0)
+        if (getImageFrameRate() % 20 == 0)
             footStep = new FootStep();
         try {
             checkIfWalking();
@@ -312,18 +327,21 @@ public class MainPlayer extends GameObject {
     }
 
     private void checkIfSpacialAttack() {
-        if(spacielAttack)
+        if(isSpacielAttack())
         {
-            attacking=false;
-            stand=false;
-            walking=false;
-            if(index>=spacielAttackA.size()-1)
+
+            setAttacking(false);
+            setStand(false);
+            setWalking(false);
+            if(getIndex()>=getSpacielAttackA().size()-1)
             {
-                index=spacielAttackA.size()-1;
+                setIndex(getSpacielAttackA().size()-1);
+
 
             }
-            setIcon(new ImageIcon(spacielAttackA.get(index)));
-            if(index==40)
+
+            setIcon(getSpacielAttackA().get(getIndex()));
+            if(getIndex()==10)
                 vibrateTheScreen();
 
         }
@@ -338,7 +356,7 @@ public class MainPlayer extends GameObject {
                     while (GamePanel.jProgressBar.getValue()>0)
                     {
                         GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue()-1);
-                        Thread.sleep(5);
+                        Thread.sleep(10);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -349,7 +367,7 @@ public class MainPlayer extends GameObject {
 
             boolean dir=false;
             public void run() {
-                while (intersect)
+                while (isIntersect())
                 {
 
 
@@ -371,147 +389,149 @@ public class MainPlayer extends GameObject {
                     }
 
                 }
-                spacielAttack=false;
-                stand=true;
+                setSpacielAttack(false);
+                setStand(true);
+
             }
         }).start();
     }
 
     private void checkIfAttacking() {
 
-        if (attacking) {
+        if (isAttacking()) {
+            setSize(getxSpriteSheet(),getySprtieSheet());
+
             setTheMainPlayerAttackSound();
 
 
-            if (leftFromTheGhost) {
-                checkIndexOutOfBound(attackRight);
-                setIcon(new ImageIcon(attackRight.get(index)));
-            } else if (rightFromTheGhost) {
-                checkIndexOutOfBound(attackLeft);
-                setIcon(new ImageIcon(attackLeft.get(index)));
+            if (isLeftFromTheGhost()) {
+                checkIndexOutOfBound(getAttackRight());
+                setIcon((getAttackRight().get(getIndex())));
+            } else if (isRightFromTheGhost()) {
+                checkIndexOutOfBound(getAttackLeft());
+                setIcon((getAttackLeft().get(getIndex())));
 
-            } else if (downFromTheGhost) {
-                checkIndexOutOfBound(attackUp);
-                setIcon(new ImageIcon(attackUp.get(index)));
+            } else if (isDownFromTheGhost()) {
+                checkIndexOutOfBound(getAttackUp());
+                setIcon((getAttackUp().get(getIndex())));
 
-            } else if (upFromTheGhost) {
-                checkIndexOutOfBound(attackDown);
-                setIcon(new ImageIcon(attackDown.get(index)));
+            } else if (isUpFromTheGhost()) {
+                checkIndexOutOfBound(getAttackDown());
+                setIcon((getAttackDown().get(getIndex())));
 
             }
         }
     }
 
         private void checkIfWalking() {
-            if (walking) {
-                attackingSound.stopSound();
-                walkingSound.playSound(Sound.path.get(0), false);
-                if (index >= left.size())
-                    index = 0;
-                attacking = false;
-                stand = false;
-                if (angle < 164 && angle >= 52) {
+
+            if (isWalking()) {
+
+                setSize(getxSpriteSheet(),getySprtieSheet());
+                getAttackingSound().stopSound();
+                getWalkingSound().playSound(Sound.path.get(0), false);
+                if (getIndex() >= getLeft().size()-1)
+                    setIndex(0);
+                setAttacking(false);
+                setStand(false);
+
+
+                if (getAngle() < 164 && getAngle() >= 52) {
                     StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() + imageSpeed);
-                    setLocation(getX(), getY() - imageSpeed);
-                    if (up.size() > 0 && index <= up.size())
-                        setIcon(new ImageIcon(up.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(3);
+                    setLocation(getX(), getY() - getImageSpeed());
+                        setIcon((getUp().get(getIndex())));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(3);
 // up
 
                 }
-                if (angle < 183 && angle >= 164) {
+                else if (getAngle() < 183 && getAngle() >= 164) {
 
-                    StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() + imageSpeed);
-                    setLocation(getX() + imageSpeed, getY() - imageSpeed);
-                    if (right.size() > 0 && index <= right.size())
-                        setIcon(new ImageIcon(right.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(4);
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() - getImageSpeed(), StaticVariables.world.getY() + getImageSpeed());
+                    setLocation(getX() + getImageSpeed(), getY() - getImageSpeed());
+                        setIcon((getRight().get(getIndex())));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(4);
 //                    rightup
                 }
-                if (angle < 205 && angle >= 183) {
+                else if (getAngle() < 205 && getAngle() >= 183) {
 
-                    StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY());
-                    setLocation(getX() + imageSpeed, getY());
-                    if (right.size() > 0 && index <= right.size())
-                        setIcon(new ImageIcon(right.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(5);
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() - getImageSpeed(), StaticVariables.world.getY());
+                    setLocation(getX() + getImageSpeed(), getY());
+                    setIcon(getRight().get(getIndex()));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(5);
 //                    right
 
                 }
-                if (angle < 231 && angle >= 205) {
+                else if (getAngle() < 231 && getAngle() >= 205) {
 
-                    StaticVariables.world.setLocation(StaticVariables.world.getX() - imageSpeed, StaticVariables.world.getY() - imageSpeed);
-                    setLocation(getX() + imageSpeed, getY() + imageSpeed);
-                    if (right.size() > 0 && index <= right.size())
-                        setIcon(new ImageIcon(right.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(6);
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() - getImageSpeed(), StaticVariables.world.getY() - getImageSpeed());
+                    setLocation(getX() + getImageSpeed(), getY() + getImageSpeed());
+                        setIcon((getRight().get(getIndex())));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(6);
 //right down
                 }
-                if (angle < 281 && angle >= 231) {
+                else if (getAngle() < 281 && getAngle() >= 231) {
 //                    down
 
 
-                    StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() - imageSpeed);
-                    setLocation(getX(), getY() + imageSpeed);
-                    if (down.size() > 0 && index <= down.size())
-                        setIcon(new ImageIcon(down.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(7);
+                    StaticVariables.world.setLocation(StaticVariables.world.getX(), StaticVariables.world.getY() - getImageSpeed());
+                    setLocation(getX(), getY() + getImageSpeed());
+                        setIcon((getDown().get(getIndex())));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(7);
                 }
-                if (angle < 318 && angle >= 281) {
+                else if (getAngle() < 318 && getAngle() >= 281) {
 //                    left up
 
 
-                    StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() - imageSpeed);
-                    setLocation(getX() - imageSpeed, getY() + imageSpeed);
-                    if (left.size() > 0 && index <= left.size())
-                        setIcon(new ImageIcon(left.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(2);
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() + getImageSpeed(), StaticVariables.world.getY() - getImageSpeed());
+                    setLocation(getX() - getImageSpeed(), getY() + getImageSpeed());
+                        setIcon((getLeft().get(getIndex())));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(2);
 
                 }
 
-                if (angle >= 318) {
+                else if (getAngle() >= 318) {
 //                    left
 
-                    StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY());
-                    setLocation(getX() - imageSpeed, getY());
-                    if (left.size() > 0 && index <= left.size())
-                        setIcon(new ImageIcon(left.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(1);
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() + getImageSpeed(), StaticVariables.world.getY());
+                    setLocation(getX() - getImageSpeed(), getY());
+                        setIcon(getLeft().get(getIndex()));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(1);
 
                 }
-                if (angle < 52 && angle >= 0) {
+                else if (getAngle() < 52 && getAngle() >= 0) {
 //                    left down
 
-                    StaticVariables.world.setLocation(StaticVariables.world.getX() + imageSpeed, StaticVariables.world.getY() + imageSpeed);
-                    setLocation(getX() - imageSpeed, getY() - imageSpeed);
-                    if (left.size() > 0 && index <= left.size())
-                        setIcon(new ImageIcon(left.get(index)));
-                    if (imageFrameRate % 20 == 0)
-                        footStep.setTheImage(8);
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() + getImageSpeed(), StaticVariables.world.getY() + getImageSpeed());
+                    setLocation(getX() - getImageSpeed(), getY() - getImageSpeed());
+                        setIcon((getLeft().get(getIndex())));
+                    if (getImageFrameRate() % 20 == 0)
+                        getFootStep().setTheImage(8);
                 }
+
             }
+
         }
 
-        private void checkIndexOutOfBound (ArrayList < Image > arralist) {
+        private void checkIndexOutOfBound (ArrayList < ImageIcon > arralist) {
 
 
-            if (index == arralist.size() - 1) {
-                attacking = false;
-                index = 0;
+            if (getIndex() == arralist.size() - 1) {
+                setAttacking(false);
+                setIndex(0);
                 new Thread(new Runnable() {
                     public void run() {
                         try {
                             Thread.sleep(400);
-                            GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue()+20);
-                            if (index != 0 && !attacking)
-                                stand = true;
+                            GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue()+100);
+                            if (getIndex() != 0 && !isAttacking())
+                                setStand(true);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -526,16 +546,16 @@ public class MainPlayer extends GameObject {
                 for (GameObject house : StaticVariables.world.getBackGroundObjects()) {
                     if (house.getClass().getSimpleName().equals("House")) {
                         if (house.getBounds().intersects(getBounds())) {
-                            stand = true;
-                            walking = false;
+                            setStand(true);
+                            setWalking(false);
                         }
                     }
                 }
 
                 if (getX() <= 0 || getY() <= 0 || getX() >= StaticVariables.world.getWidth() - getWidth() || getY() >= StaticVariables.world.getHeight() - getHeight()) {
+                    setStand(true);
+                    setWalking(false);
 
-                    stand = true;
-                    walking = false;
 
                 }
             } catch (NullPointerException e) {
@@ -713,92 +733,108 @@ public class MainPlayer extends GameObject {
         DIR_1 = dir1;
     }
 
-    public static ArrayList<Image> getUp() {
+    public static ArrayList<ImageIcon> getUp() {
         return up;
     }
 
-    public static void setUp(ArrayList<Image> up) {
+    public static void setUp(ArrayList<ImageIcon> up) {
         MainPlayer.up = up;
     }
 
-    public static ArrayList<Image> getDown() {
+    public static ArrayList<ImageIcon> getDown() {
         return down;
     }
 
-    public static void setDown(ArrayList<Image> down) {
+    public static void setDown(ArrayList<ImageIcon> down) {
         MainPlayer.down = down;
     }
 
-    public static ArrayList<Image> getLeft() {
+    public static ArrayList<ImageIcon> getLeft() {
         return left;
     }
 
-    public static void setLeft(ArrayList<Image> left) {
+    public static void setLeft(ArrayList<ImageIcon> left) {
         MainPlayer.left = left;
     }
 
-    public static ArrayList<Image> getRight() {
+    public static ArrayList<ImageIcon> getRight() {
         return right;
     }
 
-    public static void setRight(ArrayList<Image> right) {
+    public static void setRight(ArrayList<ImageIcon> right) {
         MainPlayer.right = right;
     }
 
-    public static ArrayList<Image> getStandDown() {
+    public static ArrayList<ImageIcon> getStandDown() {
         return standDown;
     }
 
-    public static void setStandDown(ArrayList<Image> standDown) {
+    public static void setStandDown(ArrayList<ImageIcon> standDown) {
         MainPlayer.standDown = standDown;
     }
 
-    public static ArrayList<Image> getAttackLeft() {
+    public static ArrayList<ImageIcon> getAttackLeft() {
         return attackLeft;
     }
 
-    public static void setAttackLeft(ArrayList<Image> attackLeft) {
+    public static void setAttackLeft(ArrayList<ImageIcon> attackLeft) {
         MainPlayer.attackLeft = attackLeft;
     }
 
-    public static ArrayList<Image> getAttackRight() {
+    public static ArrayList<ImageIcon> getAttackRight() {
         return attackRight;
     }
 
-    public static void setAttackRight(ArrayList<Image> attackRight) {
+    public static void setAttackRight(ArrayList<ImageIcon> attackRight) {
         MainPlayer.attackRight = attackRight;
     }
 
-    public static ArrayList<Image> getAttackDown() {
+    public static ArrayList<ImageIcon> getAttackDown() {
         return attackDown;
     }
 
-    public static void setAttackDown(ArrayList<Image> attackDown) {
+    public static void setAttackDown(ArrayList<ImageIcon> attackDown) {
         MainPlayer.attackDown = attackDown;
     }
 
-    public static ArrayList<Image> getAttackUp() {
+    public static ArrayList<ImageIcon> getAttackUp() {
         return attackUp;
     }
 
-    public static void setAttackUp(ArrayList<Image> attackUp) {
+    public static void setAttackUp(ArrayList<ImageIcon> attackUp) {
         MainPlayer.attackUp = attackUp;
     }
 
-    public static ArrayList<Image> getDie() {
+    public static ArrayList<ImageIcon> getDie() {
         return die;
     }
 
-    public static void setDie(ArrayList<Image> die) {
+    public static void setDie(ArrayList<ImageIcon> die) {
         MainPlayer.die = die;
     }
 
-    public static ArrayList<Image> getSpacielAttackA() {
+    public static ArrayList<ImageIcon> getSpacielAttackA() {
         return spacielAttackA;
     }
 
-    public static void setSpacielAttackA(ArrayList<Image> spacielAttackA) {
+    public static void setSpacielAttackA(ArrayList<ImageIcon> spacielAttackA) {
         MainPlayer.spacielAttackA = spacielAttackA;
+    }
+
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(float startTime) {
+        this.startTime = startTime;
+    }
+
+    public float getStopTime() {
+        return stopTime;
+    }
+
+    public void setStopTime(float stopTime) {
+        this.stopTime = stopTime;
     }
 
     public long getSpeedOfMove() {
@@ -898,20 +934,29 @@ public class MainPlayer extends GameObject {
             return distanceFromPoint;
         }
 
-        public void setDistanceFromPoint ( double distanceFromPoint){
+    public Sound getSpacielSound() {
+        return spacielSound;
+    }
+
+    public void setSpacielSound(Sound spacielSound) {
+        this.spacielSound = spacielSound;
+    }
+
+    public void setDistanceFromPoint (double distanceFromPoint){
             this.distanceFromPoint = distanceFromPoint;
+
 
     }
 
     private void checkIfStand() {
         if (stand) {
-
+            setSize(xSpriteSheet,ySprtieSheet);
             attackingSound.stopSound();
             walkingSound.stopSound();
             if (index >= standDown.size())
                 index = 0;
             if (standDown.size() > 0)
-                setIcon(new ImageIcon(standDown.get(index)));
+                setIcon((standDown.get(index)));
             attacking = false;
             walking = false;
         }

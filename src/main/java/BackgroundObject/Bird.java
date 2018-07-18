@@ -19,7 +19,7 @@ public class Bird extends GameObject  {
     private boolean left,down;
 
     public Bird(int x ,int y){
-        if(firstLoad)
+        /*if(firstLoad)
         {
             birdLeft=new ArrayList<Image>();
             birdRight=new ArrayList<Image>();
@@ -27,11 +27,11 @@ public class Bird extends GameObject  {
             ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),birdRight,null,new Dimension(200,200));
             firstLoad=false;
 
-        }
+        }*/
 
-        setBounds(x,y,200,200);
+        /*setBounds(x,y,200,200);
         setIcon(new ImageIcon(birdLeft.get(0)));
-        moveTheBird();
+        moveTheBird();*/
     }
     @SuppressWarnings("InfiniteLoopStatement")
     private void moveTheBird() {

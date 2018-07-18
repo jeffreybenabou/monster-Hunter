@@ -32,13 +32,7 @@ public class MainMenu extends JLabel implements MouseListener {
     private JLabel chooseThePlayer;
     private int index=0;
 
-    long startTime = System.currentTimeMillis();
 
-    long total = 0;
-
-
-    long stopTime ;
-    long elapsedTime ;
 
 
     public MainMenu(){
@@ -245,11 +239,11 @@ break;
 
 
 
-    private void addTheWatingLabel(){
+    private void addTheWaitingLabel(){
 
         new Thread(new Runnable() {
             public void run() {
-                startTime = System.currentTimeMillis();
+
                   watingLabel =new JLabel(new ImageIcon(ImageLoader.loadImage("Photos/load.png").getScaledInstance(getWidth(),getHeight(),0)));
                 watingLabel.setBounds(0,0,getWidth(),getHeight());
                   StaticVariables.mainClass.add(watingLabel);
@@ -322,7 +316,7 @@ break;
 
             if(!type.equals("")&&!textField.getText().equals(""))
             {
-                addTheWatingLabel();
+                addTheWaitingLabel();
             }
             else
 
@@ -544,35 +538,5 @@ break;
         this.index = index;
     }
 
-    public long getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public long getTotal() {
-        return total;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
-    public long getStopTime() {
-        return stopTime;
-    }
-
-    public void setStopTime(long stopTime) {
-        this.stopTime = stopTime;
-    }
-
-    public long getElapsedTime() {
-        return elapsedTime;
-    }
-
-    public void setElapsedTime(long elapsedTime) {
-        this.elapsedTime = elapsedTime;
-    }
 }

@@ -7,9 +7,14 @@ import javax.swing.*;
 
 public class House extends GameObject {
 
-    public House(int i){
+    public House(int houseNumber){
 
-        switch (i)
+        pickHouse(houseNumber);
+
+    }
+
+    private void pickHouse(int houseNumber) {
+        switch (houseNumber)
         {
             case 0:
             {
