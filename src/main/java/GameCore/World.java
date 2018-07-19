@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 public class World extends JLabel implements MouseListener {
@@ -20,6 +21,7 @@ public class World extends JLabel implements MouseListener {
     public static ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
     public static boolean ghostAreBeingAdd=false;
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
+    public static ArrayList<House>houseArrayList=new ArrayList<House>();
     private Random random;
     private Ghost firstGhost;
     private Sound backGroundWorld;
@@ -29,7 +31,6 @@ public class World extends JLabel implements MouseListener {
         setLayout(null);
         setBackground(Color.GRAY);
         backGroundWorld=new Sound();
-
         backGroundWorld.playSound(Sound.path.get(4),true);
         backGroundWorld.setVolume(-10);
         setOpaque(true);
@@ -48,9 +49,9 @@ public class World extends JLabel implements MouseListener {
         * preesing on object to avoid the main player to walk on object e.g:
         * walking on house
         * */
-        for (GameObject gameObject :backGroundObjects) {
-            if(gameObject.getClass().getSimpleName().equals("House"))
-            gameObject.addMouseListener(this);
+        for (House house :getHouseArrayList()) {
+
+            house.addMouseListener(this);
         }
     }
 
@@ -91,21 +92,28 @@ public class World extends JLabel implements MouseListener {
                 }
                 else
                 {
-                    ghostAreBeingAdd=true;
-                    for (GameObject house:backGroundObjects) {
-                        if(house.getClass().getSimpleName().equals("House"))
+                    setGhostAreBeingAdd(true);
+
+                    try
+                    {
+                        for (House house:World.getHouseArrayList()) {
                             house.setVisible(true);
+                        }
+                    }catch (ConcurrentModificationException house )
+                    {
+                        house.printStackTrace();
                     }
-                    ghostArrayList.clear();
+
+                    getGhostArrayList().clear();
                     switch (StaticVariables.level)
                     {
                         case 1:{
-                            for (int i = 0; i <5 ; i++) {
+                            for (int i = 0; i <1 ; i++) {
 
                                 Ghost ghost=new Ghost(1);
-                                ghost.checkIfGhostIntersectHouse(backGroundObjects,ghost);
+                                ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
-                                ghostArrayList.add(ghost);
+                                getGhostArrayList().add(ghost);
                                 add(ghost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
@@ -116,9 +124,9 @@ public class World extends JLabel implements MouseListener {
 
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <6 ; i++) {
+                            for (int i = 0; i <100 ; i++) {
                                 Ghost ghost=new Ghost(2);
-                                ghost.checkIfGhostIntersectHouse(backGroundObjects,ghost);
+                                ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -133,7 +141,7 @@ public class World extends JLabel implements MouseListener {
                             Ghost.addGhostImage();
                             for (int i = 0; i <7 ; i++) {
                                 Ghost ghost=new Ghost(3);
-                                ghost.checkIfGhostIntersectHouse(backGroundObjects,ghost);
+                                ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
                                 add(ghost);
@@ -190,8 +198,8 @@ public class World extends JLabel implements MouseListener {
 
                 for (int i = 0; i < 3; ) {
                     House house = new House(i);
-
-                        backGroundObjects.add(house);
+                    backGroundObjects.add(house);
+                    houseArrayList.add(house);
                         house.setVisible(false);
                         add(house);
                         i++;
@@ -377,5 +385,27 @@ public class World extends JLabel implements MouseListener {
         this.firstGhost = firstGhost;
     }
 
+    public static boolean isGhostAreBeingAdd() {
+        return ghostAreBeingAdd;
+    }
 
+    public static void setGhostAreBeingAdd(boolean ghostAreBeingAdd) {
+        World.ghostAreBeingAdd = ghostAreBeingAdd;
+    }
+
+    public static ArrayList<House> getHouseArrayList() {
+        return houseArrayList;
+    }
+
+    public static void setHouseArrayList(ArrayList<House> houseArrayList) {
+        World.houseArrayList = houseArrayList;
+    }
+
+    public Sound getBackGroundWorld() {
+        return backGroundWorld;
+    }
+
+    public void setBackGroundWorld(Sound backGroundWorld) {
+        this.backGroundWorld = backGroundWorld;
+    }
 }

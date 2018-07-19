@@ -1,5 +1,6 @@
 package Objects;
 
+import BackgroundObject.House;
 import GameCore.*;
 import ImageHandel.ImageLoader;
 
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Random;
 import java.util.Vector;
 
@@ -67,10 +69,10 @@ public class Ghost extends GameObject {
 
     }
 
-    public void checkIfGhostIntersectHouse(ArrayList<GameObject> backGroundObjects, Ghost ghost){
+    public void checkIfGhostIntersectHouse(){
         Random random=new Random();
-        for (GameObject house:backGroundObjects) {
-            if (house.getClass().getSimpleName().equals("House")) {
+        for (House house:World.houseArrayList) {
+
                 switch (StaticVariables.level) {
                     case 1: {
                         width = 250;
@@ -88,12 +90,12 @@ public class Ghost extends GameObject {
                         break;
                     }
                 }
-                ghost.setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width, height));
-                if (house.getBounds().intersects(ghost.getBounds())) {
-                    ghost.setBounds(new Rectangle(random.nextInt(3000)+2000, 1000, width, height));
+                setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width, height));
+                if (house.getBounds().intersects(getBounds())) {
+                   setBounds(3000, 3000, width, height);
                 }
 
-            }
+
         }
     }
     public void setTheDir(){
@@ -201,6 +203,52 @@ public class Ghost extends GameObject {
          * also check that the player is not getting out of the world bound .
          *
          * */
+        try
+        {
+            for (House house:World.getHouseArrayList()) {
+
+                if(getBounds().intersects(house.getBounds()))
+                {
+                    switch (Integer.parseInt(house.getName()))
+                    {
+                        case 1:
+                        {
+                            setLocation(getX()+10,getY());
+                            dirUp=true;
+                            dirDown=false;
+                            dirLeft=false;
+                            dirRight=true;
+                            break;
+                        }
+                        case 2:
+                        {
+                            setLocation(getX()+10,getY());
+                            dirUp=false;
+                            dirDown=true;
+                            dirLeft=false;
+                            dirRight=true;
+                            break;
+                        }
+                        case 3:
+                        {
+                            setLocation(getX()-10,getY());
+                            dirUp=false;
+                            dirDown=true;
+                            dirLeft=true;
+                            dirRight=false;
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
+        }catch (ConcurrentModificationException e)
+        {
+
+            e.printStackTrace();
+        }
 
 
         if (dirDown)
@@ -234,18 +282,8 @@ public class Ghost extends GameObject {
             dirUp=false;
         }
 
-        for (GameObject house:StaticVariables.world.getBackGroundObjects()) {
-            if(house.getClass().getSimpleName().equals("House"))
-            {
-                if(getBounds().intersects(house.getBounds()))
-                {
-                    dirUp=!dirUp;
-                    dirDown=!dirDown;
-                    dirLeft=!dirLeft;
-                    dirRight=!dirRight;
-                }
-            }
-        }
+
+
 
 
 

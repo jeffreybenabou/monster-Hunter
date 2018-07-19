@@ -19,7 +19,7 @@ public class MainPlayer extends GameObject {
     public static boolean spacielAttack;
 
 
-    private Sound walkingSound, attackingSound,spacielSound;
+    private Sound walkingSound, attackingSound,spacielSound,earthQuaqe;
     public static int imageFrameRate = 0, addLifeToMainPlayer = 0;
     public static boolean intersect = false;
     private int xSpriteSheet = 350, ySprtieSheet = 320, index = 0, imageSpeed = 3, damgeToGhost;
@@ -59,6 +59,7 @@ public class MainPlayer extends GameObject {
     public MainPlayer() {
         walkingSound = new Sound();
         attackingSound = new Sound();
+        earthQuaqe=new Sound();
 
         setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
         point = new Point(getX(), getY());
@@ -342,6 +343,7 @@ new Thread(new Runnable() {
         if(isSpacielAttack())
         {
 
+
             setAttacking(false);
             setStand(false);
             setWalking(false);
@@ -353,7 +355,7 @@ new Thread(new Runnable() {
             }
 
             setIcon(getSpacielAttackA().get(getIndex()));
-            if(getIndex()==10)
+            if(getIndex()==40)
                 vibrateTheScreen();
 
         }
@@ -379,10 +381,11 @@ new Thread(new Runnable() {
 
             boolean dir=false;
             public void run() {
+
                 while (isIntersect())
                 {
 
-
+                    earthQuaqe.playSound(Sound.path.get(5),true);
                     for (Ghost g:World.ghostArrayList) {
                         g.decreaseLife(50);
                     }
@@ -401,6 +404,7 @@ new Thread(new Runnable() {
                     }
 
                 }
+                earthQuaqe.stopSound();
                 setSpacielAttack(false);
                 setStand(true);
 

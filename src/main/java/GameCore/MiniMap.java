@@ -100,11 +100,11 @@ public class MiniMap extends JLabel {
                     label.setVisible(false);
                 }
                 aghost.clear();
-                StaticVariables.world.addGhost();
-                try {
 
+                try {
+                    StaticVariables.world.addGhost();
                     loadFuncation=true;
-                    Thread.sleep(3000);
+                    Thread.sleep(4000);
 
                     addActionOfMiniMap();
 

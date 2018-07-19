@@ -25,6 +25,7 @@ public class Sound {
             path.add("sounds/backgroundOpen.wav");
             path.add("sounds/femaleAttack.wav");
             path.add("sounds/backgroundworld.wav");
+            path.add("sounds/earthQueaqe.wav");
             firstPlay=false;
         }
     }

@@ -1,16 +1,13 @@
 package BackgroundObject;
-
 import GameCore.GameObject;
 import GameCore.StaticVariables;
-
 import javax.swing.*;
-import java.awt.*;
 import java.util.Random;
 
 public class Cloud extends GameObject {
 
     private boolean left,down;
-    private static ImageIcon imageIcon=new ImageIcon(StaticVariables.cloud.getScaledInstance(1100,700,Image.SCALE_SMOOTH));
+    private static ImageIcon imageIcon=new ImageIcon(StaticVariables.cloud);
 
     public Cloud(int x ,int y){
         Random random=new Random();

@@ -35,6 +35,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
 
+
     public MainMenu(){
         backgroundSound=new Sound();
         backgroundSound.playSound(Sound.path.get(2),true);
@@ -44,6 +45,7 @@ public class MainMenu extends JLabel implements MouseListener {
         for (int i = 0; i <4 ; i++) {
             createButton(i);
         }
+
         repaint();
 
 
@@ -96,7 +98,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
                 chooseThePlayer.setBorder(border);
                 chooseThePlayer.setForeground(Color.red);
-
+                setBorder(null);
 
             }
         }).start();
