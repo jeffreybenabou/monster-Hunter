@@ -95,13 +95,35 @@ public class MainPlayer extends GameObject {
 
 
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/spacielAttack");
+                new Thread(new Runnable() {
+                    public void run() {
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/right");
+                        ImageLoader.addImageOfObject(DIR_1, right,null, side);
+
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/left");
+                        ImageLoader.addImageOfObject(DIR_1, left,null, side);
+
+
+
+                    }
+                }).start();
+
+new Thread(new Runnable() {
+    public void run() {
+        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/down");
+        ImageLoader.addImageOfObject(DIR_1, down,null, upDown);
+
+        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/up");
+        ImageLoader.addImageOfObject(DIR_1, up,null, upDown);
+
+    }
+}).start();
+
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/spacielAttack");
                 ImageLoader.addImageOfObject(DIR_1, spacielAttackA,null, stand);
 
-
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/left");
-                        ImageLoader.addImageOfObject(DIR_1, attackLeft,null, side);
-
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/left");
+                ImageLoader.addImageOfObject(DIR_1, attackLeft,null, side);
 
 
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/up");
@@ -119,17 +141,7 @@ public class MainPlayer extends GameObject {
                         ImageLoader.addImageOfObject(DIR_1, die,null, upDown);
 
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/right");
-                        ImageLoader.addImageOfObject(DIR_1, right,null, side);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/left");
-                        ImageLoader.addImageOfObject(DIR_1, left,null, side);
-
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/down");
-                        ImageLoader.addImageOfObject(DIR_1, down,null, upDown);
-
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/up");
-                        ImageLoader.addImageOfObject(DIR_1, up,null, upDown);
 
 
 
@@ -429,7 +441,12 @@ public class MainPlayer extends GameObject {
 
                 setSize(getxSpriteSheet(),getySprtieSheet());
                 getAttackingSound().stopSound();
-                getWalkingSound().playSound(Sound.path.get(0), false);
+
+                        getWalkingSound().playSound(Sound.path.get(0), false);
+
+
+
+
                 if (getIndex() >= getLeft().size()-1)
                     setIndex(0);
                 setAttacking(false);
@@ -950,6 +967,7 @@ public class MainPlayer extends GameObject {
 
     private void checkIfStand() {
         if (stand) {
+
             setSize(xSpriteSheet,ySprtieSheet);
             attackingSound.stopSound();
             walkingSound.stopSound();

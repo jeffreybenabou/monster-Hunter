@@ -33,10 +33,17 @@ public class Sound {
     public void stopSound(){
         try
         {
-            if(clip!=null&&clip.isActive())
+            if(clip!=null)
             {
-                clip.flush();
+
+
                 clip.stop();
+                clip.flush();
+                clip.close();
+
+
+
+
             }
 
         }catch (NullPointerException e)
@@ -69,10 +76,12 @@ public class Sound {
                     }
                     else if(!clip.isActive())
                     {
+                        stopSound();
                         clip = AudioSystem.getClip();
                         inputStream = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(url));
                         clip.open(inputStream);
                         clip.start();
+
                     }
 
 

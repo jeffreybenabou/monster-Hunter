@@ -15,23 +15,23 @@ public class Bird extends GameObject  {
 
     private static   boolean firstLoad=true;
     private int index=0;
-    public static ArrayList<Image> birdLeft,birdRight;
+    public static ArrayList<ImageIcon> birdLeft,birdRight;
     private boolean left,down;
 
     public Bird(int x ,int y){
-        /*if(firstLoad)
+        if(firstLoad)
         {
-            birdLeft=new ArrayList<Image>();
-            birdRight=new ArrayList<Image>();
+            birdLeft=new ArrayList<ImageIcon>();
+            birdRight=new ArrayList<ImageIcon>();
             ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/left/"),birdLeft,null,new Dimension(200,200));
             ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),birdRight,null,new Dimension(200,200));
             firstLoad=false;
 
-        }*/
+        }
 
-        /*setBounds(x,y,200,200);
-        setIcon(new ImageIcon(birdLeft.get(0)));
-        moveTheBird();*/
+        setBounds(x,y,200,200);
+        setIcon(birdLeft.get(0));
+        moveTheBird();
     }
     @SuppressWarnings("InfiniteLoopStatement")
     private void moveTheBird() {
@@ -44,14 +44,14 @@ public class Bird extends GameObject  {
                         // TODO: 02/07/2018 change the bird icon
 
                         setLocation(getX()-1,getY());
-                        setIcon(new ImageIcon(birdLeft.get(index)));
+                        setIcon(birdLeft.get(index));
 
 
                     }
                     else
                     {
                         setLocation(getX()+1,getY());
-                        setIcon(new ImageIcon(birdRight.get(index)));
+                        setIcon((birdRight.get(index)));
 
                     }
                     if(down)
@@ -64,7 +64,7 @@ public class Bird extends GameObject  {
                     checkIfIntercet();
 
 
-                        Thread.sleep(100);
+                        Thread.sleep(40);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
