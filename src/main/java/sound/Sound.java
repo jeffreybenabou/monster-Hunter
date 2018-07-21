@@ -38,9 +38,15 @@ public class Sound {
             {
 
 
-                clip.stop();
-                clip.flush();
-                clip.close();
+                new Thread(new Runnable() {
+                    public void run() {
+                        clip.stop();
+                        clip.flush();
+                        clip=null;
+
+                    }
+                }).start();
+
 
 
 
@@ -56,9 +62,14 @@ public class Sound {
     }
     public void setVolume(float value)
     {
-        FloatControl gainControl =
-                (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        gainControl.setValue(value);
+        FloatControl gainControl;
+        if(clip!=null)
+        {
+            gainControl =
+                    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(value);
+        }
+
 
     }
 
@@ -87,7 +98,7 @@ public class Sound {
 
 
                 } catch (Exception e) {
-                   e.printStackTrace();
+
                 }
 
     }

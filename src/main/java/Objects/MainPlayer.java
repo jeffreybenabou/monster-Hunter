@@ -19,7 +19,7 @@ public class MainPlayer extends GameObject {
     public static boolean spacielAttack;
 
 
-    private Sound walkingSound, attackingSound,spacielSound,earthQuaqe;
+    private Sound walkingSound, attackingSound, spacielSound, earthQuaqe;
     public static int imageFrameRate = 0, addLifeToMainPlayer = 0;
     public static boolean intersect = false;
     private int xSpriteSheet = 350, ySprtieSheet = 320, index = 0, imageSpeed = 3, damgeToGhost;
@@ -40,26 +40,23 @@ public class MainPlayer extends GameObject {
     public static ArrayList<ImageIcon>
             up, down, left, right,
             standDown,
-            attackLeft, attackRight, attackDown, attackUp, die,spacielAttackA;
+            attackLeft, attackRight, attackDown, attackUp, die, spacielAttackA;
     private double angle = 0;
     private double distanceFromPoint;
     private long speedOfMove = 20;
     private FootStep footStep;
 
 
-
     float startTime;
 
 
-
-
-    float stopTime ;
+    float stopTime;
 
 
     public MainPlayer() {
         walkingSound = new Sound();
         attackingSound = new Sound();
-        earthQuaqe=new Sound();
+        earthQuaqe = new Sound();
 
         setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
         point = new Point(getX(), getY());
@@ -92,58 +89,48 @@ public class MainPlayer extends GameObject {
                 final Dimension upDown = new Dimension(400, 380);
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/stand/");
-                ImageLoader.addImageOfObject(DIR_1, standDown,null, stand);
+                ImageLoader.addImageOfObject(DIR_1, standDown, null, stand);
 
 
 
-                new Thread(new Runnable() {
-                    public void run() {
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/right");
-                        ImageLoader.addImageOfObject(DIR_1, right,null, side);
+                        ImageLoader.addImageOfObject(DIR_1, right, null, side);
 
                         DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/left");
-                        ImageLoader.addImageOfObject(DIR_1, left,null, side);
+                        ImageLoader.addImageOfObject(DIR_1, left, null, side);
 
 
 
-                    }
-                }).start();
 
-new Thread(new Runnable() {
-    public void run() {
-        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/down");
-        ImageLoader.addImageOfObject(DIR_1, down,null, upDown);
 
-        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/up");
-        ImageLoader.addImageOfObject(DIR_1, up,null, upDown);
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/down");
+                        ImageLoader.addImageOfObject(DIR_1, down, null, upDown);
 
-    }
-}).start();
+                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/walk/up");
+                        ImageLoader.addImageOfObject(DIR_1, up, null, upDown);
+
+
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/spacielAttack");
-                ImageLoader.addImageOfObject(DIR_1, spacielAttackA,null, stand);
+                ImageLoader.addImageOfObject(DIR_1, spacielAttackA, null, stand);
 
                 DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/left");
-                ImageLoader.addImageOfObject(DIR_1, attackLeft,null, side);
+                ImageLoader.addImageOfObject(DIR_1, attackLeft, null, side);
 
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/up");
-                        ImageLoader.addImageOfObject(DIR_1, attackUp,null, upDown);
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/up");
+                ImageLoader.addImageOfObject(DIR_1, attackUp, null, upDown);
 
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/down");
-                        ImageLoader.addImageOfObject(DIR_1, attackDown,null, side);
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/down");
+                ImageLoader.addImageOfObject(DIR_1, attackDown, null, side);
 
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/right");
-                        ImageLoader.addImageOfObject(DIR_1, attackRight,null, upDown);
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/attack/right");
+                ImageLoader.addImageOfObject(DIR_1, attackRight, null, upDown);
 
-                        DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/die");
-                        ImageLoader.addImageOfObject(DIR_1, die,null, upDown);
-
-
-
-
+                DIR_1 = new File("src/main/java/ImageHandel/Photos/character/" + type2 + "/die");
+                ImageLoader.addImageOfObject(DIR_1, die, null, upDown);
 
 
             }
@@ -172,7 +159,7 @@ new Thread(new Runnable() {
         right = new ArrayList<ImageIcon>();
 
         standDown = new ArrayList<ImageIcon>();
-        spacielAttackA=new ArrayList<ImageIcon>();
+        spacielAttackA = new ArrayList<ImageIcon>();
 
         attackLeft = new ArrayList<ImageIcon>();
         attackDown = new ArrayList<ImageIcon>();
@@ -190,7 +177,7 @@ new Thread(new Runnable() {
                 while (true) {
 
 
-                    setImageFrameRate(getImageFrameRate()+1);
+                    setImageFrameRate(getImageFrameRate() + 1);
 
                     setPlace();
 
@@ -198,7 +185,6 @@ new Thread(new Runnable() {
                     checkedMainPlayerInteractWithMonster();
                     setLocationOfMainPlayerWhenFightTheGhost();
                     addLifeToPlayer();
-
 
 
                     try {
@@ -220,7 +206,7 @@ new Thread(new Runnable() {
     private void addLifeToPlayer() {
 
         if (!isAttacking() && isWalking()) {
-            setAddLifeToMainPlayer(getAddLifeToMainPlayer()+1);
+            setAddLifeToMainPlayer(getAddLifeToMainPlayer() + 1);
             if (getAddLifeToMainPlayer() == 15 && getLife().getjProgressBar().getValue() < getLife().getjProgressBar().getMaximum()) {
                 setAddLifeToMainPlayer(0);
 
@@ -238,7 +224,7 @@ new Thread(new Runnable() {
             for (Ghost g : StaticVariables.world.getGhostArrayList()) {
                 try {
 
-                    if (g.isStopMoving()&&g.getLifeBar().isAlive())
+                    if (g.isStopMoving() && g.getLifeBar().isAlive())
                         setIntersect(g.isStopMoving());
 
                     else
@@ -322,42 +308,47 @@ new Thread(new Runnable() {
 
     }
 
+
+
     private void setPlace() {
 
 
         if (getImageFrameRate() % 20 == 0)
             footStep = new FootStep();
-        try {
-            checkIfWalking();
-            checkIfStand();
-            checkIfAttacking();
-            checkIfSpacialAttack();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        checkIfWalking();
+        checkIfStand();
+        checkIfAttacking();
+        checkIfSpacialAttack();
+
         index++;
 
     }
 
     private void checkIfSpacialAttack() {
-        if(isSpacielAttack())
-        {
+        try {
 
 
-            setAttacking(false);
-            setStand(false);
-            setWalking(false);
-            if(getIndex()>=getSpacielAttackA().size()-1)
-            {
-                setIndex(getSpacielAttackA().size()-1);
+            if (isSpacielAttack()) {
 
+
+                setAttacking(false);
+                setStand(false);
+                setWalking(false);
+                if (getIndex() >= getSpacielAttackA().size() - 1) {
+                    setIndex(getSpacielAttackA().size() - 1);
+
+
+                }
+
+                setIcon(getSpacielAttackA().get(getIndex()));
+                if (getIndex() == 40)
+                    vibrateTheScreen();
 
             }
-
-            setIcon(getSpacielAttackA().get(getIndex()));
-            if(getIndex()==40)
-                vibrateTheScreen();
-
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -367,9 +358,8 @@ new Thread(new Runnable() {
                 try {
                     Thread.sleep(2500);
 
-                    while (GamePanel.jProgressBar.getValue()>0)
-                    {
-                        GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue()-1);
+                    while (GamePanel.jProgressBar.getValue() > 0) {
+                        GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue() - 1);
                         Thread.sleep(10);
                     }
                 } catch (InterruptedException e) {
@@ -379,23 +369,23 @@ new Thread(new Runnable() {
         }).start();
         new Thread(new Runnable() {
 
-            boolean dir=false;
+            boolean dir = false;
+
             public void run() {
 
-                while (isIntersect())
-                {
+                while (isIntersect()) {
 
-                    earthQuaqe.playSound(Sound.path.get(5),true);
-                    for (Ghost g:World.ghostArrayList) {
-                        g.decreaseLife(50);
+                    earthQuaqe.playSound(Sound.path.get(5), true);
+                    for (Ghost g : World.ghostArrayList) {
+                        g.decreaseLife(20);
                     }
                     int x;
-                    if(dir)
-                    x=30;
+                    if (dir)
+                        x = 30;
                     else
-                        x=-30;
-                    dir=!dir;
-                    StaticVariables.world.setLocation(StaticVariables.world.getX()+x,StaticVariables.world.getY());
+                        x = -30;
+                    dir = !dir;
+                    StaticVariables.world.setLocation(StaticVariables.world.getX() + x, StaticVariables.world.getY());
 
                     try {
                         Thread.sleep(40);
@@ -413,33 +403,44 @@ new Thread(new Runnable() {
     }
 
     private void checkIfAttacking() {
-
-        if (isAttacking()) {
-            setSize(getxSpriteSheet(),getySprtieSheet());
-
-            setTheMainPlayerAttackSound();
+        try {
 
 
-            if (isLeftFromTheGhost()) {
-                checkIndexOutOfBound(getAttackRight());
-                setIcon((getAttackRight().get(getIndex())));
-            } else if (isRightFromTheGhost()) {
-                checkIndexOutOfBound(getAttackLeft());
-                setIcon((getAttackLeft().get(getIndex())));
+            if (isAttacking()) {
+                setSize(getxSpriteSheet(), getySprtieSheet());
 
-            } else if (isDownFromTheGhost()) {
-                checkIndexOutOfBound(getAttackUp());
-                setIcon((getAttackUp().get(getIndex())));
+                setTheMainPlayerAttackSound();
 
-            } else if (isUpFromTheGhost()) {
-                checkIndexOutOfBound(getAttackDown());
-                setIcon((getAttackDown().get(getIndex())));
 
+                if (isLeftFromTheGhost()) {
+                    checkIndexOutOfBound(getAttackRight());
+                    setIcon((getAttackRight().get(getIndex())));
+                } else if (isRightFromTheGhost()) {
+                    checkIndexOutOfBound(getAttackLeft());
+                    setIcon((getAttackLeft().get(getIndex())));
+
+                } else if (isDownFromTheGhost()) {
+                    checkIndexOutOfBound(getAttackUp());
+                    setIcon((getAttackUp().get(getIndex())));
+
+                } else if (isUpFromTheGhost()) {
+                    checkIndexOutOfBound(getAttackDown());
+                    setIcon((getAttackDown().get(getIndex())));
+
+                }
             }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
     }
 
+
+
         private void checkIfWalking() {
+
+        try
+        {
+
 
             if (isWalking()) {
 
@@ -537,7 +538,10 @@ new Thread(new Runnable() {
                 }
 
             }
-
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         }
 
         private void checkIndexOutOfBound (ArrayList < ImageIcon > arralist) {
@@ -970,18 +974,25 @@ new Thread(new Runnable() {
     }
 
     private void checkIfStand() {
-        if (stand) {
+        try {
 
-            setSize(xSpriteSheet,ySprtieSheet);
-            attackingSound.stopSound();
-            walkingSound.stopSound();
-            if (index >= standDown.size())
-                index = 0;
-            if (standDown.size() > 0)
-                setIcon((standDown.get(index)));
-            attacking = false;
-            walking = false;
+
+            if (stand) {
+
+                setSize(xSpriteSheet, ySprtieSheet);
+                attackingSound.stopSound();
+                walkingSound.stopSound();
+                if (index >= standDown.size())
+                    index = 0;
+                if (standDown.size() > 0)
+                    setIcon((standDown.get(index)));
+                attacking = false;
+                walking = false;
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
-
     }
 }

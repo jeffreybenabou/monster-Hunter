@@ -70,7 +70,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
                         new Thread(new Runnable() {
                             public void run() {
-
+// TODO: 21/07/2018 change the image to main player attack
                                 ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/stand/"),null,aMale,new Dimension(500,400));
                                 male.setIcon(new ImageIcon(aMale.get(0)));
 

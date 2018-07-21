@@ -20,7 +20,7 @@ public class Ghost extends GameObject {
 
     private static String pathOfFile;
 
-    public static Vector<Image>
+    public static ArrayList<ImageIcon>
             moveLeft,
             moveRight,
             moveUp,
@@ -108,17 +108,17 @@ public class Ghost extends GameObject {
     }
 
     public static void addTheVector() {
-        moveLeft =new Vector<Image>();
-        moveRight =new Vector<Image>();
-        moveUp =new Vector<Image>();
-        moveDown =new Vector<Image>();
+        moveLeft =new ArrayList<ImageIcon>();
+        moveRight =new ArrayList<ImageIcon>();
+        moveUp =new ArrayList<ImageIcon>();
+        moveDown =new ArrayList<ImageIcon>();
 
-        attackDown=new Vector<Image>();
-        attackLeft=new Vector<Image>();
-        attackRight=new Vector<Image>();
-        attackUp=new Vector<Image>();
+        attackDown=new ArrayList<ImageIcon>();
+        attackLeft=new ArrayList<ImageIcon>();
+        attackRight=new ArrayList<ImageIcon>();
+        attackUp=new ArrayList<ImageIcon>();
 
-        dead=new Vector<Image>();
+        dead=new ArrayList<ImageIcon>();
 
 
     }
@@ -179,7 +179,7 @@ public class Ghost extends GameObject {
         index=0;
         while (index<dead.size())
         {
-            setIcon(new ImageIcon(dead.get(index)));
+            setIcon(dead.get(index));
             index++;
             try {
                 Thread.sleep(15);
@@ -323,50 +323,50 @@ public class Ghost extends GameObject {
 
 
                 File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_down/");
-                ImageLoader.addImageOfObject(DIR_1,null, attackDown,dimension);
+                ImageLoader.addImageOfObject(DIR_1,attackDown, null,dimension);
 
 
                   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_left/");
-                ImageLoader.addImageOfObject(DIR_1,null, attackLeft,dimension);
+                ImageLoader.addImageOfObject(DIR_1,attackLeft, null,dimension);
 
 
 
 
                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_right/");
-                ImageLoader.addImageOfObject(DIR_1,null, attackRight,dimension);
+                ImageLoader.addImageOfObject(DIR_1,attackRight, null,dimension);
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_up/");
-                ImageLoader.addImageOfObject(DIR_1,null, attackUp,dimension);
+                ImageLoader.addImageOfObject(DIR_1,attackUp, null,dimension);
 
 
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_up/");
-                ImageLoader.addImageOfObject(DIR_1,null, moveUp,dimension);
+                ImageLoader.addImageOfObject(DIR_1,moveUp, null,dimension);
 
 
                       DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_right/");
-                ImageLoader.addImageOfObject(DIR_1,null, moveRight,dimension);
+                ImageLoader.addImageOfObject(DIR_1,moveRight, null,dimension);
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_left/");
-                ImageLoader.addImageOfObject(DIR_1,null, moveLeft,dimension);
+                ImageLoader.addImageOfObject(DIR_1,moveLeft, null,dimension);
 
 
 
                     DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_down/");
-                ImageLoader.addImageOfObject(DIR_1,null, moveDown,dimension);
+                ImageLoader.addImageOfObject(DIR_1,moveDown, null,dimension);
 
 
 
 
 
             DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/dead/");
-        ImageLoader.addImageOfObject(DIR_1,null, dead,dimension);
+        ImageLoader.addImageOfObject(DIR_1,dead, null,dimension);
 
 
 
@@ -384,15 +384,15 @@ public class Ghost extends GameObject {
                     dirUp = false;
                     dirRight = false;
                      if (MainPlayer.isWalking())
-                         setIcon(new ImageIcon(moveRight.get(index)));
+                         setIcon(moveRight.get(index));
                     else if (StaticVariables.mainPlayer.isLeftFromTheGhost())
-                        setIcon(new ImageIcon(attackLeft.get(index)));
+                        setIcon((attackLeft.get(index)));
                     else if (StaticVariables.mainPlayer.isDownFromTheGhost())
-                         setIcon(new ImageIcon(attackDown.get(index)));
+                         setIcon((attackDown.get(index)));
                     else if (StaticVariables.mainPlayer.isRightFromTheGhost())
-                        setIcon(new ImageIcon(attackRight.get(index)));
+                        setIcon((attackRight.get(index)));
                     else if (StaticVariables.mainPlayer.isUpFromTheGhost())
-                         setIcon(new ImageIcon(attackUp.get(index)));
+                         setIcon((attackUp.get(index)));
 
                     decreaceMainPlayerLife();
 
@@ -409,13 +409,13 @@ public class Ghost extends GameObject {
                         setTheDir();
 
                     if (dirLeft)
-                        setIcon(new ImageIcon(moveLeft.get(index)));
+                        setIcon((moveLeft.get(index)));
                     if (dirRight)
-                        setIcon(new ImageIcon(moveRight.get(index)));
+                        setIcon((moveRight.get(index)));
                     if (dirUp)
-                        setIcon(new ImageIcon(moveUp.get(index)));
+                        setIcon((moveUp.get(index)));
                     if (dirDown)
-                        setIcon(new ImageIcon(moveDown.get(index)));
+                        setIcon((moveDown.get(index)));
                 }
 
 
@@ -428,6 +428,9 @@ public class Ghost extends GameObject {
 
             index++;
         } catch (ArrayIndexOutOfBoundsException e) {
+
+        }catch (IndexOutOfBoundsException e)
+        {
 
         }
 
@@ -510,75 +513,75 @@ public class Ghost extends GameObject {
         Ghost.pathOfFile = pathOfFile;
     }
 
-    public static Vector<Image> getMoveLeft() {
+    public static ArrayList<ImageIcon> getMoveLeft() {
         return moveLeft;
     }
 
-    public static void setMoveLeft(Vector<Image> moveLeft) {
+    public static void setMoveLeft(ArrayList<ImageIcon> moveLeft) {
         Ghost.moveLeft = moveLeft;
     }
 
-    public static Vector<Image> getMoveRight() {
+    public static ArrayList<ImageIcon> getMoveRight() {
         return moveRight;
     }
 
-    public static void setMoveRight(Vector<Image> moveRight) {
+    public static void setMoveRight(ArrayList<ImageIcon> moveRight) {
         Ghost.moveRight = moveRight;
     }
 
-    public static Vector<Image> getMoveUp() {
+    public static ArrayList<ImageIcon> getMoveUp() {
         return moveUp;
     }
 
-    public static void setMoveUp(Vector<Image> moveUp) {
+    public static void setMoveUp(ArrayList<ImageIcon> moveUp) {
         Ghost.moveUp = moveUp;
     }
 
-    public static Vector<Image> getMoveDown() {
+    public static ArrayList<ImageIcon> getMoveDown() {
         return moveDown;
     }
 
-    public static void setMoveDown(Vector<Image> moveDown) {
+    public static void setMoveDown(ArrayList<ImageIcon> moveDown) {
         Ghost.moveDown = moveDown;
     }
 
-    public static Vector<Image> getAttackLeft() {
+    public static ArrayList<ImageIcon> getAttackLeft() {
         return attackLeft;
     }
 
-    public static void setAttackLeft(Vector<Image> attackLeft) {
+    public static void setAttackLeft(ArrayList<ImageIcon> attackLeft) {
         Ghost.attackLeft = attackLeft;
     }
 
-    public static Vector<Image> getAttackRight() {
+    public static ArrayList<ImageIcon> getAttackRight() {
         return attackRight;
     }
 
-    public static void setAttackRight(Vector<Image> attackRight) {
+    public static void setAttackRight(ArrayList<ImageIcon> attackRight) {
         Ghost.attackRight = attackRight;
     }
 
-    public static Vector<Image> getAttackUp() {
+    public static ArrayList<ImageIcon> getAttackUp() {
         return attackUp;
     }
 
-    public static void setAttackUp(Vector<Image> attackUp) {
+    public static void setAttackUp(ArrayList<ImageIcon> attackUp) {
         Ghost.attackUp = attackUp;
     }
 
-    public static Vector<Image> getAttackDown() {
+    public static ArrayList<ImageIcon> getAttackDown() {
         return attackDown;
     }
 
-    public static void setAttackDown(Vector<Image> attackDown) {
+    public static void setAttackDown(ArrayList<ImageIcon> attackDown) {
         Ghost.attackDown = attackDown;
     }
 
-    public static Vector<Image> getDead() {
+    public static ArrayList<ImageIcon> getDead() {
         return dead;
     }
 
-    public static void setDead(Vector<Image> dead) {
+    public static void setDead(ArrayList<ImageIcon> dead) {
         Ghost.dead = dead;
     }
 

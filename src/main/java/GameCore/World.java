@@ -111,6 +111,7 @@ public class World extends JLabel implements MouseListener {
                             for (int i = 0; i <1 ; i++) {
 
                                 Ghost ghost=new Ghost(1);
+
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
                                 getGhostArrayList().add(ghost);

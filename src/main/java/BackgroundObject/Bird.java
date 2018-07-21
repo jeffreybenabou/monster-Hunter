@@ -14,14 +14,15 @@ import java.util.Vector;
 public class Bird extends GameObject  {
 
     private static   boolean firstLoad=true;
-    private int index=0;
+    private int index=0,imageFrameRate=0;
     public static ArrayList<ImageIcon> birdLeft,birdRight;
     private boolean left,down;
 
     public Bird(int x ,int y){
         if(firstLoad)
         {
-            birdLeft=new ArrayList<ImageIcon>();
+            setBirdLeft(new ArrayList<ImageIcon>());
+
             birdRight=new ArrayList<ImageIcon>();
             ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/left/"),birdLeft,null,new Dimension(200,200));
             ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),birdRight,null,new Dimension(200,200));
@@ -39,11 +40,13 @@ public class Bird extends GameObject  {
             public void run() {
                 while (true) {
                     try {
+                        imageFrameRate++;
                     if (left)
                     {
-                        // TODO: 02/07/2018 change the bird icon
+
 
                         setLocation(getX()-1,getY());
+                        if(imageFrameRate%10==0)
                         setIcon(birdLeft.get(index));
 
 
@@ -51,7 +54,8 @@ public class Bird extends GameObject  {
                     else
                     {
                         setLocation(getX()+1,getY());
-                        setIcon((birdRight.get(index)));
+                        if(imageFrameRate%10==0)
+                            setIcon((birdRight.get(index)));
 
                     }
                     if(down)
@@ -64,7 +68,7 @@ public class Bird extends GameObject  {
                     checkIfIntercet();
 
 
-                        Thread.sleep(20);
+                        Thread.sleep(15);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -99,5 +103,61 @@ public class Bird extends GameObject  {
         }
 
 
+    }
+
+    public static boolean isFirstLoad() {
+        return firstLoad;
+    }
+
+    public static void setFirstLoad(boolean firstLoad) {
+        Bird.firstLoad = firstLoad;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getImageFrameRate() {
+        return imageFrameRate;
+    }
+
+    public void setImageFrameRate(int imageFrameRate) {
+        this.imageFrameRate = imageFrameRate;
+    }
+
+    public static ArrayList<ImageIcon> getBirdLeft() {
+        return birdLeft;
+    }
+
+    public static void setBirdLeft(ArrayList<ImageIcon> birdLeft) {
+        Bird.birdLeft = birdLeft;
+    }
+
+    public static ArrayList<ImageIcon> getBirdRight() {
+        return birdRight;
+    }
+
+    public static void setBirdRight(ArrayList<ImageIcon> birdRight) {
+        Bird.birdRight = birdRight;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
     }
 }

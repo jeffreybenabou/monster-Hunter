@@ -2,14 +2,19 @@ package GameCore;
 
 
 
+import BackgroundObject.FootStep;
 import Objects.Ghost;
 import Objects.MainPlayer;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.security.Key;
+import java.util.ArrayList;
 
-public class GamePanel extends JLabel {
+public class GamePanel extends JLabel implements KeyListener {
 
 
     private JLabel lifeBar;
@@ -18,6 +23,9 @@ public class GamePanel extends JLabel {
     private JLabel settingLabel;
     private JLabel moneyIcon;
     public static JProgressBar jProgressBar;
+
+    JTextField jTextField=new JTextField(),jTextField1=new JTextField();
+
 
     private Font font=new Font("Serif", Font.BOLD, 20);
 
@@ -30,7 +38,16 @@ public class GamePanel extends JLabel {
         addMoneyLabel();
         addSpacialAttack();
 
+        jTextField.setBounds(100,300,100,30);
+        jTextField1.setBounds(100,400,100,30);
+        jTextField.addKeyListener(this);
+        jTextField1.addKeyListener(this);
+        add(jTextField);
+        add(jTextField1);
+
+
     }
+
     private void addSpacialAttack() {
         JLabel jLabel=new JLabel();
         jLabel.setBounds(50,0,345,11);
@@ -106,4 +123,24 @@ public class GamePanel extends JLabel {
     }
 
 
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    public void keyPressed(KeyEvent e) {
+
+        JTextField jTextField5 = (JTextField) e.getComponent();
+        if (jTextField5.getText().matches("[0-9]+"))
+        {
+
+            if(e.getComponent().equals(jTextField))
+            FootStep.x=Integer.parseInt(jTextField5.getText());
+            else
+            FootStep.y=Integer.parseInt(jTextField5.getText());
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+
+    }
 }
