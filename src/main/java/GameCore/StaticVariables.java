@@ -40,7 +40,9 @@ public class StaticVariables {
     tree,
     trunk,
     cloud,
-    houseNum1,houseNum2,houseNum3;
+    houseNum1,houseNum2,houseNum3,
+    crack,
+    key1,key2,key3;
 
 
     public static GamePanel gamePanel;
@@ -49,6 +51,7 @@ public class StaticVariables {
     public static MainClass mainClass;
     public static MainPlayer mainPlayer;
     public static MiniMap miniMap;
+
 
 
     public static int level=1;
@@ -63,6 +66,9 @@ public class StaticVariables {
         new Thread(new Runnable() {
             public void run() {
 
+                key1=ImageLoader.loadImage("Photos/house/key1.png");
+                key2=ImageLoader.loadImage("Photos/house/key2.png");
+                key3=ImageLoader.loadImage("Photos/house/key3.png");
 
                 startButton=ImageLoader.loadImage("Photos/menuButton/newGame.png");
                 exitButton=ImageLoader.loadImage("Photos/menuButton/exit.png");
@@ -112,6 +118,7 @@ public class StaticVariables {
                 moneyIcon=ImageLoader.loadImage("Photos/worldFrame/money_icon.png");
                 tree=ImageLoader.loadImage("Photos/world/tree.png");
                 trunk=ImageLoader.loadImage("Photos/world/trunk.png");
+                crack=ImageLoader.loadImage("Photos/crack.png");
                 houseNum1=ImageLoader.loadImage("Photos/house/house1.png");
                 houseNum2=ImageLoader.loadImage("Photos/house/house2.png");
                 houseNum3=ImageLoader.loadImage("Photos/house/house3.png");

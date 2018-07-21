@@ -31,7 +31,7 @@ public class World extends JLabel implements MouseListener {
         setLayout(null);
         setBackground(Color.GRAY);
         backGroundWorld=new Sound();
-        backGroundWorld.playSound(Sound.path.get(4),true);
+        backGroundWorld.playSound(Sound.path.get(4));
         backGroundWorld.setVolume(-10);
         setOpaque(true);
         addMouseListener(this);
@@ -108,7 +108,7 @@ public class World extends JLabel implements MouseListener {
                     switch (StaticVariables.level)
                     {
                         case 1:{
-                            for (int i = 0; i <1 ; i++) {
+                            for (int i = 0; i <6 ; i++) {
 
                                 Ghost ghost=new Ghost(1);
 
@@ -125,7 +125,7 @@ public class World extends JLabel implements MouseListener {
 
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <100 ; i++) {
+                            for (int i = 0; i <7 ; i++) {
                                 Ghost ghost=new Ghost(2);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
@@ -265,7 +265,7 @@ public class World extends JLabel implements MouseListener {
 
         if(
                 MainPlayer.intersect
-                &&!StaticVariables.mainPlayer.isAttacking()&&e.getComponent().getClass().getSimpleName().equals("Ghost"))
+                &&!MainPlayer.isAttacking()&&e.getComponent().getClass().getSimpleName().equals("Ghost"))
         {
             Ghost ghost=(Ghost)e.getComponent();
             MainPlayer.walking=false;
@@ -274,7 +274,7 @@ public class World extends JLabel implements MouseListener {
             StaticVariables.mainPlayer.setDamgeToGhost(10);
             StaticVariables.mainPlayer.setIndex(0);
             // TODO: 29/06/2018 work on upgrade
-            StaticVariables.mainPlayer.setAttacking(true);
+            MainPlayer.setAttacking(true);
 
         }
     }
@@ -284,7 +284,7 @@ public class World extends JLabel implements MouseListener {
     }
 
     public void mousePressed(MouseEvent e) {
-        
+
 
         if(e.getButton()==MouseEvent.BUTTON2)
         {
@@ -294,19 +294,23 @@ public class World extends JLabel implements MouseListener {
                 StaticVariables.mainPlayer.setIndex(0);
                 MainPlayer.spacielAttack=true;
 
+
             }
 
         }
         if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacielAttack)
         {
+
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
+
 
         }
         if(e.getButton()==MouseEvent.BUTTON3&&!MainPlayer.spacielAttack)
         {
             MainPlayer.walking=false;
             MainPlayer.stand=true;
+
         }
 
 

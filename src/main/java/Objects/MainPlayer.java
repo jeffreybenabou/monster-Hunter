@@ -1,14 +1,18 @@
 package Objects;
 
 import BackgroundObject.FootStep;
+import BackgroundObject.GroundCrack;
 import GameCore.*;
 import ImageHandel.ImageLoader;
 import sound.Sound;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
@@ -19,7 +23,7 @@ public class MainPlayer extends GameObject {
     public static boolean spacielAttack;
 
 
-    private Sound walkingSound, attackingSound, spacielSound, earthQuaqe;
+    public static Sound walkingSound, attackingSound, earthQuaqe;
     public static int imageFrameRate = 0, addLifeToMainPlayer = 0;
     public static boolean intersect = false;
     private int xSpriteSheet = 350, ySprtieSheet = 320, index = 0, imageSpeed = 3, damgeToGhost;
@@ -57,7 +61,12 @@ public class MainPlayer extends GameObject {
         walkingSound = new Sound();
         attackingSound = new Sound();
         earthQuaqe = new Sound();
-
+        getWalkingSound().playSound(Sound.path.get(0));
+        getWalkingSound().setVolume(-80);
+        getEarthQuaqe().playSound(Sound.path.get(5));
+        getEarthQuaqe().setVolume(-80);
+        getWalkingSound().setVolume(-80);
+        setTheMainPlayerAttackSound();
         setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
         point = new Point(getX(), getY());
         setTheUserAction();
@@ -141,12 +150,12 @@ public class MainPlayer extends GameObject {
 
     private void setTheMainPlayerAttackSound() {
         if (type.equals("male")) {
-            attackingSound.playSound(Sound.path.get(1), false);
-            attackingSound.setVolume(-15);
+            attackingSound.playSound(Sound.path.get(1));
+            attackingSound.setVolume(-80);
         } else {
-            attackingSound.playSound(Sound.path.get(3), false);
+            attackingSound.playSound(Sound.path.get(3));
 
-            attackingSound.setVolume(-15);
+            attackingSound.setVolume(-80);
         }
 
     }
@@ -171,6 +180,21 @@ public class MainPlayer extends GameObject {
     }
 
     private void setTheUserAction() {
+
+        new Thread(new Runnable() {
+            public void run() {
+                while (true)
+                {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    checkSoundStatus();
+                }
+            }
+        }).start();
+
         new Thread(new Runnable() {
             public void run() {
 
@@ -316,6 +340,7 @@ public class MainPlayer extends GameObject {
         if (getImageFrameRate() % 20 == 0)
             footStep = new FootStep();
 
+
         checkIfWalking();
         checkIfStand();
         checkIfAttacking();
@@ -325,11 +350,39 @@ public class MainPlayer extends GameObject {
 
     }
 
+    public static void checkSoundStatus() {
+        if(isStand())
+        {
+            getWalkingSound().setVolume(-80);
+            getAttackingSound().setVolume(-80);
+            getEarthQuaqe().setVolume(-80);
+        }
+        if(isWalking())
+        {
+            getWalkingSound().setVolume(6);
+            getAttackingSound().setVolume(-80);
+            getEarthQuaqe().setVolume(-80);
+        }
+         if(isAttacking())
+        {
+            getWalkingSound().setVolume(-80);
+            getAttackingSound().setVolume(6);
+            getEarthQuaqe().setVolume(-80);
+        }
+         if(isSpacielAttack())
+        {
+            getWalkingSound().setVolume(-80);
+            getAttackingSound().setVolume(-80);
+            getEarthQuaqe().setVolume(6);
+        }
+    }
+
     private void checkIfSpacialAttack() {
         try {
 
 
             if (isSpacielAttack()) {
+
 
 
                 setAttacking(false);
@@ -373,11 +426,14 @@ public class MainPlayer extends GameObject {
 
             public void run() {
 
+                GroundCrack groundCrack=new GroundCrack(StaticVariables.mainPlayer.getX(),StaticVariables.mainPlayer.getY()+200);
+                StaticVariables.world.add(groundCrack);
                 while (isIntersect()) {
 
-                    earthQuaqe.playSound(Sound.path.get(5), true);
+                    earthQuaqe.playSound(Sound.path.get(5));
+
                     for (Ghost g : World.ghostArrayList) {
-                        g.decreaseLife(20);
+                        g.decreaseLife(50);
                     }
                     int x;
                     if (dir)
@@ -394,7 +450,7 @@ public class MainPlayer extends GameObject {
                     }
 
                 }
-                earthQuaqe.stopSound();
+
                 setSpacielAttack(false);
                 setStand(true);
 
@@ -407,9 +463,11 @@ public class MainPlayer extends GameObject {
 
 
             if (isAttacking()) {
+
+
                 setSize(getxSpriteSheet(), getySprtieSheet());
 
-                setTheMainPlayerAttackSound();
+
 
 
                 if (isLeftFromTheGhost()) {
@@ -443,14 +501,6 @@ public class MainPlayer extends GameObject {
 
 
             if (isWalking()) {
-
-                setSize(getxSpriteSheet(),getySprtieSheet());
-                getAttackingSound().stopSound();
-
-                        getWalkingSound().playSound(Sound.path.get(0), false);
-
-
-
 
                 if (getIndex() >= getLeft().size()-1)
                     setIndex(0);
@@ -538,6 +588,7 @@ public class MainPlayer extends GameObject {
                 }
 
             }
+
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -592,107 +643,21 @@ public class MainPlayer extends GameObject {
 
         }
 
+    public static int getSumOfLife() {
+        return sumOfLife;
+    }
 
-        public static int getSumOfLife () {
-            return sumOfLife;
-        }
+    public static void setSumOfLife(int sumOfLife) {
+        MainPlayer.sumOfLife = sumOfLife;
+    }
 
-        public static void setSumOfLife ( int sumOfLife){
-            MainPlayer.sumOfLife = sumOfLife;
-        }
+    public static Life getLife() {
+        return life;
+    }
 
-        public static Life getLife () {
-            return life;
-        }
-
-        public static void setLife (Life life){
-            MainPlayer.life = life;
-        }
-
-        public int getxSpriteSheet () {
-            return xSpriteSheet;
-        }
-
-        public void setxSpriteSheet ( int xSpriteSheet){
-            this.xSpriteSheet = xSpriteSheet;
-        }
-
-        public int getySprtieSheet () {
-            return ySprtieSheet;
-        }
-
-        public void setySprtieSheet ( int ySprtieSheet){
-            this.ySprtieSheet = ySprtieSheet;
-        }
-
-        public int getIndex () {
-            return index;
-        }
-
-        public void setIndex ( int index){
-            this.index = index;
-        }
-
-        public int getImageFrameRate () {
-            return imageFrameRate;
-        }
-
-        public void setImageFrameRate ( int imageFrameRate){
-            this.imageFrameRate = imageFrameRate;
-        }
-
-        public int getImageSpeed () {
-            return imageSpeed;
-        }
-
-        public void setImageSpeed ( int imageSpeed){
-            this.imageSpeed = imageSpeed;
-        }
-
-        public static String getNameOfPlayer () {
-            return nameOfPlayer;
-        }
-
-        public static void setNameOfPlayer (String nameOfPlayer){
-            MainPlayer.nameOfPlayer = nameOfPlayer;
-        }
-
-
-        public boolean isAttacking () {
-            return attacking;
-        }
-
-        public void setAttacking ( boolean attacking){
-            this.attacking = attacking;
-        }
-
-        public static boolean isWalking () {
-            return walking;
-        }
-
-        public static void setWalking ( boolean walking){
-            MainPlayer.walking = walking;
-        }
-
-        public static Point getPoint () {
-            return point;
-        }
-
-        public static void setPoint (Point point){
-            MainPlayer.point = point;
-        }
-
-        public boolean isLeftFromTheGhost () {
-            return leftFromTheGhost;
-        }
-
-        public int getDamgeToGhost () {
-            return damgeToGhost;
-        }
-
-        public void setDamgeToGhost ( int damgeToGhost){
-            this.damgeToGhost = damgeToGhost;
-        }
+    public static void setLife(Life life) {
+        MainPlayer.life = life;
+    }
 
     public static boolean isSpacielAttack() {
         return spacielAttack;
@@ -702,20 +667,36 @@ public class MainPlayer extends GameObject {
         MainPlayer.spacielAttack = spacielAttack;
     }
 
-    public Sound getWalkingSound() {
+    public static Sound getWalkingSound() {
         return walkingSound;
     }
 
-    public void setWalkingSound(Sound walkingSound) {
-        this.walkingSound = walkingSound;
+    public static void setWalkingSound(Sound walkingSound) {
+        MainPlayer.walkingSound = walkingSound;
     }
 
-    public Sound getAttackingSound() {
+    public static Sound getAttackingSound() {
         return attackingSound;
     }
 
-    public void setAttackingSound(Sound attackingSound) {
-        this.attackingSound = attackingSound;
+    public static void setAttackingSound(Sound attackingSound) {
+        MainPlayer.attackingSound = attackingSound;
+    }
+
+    public static Sound getEarthQuaqe() {
+        return earthQuaqe;
+    }
+
+    public static void setEarthQuaqe(Sound earthQuaqe) {
+        MainPlayer.earthQuaqe = earthQuaqe;
+    }
+
+    public static int getImageFrameRate() {
+        return imageFrameRate;
+    }
+
+    public static void setImageFrameRate(int imageFrameRate) {
+        MainPlayer.imageFrameRate = imageFrameRate;
     }
 
     public static int getAddLifeToMainPlayer() {
@@ -734,6 +715,54 @@ public class MainPlayer extends GameObject {
         MainPlayer.intersect = intersect;
     }
 
+    public int getxSpriteSheet() {
+        return xSpriteSheet;
+    }
+
+    public void setxSpriteSheet(int xSpriteSheet) {
+        this.xSpriteSheet = xSpriteSheet;
+    }
+
+    public int getySprtieSheet() {
+        return ySprtieSheet;
+    }
+
+    public void setySprtieSheet(int ySprtieSheet) {
+        this.ySprtieSheet = ySprtieSheet;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getImageSpeed() {
+        return imageSpeed;
+    }
+
+    public void setImageSpeed(int imageSpeed) {
+        this.imageSpeed = imageSpeed;
+    }
+
+    public int getDamgeToGhost() {
+        return damgeToGhost;
+    }
+
+    public void setDamgeToGhost(int damgeToGhost) {
+        this.damgeToGhost = damgeToGhost;
+    }
+
+    public static String getNameOfPlayer() {
+        return nameOfPlayer;
+    }
+
+    public static void setNameOfPlayer(String nameOfPlayer) {
+        MainPlayer.nameOfPlayer = nameOfPlayer;
+    }
+
     public static String getType() {
         return type;
     }
@@ -742,12 +771,100 @@ public class MainPlayer extends GameObject {
         MainPlayer.type = type;
     }
 
+    public static boolean isAttacking() {
+        return attacking;
+    }
+
+    public static void setAttacking(boolean attacking) {
+        MainPlayer.attacking = attacking;
+    }
+
+    public static boolean isWalking() {
+        return walking;
+    }
+
+    public static void setWalking(boolean walking) {
+        MainPlayer.walking = walking;
+    }
+
     public static boolean isStand() {
         return stand;
     }
 
     public static void setStand(boolean stand) {
         MainPlayer.stand = stand;
+    }
+
+    public static Point getPoint() {
+        return point;
+    }
+
+    public static void setPoint(Point point) {
+        MainPlayer.point = point;
+    }
+
+    public boolean isLeftFromTheGhost() {
+        return leftFromTheGhost;
+    }
+
+    public void setLeftFromTheGhost(boolean leftFromTheGhost) {
+        this.leftFromTheGhost = leftFromTheGhost;
+    }
+
+    public boolean isRightFromTheGhost() {
+        return rightFromTheGhost;
+    }
+
+    public void setRightFromTheGhost(boolean rightFromTheGhost) {
+        this.rightFromTheGhost = rightFromTheGhost;
+    }
+
+    public boolean isUpFromTheGhost() {
+        return upFromTheGhost;
+    }
+
+    public void setUpFromTheGhost(boolean upFromTheGhost) {
+        this.upFromTheGhost = upFromTheGhost;
+    }
+
+    public boolean isDownFromTheGhost() {
+        return downFromTheGhost;
+    }
+
+    public void setDownFromTheGhost(boolean downFromTheGhost) {
+        this.downFromTheGhost = downFromTheGhost;
+    }
+
+    public boolean isIs_stand_left_up() {
+        return is_stand_left_up;
+    }
+
+    public void setIs_stand_left_up(boolean is_stand_left_up) {
+        this.is_stand_left_up = is_stand_left_up;
+    }
+
+    public boolean isIs_stand_left_down() {
+        return is_stand_left_down;
+    }
+
+    public void setIs_stand_left_down(boolean is_stand_left_down) {
+        this.is_stand_left_down = is_stand_left_down;
+    }
+
+    public boolean isIs_stand_right_dowb() {
+        return is_stand_right_dowb;
+    }
+
+    public void setIs_stand_right_dowb(boolean is_stand_right_dowb) {
+        this.is_stand_right_dowb = is_stand_right_dowb;
+    }
+
+    public boolean isIs_stand_right_up() {
+        return is_stand_right_up;
+    }
+
+    public void setIs_stand_right_up(boolean is_stand_right_up) {
+        this.is_stand_right_up = is_stand_right_up;
     }
 
     public static File getDir1() {
@@ -846,20 +963,20 @@ public class MainPlayer extends GameObject {
         MainPlayer.spacielAttackA = spacielAttackA;
     }
 
-    public float getStartTime() {
-        return startTime;
+    public double getAngle() {
+        return angle;
     }
 
-    public void setStartTime(float startTime) {
-        this.startTime = startTime;
+    public void setAngle(double angle) {
+        this.angle = angle;
     }
 
-    public float getStopTime() {
-        return stopTime;
+    public double getDistanceFromPoint() {
+        return distanceFromPoint;
     }
 
-    public void setStopTime(float stopTime) {
-        this.stopTime = stopTime;
+    public void setDistanceFromPoint(double distanceFromPoint) {
+        this.distanceFromPoint = distanceFromPoint;
     }
 
     public long getSpeedOfMove() {
@@ -878,99 +995,20 @@ public class MainPlayer extends GameObject {
         this.footStep = footStep;
     }
 
-    public void setLeftFromTheGhost (boolean leftFromTheGhost){
-            this.leftFromTheGhost = leftFromTheGhost;
-        }
-
-        public boolean isRightFromTheGhost () {
-            return rightFromTheGhost;
-        }
-
-        public void setRightFromTheGhost ( boolean rightFromTheGhost){
-            this.rightFromTheGhost = rightFromTheGhost;
-        }
-
-        public boolean isUpFromTheGhost () {
-            return upFromTheGhost;
-        }
-
-        public void setUpFromTheGhost ( boolean upFromTheGhost){
-            this.upFromTheGhost = upFromTheGhost;
-        }
-
-        public boolean isDownFromTheGhost () {
-            return downFromTheGhost;
-        }
-
-        public void setDownFromTheGhost ( boolean downFromTheGhost){
-            this.downFromTheGhost = downFromTheGhost;
-        }
-
-        public boolean isIs_stand_left_up () {
-            return is_stand_left_up;
-        }
-
-        public void setIs_stand_left_up ( boolean is_stand_left_up){
-            this.is_stand_left_up = is_stand_left_up;
-        }
-
-        public boolean isIs_stand_left_down () {
-            return is_stand_left_down;
-        }
-
-        public void setIs_stand_left_down ( boolean is_stand_left_down){
-            this.is_stand_left_down = is_stand_left_down;
-        }
-
-        public boolean isIs_stand_right_dowb () {
-            return is_stand_right_dowb;
-        }
-
-        public void setIs_stand_right_dowb ( boolean is_stand_right_dowb){
-            this.is_stand_right_dowb = is_stand_right_dowb;
-        }
-
-        public boolean isIs_stand_right_up () {
-            return is_stand_right_up;
-        }
-
-        public void setIs_stand_right_up ( boolean is_stand_right_up){
-            this.is_stand_right_up = is_stand_right_up;
-        }
-
-        public File getDIR_1 () {
-            return DIR_1;
-        }
-
-        public void setDIR_1 (File DIR_1){
-            this.DIR_1 = DIR_1;
-        }
-
-
-        public double getAngle () {
-            return angle;
-        }
-
-        public void setAngle ( double angle){
-            this.angle = angle;
-        }
-
-        public double getDistanceFromPoint () {
-            return distanceFromPoint;
-        }
-
-    public Sound getSpacielSound() {
-        return spacielSound;
+    public float getStartTime() {
+        return startTime;
     }
 
-    public void setSpacielSound(Sound spacielSound) {
-        this.spacielSound = spacielSound;
+    public void setStartTime(float startTime) {
+        this.startTime = startTime;
     }
 
-    public void setDistanceFromPoint (double distanceFromPoint){
-            this.distanceFromPoint = distanceFromPoint;
+    public float getStopTime() {
+        return stopTime;
+    }
 
-
+    public void setStopTime(float stopTime) {
+        this.stopTime = stopTime;
     }
 
     private void checkIfStand() {
@@ -980,8 +1018,8 @@ public class MainPlayer extends GameObject {
             if (stand) {
 
                 setSize(xSpriteSheet, ySprtieSheet);
-                attackingSound.stopSound();
-                walkingSound.stopSound();
+
+
                 if (index >= standDown.size())
                     index = 0;
                 if (standDown.size() > 0)

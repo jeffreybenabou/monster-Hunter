@@ -13,6 +13,9 @@ public class House extends GameObject {
 
     }
 
+    private void addHouseEntrance(){
+
+    }
     private void pickHouse(int houseNumber) {
         switch (houseNumber)
         {

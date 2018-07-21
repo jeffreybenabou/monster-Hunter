@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class Sound {
 
+    // TODO: 21/07/2018 fix the sound problem
     public static ArrayList<String> path=new ArrayList<String>();
     private  Clip  clip;
     private static boolean firstPlay=true;
@@ -31,50 +32,24 @@ public class Sound {
     }
 
 
-    public void stopSound(){
-        try
-        {
-            if(clip!=null)
-            {
-
-
-                new Thread(new Runnable() {
-                    public void run() {
-                        clip.stop();
-                        clip.flush();
-                        clip=null;
-
-                    }
-                }).start();
-
-
-
-
-
-            }
-
-        }catch (NullPointerException e)
-        {
-            e.printStackTrace();
-
-        }
-
-    }
     public void setVolume(float value)
     {
-        FloatControl gainControl;
-        if(clip!=null)
-        {
+//        min=-80
+
+//        max=6
+
+       /* FloatControl gainControl;
+
             gainControl =
                     (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(value);
-        }
+            gainControl.setValue(value);*/
 
 
     }
 
-    public void playSound(final String url, final boolean alwayesActive) {
+    public void playSound(final String url) {
 
+/*
 
                 try {
                     if(clip==null)
@@ -83,23 +58,16 @@ public class Sound {
                          inputStream = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(url));
                         clip.open(inputStream);
                         clip.start();
-                        if(alwayesActive)
                             clip.loop(Clip.LOOP_CONTINUOUSLY);
-                    }
-                    else if(!clip.isActive())
-                    {
-                        stopSound();
-                        clip = AudioSystem.getClip();
-                        inputStream = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(url));
-                        clip.open(inputStream);
-                        clip.start();
 
                     }
+
 
 
                 } catch (Exception e) {
 
                 }
+*/
 
     }
 

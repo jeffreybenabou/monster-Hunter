@@ -143,4 +143,78 @@ public class GamePanel extends JLabel implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+
+    public JLabel getLifeBar() {
+        return lifeBar;
+    }
+
+    public void setLifeBar(JLabel lifeBar) {
+        this.lifeBar = lifeBar;
+    }
+
+    public JLabel getLevelLabel() {
+        return levelLabel;
+    }
+
+    public void setLevelLabel(JLabel levelLabel) {
+        this.levelLabel = levelLabel;
+    }
+
+    public JLabel getShopIcon() {
+        return shopIcon;
+    }
+
+    public void setShopIcon(JLabel shopIcon) {
+        this.shopIcon = shopIcon;
+    }
+
+    public JLabel getSettingLabel() {
+        return settingLabel;
+    }
+
+    public void setSettingLabel(JLabel settingLabel) {
+        this.settingLabel = settingLabel;
+    }
+
+    public JLabel getMoneyIcon() {
+        return moneyIcon;
+    }
+
+    public void setMoneyIcon(JLabel moneyIcon) {
+        this.moneyIcon = moneyIcon;
+    }
+
+    public static JProgressBar getjProgressBar() {
+        return jProgressBar;
+    }
+
+    public static void setjProgressBar(JProgressBar jProgressBar) {
+        GamePanel.jProgressBar = jProgressBar;
+    }
+
+    public JTextField getjTextField() {
+        return jTextField;
+    }
+
+    public void setjTextField(JTextField jTextField) {
+        this.jTextField = jTextField;
+    }
+
+    public JTextField getjTextField1() {
+        return jTextField1;
+    }
+
+    public void setjTextField1(JTextField jTextField1) {
+        this.jTextField1 = jTextField1;
+    }
+
+    @Override
+    public Font getFont() {
+        return font;
+    }
+
+    @Override
+    public void setFont(Font font) {
+        this.font = font;
+    }
 }

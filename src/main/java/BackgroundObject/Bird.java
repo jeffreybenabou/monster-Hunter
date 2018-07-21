@@ -63,7 +63,7 @@ public class Bird extends GameObject  {
                     else
                         setLocation(getX(),getY()-1);
                     index++;
-                    if (index >= birdRight.size()-1)
+                    if (index >= birdRight.size()-1||index>=birdLeft.size()-1)
                         index = 0;
                     checkIfIntercet();
 
@@ -75,6 +75,7 @@ public class Bird extends GameObject  {
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     } catch (IndexOutOfBoundsException e) {
+                        index=0;
                         e.printStackTrace();
                     }catch (Exception e)
                     {

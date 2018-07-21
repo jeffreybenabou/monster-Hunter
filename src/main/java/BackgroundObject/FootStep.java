@@ -14,7 +14,7 @@ public class FootStep extends GameObject {
     public void setTheImage(final int dir) {
         new Thread(new Runnable() {
             public void run() {
-                System.out.println(x+"/"+y);
+
                 switch (dir) {
                     case 1: {
 

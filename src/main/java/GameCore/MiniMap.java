@@ -4,6 +4,7 @@ package GameCore;
 
 
 
+import ImageHandel.ImageLoader;
 import Objects.Ghost;
 
 import javax.swing.*;
@@ -12,9 +13,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
-
+    boolean changeLevel = false;
     private boolean loadFuncation=false;
     private  Border blackline;
+    private Key key;
     public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
 
     public MiniMap() {
@@ -25,11 +27,10 @@ public class MiniMap extends JLabel {
 
     }
 
-    public void addActionOfMiniMap()
-    {
+    public void addActionOfMiniMap() {
         new Thread(new Runnable() {
             public void run() {
-                loadFuncation=false;
+                loadFuncation = false;
                 addTheMainPlayerLocationToMap();
                 while (!loadFuncation) {
 
@@ -44,21 +45,14 @@ public class MiniMap extends JLabel {
                                 aghost.get(i).setVisible(false);
 
 
-                        }
-
-
-                        catch (IndexOutOfBoundsException e)
-                        {
+                        } catch (IndexOutOfBoundsException e) {
                             e.printStackTrace();
                             break;
 
-                        }
-                        catch (NullPointerException e)
-                        {
+                        } catch (NullPointerException e) {
                             e.printStackTrace();
 
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -70,39 +64,68 @@ public class MiniMap extends JLabel {
                     }
 
 
+                    if(Ghost.notTheFirstGhost)
+                    for (Ghost ghost : World.ghostArrayList) {
+                        if (ghost.isVisible()) {
+                            changeLevel = false;
+                            break;
+                        } else
+                            changeLevel = true;
 
-                    levelUp();
+                    }
+                    if(changeLevel)
+                        break;
+
+
 
                 }
+                levelUp();
 
             }
         }).start();
     }
 
-    private void levelUp() {
-        boolean addGhost = false;
-        for (Ghost ghost : World.ghostArrayList) {
-            if (ghost.isVisible()) {
-                addGhost = false;
-                break;
-            } else
-                addGhost = true;
 
-        }
+    private void levelUp() {
+
         if (!World.ghostAreBeingAdd) {
 
-            if (addGhost && Ghost.notTheFirstGhost) {
-
-                Ghost.numberOfDeadGhost = 0;
-
-                StaticVariables.level++;
+            if (changeLevel && Ghost.notTheFirstGhost) {
+                key=new Key();
+                StaticVariables.gamePanel.add(key);
                 for (JLabel label:aghost) {
                     label.setVisible(false);
                 }
                 aghost.clear();
 
+                while (StaticVariables.gamePanel.getMoneyIcon().getX()+100<key.getX())
+                {
+
+                    if(key.getWidth()>=100)
+                    {
+                        key.setBounds(key.getX()-2,key.getY()-1,key.getWidth()-4,key.getHeight()-4);
+                        key.setIcon(new ImageIcon(StaticVariables.key1.getScaledInstance(key.getWidth(),key.getHeight(),0)));
+                    }
+                    else
+                        key.setBounds(key.getX()-2,key.getY()-1,key.getWidth(),key.getHeight());
+
+
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                key.setVisible(false);
+                // TODO: 21/07/2018 add the key to the bag
+//                Ghost.numberOfDeadGhost = 0;
+
+
+                /*StaticVariables.level++;
+
+
                 try {
-                    StaticVariables.world.addGhost();
+                    StaticVariables.world.changeLevel();
                     loadFuncation=true;
                     Thread.sleep(4000);
 
@@ -111,7 +134,7 @@ public class MiniMap extends JLabel {
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
             }

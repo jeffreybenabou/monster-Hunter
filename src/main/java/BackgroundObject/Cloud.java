@@ -14,6 +14,8 @@ public class Cloud extends GameObject {
         left=random.nextBoolean();
         down=random.nextBoolean();
         setIcon(imageIcon);
+        setBounds(x,y,imageIcon.getIconWidth(),imageIcon.getIconHeight());
+        moveTheCloud();
     }
 
     private void moveTheCloud() {

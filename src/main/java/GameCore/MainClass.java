@@ -36,7 +36,7 @@ public class MainClass extends JFrame  {
 
     }
     public static void removeTheMainMenu(){
-        StaticVariables.mainMenu.getBackgroundSound().stopSound();
+
         StaticVariables.mainClass.repaint();
         StaticVariables.mainMenu.setVisible(false);
         StaticVariables.mainClass.remove(StaticVariables.mainMenu);

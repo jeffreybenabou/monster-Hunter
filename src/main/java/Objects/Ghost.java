@@ -166,7 +166,7 @@ public class Ghost extends GameObject {
     }
 
     public void decreaseLife(int damge) {
-        if(getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&(StaticVariables.mainPlayer.isAttacking()||MainPlayer.spacielAttack))
+        if(getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&(MainPlayer.isAttacking()||MainPlayer.spacielAttack))
         {
 
 

@@ -38,7 +38,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
     public MainMenu(){
         backgroundSound=new Sound();
-        backgroundSound.playSound(Sound.path.get(2),true);
+        backgroundSound.playSound(Sound.path.get(2));
         setIcon(new ImageIcon(StaticVariables.mainMenuBackGround));
         setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
         ChooseThePlayer();
