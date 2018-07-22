@@ -18,7 +18,7 @@ public class ImageLoader {
         try {
 
 
-            return ImageIO.read(ImageLoader.class.getResourceAsStream(path));
+            return ImageIO.read(new File(path));
         } catch (IOException e) {
             e.printStackTrace();
 

@@ -11,10 +11,12 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.security.Key;
 import java.util.ArrayList;
 
-public class GamePanel extends JLabel implements KeyListener {
+public class GamePanel extends JLabel implements KeyListener,MouseListener {
 
 
     private JLabel lifeBar;
@@ -28,6 +30,7 @@ public class GamePanel extends JLabel implements KeyListener {
 
 
     private Font font=new Font("Serif", Font.BOLD, 20);
+    private Bag bag;
 
     public GamePanel (){
         setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
@@ -37,13 +40,13 @@ public class GamePanel extends JLabel implements KeyListener {
         addSettingIcon();
         addMoneyLabel();
         addSpacialAttack();
-
+/*
         jTextField.setBounds(100,300,100,30);
         jTextField1.setBounds(100,400,100,30);
         jTextField.addKeyListener(this);
         jTextField1.addKeyListener(this);
         add(jTextField);
-        add(jTextField1);
+        add(jTextField1);*/
 
 
     }
@@ -97,11 +100,20 @@ public class GamePanel extends JLabel implements KeyListener {
     }
 
     private void addMoneyLabel() {
-        moneyIcon = new JLabel();
-        moneyIcon.setBounds(50,0,200,150);
-        moneyIcon.setIcon(new ImageIcon(StaticVariables.moneyIcon.getScaledInstance(moneyIcon.getWidth(),moneyIcon.getHeight(),0)));
+        try
+        {
+            moneyIcon = new JLabel();
+            moneyIcon.setBounds(50,0,200,150);
+            moneyIcon.setIcon(new ImageIcon(StaticVariables.moneyIcon.getScaledInstance(moneyIcon.getWidth(),moneyIcon.getHeight(),0)));
+            moneyIcon.addMouseListener(this);
+            add(moneyIcon);
+//            bag=new Bag();
+//            add(bag);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
-        add(moneyIcon);
 
 
     }
@@ -216,5 +228,29 @@ public class GamePanel extends JLabel implements KeyListener {
     @Override
     public void setFont(Font font) {
         this.font = font;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+
+        if(e.getComponent().equals(moneyIcon))
+        {
+            bag.setVisible(true);
+        }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    public void mouseExited(MouseEvent e) {
+
     }
 }

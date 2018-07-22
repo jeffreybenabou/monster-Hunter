@@ -18,6 +18,8 @@ import java.util.Random;
 public class World extends JLabel implements MouseListener {
 
 
+
+    public static boolean housePreesed=false;
     public static ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
     public static boolean ghostAreBeingAdd=false;
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
@@ -98,6 +100,7 @@ public class World extends JLabel implements MouseListener {
                     {
                         for (House house:World.getHouseArrayList()) {
                             house.setVisible(true);
+                            house.getHouseEntrance().setVisible(true);
                         }
                     }catch (ConcurrentModificationException house )
                     {
@@ -197,15 +200,7 @@ public class World extends JLabel implements MouseListener {
 
                 addGhost();
 
-                for (int i = 0; i < 3; ) {
-                    House house = new House(i);
-                    backGroundObjects.add(house);
-                    houseArrayList.add(house);
-                        house.setVisible(false);
-                        add(house);
-                        i++;
 
-                }
 
                 for (int i = 0; i <30 ; ) {
                     Tree tree=new Tree();
@@ -221,7 +216,15 @@ public class World extends JLabel implements MouseListener {
                 }
                 add(StaticVariables.mainPlayer);
 
+                for (int i = 0; i < 3; ) {
+                    House house = new House(i);
+                    backGroundObjects.add(house);
+                    houseArrayList.add(house);
+                    house.setVisible(false);
+                    add(house);
+                    i++;
 
+                }
 
 
 
@@ -303,6 +306,7 @@ public class World extends JLabel implements MouseListener {
 
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
+//            checkIfUserPreesTheHouse(e);
 
 
         }
@@ -318,6 +322,50 @@ public class World extends JLabel implements MouseListener {
 
     }
 
+    private void checkIfUserPreesTheHouse(MouseEvent e) {
+
+        House house=null;
+        Point point=null;
+        if(!e.getComponent().getClass().getSimpleName().equals("House"))
+        {
+            point=new Point(getX(),getY());
+
+        }
+        else if (e.getComponent().getClass().getSimpleName().equals("House"))
+            house=(House)e.getComponent();
+
+        if(e.getComponent().equals(house)&&housePreesed)
+        {
+
+            setLocation(point);
+            housePreesed=false;
+        }
+        if(house!=null&&!housePreesed)
+        {
+            switch (Integer.parseInt(house.getName()))
+            {
+                case 1:
+                {
+                    setLocation(getX()+500,getY()+500);
+                    break;
+                }
+                case 2:
+                {
+                    setLocation(getX()+500,getY()+500);
+                    break;
+                }
+                case 3:
+                {
+                    setLocation(getX()-500,getY()-500);
+                    break;
+                }
+            }
+            housePreesed=true;
+        }
+
+
+
+    }
 
 
     private void checkIfPlayerPreesTheWorldOrGhost(MouseEvent e) {

@@ -42,7 +42,8 @@ public class StaticVariables {
     cloud,
     houseNum1,houseNum2,houseNum3,
     crack,
-    key1,key2,key3;
+    key1,key2,key3,
+    carpet;
 
 
     public static GamePanel gamePanel;
@@ -61,19 +62,19 @@ public class StaticVariables {
     public StaticVariables(){
         mainClass=new MainClass();
         mainClass.add(new Opening());
-        mainMenuBackGround=ImageLoader.loadImage("Photos/menu.png");
+        mainMenuBackGround=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menu.png");
 
         new Thread(new Runnable() {
             public void run() {
 
-                key1=ImageLoader.loadImage("Photos/house/key1.png");
-                key2=ImageLoader.loadImage("Photos/house/key2.png");
-                key3=ImageLoader.loadImage("Photos/house/key3.png");
-
-                startButton=ImageLoader.loadImage("Photos/menuButton/newGame.png");
-                exitButton=ImageLoader.loadImage("Photos/menuButton/exit.png");
-                loadFromServerButoon=ImageLoader.loadImage("Photos/menuButton/loadOnline.png");
-                loadFromComputerButton=ImageLoader.loadImage("Photos/menuButton/load.png");
+                key1=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/key1.png");
+                key2=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/key2.png");
+                key3=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/key3.png");
+                carpet=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/debris-channel-slider.png");
+                startButton=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/newGame.png");
+                exitButton=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/exit.png");
+                loadFromServerButoon=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/loadOnline.png");
+                loadFromComputerButton=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/load.png");
 
                 mainMenu=new MainMenu();
                 mainMenu.setVisible(false);
@@ -81,7 +82,7 @@ public class StaticVariables {
         }).start();
         new Thread(new Runnable() {
             public void run() {
-                worldBackGround=ImageLoader.loadImage("Photos/world/background.jpg");
+                worldBackGround=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/world/background.jpg");
 
             }
         }).start();
@@ -100,29 +101,29 @@ public class StaticVariables {
 
         new Thread(new Runnable() {
             public void run() {
-                FootStep.left=ImageLoader.loadImage("Photos/foot_step/left.png");
-                FootStep.right=ImageLoader.loadImage("Photos/foot_step/right.png");
-                FootStep.up=ImageLoader.loadImage("Photos/foot_step/up.png");
-                FootStep. down=ImageLoader.loadImage("Photos/foot_step/down.png");
-                FootStep. leftUp=ImageLoader.loadImage("Photos/foot_step/left_up.png");
-                FootStep. leftDown=ImageLoader.loadImage("Photos/foot_step/left_down.png");
-                FootStep.  rightDown=ImageLoader.loadImage("Photos/foot_step/down_right.png");
-                FootStep.   rightUp=ImageLoader.loadImage("Photos/foot_step/right_up.png");
+                FootStep.left=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/left.png");
+                FootStep.right=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/right.png");
+                FootStep.up=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/up.png");
+                FootStep. down=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/down.png");
+                FootStep. leftUp=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/left_up.png");
+                FootStep. leftDown=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/left_down.png");
+                FootStep.  rightDown=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/down_right.png");
+                FootStep.   rightUp=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/right_up.png");
 
 
 
-                lifePanel =ImageLoader.loadImage("Photos/worldFrame/lifeBar1.png");
-                levelLabel =ImageLoader.loadImage("Photos/worldFrame/level.png");
-                shopIcon=ImageLoader.loadImage("Photos/worldFrame/shop_icon.png");
-                settingLabel=ImageLoader.loadImage("Photos/worldFrame/setting_icon.png");
-                moneyIcon=ImageLoader.loadImage("Photos/worldFrame/money_icon.png");
-                tree=ImageLoader.loadImage("Photos/world/tree.png");
-                trunk=ImageLoader.loadImage("Photos/world/trunk.png");
-                crack=ImageLoader.loadImage("Photos/crack.png");
-                houseNum1=ImageLoader.loadImage("Photos/house/house1.png");
-                houseNum2=ImageLoader.loadImage("Photos/house/house2.png");
-                houseNum3=ImageLoader.loadImage("Photos/house/house3.png");
-                cloud=ImageLoader.loadImage("Photos/cloud/cloud122.png");
+                lifePanel =ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/lifeBar1.png");
+                levelLabel =ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/level.png");
+                shopIcon=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/shop_icon.png");
+                settingLabel=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/setting_icon.png");
+                moneyIcon=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/money_icon.png");
+                tree=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/world/tree.png");
+                trunk=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/world/trunk.png");
+                crack=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/crack.png");
+                houseNum1=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/house1.png");
+                houseNum2=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/house2.png");
+                houseNum3=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/house3.png");
+                cloud=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/cloud/cloud122.png");
             }
         }).start();
 

@@ -4,16 +4,48 @@ import GameCore.GameObject;
 import GameCore.StaticVariables;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class House extends GameObject {
 
+    private int houseNumber;
+    private JLabel houseEntrance;
     public House(int houseNumber){
-
+        this.houseNumber=houseNumber;
         pickHouse(houseNumber);
+        addHouseEntrance();
 
     }
 
     private void addHouseEntrance(){
+        houseEntrance=new JLabel();
+        houseEntrance.setVisible(false);
+        switch (houseNumber)
+        {
+            case 0:
+            {
+
+
+                houseEntrance.setIcon(new ImageIcon(StaticVariables.carpet.getScaledInstance(400,200,Image.SCALE_SMOOTH)));
+                houseEntrance.setBounds(getWidth(),getHeight(),getIcon().getIconWidth(),getIcon().getIconHeight());
+                StaticVariables.world.add(houseEntrance);
+                break;
+            }
+            case 1:
+            {
+                houseEntrance.setIcon(new ImageIcon(StaticVariables.carpet.getScaledInstance(400,200,Image.SCALE_SMOOTH)));
+                houseEntrance.setBounds(getX()-getWidth(),getY()+300,getIcon().getIconWidth(),getIcon().getIconHeight());
+                StaticVariables.world.add(houseEntrance);
+               break;
+            }
+            case 2:
+            {
+                houseEntrance.setIcon(new ImageIcon(StaticVariables.carpet.getScaledInstance(400,200,Image.SCALE_SMOOTH)));
+                houseEntrance.setBounds(getWidth(),getHeight(),getIcon().getIconWidth(),getIcon().getIconHeight());
+                StaticVariables.world.add(houseEntrance);
+                break;
+            }
+        }
 
     }
     private void pickHouse(int houseNumber) {
@@ -45,5 +77,21 @@ public class House extends GameObject {
             }
 
         }
+    }
+
+    public int getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public JLabel getHouseEntrance() {
+        return houseEntrance;
+    }
+
+    public void setHouseEntrance(JLabel houseEntrance) {
+        this.houseEntrance = houseEntrance;
     }
 }

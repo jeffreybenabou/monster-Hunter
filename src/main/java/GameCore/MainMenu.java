@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Vector;
 
 
@@ -26,7 +27,7 @@ public class MainMenu extends JLabel implements MouseListener {
     private JButton confirm,start,load,loadFromServer,exit;
     private String type="";
     private boolean hover=false;
-    private Vector<Image> aMale,aFemale;
+    private ArrayList<ImageIcon> aMale,aFemale;
     private  JLabel male,female;
     private Border border;
     private JLabel chooseThePlayer;
@@ -60,8 +61,8 @@ public class MainMenu extends JLabel implements MouseListener {
         add(chooseThePlayer);
         new Thread(new Runnable() {
             public void run() {
-                aMale=new Vector<Image>();
-                aFemale=new Vector<Image>();
+                aMale=new ArrayList<ImageIcon>();
+                aFemale=new ArrayList<ImageIcon>();
                 female=new JLabel();
                 male=new JLabel();
                 addPlayerLabel();
@@ -71,16 +72,16 @@ public class MainMenu extends JLabel implements MouseListener {
                         new Thread(new Runnable() {
                             public void run() {
 // TODO: 21/07/2018 change the image to main player attack
-                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/stand/"),null,aMale,new Dimension(500,400));
-                                male.setIcon(new ImageIcon(aMale.get(0)));
+                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/attack/down/"),aMale,null,new Dimension(500,400));
+                                male.setIcon(aMale.get(0));
 
 
                             }
                         }).start();
                         new Thread(new Runnable() {
                             public void run() {
-                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/female/stand/"),null,aFemale,new Dimension(500,450));
-                                female.setIcon(new ImageIcon(aFemale.get(0)));
+                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/female/attack/down/"),aFemale,null,new Dimension(500,450));
+                                female.setIcon(aFemale.get(0));
 
 
                             }
@@ -111,11 +112,11 @@ public class MainMenu extends JLabel implements MouseListener {
         chooseThePlayer.add(male);
         female.addMouseListener(this);
         male.addMouseListener(this);
-        male.setBounds(500,100,300,400);
+        male.setBounds(480,100,380,400);
         male.setName("male");
         male.setHorizontalAlignment(JLabel.CENTER);
-        female.setBounds(80,100,300,400);
-        female.setHorizontalAlignment(JLabel.CENTER);
+        female.setBounds(20,100,380 ,400);
+        female.setHorizontalAlignment(JLabel.RIGHT);
         female.setName("female");
 
         female.setOpaque(true);
@@ -124,36 +125,29 @@ public class MainMenu extends JLabel implements MouseListener {
         getPlayerName();
     }
 
-    public void moveTheCharacter(final JLabel label, final Vector<Image> vector)
-    {
+    public void moveTheCharacter(final JLabel label, final ArrayList<ImageIcon> vector) {
 
         new Thread(new Runnable() {
             public void run() {
-                while (hover)
-                {
-                    try
-                    {
+                while (hover) {
+                    try {
 
 
                         index++;
-                        if(index>=vector.size())
-                            index=0;
-                        label.setIcon(new ImageIcon(vector.get(index)));
-                        Thread.sleep(15);
+                        if (index >= vector.size())
+                            index = 0;
+                        label.setIcon((vector.get(index)));
+                        Thread.sleep(40);
 
-                    }
-                    catch (NullPointerException e)
-                    {
+                    } catch (NullPointerException e) {
 
 
-break;
+                        break;
 
-                    }
-                    catch (ArrayIndexOutOfBoundsException e)
-                    {
+                    } catch (ArrayIndexOutOfBoundsException e) {
 
 
-break;
+                        break;
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -161,8 +155,6 @@ break;
                 }
             }
         }).start();
-
-
 
 
     }
@@ -246,7 +238,7 @@ break;
         new Thread(new Runnable() {
             public void run() {
 
-                  watingLabel =new JLabel(new ImageIcon(ImageLoader.loadImage("Photos/load.png").getScaledInstance(getWidth(),getHeight(),0)));
+                  watingLabel =new JLabel(new ImageIcon(ImageLoader.loadImage("src/main/java/ImageHandel/Photos/load.png").getScaledInstance(getWidth(),getHeight(),0)));
                 watingLabel.setBounds(0,0,getWidth(),getHeight());
                   StaticVariables.mainClass.add(watingLabel);
                 MainClass.removeTheMainMenu();
@@ -257,7 +249,7 @@ break;
                         while (true)
                         {
                             try {
-                                Thread.sleep(3000);
+                                Thread.sleep(5000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -482,19 +474,19 @@ break;
         this.hover = hover;
     }
 
-    public Vector<Image> getaMale() {
+    public ArrayList<ImageIcon> getaMale() {
         return aMale;
     }
 
-    public void setaMale(Vector<Image> aMale) {
+    public void setaMale(ArrayList<ImageIcon> aMale) {
         this.aMale = aMale;
     }
 
-    public Vector<Image> getaFemale() {
+    public ArrayList<ImageIcon> getaFemale() {
         return aFemale;
     }
 
-    public void setaFemale(Vector<Image> aFemale) {
+    public void setaFemale(ArrayList<ImageIcon> aFemale) {
         this.aFemale = aFemale;
     }
 

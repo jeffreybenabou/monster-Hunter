@@ -103,7 +103,7 @@ public class MiniMap extends JLabel {
 
                     if(key.getWidth()>=100)
                     {
-                        key.setBounds(key.getX()-2,key.getY()-1,key.getWidth()-4,key.getHeight()-4);
+                        key.setBounds(key.getX()-2,key.getY()-1,key.getWidth()-5,key.getHeight()-5);
                         key.setIcon(new ImageIcon(StaticVariables.key1.getScaledInstance(key.getWidth(),key.getHeight(),0)));
                     }
                     else
@@ -117,6 +117,7 @@ public class MiniMap extends JLabel {
                     }
                 }
                 key.setVisible(false);
+
                 // TODO: 21/07/2018 add the key to the bag
 //                Ghost.numberOfDeadGhost = 0;
 
