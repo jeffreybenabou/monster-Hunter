@@ -1,13 +1,10 @@
 package GameCore;
 
-import ImageHandel.ImageLoader;
-
 import javax.swing.*;
 
 public class Key extends GameObject {
 
 
-    public static boolean firstKey=false,secondKey=false,thirdKey=false;
     public Key(){
         addTheKeyToWorld();
     }
@@ -18,22 +15,22 @@ public class Key extends GameObject {
             {
 
                 setIcon(new ImageIcon(StaticVariables.key1));
-                setBounds(500,200,getIcon().getIconWidth(),getIcon().getIconHeight());
                 break;
             }
-        }
-    }
-    public void changeKeyStatusWhenReachTheHouse(){
-
-        switch (StaticVariables.level)
-        {
-            case 1:
+            case 2:
             {
+                setIcon(new ImageIcon(StaticVariables.key2));
 
-                firstKey=true;
+                break;
+            }
+            case 3:
+            {
+                setIcon(new ImageIcon(StaticVariables.key3));
                 break;
             }
         }
+        setBounds(500,200,getIcon().getIconWidth(),getIcon().getIconHeight());
     }
+
 
 }

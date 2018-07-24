@@ -27,6 +27,7 @@ public class World extends JLabel implements MouseListener {
     private Random random;
     private Ghost firstGhost;
     private Sound backGroundWorld;
+    private boolean key1IsPreesed=false,key2IsPreesed=false,key3IsPreesed=false;
 
     public World(){
         try
@@ -117,7 +118,7 @@ public class World extends JLabel implements MouseListener {
                     switch (StaticVariables.level)
                     {
                         case 1:{
-                            for (int i = 0; i <6 ; i++) {
+                            for (int i = 0; i <1; i++) {
 
                                 Ghost ghost=new Ghost(1);
 
@@ -134,7 +135,7 @@ public class World extends JLabel implements MouseListener {
 
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <7 ; i++) {
+                            for (int i = 0; i <1 ; i++) {
                                 Ghost ghost=new Ghost(2);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
@@ -149,7 +150,7 @@ public class World extends JLabel implements MouseListener {
                         case 3:{
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <7 ; i++) {
+                            for (int i = 0; i <1 ; i++) {
                                 Ghost ghost=new Ghost(3);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
@@ -330,13 +331,37 @@ public class World extends JLabel implements MouseListener {
     }
 
     private void checkIfPreesTheSetting(MouseEvent e) {
-        if(e.getComponent().equals(StaticVariables.gamePanel.getMoneyIcon())||e.getComponent().equals(StaticVariables.gamePanel.getBag()))
+        if(e.getComponent().equals(StaticVariables.gamePanel.getMoneyIcon())||
+                e.getComponent().equals(StaticVariables.gamePanel.getBag())||
+                e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1())||
+                e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey2())||
+                e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey3()))
         {
             StaticVariables.gamePanel.getBag().setVisible(true);
+
 
         }
         else
             StaticVariables.gamePanel.getBag().setVisible(false);
+
+        for (House house :houseArrayList) {
+            if(e.getComponent().equals(house)&&key1IsPreesed||key2IsPreesed||key3IsPreesed)
+            {
+                StaticVariables.level++;
+                addGhost();
+                StaticVariables.miniMap.addActionOfMiniMap();
+            }
+        }
+        key1IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1());
+        key2IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey2());
+        key3IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey3());
+
+
+
+
+
+
+
     }
 
     private void checkIfUserPreesTheHouse(MouseEvent e) {

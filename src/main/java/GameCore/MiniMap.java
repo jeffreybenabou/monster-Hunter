@@ -30,9 +30,9 @@ public class MiniMap extends JLabel {
         new Thread(new Runnable() {
             public void run() {
                 loadFuncation = false;
+                changeLevel=false;
                 addTheMainPlayerLocationToMap();
                 while (!loadFuncation) {
-
 
                     // TODO: 03/07/2018 fix the mini map
                     for (int i = 0; i < StaticVariables.world.getGhostArrayList().size(); i++) {
@@ -57,7 +57,7 @@ public class MiniMap extends JLabel {
 
                     }
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(10);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -79,6 +79,7 @@ public class MiniMap extends JLabel {
 
 
                 }
+
                 levelUp();
 
             }
@@ -92,6 +93,7 @@ public class MiniMap extends JLabel {
 
             if (changeLevel && Ghost.notTheFirstGhost) {
                 key=new Key();
+                key.setVisible(true);
                 StaticVariables.gamePanel.add(key);
                 for (JLabel label:aghost) {
                     label.setVisible(false);
@@ -104,10 +106,30 @@ public class MiniMap extends JLabel {
                     if(key.getWidth()>=100)
                     {
                         key.setBounds(key.getX()-2,key.getY()-1,key.getWidth()-5,key.getHeight()-5);
-                        key.setIcon(new ImageIcon(StaticVariables.key1.getScaledInstance(key.getWidth(),key.getHeight(),0)));
+                        switch (StaticVariables.level)
+                        {
+                            case 1:
+                            {
+                                key.setIcon(new ImageIcon(StaticVariables.key1.getScaledInstance(key.getWidth(),key.getHeight(),0)));
+
+                                break;
+                            }
+                            case 2:
+                            {
+                                key.setIcon(new ImageIcon(StaticVariables.key2.getScaledInstance(key.getWidth(),key.getHeight()-1,0)));
+
+                                break;
+                            }
+                            case 3:
+                            {
+                                key.setIcon(new ImageIcon(StaticVariables.key3.getScaledInstance(key.getWidth(),key.getHeight(),0)));
+
+                                break;
+                            }
+                        }
                     }
                     else
-                        key.setBounds(key.getX()-2,key.getY()-1,key.getWidth(),key.getHeight());
+                        key.setBounds(key.getX()-2,key.getY()-3,key.getWidth(),key.getHeight());
 
 
                     try {
@@ -116,28 +138,33 @@ public class MiniMap extends JLabel {
                         e.printStackTrace();
                     }
                 }
+                if(StaticVariables.level==1)
+                {
+                    StaticVariables.gamePanel.getBag().getKey1().setIcon(new ImageIcon(StaticVariables.key1.getScaledInstance(StaticVariables.gamePanel.getBag().getKey1().getWidth(),StaticVariables.gamePanel.getBag().getKey1().getHeight(),Image.SCALE_SMOOTH)));
+                    StaticVariables.gamePanel.getBag().getKey1().addMouseListener(StaticVariables.world);
+                }
+                else
+                    StaticVariables.gamePanel.getBag().getKey1().removeMouseListener(StaticVariables.world);
 
-                key.setVisible(false);
+                if(StaticVariables.level==2)
+                {
+                    StaticVariables.gamePanel.getBag().getKey2().setIcon(new ImageIcon(StaticVariables.key2.getScaledInstance(StaticVariables.gamePanel.getBag().getKey2().getWidth(),StaticVariables.gamePanel.getBag().getKey2().getHeight(),Image.SCALE_SMOOTH)));
+                    StaticVariables.gamePanel.getBag().getKey2().addMouseListener(StaticVariables.world);
+                }
+                else
+                    StaticVariables.gamePanel.getBag().getKey2().removeMouseListener(StaticVariables.world);
 
-                // TODO: 21/07/2018 add the key to the bag
-//                Ghost.numberOfDeadGhost = 0;
+                if(StaticVariables.level==3)
+                {
+                    StaticVariables.gamePanel.getBag().getKey3().setIcon(new ImageIcon(StaticVariables.key3.getScaledInstance(StaticVariables.gamePanel.getBag().getKey3().getWidth(),StaticVariables.gamePanel.getBag().getKey3().getHeight(),Image.SCALE_SMOOTH)));
+                    StaticVariables.gamePanel.getBag().getKey3().addMouseListener(StaticVariables.world);
+                }
+                else
+                    StaticVariables.gamePanel.getBag().getKey3().removeMouseListener(StaticVariables.world);
 
-
-                /*StaticVariables.level++;
-
-
-                try {
-                    StaticVariables.world.changeLevel();
-                    loadFuncation=true;
-                    Thread.sleep(4000);
-
-                    addActionOfMiniMap();
-
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
-
+                    key.setVisible(false);
+                StaticVariables.gamePanel.remove(key);
+                Ghost.numberOfDeadGhost = 0;
 
             }
 

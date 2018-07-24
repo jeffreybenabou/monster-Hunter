@@ -10,6 +10,8 @@ public class House extends GameObject {
 
     private int houseNumber;
     private JLabel houseEntrance;
+
+    public static boolean houseNumber1Open=false,houseNumber2Open=false,houseNumber3Open=false;
     public House(int houseNumber){
         this.houseNumber=houseNumber;
         pickHouse(houseNumber);
