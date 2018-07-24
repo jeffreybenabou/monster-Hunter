@@ -21,6 +21,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
 
+    private ImageLoader imageLoader;
     private Sound backgroundSound;
     private JLabel watingLabel;
     private TextField textField;
@@ -38,19 +39,33 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
     public MainMenu(){
-        backgroundSound=new Sound();
-        backgroundSound.playSound(Sound.path.get(2));
-        setIcon(new ImageIcon(StaticVariables.mainMenuBackGround));
-        setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
-        ChooseThePlayer();
-        for (int i = 0; i <4 ; i++) {
-            createButton(i);
+        imageLoader=new ImageLoader();
+        addSound();
+        try
+        {
+            setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
+            setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
+            ChooseThePlayer();
+            for (int i = 0; i <4 ; i++) {
+                createButton(i);
+            }
+
+            repaint();
+        }catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(this,e.getMessage());
+            e.printStackTrace();
+
         }
 
-        repaint();
 
 
 
+    }
+
+    private void addSound() {
+        backgroundSound=new Sound();
+        backgroundSound.playSound(Sound.path.get(2));
     }
 
 
@@ -72,16 +87,23 @@ public class MainMenu extends JLabel implements MouseListener {
                         new Thread(new Runnable() {
                             public void run() {
 // TODO: 21/07/2018 change the image to main player attack
-                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/male/attack/down/"),aMale,null,new Dimension(500,400));
-                                male.setIcon(aMale.get(0));
+
+                                imageLoader.addImageOfObject(32,"ImageHandel/Photos/character/male/attack/down/",aMale,new Dimension(500,400));
+
+                                    male.setIcon(aMale.get(0));
+
+
 
 
                             }
                         }).start();
                         new Thread(new Runnable() {
                             public void run() {
-                                ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/character/female/attack/down/"),aFemale,null,new Dimension(500,450));
-                                female.setIcon(aFemale.get(0));
+
+                                imageLoader.addImageOfObject(43,"ImageHandel/Photos/character/female/attack/down/",aFemale,new Dimension(500,450));
+                                    female.setIcon(aFemale.get(0));
+
+
 
 
                             }
@@ -174,6 +196,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
         textField.setBounds(340,50,200,20);
         JLabel label=new JLabel(" enter your character name here :");
+        label.setForeground(Color.red);
         label.setBounds(340,20,200,20);
         chooseThePlayer.add(label);
 
@@ -185,44 +208,50 @@ public class MainMenu extends JLabel implements MouseListener {
 
     private void createButton(int i) {
         JButton button=null;
-
-        switch (i)
+        try
         {
-            case 0:{
+            switch (i)
+            {
+                case 0:{
 
-                start=new JButton(new ImageIcon(StaticVariables.startButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                start.setBounds(550, 100, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
-                start.setName("start");
-                add(start);
-                button=start;
-            break;
-        }
-            case 1:{
-                exit=new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                exit.setBounds(550, 550, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
-                exit.setName("exit");
-                add(exit);
-                button=exit;
-                break;
-            }
-            case 2:{
-                loadFromServer=new JButton(new ImageIcon(StaticVariables.loadFromServerButoon.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                loadFromServer.setBounds(550, 400, loadFromServer.getIcon().getIconWidth(), loadFromServer.getIcon().getIconHeight());
-                loadFromServer.setName("loadServer");
-                add(loadFromServer);
-                button=loadFromServer;
-                break;
-            }
-            case 3:{
+                    start=new JButton(new ImageIcon(StaticVariables.startButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
+                    start.setBounds(550, 100, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
+                    start.setName("start");
+                    add(start);
+                    button=start;
+                    break;
+                }
+                case 1:{
+                    exit=new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
+                    exit.setBounds(550, 550, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
+                    exit.setName("exit");
+                    add(exit);
+                    button=exit;
+                    break;
+                }
+                case 2:{
+                    loadFromServer=new JButton(new ImageIcon(StaticVariables.loadFromServerButoon.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
+                    loadFromServer.setBounds(550, 400, loadFromServer.getIcon().getIconWidth(), loadFromServer.getIcon().getIconHeight());
+                    loadFromServer.setName("loadServer");
+                    add(loadFromServer);
+                    button=loadFromServer;
+                    break;
+                }
+                case 3:{
 
-                load=new JButton(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                load.setBounds(550, 250, load.getIcon().getIconWidth(), load.getIcon().getIconHeight());
-                load.setName("load");
-                add(load);
-                button=load;
-                break;
+                    load=new JButton(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
+                    load.setBounds(550, 250, load.getIcon().getIconWidth(), load.getIcon().getIconHeight());
+                    load.setName("load");
+                    add(load);
+                    button=load;
+                    break;
+                }
             }
+        }catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getMessage());
         }
+
 
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
@@ -237,11 +266,18 @@ public class MainMenu extends JLabel implements MouseListener {
 
         new Thread(new Runnable() {
             public void run() {
+                try
+                {
 
-                  watingLabel =new JLabel(new ImageIcon(ImageLoader.loadImage("src/main/java/ImageHandel/Photos/load.png").getScaledInstance(getWidth(),getHeight(),0)));
-                watingLabel.setBounds(0,0,getWidth(),getHeight());
-                  StaticVariables.mainClass.add(watingLabel);
-                MainClass.removeTheMainMenu();
+                    watingLabel =new JLabel(new ImageIcon(StaticVariables.watingLabel.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
+                    watingLabel.setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
+                    StaticVariables.mainClass.add(watingLabel);
+                    MainClass.removeTheMainMenu();
+                }catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getStackTrace());
+                }
+
                 new Thread(new Runnable() {
 
                     public void run() {
@@ -264,16 +300,24 @@ public class MainMenu extends JLabel implements MouseListener {
                             else
                             {
 
-                                StaticVariables.mainPlayer=new MainPlayer();
-                                StaticVariables.world=new World();
-                                StaticVariables.world.setIcon(new ImageIcon(StaticVariables.worldBackGround));
+                                try
+                                {
+                                    StaticVariables.mainPlayer=new MainPlayer();
+                                    StaticVariables.world=new World();
+                                    StaticVariables.world.setIcon(new ImageIcon(StaticVariables.worldBackGround));
 
-                                StaticVariables.miniMap=new MiniMap();
-                                StaticVariables.gamePanel=new GamePanel();
-                                StaticVariables.gamePanel.add(StaticVariables.miniMap);
-                                MainClass.addTheWorld();
-                                watingLabel.setVisible(false);
-                                StaticVariables.miniMap.addActionOfMiniMap();
+                                    StaticVariables.miniMap=new MiniMap();
+                                    StaticVariables.gamePanel=new GamePanel();
+                                    StaticVariables.gamePanel.add(StaticVariables.miniMap);
+                                    MainClass.addTheWorld();
+                                    watingLabel.setVisible(false);
+                                    StaticVariables.miniMap.addActionOfMiniMap();
+                                }catch (Exception e)
+                                {
+                                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getMessage());
+
+                                }
+
 
 
                                 break;

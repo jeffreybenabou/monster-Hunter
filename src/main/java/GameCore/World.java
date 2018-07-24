@@ -29,16 +29,23 @@ public class World extends JLabel implements MouseListener {
     private Sound backGroundWorld;
 
     public World(){
-        setBounds(-500,-750,5000,5000);
-        setLayout(null);
-        setBackground(Color.GRAY);
-        backGroundWorld=new Sound();
-        backGroundWorld.playSound(Sound.path.get(4));
-        backGroundWorld.setVolume(-10);
-        setOpaque(true);
-        addMouseListener(this);
+        try
+        {
+            setBounds(-500,-750,5000,5000);
+            setLayout(null);
+            setBackground(Color.GRAY);
+            backGroundWorld=new Sound();
+            backGroundWorld.playSound(Sound.path.get(4));
+            backGroundWorld.setVolume(-10);
+            setOpaque(true);
+            addMouseListener(this);
 
-        addBackGroundObjects();
+            addBackGroundObjects();
+        }catch (Exception e)
+        {
+
+        }
+
 
 
 

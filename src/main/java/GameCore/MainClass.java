@@ -7,12 +7,13 @@ import java.awt.event.MouseListener;
 
 public class MainClass extends JFrame  {
 
-    public static Dimension dimension= Toolkit.getDefaultToolkit().getScreenSize();
+    public static Dimension dimension;
 
 
     public MainClass(){
 
 
+        dimension= Toolkit.getDefaultToolkit().getScreenSize();
         setTheJFrame();
         addMouseListener(StaticVariables.world);
 

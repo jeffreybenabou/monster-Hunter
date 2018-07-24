@@ -13,13 +13,16 @@ import Objects.Ghost;
 import Objects.MainPlayer;
 import Server.*;
 
+
 import javax.swing.*;
 
 public class StaticVariables {
 
 
-    public static Dimension dimension= Toolkit.getDefaultToolkit().getScreenSize();
+    public static Dimension dimension;
+    public static Image watingLabel;
 
+    private ImageLoader imageLoader;
     public static Image
             mainMenuBackGround,
             exitButton,
@@ -60,29 +63,60 @@ public class StaticVariables {
     private static Sql sql;
 
     public StaticVariables(){
+        imageLoader=new ImageLoader();
+        dimension= Toolkit.getDefaultToolkit().getScreenSize();
         mainClass=new MainClass();
+
         mainClass.add(new Opening());
-        mainMenuBackGround=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menu.png");
+
+        try
+        {
+            mainMenuBackGround=imageLoader.loadImage("ImageHandel/Photos/menu.png");
+
+        }catch (Exception e)
+        {
+
+            JOptionPane.showMessageDialog(StaticVariables.mainClass,e);
+            e.printStackTrace();
+
+        }
 
         new Thread(new Runnable() {
             public void run() {
+                try
+                {
+                    watingLabel=imageLoader.loadImage("ImageHandel/Photos/load.png");
+                    key1=imageLoader.loadImage("ImageHandel/Photos/house/key1.png");
+                    key2=imageLoader.loadImage("ImageHandel/Photos/house/key2.png");
+                    key3=imageLoader.loadImage("ImageHandel/Photos/house/key3.png");
+                    carpet=imageLoader.loadImage("ImageHandel/Photos/debris-channel-slider.png");
+                    startButton=imageLoader.loadImage("ImageHandel/Photos/menuButton/newGame.png");
+                    exitButton=imageLoader.loadImage("ImageHandel/Photos/menuButton/exit.png");
+                    loadFromServerButoon=imageLoader.loadImage("ImageHandel/Photos/menuButton/loadOnline.png");
+                    loadFromComputerButton=imageLoader.loadImage("ImageHandel/Photos/menuButton/load.png");
 
-                key1=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/key1.png");
-                key2=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/key2.png");
-                key3=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/key3.png");
-                carpet=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/debris-channel-slider.png");
-                startButton=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/newGame.png");
-                exitButton=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/exit.png");
-                loadFromServerButoon=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/loadOnline.png");
-                loadFromComputerButton=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/menuButton/load.png");
+                    mainMenu=new MainMenu();
+                    mainMenu.setVisible(false);
+                }catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getCause().toString());
+                    e.printStackTrace();
 
-                mainMenu=new MainMenu();
-                mainMenu.setVisible(false);
+                }
+
             }
         }).start();
         new Thread(new Runnable() {
             public void run() {
-                worldBackGround=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/world/background.jpg");
+                try
+                {
+                    worldBackGround=imageLoader.loadImage("ImageHandel/Photos/world/background.jpg");
+
+                }catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getCause().toString());
+e.printStackTrace();
+                }
 
             }
         }).start();
@@ -101,29 +135,37 @@ public class StaticVariables {
 
         new Thread(new Runnable() {
             public void run() {
-                FootStep.left=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/left.png");
-                FootStep.right=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/right.png");
-                FootStep.up=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/up.png");
-                FootStep. down=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/down.png");
-                FootStep. leftUp=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/left_up.png");
-                FootStep. leftDown=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/left_down.png");
-                FootStep.  rightDown=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/down_right.png");
-                FootStep.   rightUp=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/foot_step/right_up.png");
+                try
+                {
+                    FootStep.left=imageLoader.loadImage("ImageHandel/Photos/foot_step/left.png");
+                    FootStep.right=imageLoader.loadImage("ImageHandel/Photos/foot_step/right.png");
+                    FootStep.up=imageLoader.loadImage("ImageHandel/Photos/foot_step/up.png");
+                    FootStep. down=imageLoader.loadImage("ImageHandel/Photos/foot_step/down.png");
+                    FootStep. leftUp=imageLoader.loadImage("ImageHandel/Photos/foot_step/left_up.png");
+                    FootStep. leftDown=imageLoader.loadImage("ImageHandel/Photos/foot_step/left_down.png");
+                    FootStep.  rightDown=imageLoader.loadImage("ImageHandel/Photos/foot_step/down_right.png");
+                    FootStep.   rightUp=imageLoader.loadImage("ImageHandel/Photos/foot_step/right_up.png");
 
 
 
-                lifePanel =ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/lifeBar1.png");
-                levelLabel =ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/level.png");
-                shopIcon=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/shop_icon.png");
-                settingLabel=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/setting_icon.png");
-                moneyIcon=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/worldFrame/money_icon.png");
-                tree=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/world/tree.png");
-                trunk=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/world/trunk.png");
-                crack=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/crack.png");
-                houseNum1=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/house1.png");
-                houseNum2=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/house2.png");
-                houseNum3=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/house/house3.png");
-                cloud=ImageLoader.loadImage("src/main/java/ImageHandel/Photos/cloud/cloud122.png");
+                    lifePanel =imageLoader.loadImage("ImageHandel/Photos/worldFrame/lifeBar1.png");
+                    levelLabel =imageLoader.loadImage("ImageHandel/Photos/worldFrame/level.png");
+                    shopIcon=imageLoader.loadImage("ImageHandel/Photos/worldFrame/shop_icon.png");
+                    settingLabel=imageLoader.loadImage("ImageHandel/Photos/worldFrame/setting_icon.png");
+                    moneyIcon=imageLoader.loadImage("ImageHandel/Photos/worldFrame/money_icon.png");
+                    tree=imageLoader.loadImage("ImageHandel/Photos/world/tree.png");
+                    trunk=imageLoader.loadImage("ImageHandel/Photos/world/trunk.png");
+                    crack=imageLoader.loadImage("ImageHandel/Photos/crack.png");
+                    houseNum1=imageLoader.loadImage("ImageHandel/Photos/house/house1.png");
+                    houseNum2=imageLoader.loadImage("ImageHandel/Photos/house/house2.png");
+                    houseNum3=imageLoader.loadImage("ImageHandel/Photos/house/house3.png");
+                    cloud=imageLoader.loadImage("ImageHandel/Photos/cloud/cloud122.png");
+                }catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(mainClass,e.getCause().toString());
+                    e.printStackTrace();
+                }
+
             }
         }).start();
 

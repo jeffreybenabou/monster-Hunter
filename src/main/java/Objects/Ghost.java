@@ -16,9 +16,11 @@ import java.util.Vector;
 
 public class Ghost extends GameObject {
 
-    private int ghostType,damgeToMainPlayer,damgeFromMainPlayer,life;
+    private int ghostType, damgeToMainPlayer, damgeFromMainPlayer, life;
 
     private static String pathOfFile;
+
+    private static ImageLoader imageLoader;
 
     public static ArrayList<ImageIcon>
             moveLeft,
@@ -31,11 +33,11 @@ public class Ghost extends GameObject {
             attackDown,
 
     dead;
-    public static int numberOfDeadGhost=0;
+    public static int numberOfDeadGhost = 0;
 
 
     private Life lifeBar;
-    private boolean stopMoving=false;
+    private boolean stopMoving = false;
 
     private boolean
 
@@ -53,13 +55,14 @@ public class Ghost extends GameObject {
             isAttackRightDown;
 
     private int speed;
-    public static boolean notTheFirstGhost=false;
-    private int index=0;
+    public static boolean notTheFirstGhost = false;
+    private int index = 0;
     private int width, height;
 
 
-    public Ghost(int ghostType){
-        this.ghostType=ghostType;
+    public Ghost(int ghostType) {
+        this.ghostType = ghostType;
+
         setHorizontalAlignment(JLabel.CENTER);
         checkTheGhostType();
         setTheDir();
@@ -69,81 +72,79 @@ public class Ghost extends GameObject {
 
     }
 
-    public void checkIfGhostIntersectHouse(){
-        Random random=new Random();
-        for (House house:World.houseArrayList) {
+    public void checkIfGhostIntersectHouse() {
+        Random random = new Random();
+        for (House house : World.houseArrayList) {
 
-                switch (StaticVariables.level) {
-                    case 1: {
-                        width = 250;
-                        height = 300;
-                        break;
-                    }
-                    case 2: {
-                        width = 300;
-                        height = 350;
-                        break;
-                    }
-                    case 3: {
-                        width = 400;
-                        height = 450;
-                        break;
-                    }
+            switch (StaticVariables.level) {
+                case 1: {
+                    width = 250;
+                    height = 300;
+                    break;
                 }
-                setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width, height));
-                if (house.getBounds().intersects(getBounds())) {
-                   setBounds(3000, 3000, width, height);
+                case 2: {
+                    width = 300;
+                    height = 350;
+                    break;
                 }
+                case 3: {
+                    width = 400;
+                    height = 450;
+                    break;
+                }
+            }
+            setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width, height));
+            if (house.getBounds().intersects(getBounds())) {
+                setBounds(3000, 3000, width, height);
+            }
 
 
         }
     }
-    public void setTheDir(){
-        Random random=new Random();
-        dirLeft=random.nextBoolean();
-        dirUp=random.nextBoolean();
+
+    public void setTheDir() {
+        Random random = new Random();
+        dirLeft = random.nextBoolean();
+        dirUp = random.nextBoolean();
         dirRight = !dirLeft;
 
         dirDown = !dirUp;
     }
 
     public static void addTheVector() {
-        moveLeft =new ArrayList<ImageIcon>();
-        moveRight =new ArrayList<ImageIcon>();
-        moveUp =new ArrayList<ImageIcon>();
-        moveDown =new ArrayList<ImageIcon>();
+        moveLeft = new ArrayList<ImageIcon>();
+        moveRight = new ArrayList<ImageIcon>();
+        moveUp = new ArrayList<ImageIcon>();
+        moveDown = new ArrayList<ImageIcon>();
 
-        attackDown=new ArrayList<ImageIcon>();
-        attackLeft=new ArrayList<ImageIcon>();
-        attackRight=new ArrayList<ImageIcon>();
-        attackUp=new ArrayList<ImageIcon>();
+        attackDown = new ArrayList<ImageIcon>();
+        attackLeft = new ArrayList<ImageIcon>();
+        attackRight = new ArrayList<ImageIcon>();
+        attackUp = new ArrayList<ImageIcon>();
 
-        dead=new ArrayList<ImageIcon>();
+        dead = new ArrayList<ImageIcon>();
 
 
     }
 
-    public void removeTheGhostWhenDead(){
-            StaticVariables.world.remove(this);
+    public void removeTheGhostWhenDead() {
+        StaticVariables.world.remove(this);
 
-            setVisible(false);
+        setVisible(false);
     }
 
 
-
-    public void setTheActionToGhost(){
+    public void setTheActionToGhost() {
         new Thread(new Runnable() {
             public void run() {
-                while(lifeBar.isAlive())
-                {
+                while (lifeBar.isAlive()) {
                     stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
 
-                    if(notTheFirstGhost)
-                    moveTheGhostAroundTheWorld();
+                    if (notTheFirstGhost)
+                        moveTheGhostAroundTheWorld();
                     else
                         changeTheGhostIcon();
                     decreaseLife(StaticVariables.mainPlayer.getDamgeToGhost());
-
 
 
                     try {
@@ -160,25 +161,23 @@ public class Ghost extends GameObject {
     }
 
     private void decreaceMainPlayerLife() {
-        MainPlayer.life.getjProgressBar().setValue(MainPlayer.life.getjProgressBar().getValue()-damgeToMainPlayer);
-        MainPlayer.life.getjProgressBar().setString(""+(MainPlayer.life.getjProgressBar().getValue()-damgeToMainPlayer));
+        MainPlayer.life.getjProgressBar().setValue(MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer);
+        MainPlayer.life.getjProgressBar().setString("" + (MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer));
 
     }
 
     public void decreaseLife(int damge) {
-        if(getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&(MainPlayer.isAttacking()||MainPlayer.spacielAttack))
-        {
+        if (getBounds().intersects(StaticVariables.mainPlayer.getBounds()) && (MainPlayer.isAttacking() || MainPlayer.spacielAttack)) {
 
 
-            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue()-damge);
-            getLifeBar().getjProgressBar().setString(""+getLifeBar().getjProgressBar().getValue());
+            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue() - damge);
+            getLifeBar().getjProgressBar().setString("" + getLifeBar().getjProgressBar().getValue());
         }
     }
 
     private void setTheGhostDeadAnimation() {
-        index=0;
-        while (index<dead.size())
-        {
+        index = 0;
+        while (index < dead.size()) {
             setIcon(dead.get(index));
             index++;
             try {
@@ -203,39 +202,33 @@ public class Ghost extends GameObject {
          * also check that the player is not getting out of the world bound .
          *
          * */
-        try
-        {
-            for (House house:World.getHouseArrayList()) {
+        try {
+            for (House house : World.getHouseArrayList()) {
 
-                if(getBounds().intersects(house.getBounds()))
-                {
-                    switch (Integer.parseInt(house.getName()))
-                    {
-                        case 1:
-                        {
-                            setLocation(getX()+10,getY());
-                            dirUp=true;
-                            dirDown=false;
-                            dirLeft=false;
-                            dirRight=true;
+                if (getBounds().intersects(house.getBounds())) {
+                    switch (Integer.parseInt(house.getName())) {
+                        case 1: {
+                            setLocation(getX() + 10, getY());
+                            dirUp = true;
+                            dirDown = false;
+                            dirLeft = false;
+                            dirRight = true;
                             break;
                         }
-                        case 2:
-                        {
-                            setLocation(getX()+10,getY());
-                            dirUp=false;
-                            dirDown=true;
-                            dirLeft=false;
-                            dirRight=true;
+                        case 2: {
+                            setLocation(getX() + 10, getY());
+                            dirUp = false;
+                            dirDown = true;
+                            dirLeft = false;
+                            dirRight = true;
                             break;
                         }
-                        case 3:
-                        {
-                            setLocation(getX()-10,getY());
-                            dirUp=false;
-                            dirDown=true;
-                            dirLeft=true;
-                            dirRight=false;
+                        case 3: {
+                            setLocation(getX() - 10, getY());
+                            dirUp = false;
+                            dirDown = true;
+                            dirLeft = true;
+                            dirRight = false;
                             break;
                         }
 
@@ -244,8 +237,7 @@ public class Ghost extends GameObject {
                 }
 
             }
-        }catch (ConcurrentModificationException e)
-        {
+        } catch (ConcurrentModificationException e) {
 
             e.printStackTrace();
         }
@@ -261,115 +253,100 @@ public class Ghost extends GameObject {
             setLocation(getX() + speed, getY());
 
 
-        if(getX()> StaticVariables.world.getWidth()-getWidth())
-        {
-            dirRight=false;
-            dirLeft=true;
+        if (getX() > StaticVariables.world.getWidth() - getWidth()) {
+            dirRight = false;
+            dirLeft = true;
         }
-        if(getX()<0)
-        {
-            dirRight=true;
-            dirLeft=false;
+        if (getX() < 0) {
+            dirRight = true;
+            dirLeft = false;
         }
-        if(getY()> StaticVariables.world.getHeight()-getHeight())
-        {
-            dirDown=false;
-            dirUp=true;
+        if (getY() > StaticVariables.world.getHeight() - getHeight()) {
+            dirDown = false;
+            dirUp = true;
         }
-        if(getY()<0)
-        {
-            dirDown=true;
-            dirUp=false;
+        if (getY() < 0) {
+            dirDown = true;
+            dirUp = false;
         }
-
-
-
-
 
 
         changeTheGhostIcon();
 
 
-
-
     }
 
-    public static   void addGhostImage(){
+    public static void addGhostImage() {
         addTheVector();
-        final Dimension dimension=new Dimension(500,320);
+        final Dimension dimension = new Dimension(500, 320);
 
-        switch (StaticVariables.level)
-        {
-            case 1:
-            {
-                pathOfFile="firstGhost";
+        switch (StaticVariables.level) {
+            case 1: {
+                pathOfFile = "firstGhost";
 
                 break;
             }
-            case 2:
-            {
-                pathOfFile="secondeGhost";
+            case 2: {
+                pathOfFile = "secondeGhost";
 
                 break;
             }
-            case 3:
-            {
-                pathOfFile="thirdGhost";
+            case 3: {
+                pathOfFile = "thirdGhost";
 
                 break;
             }
         }
 
+        imageLoader = new ImageLoader();
+
+        String DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_down/";
+        if (pathOfFile.equals("firstGhost"))
+            imageLoader.addImageOfObject(42, DIR_1, attackDown, dimension);
+        else
+            imageLoader.addImageOfObject(48, DIR_1, attackDown, dimension);
+
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_left/";
+        if (pathOfFile.equals("firstGhost"))
+            imageLoader.addImageOfObject(42, DIR_1, attackLeft, dimension);
+        else
+            imageLoader.addImageOfObject(48, DIR_1, attackLeft, dimension);
 
 
-                File   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_down/");
-                ImageLoader.addImageOfObject(DIR_1,attackDown, null,dimension);
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_right/";
+        if (pathOfFile.equals("firstGhost"))
+
+            imageLoader.addImageOfObject(42, DIR_1, attackRight, dimension);
+        else
+            imageLoader.addImageOfObject(48, DIR_1, attackRight, dimension);
 
 
-                  DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_left/");
-                ImageLoader.addImageOfObject(DIR_1,attackLeft, null,dimension);
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_up/";
+        if (pathOfFile.equals("firstGhost"))
+
+            imageLoader.addImageOfObject(42, DIR_1, attackUp, dimension);
+        else
+            imageLoader.addImageOfObject(48, DIR_1, attackUp, dimension);
 
 
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_up/";
+        imageLoader.addImageOfObject(42, DIR_1, moveUp, dimension);
 
 
-                   DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_right/");
-                ImageLoader.addImageOfObject(DIR_1,attackRight, null,dimension);
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_right/";
+        imageLoader.addImageOfObject(42, DIR_1, moveRight, dimension);
 
 
-
-                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/attack/attack_up/");
-                ImageLoader.addImageOfObject(DIR_1,attackUp, null,dimension);
-
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_left/";
+        imageLoader.addImageOfObject(42, DIR_1, moveLeft, dimension);
 
 
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_down/";
+        imageLoader.addImageOfObject(42, DIR_1, moveDown, dimension);
 
 
-                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_up/");
-                ImageLoader.addImageOfObject(DIR_1,moveUp, null,dimension);
-
-
-                      DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_right/");
-                ImageLoader.addImageOfObject(DIR_1,moveRight, null,dimension);
-
-
-
-                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_left/");
-                ImageLoader.addImageOfObject(DIR_1,moveLeft, null,dimension);
-
-
-
-                    DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/walk/walk_down/");
-                ImageLoader.addImageOfObject(DIR_1,moveDown, null,dimension);
-
-
-
-
-
-            DIR_1 = new File("src/main/java/ImageHandel/Photos/ghost/"+pathOfFile+"/dead/");
-        ImageLoader.addImageOfObject(DIR_1,dead, null,dimension);
-
-
-
+        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/dead/";
+        imageLoader.addImageOfObject(40, DIR_1, dead, dimension);
 
 
     }
@@ -383,29 +360,23 @@ public class Ghost extends GameObject {
                     dirDown = false;
                     dirUp = false;
                     dirRight = false;
-                     if (MainPlayer.isWalking())
-                         setIcon(moveRight.get(index));
+                    if (MainPlayer.isWalking())
+                        setIcon(moveRight.get(index));
                     else if (StaticVariables.mainPlayer.isLeftFromTheGhost())
                         setIcon((attackLeft.get(index)));
                     else if (StaticVariables.mainPlayer.isDownFromTheGhost())
-                         setIcon((attackDown.get(index)));
+                        setIcon((attackDown.get(index)));
                     else if (StaticVariables.mainPlayer.isRightFromTheGhost())
                         setIcon((attackRight.get(index)));
                     else if (StaticVariables.mainPlayer.isUpFromTheGhost())
-                         setIcon((attackUp.get(index)));
+                        setIcon((attackUp.get(index)));
 
                     decreaceMainPlayerLife();
 
 
+                } else {
 
-
-
-
-                }
-                else
-                {
-
-                    if(!dirUp&&!dirDown&&!dirLeft&&!dirRight)
+                    if (!dirUp && !dirDown && !dirLeft && !dirRight)
                         setTheDir();
 
                     if (dirLeft)
@@ -419,18 +390,15 @@ public class Ghost extends GameObject {
                 }
 
 
-
             } else {
                 index = 0;
             }
 
 
-
             index++;
         } catch (ArrayIndexOutOfBoundsException e) {
 
-        }catch (IndexOutOfBoundsException e)
-        {
+        } catch (IndexOutOfBoundsException e) {
 
         }
 
@@ -439,46 +407,39 @@ public class Ghost extends GameObject {
 
 
     private void checkTheGhostType() {
-        Random random=new Random();
-       switch (ghostType)
-       {
-           case 1:
-           {
-               setSize(250,300);
-               damgeToMainPlayer=2*random.nextInt(2)+1;
-               life=5000;
-               speed=1;
-               break;
-           }
-           case 2:
-           {
+        Random random = new Random();
+        switch (ghostType) {
+            case 1: {
+                setSize(250, 300);
+                damgeToMainPlayer = 2 * random.nextInt(2) + 1;
+                life = 5000;
+                speed = 1;
+                break;
+            }
+            case 2: {
 
 
-               setSize(300,350);
-               damgeToMainPlayer=3*random.nextInt(2)+1;
-               life=10000;
-               speed=2;
-               break;
-           }
-           case 3:
-           {
+                setSize(300, 350);
+                damgeToMainPlayer = 3 * random.nextInt(2) + 1;
+                life = 10000;
+                speed = 2;
+                break;
+            }
+            case 3: {
 
-               setSize(400,450);
-               damgeToMainPlayer=4*random.nextInt(2)+1;
-               life=15000;
-               speed=3;
+                setSize(400, 450);
+                damgeToMainPlayer = 4 * random.nextInt(2) + 1;
+                life = 15000;
+                speed = 3;
 
-               break;
-           }
-       }
-        lifeBar=new Life(life,this);
-       add(lifeBar.getjProgressBar());
-
-
+                break;
+            }
+        }
+        lifeBar = new Life(life, this);
+        add(lifeBar.getjProgressBar());
 
 
     }
-
 
 
     public int getGhostType() {

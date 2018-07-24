@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_ghosthunter" default="compile.module.ghosthunter">
+  <dirname property="module.ghosthunter.basedir" file="${ant.file.module_ghosthunter}"/>
+  
+  <property name="module.jdk.home.ghosthunter" value="${jdk.home.9.0}"/>
+  <property name="module.jdk.bin.ghosthunter" value="${jdk.bin.9.0}"/>
+  <property name="module.jdk.classpath.ghosthunter" value="jdk.classpath.9.0"/>
+  
+  <property name="compiler.args.ghosthunter" value="-encoding UTF-8 -source 5 -target 1.5 ${compiler.args}"/>
+  
+  <property name="ghosthunter.output.dir" value="${module.ghosthunter.basedir}/target/classes"/>
+  <property name="ghosthunter.testoutput.dir" value="${module.ghosthunter.basedir}/target/test-classes"/>
+  
+  <path id="ghosthunter.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ghosthunter.module.production.classpath">
+    <path refid="${module.jdk.classpath.ghosthunter}"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.39.classpath"/>
+  </path>
+  
+  <path id="ghosthunter.runtime.production.module.classpath">
+    <pathelement location="${ghosthunter.output.dir}"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.39.classpath"/>
+  </path>
+  
+  <path id="ghosthunter.module.classpath">
+    <path refid="${module.jdk.classpath.ghosthunter}"/>
+    <pathelement location="${ghosthunter.output.dir}"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.39.classpath"/>
+  </path>
+  
+  <path id="ghosthunter.runtime.module.classpath">
+    <pathelement location="${ghosthunter.testoutput.dir}"/>
+    <pathelement location="${ghosthunter.output.dir}"/>
+    <path refid="library.maven:_mysql:mysql-connector-java:5.1.39.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.ghosthunter">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ghosthunter">
+    <patternset refid="excluded.from.module.ghosthunter"/>
+  </patternset>
+  
+  <path id="ghosthunter.module.sourcepath">
+    <dirset dir="${module.ghosthunter.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="ghosthunter.module.test.sourcepath">
+    <dirset dir="${module.ghosthunter.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.ghosthunter" depends="compile.module.ghosthunter.production,compile.module.ghosthunter.tests" description="Compile module GhostHunter"/>
+  
+  <target name="compile.module.ghosthunter.production" depends="register.custom.compilers" description="Compile module GhostHunter; production classes">
+    <mkdir dir="${ghosthunter.output.dir}"/>
+    <javac2 destdir="${ghosthunter.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ghosthunter}/javac">
+      <compilerarg line="${compiler.args.ghosthunter}"/>
+      <bootclasspath refid="ghosthunter.module.bootclasspath"/>
+      <classpath refid="ghosthunter.module.production.classpath"/>
+      <src refid="ghosthunter.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ghosthunter"/>
+    </javac2>
+    
+    <copy todir="${ghosthunter.output.dir}">
+      <fileset dir="${module.ghosthunter.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.ghosthunter.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.ghosthunter.tests" depends="register.custom.compilers,compile.module.ghosthunter.production" description="compile module GhostHunter; test classes" unless="skip.tests">
+    <mkdir dir="${ghosthunter.testoutput.dir}"/>
+    <javac2 destdir="${ghosthunter.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ghosthunter}/javac">
+      <compilerarg line="${compiler.args.ghosthunter}"/>
+      <bootclasspath refid="ghosthunter.module.bootclasspath"/>
+      <classpath refid="ghosthunter.module.classpath"/>
+      <src refid="ghosthunter.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ghosthunter"/>
+    </javac2>
+    
+    <copy todir="${ghosthunter.testoutput.dir}">
+      <fileset dir="${module.ghosthunter.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.ghosthunter" description="cleanup module">
+    <delete dir="${ghosthunter.output.dir}"/>
+    <delete dir="${ghosthunter.testoutput.dir}"/>
+  </target>
+</project>

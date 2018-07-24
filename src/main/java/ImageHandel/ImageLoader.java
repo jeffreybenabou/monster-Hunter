@@ -3,49 +3,65 @@ package ImageHandel;
 
 
 
+import GameCore.StaticVariables;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
+import java.util.jar.JarFile;
 
 public class ImageLoader {
-    public static BufferedImage loadImage(String path){
+    ClassLoader classLoader = getClass().getClassLoader();
+
+    public BufferedImage loadImage(String path) {
         try {
 
 
-            return ImageIO.read(new File(path));
+            return ImageIO.read(classLoader.getResourceAsStream(path));
         } catch (IOException e) {
+            JOptionPane.showMessageDialog(StaticVariables.mainClass, e.getStackTrace());
+
+            e.printStackTrace();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(StaticVariables.mainClass, e.getStackTrace());
             e.printStackTrace();
 
         }
-    return null;
+        return null;
     }
 
-    public    static void addImageOfObject(File dir, ArrayList<ImageIcon> linkedList,Vector<Image>vector, Dimension size) {
-        String ImagePath;
-        for (int i = 0; dir.listFiles().length > i; i++)
-        {
+    public void addImageOfObject(int type, String dir, ArrayList<ImageIcon> linkedList, Dimension size) {
+        Image image;
+        String dirc;
 
-            try
-            {
-                ImagePath = dir.getPath() + "\\" + i + ".png";
-                ImagePath = ImagePath.replace("\\", "/");
-                if(vector==null)
-                linkedList.add(new ImageIcon(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH)));
-                else
-                    vector.add(new ImageIcon(ImagePath).getImage().getScaledInstance(size.width,size.height,Image.SCALE_SMOOTH));
 
-            }catch (NullPointerException e)
-            {
-                e.printStackTrace();
+
+
+            for (int i = 0; i<type; i++) {
+                try {
+                    dirc = dir + i + ".png";
+                    image = loadImage(dirc);
+                    linkedList.add(new ImageIcon(image.getScaledInstance(size.width, size.height, 4)));
+                } catch (NullPointerException e) {
+
+                    break;
+                }
+
             }
 
-        }
+
     }
+
+
+
 
 }

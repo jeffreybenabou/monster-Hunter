@@ -17,16 +17,25 @@ public class Bird extends GameObject  {
     private int index=0,imageFrameRate=0;
     public static ArrayList<ImageIcon> birdLeft,birdRight;
     private boolean left,down;
+    private ImageLoader imageLoader;
 
     public Bird(int x ,int y){
+        imageLoader=new ImageLoader();
         if(firstLoad)
         {
             setBirdLeft(new ArrayList<ImageIcon>());
 
             birdRight=new ArrayList<ImageIcon>();
-            ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/left/"),birdLeft,null,new Dimension(200,200));
-            ImageLoader.addImageOfObject(new File("src/main/java/ImageHandel/Photos/bird/right/"),birdRight,null,new Dimension(200,200));
-            firstLoad=false;
+            try
+            {
+                imageLoader.addImageOfObject(13,"ImageHandel/Photos/bird/left/",birdLeft,new Dimension(200,200));
+                imageLoader.addImageOfObject(13,"ImageHandel/Photos/bird/right/",birdRight,new Dimension(200,200));
+                firstLoad=false;
+            }catch (NullPointerException e)
+            {
+                e.printStackTrace();
+            }
+
 
         }
 
