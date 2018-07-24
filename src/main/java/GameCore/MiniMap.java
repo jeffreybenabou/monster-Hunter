@@ -128,6 +128,7 @@ public class MiniMap extends JLabel {
                             }
                         }
                     }
+
                     else
                         key.setBounds(key.getX()-2,key.getY()-3,key.getWidth(),key.getHeight());
 
