@@ -4,16 +4,12 @@ import ImageHandel.ImageLoader;
 import Objects.MainPlayer;
 import sound.Sound;
 
-
 import javax.swing.*;
 import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Vector;
 
 
 
@@ -50,7 +46,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 createButton(i);
             }
 
-            repaint();
+
         }catch (Exception e)
         {
             JOptionPane.showMessageDialog(this,e.getMessage());

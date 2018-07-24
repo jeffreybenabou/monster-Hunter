@@ -3,20 +3,14 @@ package GameCore;
 
 
 import BackgroundObject.FootStep;
-import Objects.Ghost;
 import Objects.MainPlayer;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.security.Key;
-import java.util.ArrayList;
 
-public class GamePanel extends JLabel implements KeyListener,MouseListener {
+public class GamePanel extends JLabel  {
 
 
     private JLabel lifeBar;
@@ -40,6 +34,9 @@ public class GamePanel extends JLabel implements KeyListener,MouseListener {
         addSettingIcon();
         addMoneyLabel();
         addSpacialAttack();
+        setBackground(new Color(0,0,0,0));
+        setOpaque(true);
+        setVisible(true);
 /*
         jTextField.setBounds(100,300,100,30);
         jTextField1.setBounds(100,400,100,30);
@@ -105,10 +102,11 @@ public class GamePanel extends JLabel implements KeyListener,MouseListener {
             moneyIcon = new JLabel();
             moneyIcon.setBounds(50,0,200,150);
             moneyIcon.setIcon(new ImageIcon(StaticVariables.moneyIcon.getScaledInstance(moneyIcon.getWidth(),moneyIcon.getHeight(),0)));
-            moneyIcon.addMouseListener(this);
+            moneyIcon.addMouseListener(StaticVariables.world);
             add(moneyIcon);
-//            bag=new Bag();
-//            add(bag);
+            bag=new Bag();
+            bag.addMouseListener(StaticVariables.world);
+            add(bag);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -230,27 +228,11 @@ public class GamePanel extends JLabel implements KeyListener,MouseListener {
         this.font = font;
     }
 
-    public void mouseClicked(MouseEvent e) {
-
+    public Bag getBag() {
+        return bag;
     }
 
-    public void mousePressed(MouseEvent e) {
-
-        if(e.getComponent().equals(moneyIcon))
-        {
-            bag.setVisible(true);
-        }
-    }
-
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    public void mouseExited(MouseEvent e) {
-
+    public void setBag(Bag bag) {
+        this.bag = bag;
     }
 }

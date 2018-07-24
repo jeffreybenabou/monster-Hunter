@@ -6,13 +6,8 @@ import GameCore.*;
 import ImageHandel.ImageLoader;
 import sound.Sound;
 
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-
-import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
@@ -61,6 +56,7 @@ public class MainPlayer extends GameObject {
     public MainPlayer() {
         try
         {
+
             imageLoader=new ImageLoader();
             walkingSound = new Sound();
             attackingSound = new Sound();
@@ -91,7 +87,7 @@ public class MainPlayer extends GameObject {
         angle = (360 + Math.toDegrees(Math.atan2(yDistance, xDistance))) % 360;
         /*
          * calculate the angle of main player position in order to
-         * know what is the diriction that the main player wants to move
+         * know what is the direction that the main player wants to move
          * */
     }
 
@@ -108,7 +104,7 @@ public class MainPlayer extends GameObject {
 
                 imageLoader=new ImageLoader();
                 DIR_1 = "ImageHandel/Photos/character/" + type2 + "/stand/";
-                imageLoader.addImageOfObject(43,DIR_1, standDown, stand);
+                imageLoader.addImageOfObject(31,DIR_1, standDown, stand);
 
 
 

@@ -9,7 +9,7 @@ public class Trunk extends GameObject {
 
 
     public Trunk(){
-        setIcon(new ImageIcon(StaticVariables.trunk.getScaledInstance(200,150,0)));
+        setIcon(new ImageIcon(StaticVariables.trunk));
         setSize(200,150);
 
     }

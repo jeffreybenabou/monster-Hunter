@@ -37,7 +37,6 @@ public class World extends JLabel implements MouseListener {
             backGroundWorld=new Sound();
             backGroundWorld.playSound(Sound.path.get(4));
             backGroundWorld.setVolume(-10);
-            setOpaque(true);
             addMouseListener(this);
 
             addBackGroundObjects();
@@ -311,6 +310,7 @@ public class World extends JLabel implements MouseListener {
         if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacielAttack)
         {
 
+            checkIfPreesTheSetting(e);
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
 //            checkIfUserPreesTheHouse(e);
@@ -327,6 +327,16 @@ public class World extends JLabel implements MouseListener {
 
 
 
+    }
+
+    private void checkIfPreesTheSetting(MouseEvent e) {
+        if(e.getComponent().equals(StaticVariables.gamePanel.getMoneyIcon())||e.getComponent().equals(StaticVariables.gamePanel.getBag()))
+        {
+            StaticVariables.gamePanel.getBag().setVisible(true);
+
+        }
+        else
+            StaticVariables.gamePanel.getBag().setVisible(false);
     }
 
     private void checkIfUserPreesTheHouse(MouseEvent e) {

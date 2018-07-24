@@ -2,8 +2,6 @@ package GameCore;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class MainClass extends JFrame  {
 
@@ -13,20 +11,11 @@ public class MainClass extends JFrame  {
     public MainClass(){
 
 
+        getContentPane().setBackground(Color.black);
         dimension= Toolkit.getDefaultToolkit().getScreenSize();
+
         setTheJFrame();
         addMouseListener(StaticVariables.world);
-
-        new Thread(new Runnable() {
-            public void run() {
-                while (true)
-                {
-                    repaint();
-
-                }
-
-            }
-        }).start();
         setVisible(true);
     }
 
@@ -38,7 +27,7 @@ public class MainClass extends JFrame  {
     }
     public static void removeTheMainMenu(){
 
-        StaticVariables.mainClass.repaint();
+
         StaticVariables.mainMenu.setVisible(false);
         StaticVariables.mainClass.remove(StaticVariables.mainMenu);
 
@@ -52,6 +41,7 @@ public class MainClass extends JFrame  {
 
             StaticVariables.world.setVisible(true);
             StaticVariables.gamePanel.setVisible(true);
+
             removeTheMainMenu();
         }catch (NullPointerException e)
         {
@@ -61,7 +51,7 @@ public class MainClass extends JFrame  {
     }
 
     public static void removeTheWorld(){
-        StaticVariables.mainClass.repaint();
+
         if(StaticVariables.world!=null)
         StaticVariables.world.setVisible(false);
         if(  StaticVariables.gamePanel!=null)
@@ -75,6 +65,7 @@ public class MainClass extends JFrame  {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
+
 
     }
 

@@ -2,36 +2,31 @@ package GameCore;
 
 
 
-import ImageHandel.ImageLoader;
-import Objects.MainPlayer;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Opening extends JLabel {
 
-    private ImageLoader imageLoader;
-    private int x=0,y=0;
-    private Image intro;
-    public Opening(){
 
-imageLoader=new ImageLoader();
+    public Opening(){
 
 
 
 
         try
         {
-            intro=imageLoader.loadImage("ImageHandel/Photos/opening.png");
-            setIcon(new ImageIcon(intro.getScaledInstance(StaticVariables.dimension.width,StaticVariables.dimension.height,Image.SCALE_SMOOTH)));
+
+            // TODO: 24/07/2018 check why the opening image wont work
             setBounds(0,0,StaticVariables.dimension.width,StaticVariables.dimension.height);
+            setIcon(new ImageIcon(StaticVariables.into));
+
+
+
 
 
 
         }catch (NullPointerException e)
         {
-            JOptionPane.showMessageDialog(StaticVariables.mainClass,e.fillInStackTrace());
+            JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getStackTrace());
             e.printStackTrace();
 
 
@@ -54,5 +49,6 @@ imageLoader=new ImageLoader();
 
             }
         }).start();
+
     }
 }

@@ -4,7 +4,6 @@ package GameCore;
 
 
 
-import ImageHandel.ImageLoader;
 import Objects.Ghost;
 
 import javax.swing.*;
@@ -59,6 +58,7 @@ public class MiniMap extends JLabel {
                     }
                     try {
                         Thread.sleep(200);
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -116,6 +116,7 @@ public class MiniMap extends JLabel {
                         e.printStackTrace();
                     }
                 }
+
                 key.setVisible(false);
 
                 // TODO: 21/07/2018 add the key to the bag

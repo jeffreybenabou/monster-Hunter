@@ -1,26 +1,20 @@
 package GameCore;
 
-import BackgroundObject.Bird;
 import BackgroundObject.FootStep;
 import ImageHandel.ImageLoader;
-
-import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Vector;
-
 import Objects.Ghost;
 import Objects.MainPlayer;
-import Server.*;
-
+import Server.Sql;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StaticVariables {
 
 
     public static Dimension dimension;
     public static Image watingLabel;
+    public static Image into;
 
     private ImageLoader imageLoader;
     public static Image
@@ -66,7 +60,7 @@ public class StaticVariables {
         imageLoader=new ImageLoader();
         dimension= Toolkit.getDefaultToolkit().getScreenSize();
         mainClass=new MainClass();
-
+        into=imageLoader.loadImage("ImageHandel/Photos/opening.png");
         mainClass.add(new Opening());
 
         try
@@ -85,6 +79,7 @@ public class StaticVariables {
             public void run() {
                 try
                 {
+
                     watingLabel=imageLoader.loadImage("ImageHandel/Photos/load.png");
                     key1=imageLoader.loadImage("ImageHandel/Photos/house/key1.png");
                     key2=imageLoader.loadImage("ImageHandel/Photos/house/key2.png");

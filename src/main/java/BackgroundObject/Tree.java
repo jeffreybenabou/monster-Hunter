@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Tree extends GameObject {
 
     public Tree(){
-        setIcon(new ImageIcon(StaticVariables.tree.getScaledInstance(400,600,0)));
+        setIcon(new ImageIcon(StaticVariables.tree));
         setSize(400,600);
     }
 }
