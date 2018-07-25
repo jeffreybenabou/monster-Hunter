@@ -200,19 +200,7 @@ public class MainPlayer extends GameObject {
 
     private void setTheUserAction() {
 
-      /*  new Thread(new Runnable() {
-            public void run() {
-                while (true)
-                {
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    checkSoundStatus();
-                }
-            }
-        }).start();*/
+
 
         new Thread(new Runnable() {
             public void run() {
@@ -641,7 +629,7 @@ public class MainPlayer extends GameObject {
 
                 for (GameObject house : StaticVariables.world.getBackGroundObjects()) {
                     if (house.getClass().getSimpleName().equals("House")) {
-                        if (house.getBounds().intersects(getBounds())) {
+                        if (house.getBounds().intersects(getBounds())&&house.isVisible()) {
                             setStand(true);
                             setWalking(false);
                         }

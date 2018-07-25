@@ -73,6 +73,8 @@ public class MiniMap extends JLabel {
                             changeLevel = true;
 
                     }
+                    System.out.println(StaticVariables.level);
+
                     if(changeLevel)
                         break;
 
@@ -139,30 +141,7 @@ public class MiniMap extends JLabel {
                         e.printStackTrace();
                     }
                 }
-                if(StaticVariables.level==1)
-                {
-                    StaticVariables.gamePanel.getBag().getKey1().setIcon(new ImageIcon(StaticVariables.key1.getScaledInstance(StaticVariables.gamePanel.getBag().getKey1().getWidth(),StaticVariables.gamePanel.getBag().getKey1().getHeight(),Image.SCALE_SMOOTH)));
-                    StaticVariables.gamePanel.getBag().getKey1().addMouseListener(StaticVariables.world);
-                }
-                else
-                    StaticVariables.gamePanel.getBag().getKey1().removeMouseListener(StaticVariables.world);
-
-                if(StaticVariables.level==2)
-                {
-                    StaticVariables.gamePanel.getBag().getKey2().setIcon(new ImageIcon(StaticVariables.key2.getScaledInstance(StaticVariables.gamePanel.getBag().getKey2().getWidth(),StaticVariables.gamePanel.getBag().getKey2().getHeight(),Image.SCALE_SMOOTH)));
-                    StaticVariables.gamePanel.getBag().getKey2().addMouseListener(StaticVariables.world);
-                }
-                else
-                    StaticVariables.gamePanel.getBag().getKey2().removeMouseListener(StaticVariables.world);
-
-                if(StaticVariables.level==3)
-                {
-                    StaticVariables.gamePanel.getBag().getKey3().setIcon(new ImageIcon(StaticVariables.key3.getScaledInstance(StaticVariables.gamePanel.getBag().getKey3().getWidth(),StaticVariables.gamePanel.getBag().getKey3().getHeight(),Image.SCALE_SMOOTH)));
-                    StaticVariables.gamePanel.getBag().getKey3().addMouseListener(StaticVariables.world);
-                }
-                else
-                    StaticVariables.gamePanel.getBag().getKey3().removeMouseListener(StaticVariables.world);
-
+                Key.changeTheKeyState();
                     key.setVisible(false);
                 StaticVariables.gamePanel.remove(key);
                 Ghost.numberOfDeadGhost = 0;

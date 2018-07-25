@@ -150,7 +150,8 @@ public class World extends JLabel implements MouseListener {
                         case 3:{
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <1 ; i++) {
+                            for (int i = 0; i <20 ; i++) {
+
                                 Ghost ghost=new Ghost(3);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
@@ -347,14 +348,21 @@ public class World extends JLabel implements MouseListener {
         for (House house :houseArrayList) {
             if(e.getComponent().equals(house)&&key1IsPreesed||key2IsPreesed||key3IsPreesed)
             {
+                key1IsPreesed=false;
+                key2IsPreesed=false;
+                key3IsPreesed=false;
+                Key.removeTheKeyLiseners();
                 StaticVariables.level++;
                 addGhost();
                 StaticVariables.miniMap.addActionOfMiniMap();
+                break;
+
             }
         }
         key1IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1());
         key2IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey2());
         key3IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey3());
+
 
 
 
