@@ -73,7 +73,7 @@ public class MiniMap extends JLabel {
                             changeLevel = true;
 
                     }
-                    System.out.println(StaticVariables.level);
+
 
                     if(changeLevel)
                         break;
@@ -102,48 +102,8 @@ public class MiniMap extends JLabel {
                 }
                 aghost.clear();
 
-                while (StaticVariables.gamePanel.getMoneyIcon().getX()+100<key.getX())
-                {
 
-                    if(key.getWidth()>=100)
-                    {
-                        key.setBounds(key.getX()-2,key.getY()-1,key.getWidth()-5,key.getHeight()-5);
-                        switch (StaticVariables.level)
-                        {
-                            case 1:
-                            {
-                                key.setIcon(new ImageIcon(StaticVariables.key1.getScaledInstance(key.getWidth(),key.getHeight(),0)));
-
-                                break;
-                            }
-                            case 2:
-                            {
-                                key.setIcon(new ImageIcon(StaticVariables.key2.getScaledInstance(key.getWidth(),key.getHeight()-1,0)));
-
-                                break;
-                            }
-                            case 3:
-                            {
-                                key.setIcon(new ImageIcon(StaticVariables.key3.getScaledInstance(key.getWidth(),key.getHeight(),0)));
-
-                                break;
-                            }
-                        }
-                    }
-
-                    else
-                        key.setBounds(key.getX()-2,key.getY()-3,key.getWidth(),key.getHeight());
-
-
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Key.changeTheKeyState();
-                    key.setVisible(false);
-                StaticVariables.gamePanel.remove(key);
+                key.moveTheKey();
                 Ghost.numberOfDeadGhost = 0;
 
             }

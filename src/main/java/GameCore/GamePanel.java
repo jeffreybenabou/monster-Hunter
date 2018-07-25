@@ -22,6 +22,7 @@ public class GamePanel extends JLabel  {
 
     JTextField jTextField=new JTextField(),jTextField1=new JTextField();
 
+    private int width_ =100;
 
     private Font font=new Font("Serif", Font.BOLD, 20);
     private Bag bag;
@@ -200,6 +201,15 @@ public class GamePanel extends JLabel  {
 
     public static void setjProgressBar(JProgressBar jProgressBar) {
         GamePanel.jProgressBar = jProgressBar;
+    }
+
+
+    public int getWidth_() {
+        return width_;
+    }
+
+    public void setWidth_(int width_) {
+        this.width_ = width_;
     }
 
     public JTextField getjTextField() {
