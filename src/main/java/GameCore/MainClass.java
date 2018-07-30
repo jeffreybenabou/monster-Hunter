@@ -16,6 +16,7 @@ public class MainClass extends JFrame  {
 
         setTheJFrame();
         addMouseListener(StaticVariables.world);
+
         setVisible(true);
     }
 

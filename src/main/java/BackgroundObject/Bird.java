@@ -6,10 +6,8 @@ import ImageHandel.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
 
 public class Bird extends GameObject  {
 

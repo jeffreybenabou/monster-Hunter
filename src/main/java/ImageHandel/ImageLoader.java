@@ -1,25 +1,29 @@
 package ImageHandel;
 
 
-
-
 import GameCore.StaticVariables;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImageLoader {
-    ClassLoader classLoader = getClass().getClassLoader();
+
 
     public BufferedImage loadImage(String path) {
         try {
 
+            ClassLoader classLoader = ImageLoader.class.getClassLoader();
+            File file = new File(classLoader.getResource(path).getFile());
 
-            return ImageIO.read(classLoader.getResourceAsStream(path));
+
+
+            return             ImageIO.read(file);
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(StaticVariables.mainClass, e.getStackTrace());
 

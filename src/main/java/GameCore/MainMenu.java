@@ -84,7 +84,7 @@ public class MainMenu extends JLabel implements MouseListener {
                             public void run() {
 // TODO: 21/07/2018 change the image to main player attack
 
-                                imageLoader.addImageOfObject(32,"ImageHandel/Photos/character/male/attack/down/",aMale,new Dimension(500,400));
+                                imageLoader.addImageOfObject(32,"Photos/character/male/attack/down/",aMale,new Dimension(500,400));
 
                                     male.setIcon(aMale.get(0));
 
@@ -96,7 +96,7 @@ public class MainMenu extends JLabel implements MouseListener {
                         new Thread(new Runnable() {
                             public void run() {
 
-                                imageLoader.addImageOfObject(43,"ImageHandel/Photos/character/female/attack/down/",aFemale,new Dimension(500,450));
+                                imageLoader.addImageOfObject(43,"Photos/character/female/attack/down/",aFemale,new Dimension(500,450));
                                     female.setIcon(aFemale.get(0));
 
 

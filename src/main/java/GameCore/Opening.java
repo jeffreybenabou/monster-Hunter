@@ -16,12 +16,9 @@ public class Opening extends JLabel {
         {
 
             // TODO: 24/07/2018 check why the opening image wont work
-            setBounds(0,0,StaticVariables.dimension.width,StaticVariables.dimension.height);
-            setIcon(new ImageIcon(StaticVariables.into));
 
-
-
-
+           setIcon(new ImageIcon(StaticVariables.into.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,0)));
+            setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
 
 
         }catch (NullPointerException e)
@@ -42,6 +39,7 @@ public class Opening extends JLabel {
                 }
                 setVisible(false);
                 StaticVariables.mainMenu.setVisible(true);
+                StaticVariables.mainMenu.setOpaque(true);
                 MainClass.addTheMainMenu();
 
 

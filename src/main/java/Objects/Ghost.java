@@ -8,11 +8,9 @@ import ImageHandel.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Random;
-import java.util.Vector;
 
 public class Ghost extends GameObject {
 
@@ -300,20 +298,20 @@ public class Ghost extends GameObject {
 
         imageLoader = new ImageLoader();
 
-        String DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_down/";
+        String DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_down/";
         if (pathOfFile.equals("firstGhost"))
             imageLoader.addImageOfObject(42, DIR_1, attackDown, dimension);
         else
             imageLoader.addImageOfObject(48, DIR_1, attackDown, dimension);
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_left/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_left/";
         if (pathOfFile.equals("firstGhost"))
             imageLoader.addImageOfObject(42, DIR_1, attackLeft, dimension);
         else
             imageLoader.addImageOfObject(48, DIR_1, attackLeft, dimension);
 
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_right/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_right/";
         if (pathOfFile.equals("firstGhost"))
 
             imageLoader.addImageOfObject(42, DIR_1, attackRight, dimension);
@@ -321,7 +319,7 @@ public class Ghost extends GameObject {
             imageLoader.addImageOfObject(48, DIR_1, attackRight, dimension);
 
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/attack/attack_up/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_up/";
         if (pathOfFile.equals("firstGhost"))
 
             imageLoader.addImageOfObject(42, DIR_1, attackUp, dimension);
@@ -329,23 +327,23 @@ public class Ghost extends GameObject {
             imageLoader.addImageOfObject(48, DIR_1, attackUp, dimension);
 
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_up/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_up/";
         imageLoader.addImageOfObject(42, DIR_1, moveUp, dimension);
 
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_right/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_right/";
         imageLoader.addImageOfObject(42, DIR_1, moveRight, dimension);
 
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_left/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_left/";
         imageLoader.addImageOfObject(42, DIR_1, moveLeft, dimension);
 
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/walk/walk_down/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_down/";
         imageLoader.addImageOfObject(42, DIR_1, moveDown, dimension);
 
 
-        DIR_1 = "ImageHandel/Photos/ghost/" + pathOfFile + "/dead/";
+        DIR_1 = "Photos/ghost/" + pathOfFile + "/dead/";
         imageLoader.addImageOfObject(40, DIR_1, dead, dimension);
 
 
