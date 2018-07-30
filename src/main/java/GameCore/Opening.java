@@ -15,11 +15,14 @@ public class Opening extends JLabel {
         try
         {
 
-            // TODO: 24/07/2018 check why the opening image wont work
 
-           setIcon(new ImageIcon(StaticVariables.into.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,0)));
+            ImageIcon imageIcon=new ImageIcon(StaticVariables.into.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,4));
+
+           setIcon(imageIcon);
             setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
+setVisible(true);
 
+            // TODO: 24/07/2018 check why the opening image wont work
 
         }catch (NullPointerException e)
         {

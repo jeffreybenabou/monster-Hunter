@@ -37,7 +37,7 @@ public class ImageLoader {
         return null;
     }
 
-    public void addImageOfObject(int type, String dir, ArrayList<ImageIcon> linkedList, Dimension size) {
+    public void addImageOfObject(int type, String dir, ArrayList<ImageIcon> linkedList) {
         Image image;
         String dirc;
 

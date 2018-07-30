@@ -16,7 +16,9 @@ public class MainClass extends JFrame  {
 
         setTheJFrame();
         addMouseListener(StaticVariables.world);
-
+       StaticVariables. into=StaticVariables.imageLoader.loadImage("Photos/opening.png");
+        Opening opening=new Opening();
+        add(opening);
         setVisible(true);
     }
 

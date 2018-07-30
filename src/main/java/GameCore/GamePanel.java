@@ -35,8 +35,7 @@ public class GamePanel extends JLabel  {
         addSettingIcon();
         addMoneyLabel();
         addSpacialAttack();
-        setBackground(new Color(0,0,0,0));
-        setOpaque(true);
+
         setVisible(true);
 /*
         jTextField.setBounds(100,300,100,30);

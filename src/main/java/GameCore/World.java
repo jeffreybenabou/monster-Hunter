@@ -33,7 +33,6 @@ public class World extends JLabel implements MouseListener {
         try
         {
             setBounds(-500,-750,5000,5000);
-            setLayout(null);
             setBackground(Color.GRAY);
             backGroundWorld=new Sound();
             backGroundWorld.playSound(Sound.path.get(4));

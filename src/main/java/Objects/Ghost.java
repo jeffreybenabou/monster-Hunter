@@ -300,51 +300,51 @@ public class Ghost extends GameObject {
 
         String DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_down/";
         if (pathOfFile.equals("firstGhost"))
-            imageLoader.addImageOfObject(42, DIR_1, attackDown, dimension);
+            imageLoader.addImageOfObject(42, DIR_1, attackDown);
         else
-            imageLoader.addImageOfObject(48, DIR_1, attackDown, dimension);
+            imageLoader.addImageOfObject(48, DIR_1, attackDown);
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_left/";
         if (pathOfFile.equals("firstGhost"))
-            imageLoader.addImageOfObject(42, DIR_1, attackLeft, dimension);
+            imageLoader.addImageOfObject(42, DIR_1, attackLeft);
         else
-            imageLoader.addImageOfObject(48, DIR_1, attackLeft, dimension);
+            imageLoader.addImageOfObject(48, DIR_1, attackLeft);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_right/";
         if (pathOfFile.equals("firstGhost"))
 
-            imageLoader.addImageOfObject(42, DIR_1, attackRight, dimension);
+            imageLoader.addImageOfObject(42, DIR_1, attackRight);
         else
-            imageLoader.addImageOfObject(48, DIR_1, attackRight, dimension);
+            imageLoader.addImageOfObject(48, DIR_1, attackRight);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_up/";
         if (pathOfFile.equals("firstGhost"))
 
-            imageLoader.addImageOfObject(42, DIR_1, attackUp, dimension);
+            imageLoader.addImageOfObject(42, DIR_1, attackUp);
         else
-            imageLoader.addImageOfObject(48, DIR_1, attackUp, dimension);
+            imageLoader.addImageOfObject(48, DIR_1, attackUp);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_up/";
-        imageLoader.addImageOfObject(42, DIR_1, moveUp, dimension);
+        imageLoader.addImageOfObject(42, DIR_1, moveUp);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_right/";
-        imageLoader.addImageOfObject(42, DIR_1, moveRight, dimension);
+        imageLoader.addImageOfObject(42, DIR_1, moveRight);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_left/";
-        imageLoader.addImageOfObject(42, DIR_1, moveLeft, dimension);
+        imageLoader.addImageOfObject(42, DIR_1, moveLeft);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/walk/walk_down/";
-        imageLoader.addImageOfObject(42, DIR_1, moveDown, dimension);
+        imageLoader.addImageOfObject(42, DIR_1, moveDown);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/dead/";
-        imageLoader.addImageOfObject(40, DIR_1, dead, dimension);
+        imageLoader.addImageOfObject(40, DIR_1, dead);
 
 
     }

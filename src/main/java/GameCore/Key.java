@@ -11,6 +11,8 @@ public class Key extends GameObject {
 
     public Key(){
         addTheKeyToWorld();
+        setBackground(new Color(0,0,0,0));
+        setOpaque(true);
     }
     public void addTheKeyToWorld(){
         switch (StaticVariables.level)

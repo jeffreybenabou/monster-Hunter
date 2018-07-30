@@ -16,7 +16,7 @@ public class StaticVariables {
     public static Image watingLabel;
     public static Image into;
 
-    private ImageLoader imageLoader;
+    public static ImageLoader imageLoader;
     public static Image
             mainMenuBackGround,
             exitButton,
@@ -63,13 +63,9 @@ public class StaticVariables {
             dimension= Toolkit.getDefaultToolkit().getScreenSize();
             mainClass=new MainClass();
 
-            new Thread(new Runnable() {
-                public void run() {
-                    into=imageLoader.loadImage("Photos/opening.png");
-                    Opening opening=new Opening();
-                    mainClass.add(opening);
-                }
-            }).start();
+
+
+
 
         }catch (Exception e)
         {
@@ -106,7 +102,7 @@ public class StaticVariables {
                     loadFromComputerButton=imageLoader.loadImage("Photos/menuButton/load.png");
 
                     mainMenu=new MainMenu();
-                    mainMenu.setVisible(false);
+
                 }catch (Exception e)
                 {
                     JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getCause().toString());

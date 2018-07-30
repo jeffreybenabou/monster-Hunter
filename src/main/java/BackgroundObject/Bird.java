@@ -5,7 +5,6 @@ import GameCore.StaticVariables;
 import ImageHandel.ImageLoader;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,8 +25,8 @@ public class Bird extends GameObject  {
             birdRight=new ArrayList<ImageIcon>();
             try
             {
-                imageLoader.addImageOfObject(13,"ImageHandel/Photos/bird/left/",birdLeft,new Dimension(200,200));
-                imageLoader.addImageOfObject(13,"ImageHandel/Photos/bird/right/",birdRight,new Dimension(200,200));
+                imageLoader.addImageOfObject(13,"Photos/bird/left/",birdLeft);
+                imageLoader.addImageOfObject(13,"Photos/bird/right/",birdRight);
                 firstLoad=false;
             }catch (NullPointerException e)
             {

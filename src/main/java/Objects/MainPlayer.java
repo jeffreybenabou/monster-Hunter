@@ -22,7 +22,8 @@ public class MainPlayer extends GameObject {
     public static Sound walkingSound, attackingSound, earthQuaqe;
     public static int imageFrameRate = 0, addLifeToMainPlayer = 0;
     public static boolean intersect = false;
-    private int xSpriteSheet = 350, ySprtieSheet = 320, index = 0, imageSpeed = 3, damgeToGhost;
+    private int  index = 0, imageSpeed = 3, damgeToGhost;
+    public static int xSpriteSheet = 250, ySprtieSheet = 250;
     public static String nameOfPlayer, type;
     public static boolean attacking;
     public static boolean walking = false;
@@ -98,64 +99,62 @@ public class MainPlayer extends GameObject {
             public void run() {
 
 
-                final Dimension stand = new Dimension(350, 330);
-                final Dimension side = new Dimension(400, 350);
-                final Dimension upDown = new Dimension(400, 380);
+
 
                 imageLoader=new ImageLoader();
-                DIR_1 = "ImageHandel/Photos/character/" + type2 + "/stand/";
-                imageLoader.addImageOfObject(31,DIR_1, standDown, stand);
+                DIR_1 = "Photos/character/" + type2 + "/stand/";
+                imageLoader.addImageOfObject(31,DIR_1, standDown );
 
 
 
-                        DIR_1 = "ImageHandel/Photos/character/" + type2 + "/walk/right/";
-                imageLoader.addImageOfObject(31,DIR_1, right, side);
+                        DIR_1 = "Photos/character/" + type2 + "/walk/right/";
+                imageLoader.addImageOfObject(31,DIR_1, right);
 
-                        DIR_1 ="ImageHandel/Photos/character/" + type2 + "/walk/left/";
-                imageLoader.addImageOfObject(31,DIR_1, left, side);
-
-
+                        DIR_1 ="Photos/character/" + type2 + "/walk/left/";
+                imageLoader.addImageOfObject(31,DIR_1, left);
 
 
 
-                        DIR_1 = "ImageHandel/Photos/character/" + type2 + "/walk/down/";
-                imageLoader.addImageOfObject(31,DIR_1, down, upDown);
-
-                        DIR_1 = "ImageHandel/Photos/character/" + type2 + "/walk/up/";
-                imageLoader.addImageOfObject(31,DIR_1, up, upDown);
 
 
+                        DIR_1 = "Photos/character/" + type2 + "/walk/down/";
+                imageLoader.addImageOfObject(31,DIR_1, down);
 
-                DIR_1 = "ImageHandel/Photos/character/" + type2 + "/attack/spacielAttack/";
-                imageLoader.addImageOfObject(72,DIR_1, spacielAttackA, stand);
+                        DIR_1 = "Photos/character/" + type2 + "/walk/up/";
+                imageLoader.addImageOfObject(31,DIR_1, up);
 
-                DIR_1 = "ImageHandel/Photos/character/" + type2 + "/attack/left/";
+
+
+                DIR_1 = "Photos/character/" + type2 + "/attack/spacielAttack/";
+                imageLoader.addImageOfObject(72,DIR_1, spacielAttackA);
+
+                DIR_1 = "Photos/character/" + type2 + "/attack/left/";
                 if(type2.equals("male"))
-                imageLoader.addImageOfObject(32,DIR_1, attackLeft, side);
+                imageLoader.addImageOfObject(32,DIR_1, attackLeft);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackLeft, side);
+                    imageLoader.addImageOfObject(42,DIR_1, attackLeft);
 
 
-                DIR_1 ="ImageHandel/Photos/character/" + type2 + "/attack/up/";
+                DIR_1 ="Photos/character/" + type2 + "/attack/up/";
                 if(type2.equals("male"))
-                    imageLoader.addImageOfObject(32,DIR_1, attackUp, upDown);
+                    imageLoader.addImageOfObject(32,DIR_1, attackUp);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackUp, upDown);
+                    imageLoader.addImageOfObject(42,DIR_1, attackUp);
 
 
 
-                DIR_1 = "ImageHandel/Photos/character/" + type2 + "/attack/down/";
+                DIR_1 = "Photos/character/" + type2 + "/attack/down/";
                 if(type2.equals("male"))
-                imageLoader.addImageOfObject(32,DIR_1, attackDown, side);
+                imageLoader.addImageOfObject(32,DIR_1, attackDown);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackDown, side);
+                    imageLoader.addImageOfObject(42,DIR_1, attackDown);
 
 
-                DIR_1 ="ImageHandel/Photos/character/" + type2 + "/attack/right/";
+                DIR_1 ="Photos/character/" + type2 + "/attack/right/";
                 if(type2.equals("male"))
-                imageLoader.addImageOfObject(32,DIR_1, attackRight, upDown);
+                imageLoader.addImageOfObject(32,DIR_1, attackRight);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackRight, upDown);
+                    imageLoader.addImageOfObject(42,DIR_1, attackRight);
 
 //                DIR_1 = "ImageHandel/Photos/character/"+ type2 +"/die/";
 //                ImageLoader.addImageOfObject(DIR_1, die, upDown);
@@ -216,7 +215,6 @@ public class MainPlayer extends GameObject {
                     checkedMainPlayerInteractWithMonster();
                     setLocationOfMainPlayerWhenFightTheGhost();
                     addLifeToPlayer();
-
 
                     try {
                         Thread.sleep(getSpeedOfMove());
@@ -352,6 +350,8 @@ public class MainPlayer extends GameObject {
         checkIfStand();
         checkIfAttacking();
         checkIfSpacialAttack();
+        setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
+
 
         index++;
 
@@ -472,7 +472,6 @@ public class MainPlayer extends GameObject {
             if (isAttacking()) {
 
 
-                setSize(getxSpriteSheet(), getySprtieSheet());
 
 
 
