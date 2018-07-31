@@ -18,7 +18,7 @@ public class ImageLoader {
         try {
 
             ClassLoader classLoader = ImageLoader.class.getClassLoader();
-            File file = new File(classLoader.getResource(path).getFile());
+            File file = new File(classLoader.getResource(path).toURI());
 
 
 
