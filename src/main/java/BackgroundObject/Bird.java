@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Bird extends GameObject  {
 
     private static   boolean firstLoad=true;
-    private int index=0,imageFrameRate=0;
+    private Integer index=0,imageFrameRate=0;
     public static ArrayList<ImageIcon> birdLeft,birdRight;
     private boolean left,down;
     private ImageLoader imageLoader;
@@ -120,19 +120,19 @@ public class Bird extends GameObject  {
         Bird.firstLoad = firstLoad;
     }
 
-    public int getIndex() {
+    public Integer getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
-    public int getImageFrameRate() {
+    public Integer getImageFrameRate() {
         return imageFrameRate;
     }
 
-    public void setImageFrameRate(int imageFrameRate) {
+    public void setImageFrameRate(Integer imageFrameRate) {
         this.imageFrameRate = imageFrameRate;
     }
 
@@ -166,5 +166,13 @@ public class Bird extends GameObject  {
 
     public void setDown(boolean down) {
         this.down = down;
+    }
+
+    public ImageLoader getImageLoader() {
+        return imageLoader;
+    }
+
+    public void setImageLoader(ImageLoader imageLoader) {
+        this.imageLoader = imageLoader;
     }
 }

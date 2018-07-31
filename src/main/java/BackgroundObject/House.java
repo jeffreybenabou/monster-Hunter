@@ -1,6 +1,7 @@
 package BackgroundObject;
 
 import GameCore.GameObject;
+import GameCore.MiniMap;
 import GameCore.StaticVariables;
 
 import javax.swing.*;
@@ -79,6 +80,11 @@ public class House extends GameObject {
             }
 
         }
+        MiniMap.house.add(new JLabel(new ImageIcon(StaticVariables.houseIconMiniMap)));
+        MiniMap.house.get(MiniMap.house.size()-1).setVisible(false);
+        StaticVariables.miniMap.add( MiniMap.house.get(MiniMap.house.size()-1));
+
+
     }
 
     public int getHouseNumber() {

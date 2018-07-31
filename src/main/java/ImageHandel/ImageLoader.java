@@ -19,9 +19,6 @@ public class ImageLoader {
 
             ClassLoader classLoader = ImageLoader.class.getClassLoader();
             File file = new File(classLoader.getResource(path).toURI());
-
-
-
             return             ImageIO.read(file);
 
         } catch (IOException e) {

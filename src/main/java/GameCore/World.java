@@ -19,11 +19,11 @@ public class World extends JLabel implements MouseListener {
 
 
 
-    public static boolean housePreesed=false;
-    public static ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
-    public static boolean ghostAreBeingAdd=false;
+    private  boolean housePreesed=false;
+    private  ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
+    private  boolean ghostAreBeingAdd=false;
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
-    public static ArrayList<House>houseArrayList=new ArrayList<House>();
+    private  ArrayList<House>houseArrayList=new ArrayList<House>();
     private Random random;
     private Ghost firstGhost;
     private Sound backGroundWorld;
@@ -75,13 +75,14 @@ public class World extends JLabel implements MouseListener {
                      *
                      * */
 
-                            firstGhost=new Ghost(1);
-                            firstGhost.setLocation(2500,2500);
-                    firstGhost.setName(""+0);
-                    ghostArrayList.add(firstGhost);
-                    add(firstGhost);
-                    StaticVariables.miniMap.addTheGhostLocationToMap(0,firstGhost.getLocation());
-                            while(firstGhost.getLifeBar().isAlive()){
+                    setFirstGhost(new Ghost(1));
+
+                            getFirstGhost().setLocation(2500,2500);
+                    getFirstGhost().setName(""+0);
+                    getGhostArrayList().add(getFirstGhost());
+                    add(getFirstGhost());
+                    StaticVariables.miniMap.addTheGhostLocationToMap(0,getFirstGhost().getLocation());
+                            while(getFirstGhost().getLifeBar().isAlive()){
                                 try {
                                     Thread.sleep(100);
                                 } catch (InterruptedException e) {
@@ -104,7 +105,7 @@ public class World extends JLabel implements MouseListener {
 
                     try
                     {
-                        for (House house:World.getHouseArrayList()) {
+                        for (House house:StaticVariables.world.getHouseArrayList()) {
                             house.setVisible(true);
                             house.getHouseEntrance().setVisible(true);
                         }
@@ -163,9 +164,10 @@ public class World extends JLabel implements MouseListener {
                             break;
                         }
                     }
-                    ghostArrayList.remove(firstGhost);
-                    firstGhost=null;
-                    ghostAreBeingAdd=false;
+                    getGhostArrayList().remove(getFirstGhost());
+                    setFirstGhost(null);
+                    setGhostAreBeingAdd(false);
+
                 }
             }
         }).start();
@@ -176,7 +178,8 @@ public class World extends JLabel implements MouseListener {
     }
 
     private void addBackGroundObjects() {
-        random=new Random();
+        setRandom(new Random());
+
 
 
         new Thread(new Runnable() {
@@ -189,9 +192,9 @@ public class World extends JLabel implements MouseListener {
 
                             {
 
-                                        Cloud cloud=new Cloud(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                        Cloud cloud=new Cloud(getRandom().nextInt(getWidth()),getRandom().nextInt(getHeight()));
                                         add(cloud);
-                                Bird bird=new Bird(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                                Bird bird=new Bird(getRandom().nextInt(getWidth()),getRandom().nextInt(getHeight()));
                                 add(bird);
 
 
@@ -211,10 +214,10 @@ public class World extends JLabel implements MouseListener {
 
                 for (int i = 0; i <30 ; ) {
                     Tree tree=new Tree();
-                    tree.setBounds(random.nextInt(getWidth()),random.nextInt(getHeight()),400,600);
+                    tree.setBounds(getRandom().nextInt(getWidth()),getRandom().nextInt(getHeight()),400,600);
                     if(!checkIfInetrcet(tree))
                     {
-                        backGroundObjects.add(tree);
+                        getBackGroundObjects().add(tree);
                         add(tree);
                         i++;
 
@@ -225,8 +228,8 @@ public class World extends JLabel implements MouseListener {
 
                 for (int i = 0; i < 3; ) {
                     House house = new House(i);
-                    backGroundObjects.add(house);
-                    houseArrayList.add(house);
+                    getBackGroundObjects().add(house);
+                    getHouseArrayList().add(house);
                     house.setVisible(false);
                     add(house);
                     i++;
@@ -240,11 +243,11 @@ public class World extends JLabel implements MouseListener {
 
                 for (int i = 0; i <20 ; ) {
                     Trunk trunk=new Trunk();
-                    trunk.setLocation(random.nextInt(getWidth()),random.nextInt(getHeight()));
+                    trunk.setLocation(getRandom().nextInt(getWidth()),getRandom().nextInt(getHeight()));
 
                     if(!checkIfInetrcet(trunk))
                     {
-                        backGroundObjects.add(trunk);
+                        getBackGroundObjects().add(trunk);
                         add(trunk);
                         i++;
                     }
@@ -261,7 +264,7 @@ public class World extends JLabel implements MouseListener {
 
 
     private boolean checkIfInetrcet(GameObject  object) {
-        for (GameObject gameObject: backGroundObjects) {
+        for (GameObject gameObject: getBackGroundObjects()) {
             if(gameObject.getBounds().intersects(object.getBounds()))
             {
                 return true;
@@ -347,9 +350,10 @@ public class World extends JLabel implements MouseListener {
         for (House house :houseArrayList) {
             if(e.getComponent().equals(house)&&key1IsPreesed||key2IsPreesed||key3IsPreesed)
             {
-                key1IsPreesed=false;
-                key2IsPreesed=false;
-                key3IsPreesed=false;
+                setKey1IsPreesed(false);
+                setKey2IsPreesed(false);
+                setKey3IsPreesed(false);
+
                 Key.removeTheKeyLiseners();
                 StaticVariables.level++;
                 addGhost();
@@ -358,9 +362,10 @@ public class World extends JLabel implements MouseListener {
 
             }
         }
-        key1IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1());
-        key2IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey2());
-        key3IsPreesed = e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey3());
+        setKey1IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1()));
+        setKey2IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey2()));
+        setKey3IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey3()));
+
 
 
 
@@ -487,20 +492,53 @@ public class World extends JLabel implements MouseListener {
         this.firstGhost = firstGhost;
     }
 
-    public static boolean isGhostAreBeingAdd() {
+
+    public boolean isHousePreesed() {
+        return housePreesed;
+    }
+
+    public void setHousePreesed(boolean housePreesed) {
+        this.housePreesed = housePreesed;
+    }
+
+    public boolean isGhostAreBeingAdd() {
         return ghostAreBeingAdd;
     }
 
-    public static void setGhostAreBeingAdd(boolean ghostAreBeingAdd) {
-        World.ghostAreBeingAdd = ghostAreBeingAdd;
+    public void setGhostAreBeingAdd(boolean ghostAreBeingAdd) {
+        this.ghostAreBeingAdd = ghostAreBeingAdd;
     }
 
-    public static ArrayList<House> getHouseArrayList() {
+    public ArrayList<House> getHouseArrayList() {
         return houseArrayList;
     }
 
-    public static void setHouseArrayList(ArrayList<House> houseArrayList) {
-        World.houseArrayList = houseArrayList;
+    public void setHouseArrayList(ArrayList<House> houseArrayList) {
+        this.houseArrayList = houseArrayList;
+    }
+
+    public boolean isKey1IsPreesed() {
+        return key1IsPreesed;
+    }
+
+    public void setKey1IsPreesed(boolean key1IsPreesed) {
+        this.key1IsPreesed = key1IsPreesed;
+    }
+
+    public boolean isKey2IsPreesed() {
+        return key2IsPreesed;
+    }
+
+    public void setKey2IsPreesed(boolean key2IsPreesed) {
+        this.key2IsPreesed = key2IsPreesed;
+    }
+
+    public boolean isKey3IsPreesed() {
+        return key3IsPreesed;
+    }
+
+    public void setKey3IsPreesed(boolean key3IsPreesed) {
+        this.key3IsPreesed = key3IsPreesed;
     }
 
     public Sound getBackGroundWorld() {

@@ -17,6 +17,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
 
+    private JLabel loadingIcon;
     private ImageLoader imageLoader;
     private Sound backgroundSound;
     private JLabel watingLabel;
@@ -266,8 +267,14 @@ public class MainMenu extends JLabel implements MouseListener {
                 try
                 {
 
+                    loadingIcon=new JLabel("loading.....");
+                    loadingIcon.setHorizontalTextPosition(JLabel.CENTER);
+                    loadingIcon.setFont(new Font("Serif", Font.PLAIN, 45));
+                    loadingIcon.setForeground(Color.red);
+                    loadingIcon.setBounds(getWidth()-250,getHeight()-80,400,80);
                     watingLabel =new JLabel(new ImageIcon(StaticVariables.watingLabel.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
                     watingLabel.setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
+                    watingLabel.add(loadingIcon);
                     StaticVariables.mainClass.add(watingLabel);
                     MainClass.removeTheMainMenu();
                 }catch (Exception e)

@@ -13,49 +13,54 @@ import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
     boolean changeLevel = false;
+    private JLabel mainPlayerLabel;
     private boolean loadFuncation=false;
     private  Border blackline;
     private Key key;
     public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
+    public static ArrayList<JLabel> house=new ArrayList<JLabel>();
 
     public MiniMap() {
-        blackline = BorderFactory.createRaisedBevelBorder();
+        setBlackline(BorderFactory.createRaisedBevelBorder());
         setBorder(blackline);
         setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
         setBackground(Color.black);
-
+        setTheMainPlayerLabel();
     }
 
+    public void setTheMainPlayerLabel(){
+         mainPlayerLabel=new JLabel();
+        mainPlayerLabel.setBounds(20,20,5,5);
+        mainPlayerLabel.setBackground(Color.blue);
+        mainPlayerLabel.setOpaque(true);
+        add(mainPlayerLabel);
+    }
     public void addActionOfMiniMap() {
         new Thread(new Runnable() {
             public void run() {
-                loadFuncation = false;
-                changeLevel=false;
-                addTheMainPlayerLocationToMap();
-                while (!loadFuncation) {
-
-                    // TODO: 03/07/2018 fix the mini map
-                    for (int i = 0; i < StaticVariables.world.getGhostArrayList().size(); i++) {
-                        try {
-
-                            if (StaticVariables.world.getGhostArrayList().get(i).isVisible())
-                                aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX() / 20, StaticVariables.world.getGhostArrayList().get(i).getY() / 32);
-                            else
-                                aghost.get(i).setVisible(false);
+                setLoadFuncation(false);
+                setChangeLevel(false);
 
 
-                        } catch (IndexOutOfBoundsException e) {
-                            e.printStackTrace();
-                            break;
-
-                        } catch (NullPointerException e) {
-                            e.printStackTrace();
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                new Thread(new Runnable() {
+                    public void run() {
+                        while (true)
+                        {
+                            addTheMainPlayerLocationToMap();
+                            try {
+                                Thread.sleep(150);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
-
                     }
+                }).start();
+
+                while (!isLoadFuncation()) {
+
+                    addTheHouseLocationToMap();
+                    addGhostToMiniMap();
+
                     try {
                         Thread.sleep(10);
 
@@ -65,17 +70,18 @@ public class MiniMap extends JLabel {
 
 
                     if(Ghost.notTheFirstGhost)
-                    for (Ghost ghost : World.ghostArrayList) {
+                    for (Ghost ghost : StaticVariables.world.getGhostArrayList()) {
                         if (ghost.isVisible()) {
-                            changeLevel = false;
+                            setChangeLevel(false);
                             break;
                         } else
-                            changeLevel = true;
+                            setChangeLevel(true);
+
 
                     }
 
 
-                    if(changeLevel)
+                    if(isChangeLevel())
                         break;
 
 
@@ -88,22 +94,76 @@ public class MiniMap extends JLabel {
         }).start();
     }
 
+    private void addGhostToMiniMap() {
+        for (int i = 0; i < StaticVariables.world.getGhostArrayList().size(); i++) {
+            try {
+
+                if (StaticVariables.world.getGhostArrayList().get(i).isVisible())
+                    aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX() / 20, StaticVariables.world.getGhostArrayList().get(i).getY() / 32);
+                else
+                    aghost.get(i).setVisible(false);
+
+
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+                break;
+
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void addTheHouseLocationToMap() {
+        if(Ghost.notTheFirstGhost)
+        for (int i = 0; i < house.size(); i++) {
+            try {
+                if(i==StaticVariables.level-1)
+                {
+                    house.get(i).setIcon(new ImageIcon(StaticVariables.houseIconChooseMiniMap));
+                }
+                else
+                    house.get(i).setIcon(new ImageIcon(StaticVariables.houseIconMiniMap));
+
+                    house.get(i).setVisible(true);
+                    house.get(i).setBounds(StaticVariables.world.getHouseArrayList().get(i).getX() / 19+10, StaticVariables.world.getHouseArrayList().get(i).getY() / 32+5,house.get(i).getIcon().getIconWidth(),house.get(i).getIcon().getIconHeight());
+
+
+
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+                break;
+
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 
     private void levelUp() {
 
-        if (!World.ghostAreBeingAdd) {
+        if (!StaticVariables.world.isGhostAreBeingAdd()) {
 
-            if (changeLevel && Ghost.notTheFirstGhost) {
-                key=new Key();
-                key.setVisible(true);
-                StaticVariables.gamePanel.add(key);
-                for (JLabel label:aghost) {
+            if (isChangeLevel() && Ghost.notTheFirstGhost) {
+                setKey(new Key());
+                getKey().setVisible(true);
+                StaticVariables.gamePanel.add(getKey());
+                for (JLabel label:getAghost()) {
                     label.setVisible(false);
                 }
-                aghost.clear();
+                getAghost().clear();
 
 
-                key.moveTheKey();
+                getKey().moveTheKey();
                 Ghost.numberOfDeadGhost = 0;
 
             }
@@ -113,32 +173,25 @@ public class MiniMap extends JLabel {
     }
 
     public void addTheMainPlayerLocationToMap(){
-        new Thread(new Runnable() {
-            public void run() {
-                JLabel jLabel=new JLabel();
-                jLabel.setBounds(20,20,5,5);
-                jLabel.setBackground(Color.blue);
-                jLabel.setOpaque(true);
-                add(jLabel);
-                while (true){
+
+
+
                     int x;
                     int y;
                     try{
                         y=StaticVariables.mainPlayer.getLocation().y/32;
                         x=StaticVariables.mainPlayer.getLocation().x/20;
-                        jLabel.setLocation(x,y);
-                        Thread.sleep(200);
+                        mainPlayerLabel.setLocation(x,y);
+
                     }catch (NullPointerException e)
                     {
 
-                        addTheMainPlayerLocationToMap();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+
                     }
 
-                }
-            }
-        }).start();
+
+
+
 
 
     }
@@ -151,7 +204,7 @@ public class MiniMap extends JLabel {
             jLabel.setOpaque(true);
         jLabel.setName(""+position);
             add(jLabel);
-            aghost.add(jLabel);
+            getAghost().add(jLabel);
 
 
 
@@ -159,5 +212,45 @@ public class MiniMap extends JLabel {
 
 
 
+    }
+
+    public boolean isChangeLevel() {
+        return changeLevel;
+    }
+
+    public void setChangeLevel(boolean changeLevel) {
+        this.changeLevel = changeLevel;
+    }
+
+    public boolean isLoadFuncation() {
+        return loadFuncation;
+    }
+
+    public void setLoadFuncation(boolean loadFuncation) {
+        this.loadFuncation = loadFuncation;
+    }
+
+    public Border getBlackline() {
+        return blackline;
+    }
+
+    public void setBlackline(Border blackline) {
+        this.blackline = blackline;
+    }
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public static ArrayList<JLabel> getAghost() {
+        return aghost;
+    }
+
+    public static void setAghost(ArrayList<JLabel> aghost) {
+        MiniMap.aghost = aghost;
     }
 }

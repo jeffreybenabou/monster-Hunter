@@ -8,6 +8,7 @@ import Server.Sql;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class StaticVariables {
 
@@ -15,6 +16,7 @@ public class StaticVariables {
     public static Dimension dimension;
     public static Image watingLabel;
     public static Image into;
+    public static Image houseIconMiniMap;
 
     public static ImageLoader imageLoader;
     public static Image
@@ -52,9 +54,10 @@ public class StaticVariables {
 
 
 
-    public static int level=1;
+    public static Integer level=1;
 
     private static Sql sql;
+    public static BufferedImage houseIconChooseMiniMap;
 
     public StaticVariables(){
         try
@@ -76,6 +79,9 @@ public class StaticVariables {
 
         try
         {
+
+            houseIconMiniMap=imageLoader.loadImage("Photos/minimap/houseDanger.png");
+            houseIconChooseMiniMap=imageLoader.loadImage("Photos/minimap/dogarrowminimap.gif");
             mainMenuBackGround=imageLoader.loadImage("Photos/menu.png");
 
         }catch (Exception e)

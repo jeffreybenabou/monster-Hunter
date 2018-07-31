@@ -34,7 +34,7 @@ public class Bag extends GameObject {
 
     private void setBagProperties() {
         setBounds(500,300,500,300);
-        setBackground(Color.gray);
+        setBackground(Color.black);
         border  = BorderFactory.createLineBorder(Color.red);
         setBorder(border);
         setVisible(false);

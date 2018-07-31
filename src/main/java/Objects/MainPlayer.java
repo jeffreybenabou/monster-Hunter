@@ -13,17 +13,17 @@ import java.util.ConcurrentModificationException;
 
 public class MainPlayer extends GameObject {
 
-    public static int sumOfLife = 20000;
+    public static Integer sumOfLife = 500;
     public static Life life;
     public static boolean spacielAttack;
 
     private static ImageLoader imageLoader;
 
     public static Sound walkingSound, attackingSound, earthQuaqe;
-    public static int imageFrameRate = 0, addLifeToMainPlayer = 0;
+    public static Integer imageFrameRate = 0, addLifeToMainPlayer = 0;
     public static boolean intersect = false;
     private int  index = 0, imageSpeed = 3, damgeToGhost;
-    public static int xSpriteSheet = 250, ySprtieSheet = 250;
+    public static Integer xSpriteSheet = 250, ySprtieSheet = 250;
     public static String nameOfPlayer, type;
     public static boolean attacking;
     public static boolean walking = false;
@@ -42,9 +42,9 @@ public class MainPlayer extends GameObject {
             up, down, left, right,
             standDown,
             attackLeft, attackRight, attackDown, attackUp, die, spacielAttackA;
-    private double angle = 0;
-    private double distanceFromPoint;
-    private long speedOfMove = 20;
+    private Double angle = 0d;
+    private Double distanceFromPoint;
+    private Long speedOfMove = 20l;
     private FootStep footStep;
 
 
@@ -156,9 +156,9 @@ public class MainPlayer extends GameObject {
                 else
                     imageLoader.addImageOfObject(42,DIR_1, attackRight);
 
-//                DIR_1 = "ImageHandel/Photos/character/"+ type2 +"/die/";
-//                ImageLoader.addImageOfObject(DIR_1, die, upDown);
-// TODO: 22/07/2018 add die to male
+                DIR_1 = "Photos/character/"+ type2 +"/die/";
+                imageLoader.addImageOfObject(11, DIR_1, die);
+
 
             }
         }).start();
@@ -226,6 +226,10 @@ public class MainPlayer extends GameObject {
                         break;
                     }
                 }
+
+
+
+
 
 
             }
@@ -351,9 +355,42 @@ public class MainPlayer extends GameObject {
         checkIfAttacking();
         checkIfSpacialAttack();
         setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
-
+        checkIfMainPlayerIsDieing();
 
         index++;
+
+    }
+
+    private void checkIfMainPlayerIsDieing() {
+try
+{
+    if(!getLife().isAlive())
+    {
+        setWalking(false);
+        setAttacking(false);
+        setSpacielAttack(false);
+        setStand(false);
+        index=0;
+        while (getHeight()>=0)
+        {
+            if(index>die.size())
+                index=0;
+            setIcon(getDie().get(index++));
+            setBounds(getX(),getY()+1,getWidth(),getHeight()-1);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}catch (Exception e)
+{
+    e.printStackTrace();
+}
+
+
+
 
     }
 
@@ -439,7 +476,7 @@ public class MainPlayer extends GameObject {
 
                     earthQuaqe.playSound(Sound.path.get(5));
 
-                    for (Ghost g : World.ghostArrayList) {
+                    for (Ghost g : StaticVariables.world.getGhostArrayList()) {
                         g.decreaseLife(50);
                     }
                     int x;
@@ -650,11 +687,37 @@ public class MainPlayer extends GameObject {
 
         }
 
-    public static int getSumOfLife() {
+
+
+    private void checkIfStand() {
+        try {
+
+
+            if (stand) {
+
+                setSize(xSpriteSheet, ySprtieSheet);
+
+
+                if (index >= standDown.size())
+                    index = 0;
+                if (standDown.size() > 0)
+                    setIcon(standDown.get(index));
+
+                attacking = false;
+                walking = false;
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static Integer getSumOfLife() {
         return sumOfLife;
     }
 
-    public static void setSumOfLife(int sumOfLife) {
+    public static void setSumOfLife(Integer sumOfLife) {
         MainPlayer.sumOfLife = sumOfLife;
     }
 
@@ -672,6 +735,14 @@ public class MainPlayer extends GameObject {
 
     public static void setSpacielAttack(boolean spacielAttack) {
         MainPlayer.spacielAttack = spacielAttack;
+    }
+
+    public static ImageLoader getImageLoader() {
+        return imageLoader;
+    }
+
+    public static void setImageLoader(ImageLoader imageLoader) {
+        MainPlayer.imageLoader = imageLoader;
     }
 
     public static Sound getWalkingSound() {
@@ -698,19 +769,19 @@ public class MainPlayer extends GameObject {
         MainPlayer.earthQuaqe = earthQuaqe;
     }
 
-    public static int getImageFrameRate() {
+    public static Integer getImageFrameRate() {
         return imageFrameRate;
     }
 
-    public static void setImageFrameRate(int imageFrameRate) {
+    public static void setImageFrameRate(Integer imageFrameRate) {
         MainPlayer.imageFrameRate = imageFrameRate;
     }
 
-    public static int getAddLifeToMainPlayer() {
+    public static Integer getAddLifeToMainPlayer() {
         return addLifeToMainPlayer;
     }
 
-    public static void setAddLifeToMainPlayer(int addLifeToMainPlayer) {
+    public static void setAddLifeToMainPlayer(Integer addLifeToMainPlayer) {
         MainPlayer.addLifeToMainPlayer = addLifeToMainPlayer;
     }
 
@@ -720,22 +791,6 @@ public class MainPlayer extends GameObject {
 
     public static void setIntersect(boolean intersect) {
         MainPlayer.intersect = intersect;
-    }
-
-    public int getxSpriteSheet() {
-        return xSpriteSheet;
-    }
-
-    public void setxSpriteSheet(int xSpriteSheet) {
-        this.xSpriteSheet = xSpriteSheet;
-    }
-
-    public int getySprtieSheet() {
-        return ySprtieSheet;
-    }
-
-    public void setySprtieSheet(int ySprtieSheet) {
-        this.ySprtieSheet = ySprtieSheet;
     }
 
     public int getIndex() {
@@ -760,6 +815,22 @@ public class MainPlayer extends GameObject {
 
     public void setDamgeToGhost(int damgeToGhost) {
         this.damgeToGhost = damgeToGhost;
+    }
+
+    public static Integer getxSpriteSheet() {
+        return xSpriteSheet;
+    }
+
+    public static void setxSpriteSheet(Integer xSpriteSheet) {
+        MainPlayer.xSpriteSheet = xSpriteSheet;
+    }
+
+    public static Integer getySprtieSheet() {
+        return ySprtieSheet;
+    }
+
+    public static void setySprtieSheet(Integer ySprtieSheet) {
+        MainPlayer.ySprtieSheet = ySprtieSheet;
     }
 
     public static String getNameOfPlayer() {
@@ -874,7 +945,13 @@ public class MainPlayer extends GameObject {
         this.is_stand_right_up = is_stand_right_up;
     }
 
+    public static String getDir1() {
+        return DIR_1;
+    }
 
+    public static void setDir1(String dir1) {
+        DIR_1 = dir1;
+    }
 
     public static ArrayList<ImageIcon> getUp() {
         return up;
@@ -964,27 +1041,27 @@ public class MainPlayer extends GameObject {
         MainPlayer.spacielAttackA = spacielAttackA;
     }
 
-    public double getAngle() {
+    public Double getAngle() {
         return angle;
     }
 
-    public void setAngle(double angle) {
+    public void setAngle(Double angle) {
         this.angle = angle;
     }
 
-    public double getDistanceFromPoint() {
+    public Double getDistanceFromPoint() {
         return distanceFromPoint;
     }
 
-    public void setDistanceFromPoint(double distanceFromPoint) {
+    public void setDistanceFromPoint(Double distanceFromPoint) {
         this.distanceFromPoint = distanceFromPoint;
     }
 
-    public long getSpeedOfMove() {
+    public Long getSpeedOfMove() {
         return speedOfMove;
     }
 
-    public void setSpeedOfMove(long speedOfMove) {
+    public void setSpeedOfMove(Long speedOfMove) {
         this.speedOfMove = speedOfMove;
     }
 
@@ -1010,29 +1087,5 @@ public class MainPlayer extends GameObject {
 
     public void setStopTime(float stopTime) {
         this.stopTime = stopTime;
-    }
-
-    private void checkIfStand() {
-        try {
-
-
-            if (stand) {
-
-                setSize(xSpriteSheet, ySprtieSheet);
-
-
-                if (index >= standDown.size())
-                    index = 0;
-                if (standDown.size() > 0)
-                    setIcon(standDown.get(index));
-
-                attacking = false;
-                walking = false;
-            }
-
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 }

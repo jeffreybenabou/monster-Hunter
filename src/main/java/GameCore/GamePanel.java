@@ -22,7 +22,7 @@ public class GamePanel extends JLabel  {
 
     JTextField jTextField=new JTextField(),jTextField1=new JTextField();
 
-    private int width_ =100;
+    private Integer width_ =100;
 
     private Font font=new Font("Serif", Font.BOLD, 20);
     private Bag bag;
