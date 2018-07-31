@@ -17,6 +17,7 @@ public class StaticVariables {
     public static Image watingLabel;
     public static Image into;
     public static Image houseIconMiniMap;
+    public static Image hole;
 
     public static ImageLoader imageLoader;
     public static Image
@@ -80,6 +81,7 @@ public class StaticVariables {
         try
         {
 
+            hole=imageLoader.loadImage("Photos/hole.png");
             houseIconMiniMap=imageLoader.loadImage("Photos/minimap/houseDanger.png");
             houseIconChooseMiniMap=imageLoader.loadImage("Photos/minimap/dogarrowminimap.gif");
             mainMenuBackGround=imageLoader.loadImage("Photos/menu.png");

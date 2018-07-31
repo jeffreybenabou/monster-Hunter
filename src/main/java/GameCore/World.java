@@ -19,6 +19,7 @@ public class World extends JLabel implements MouseListener {
 
 
 
+    private JLabel hole;
     private  boolean housePreesed=false;
     private  ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
     private  boolean ghostAreBeingAdd=false;
@@ -32,6 +33,7 @@ public class World extends JLabel implements MouseListener {
     public World(){
         try
         {
+
             setBounds(-500,-750,5000,5000);
             setBackground(Color.GRAY);
             backGroundWorld=new Sound();
@@ -539,6 +541,14 @@ public class World extends JLabel implements MouseListener {
 
     public void setKey3IsPreesed(boolean key3IsPreesed) {
         this.key3IsPreesed = key3IsPreesed;
+    }
+
+    public JLabel getHole() {
+        return hole;
+    }
+
+    public void setHole(JLabel hole) {
+        this.hole = hole;
     }
 
     public Sound getBackGroundWorld() {

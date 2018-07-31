@@ -52,6 +52,7 @@ public class MainPlayer extends GameObject {
 
 
     float stopTime;
+    private boolean playerDead=false;
 
 
     public MainPlayer() {
@@ -204,7 +205,7 @@ public class MainPlayer extends GameObject {
         new Thread(new Runnable() {
             public void run() {
 
-                while (true) {
+                while (!playerDead) {
 
 
                     setImageFrameRate(getImageFrameRate() + 1);
@@ -366,6 +367,10 @@ try
 {
     if(!getLife().isAlive())
     {
+        playerDead=true;
+        StaticVariables.world.setHole(new JLabel(new ImageIcon(StaticVariables.hole)));
+        StaticVariables.world.getHole().setBounds(getX(),getY(), StaticVariables.world.getHole().getIcon().getIconWidth(),StaticVariables.world.getHole().getIcon().getIconHeight());
+        StaticVariables.world.add(StaticVariables.world.getHole());
         setWalking(false);
         setAttacking(false);
         setSpacielAttack(false);
@@ -373,12 +378,13 @@ try
         index=0;
         while (getHeight()>=0)
         {
-            if(index>die.size())
+            if(index>die.size()-1)
                 index=0;
             setIcon(getDie().get(index++));
-            setBounds(getX(),getY()+1,getWidth(),getHeight()-1);
+            setBounds(getX(),getY()+3,getWidth(),getHeight()-4);
+            setVerticalAlignment(JLabel.TOP);
             try {
-                Thread.sleep(50);
+                Thread.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
