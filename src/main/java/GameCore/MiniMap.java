@@ -24,8 +24,11 @@ public class MiniMap extends JLabel {
         setBlackline(BorderFactory.createRaisedBevelBorder());
         setBorder(blackline);
         setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
+
+
         setBackground(Color.black);
         setTheMainPlayerLabel();
+
     }
 
     public void setTheMainPlayerLabel(){
@@ -36,6 +39,14 @@ public class MiniMap extends JLabel {
         add(mainPlayerLabel);
     }
     public void addActionOfMiniMap() {
+        try
+        {
+            setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(getWidth(),getHeight(),4)));
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         new Thread(new Runnable() {
             public void run() {
                 setLoadFuncation(false);

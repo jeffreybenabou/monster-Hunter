@@ -99,7 +99,9 @@ public class GamePanel extends JLabel  {
     private void addMoneyLabel() {
         try
         {
-            moneyIcon = new JLabel();
+            moneyIcon = new JLabel("0");
+            moneyIcon.setVerticalTextPosition(JLabel.CENTER);
+            moneyIcon.setHorizontalTextPosition(JLabel.CENTER);
             moneyIcon.setBounds(50,0,200,150);
             moneyIcon.setIcon(new ImageIcon(StaticVariables.moneyIcon.getScaledInstance(moneyIcon.getWidth(),moneyIcon.getHeight(),0)));
             moneyIcon.addMouseListener(StaticVariables.world);

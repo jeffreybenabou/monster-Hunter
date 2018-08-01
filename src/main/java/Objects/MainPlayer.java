@@ -13,7 +13,7 @@ import java.util.ConcurrentModificationException;
 
 public class MainPlayer extends GameObject {
 
-    public static Integer sumOfLife = 500;
+    public static Integer sumOfLife = 20000;
     public static Life life;
     public static boolean spacielAttack;
 
