@@ -16,8 +16,10 @@ public class GamePanel extends JLabel  {
     private JLabel lifeBar;
     private JLabel levelLabel;
     private JLabel shopIcon;
+    private JLabel shopLabel;
     private JLabel settingLabel;
     private JLabel moneyIcon;
+    private JLabel sumOfMoney;
     public static JProgressBar jProgressBar;
 
     JTextField jTextField=new JTextField(),jTextField1=new JTextField();
@@ -35,7 +37,7 @@ public class GamePanel extends JLabel  {
         addSettingIcon();
         addMoneyLabel();
         addSpacialAttack();
-
+        addShopLabel();
         setVisible(true);
 /*
         jTextField.setBounds(100,300,100,30);
@@ -46,6 +48,11 @@ public class GamePanel extends JLabel  {
         add(jTextField1);*/
 
 
+    }
+
+    private void addShopLabel() {
+        shopLabel=new JLabel();
+        shopLabel.setBounds(400,300,400,300);
     }
 
     private void addSpacialAttack() {
@@ -99,12 +106,18 @@ public class GamePanel extends JLabel  {
     private void addMoneyLabel() {
         try
         {
-            moneyIcon = new JLabel("0");
-            moneyIcon.setVerticalTextPosition(JLabel.CENTER);
-            moneyIcon.setHorizontalTextPosition(JLabel.CENTER);
+            moneyIcon = new JLabel();
             moneyIcon.setBounds(50,0,200,150);
             moneyIcon.setIcon(new ImageIcon(StaticVariables.moneyIcon.getScaledInstance(moneyIcon.getWidth(),moneyIcon.getHeight(),0)));
             moneyIcon.addMouseListener(StaticVariables.world);
+            sumOfMoney=new JLabel();
+            sumOfMoney.setHorizontalTextPosition(JLabel.CENTER);
+            sumOfMoney.setVerticalTextPosition(JLabel.CENTER);
+            sumOfMoney.setFont(font);
+            sumOfMoney.setForeground(Color.red);
+            sumOfMoney.setBounds(moneyIcon.getWidth()/2-5,moneyIcon.getHeight()-40,300,40);
+            sumOfMoney.setText(""+0);
+            moneyIcon.add(sumOfMoney);
             add(moneyIcon);
             bag=new Bag();
             bag.addMouseListener(StaticVariables.world);
@@ -227,6 +240,18 @@ public class GamePanel extends JLabel  {
 
     public void setjTextField1(JTextField jTextField1) {
         this.jTextField1 = jTextField1;
+    }
+
+    public JLabel getSumOfMoney() {
+        return sumOfMoney;
+    }
+
+    public void setSumOfMoney(JLabel sumOfMoney) {
+        this.sumOfMoney = sumOfMoney;
+    }
+
+    public void setWidth_(Integer width_) {
+        this.width_ = width_;
     }
 
     @Override

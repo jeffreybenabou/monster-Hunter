@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
 public class StaticVariables {
 
 
-    public static Dimension dimension;
     public static Image watingLabel;
     public static Image into;
     public static Image houseIconMiniMap;
@@ -55,7 +54,9 @@ public class StaticVariables {
 
 
 
-    public static Integer level=1;
+    public static Integer level=1,sumOfMoney=0;
+    public static Image coin;
+
 
     private static Sql sql;
     public static BufferedImage houseIconChooseMiniMap;
@@ -64,7 +65,6 @@ public class StaticVariables {
         try
         {
             imageLoader=new ImageLoader();
-            dimension= Toolkit.getDefaultToolkit().getScreenSize();
             mainClass=new MainClass();
 
 
@@ -80,7 +80,7 @@ public class StaticVariables {
 
         try
         {
-
+            coin=imageLoader.loadImage("Photos/coin.png");
             hole=imageLoader.loadImage("Photos/hole.png");
             houseIconMiniMap=imageLoader.loadImage("Photos/minimap/houseDanger.png");
             houseIconChooseMiniMap=imageLoader.loadImage("Photos/minimap/dogarrowminimap.gif");

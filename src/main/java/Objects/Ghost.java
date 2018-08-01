@@ -127,6 +127,7 @@ public class Ghost extends GameObject {
 
     public void removeTheGhostWhenDead() {
         StaticVariables.world.remove(this);
+        new CoinAdd(getX(),getY());
 
         setVisible(false);
     }
@@ -158,17 +159,17 @@ public class Ghost extends GameObject {
         }).start();
     }
 
-    private void decreaceMainPlayerLife() {
+    private void decreaseMainPlayerLife() {
         MainPlayer.life.getjProgressBar().setValue(MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer);
         MainPlayer.life.getjProgressBar().setString("" + (MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer));
 
     }
 
-    public void decreaseLife(int damge) {
+    public void decreaseLife(int damage) {
         if (getBounds().intersects(StaticVariables.mainPlayer.getBounds()) && (MainPlayer.isAttacking() || MainPlayer.spacielAttack)) {
 
 
-            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue() - damge*StaticVariables.level);
+            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue() - damage*StaticVariables.level);
             getLifeBar().getjProgressBar().setString("" + getLifeBar().getjProgressBar().getValue());
         }
     }
@@ -370,7 +371,7 @@ public class Ghost extends GameObject {
                     else if (StaticVariables.mainPlayer.isUpFromTheGhost())
                         setIcon((attackUp.get(index)));
 
-                    decreaceMainPlayerLife();
+                    decreaseMainPlayerLife();
 
 
                 } else {

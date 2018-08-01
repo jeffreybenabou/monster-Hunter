@@ -213,7 +213,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 case 0:{
 
                     start=new JButton(new ImageIcon(StaticVariables.startButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    start.setBounds(550, 100, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
+                    start.setBounds(550-MainClass.differenceX, 100-MainClass.differenceY, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
                     start.setName("start");
                     add(start);
                     button=start;
@@ -221,7 +221,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 }
                 case 1:{
                     exit=new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    exit.setBounds(550, 550, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
+                    exit.setBounds(550-MainClass.differenceX, 550-MainClass.differenceY, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
                     exit.setName("exit");
                     add(exit);
                     button=exit;
@@ -229,7 +229,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 }
                 case 2:{
                     loadFromServer=new JButton(new ImageIcon(StaticVariables.loadFromServerButoon.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    loadFromServer.setBounds(550, 400, loadFromServer.getIcon().getIconWidth(), loadFromServer.getIcon().getIconHeight());
+                    loadFromServer.setBounds(550-MainClass.differenceX, 400-MainClass.differenceY, loadFromServer.getIcon().getIconWidth(), loadFromServer.getIcon().getIconHeight());
                     loadFromServer.setName("loadServer");
                     add(loadFromServer);
                     button=loadFromServer;
@@ -238,7 +238,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 case 3:{
 
                     load=new JButton(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    load.setBounds(550, 250, load.getIcon().getIconWidth(), load.getIcon().getIconHeight());
+                    load.setBounds(550-MainClass.differenceX, 250-MainClass.differenceY, load.getIcon().getIconWidth(), load.getIcon().getIconHeight());
                     load.setName("load");
                     add(load);
                     button=load;
@@ -271,7 +271,7 @@ public class MainMenu extends JLabel implements MouseListener {
                     loadingIcon.setHorizontalTextPosition(JLabel.CENTER);
                     loadingIcon.setFont(new Font("Serif", Font.PLAIN, 45));
                     loadingIcon.setForeground(Color.red);
-                    loadingIcon.setBounds(getWidth()-250,getHeight()-80,400,80);
+                    loadingIcon.setBounds(getWidth()-250-MainClass.differenceX,getHeight()-80-MainClass.differenceY,400-MainClass.differenceX,80-MainClass.differenceY);
                     watingLabel =new JLabel(new ImageIcon(StaticVariables.watingLabel.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
                     watingLabel.setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
                     watingLabel.add(loadingIcon);

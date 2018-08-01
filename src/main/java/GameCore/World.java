@@ -300,17 +300,12 @@ public class World extends JLabel implements MouseListener {
 
     public void mousePressed(MouseEvent e) {
 
+        checkIfUserPreesTheCoin(e);
 
         if(e.getButton()==MouseEvent.BUTTON2)
         {
-            if(GamePanel.jProgressBar.getValue()==GamePanel.jProgressBar.getMaximum()&&MainPlayer.intersect)
-            {
+            checkIfSpacialAttack();
 
-                StaticVariables.mainPlayer.setIndex(0);
-                MainPlayer.spacielAttack=true;
-
-
-            }
 
         }
         if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacielAttack)
@@ -333,6 +328,29 @@ public class World extends JLabel implements MouseListener {
 
 
 
+    }
+
+    private void checkIfUserPreesTheCoin(MouseEvent e) {
+        if(e.getComponent().getClass().getSimpleName().equals("CoinAdd"))
+        {
+            CoinAdd coinAdd=(CoinAdd)e.getComponent();
+            coinAdd.changeTheSumOfMoney();
+            coinAdd.setVisible(false);
+
+
+        }
+
+    }
+
+    private void checkIfSpacialAttack() {
+        if(GamePanel.jProgressBar.getValue()==GamePanel.jProgressBar.getMaximum()&&MainPlayer.intersect)
+        {
+
+            StaticVariables.mainPlayer.setIndex(0);
+            MainPlayer.spacielAttack=true;
+
+
+        }
     }
 
     private void checkIfPreesTheSetting(MouseEvent e) {
@@ -558,4 +576,6 @@ public class World extends JLabel implements MouseListener {
     public void setBackGroundWorld(Sound backGroundWorld) {
         this.backGroundWorld = backGroundWorld;
     }
+
+
 }

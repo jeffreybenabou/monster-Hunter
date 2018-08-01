@@ -6,6 +6,7 @@ import java.awt.*;
 public class MainClass extends JFrame  {
 
     public static Dimension dimension;
+    public static int differenceX,differenceY;
 
 
     public MainClass(){
@@ -13,7 +14,11 @@ public class MainClass extends JFrame  {
 
         getContentPane().setBackground(Color.black);
         dimension= Toolkit.getDefaultToolkit().getScreenSize();
+        differenceX=(1366-dimension.width)/2;
+        differenceY=(768-dimension.height)/2;
 
+
+        setPreferredSize(new Dimension(1366+differenceX, 768+differenceY));
         setTheJFrame();
         addMouseListener(StaticVariables.world);
        StaticVariables. into=StaticVariables.imageLoader.loadImage("Photos/opening.png");
