@@ -22,34 +22,42 @@ public class House extends GameObject {
 
     private void addHouseEntrance(){
         houseEntrance=new JLabel();
+        houseEntrance.setName("houseEntrance");
         houseEntrance.setVisible(false);
+        houseEntrance.addMouseListener(StaticVariables.world);
+
         switch (houseNumber)
         {
             case 0:
             {
 
 
-                houseEntrance.setIcon(new ImageIcon(StaticVariables.carpet.getScaledInstance(400,200,Image.SCALE_SMOOTH)));
-                houseEntrance.setBounds(getWidth(),getHeight(),getIcon().getIconWidth(),getIcon().getIconHeight());
+                houseEntrance.setIcon(new ImageIcon(StaticVariables.houseEnter.getScaledInstance(200,200,Image.SCALE_SMOOTH)));
+                houseEntrance.setBounds(getX()+getWidth()+300,getY()+100,200,200);
                 StaticVariables.world.add(houseEntrance);
+
+
+
                 break;
             }
             case 1:
             {
-                houseEntrance.setIcon(new ImageIcon(StaticVariables.carpet.getScaledInstance(400,200,Image.SCALE_SMOOTH)));
-                houseEntrance.setBounds(getX()-getWidth(),getY()+300,getIcon().getIconWidth(),getIcon().getIconHeight());
+                houseEntrance.setIcon(new ImageIcon(StaticVariables.houseEnter.getScaledInstance(200,200,Image.SCALE_SMOOTH)));
+                houseEntrance.setBounds(getWidth()+100,getHeight()+100,200,200);
                 StaticVariables.world.add(houseEntrance);
+
                break;
             }
             case 2:
             {
-                houseEntrance.setIcon(new ImageIcon(StaticVariables.carpet.getScaledInstance(400,200,Image.SCALE_SMOOTH)));
-                houseEntrance.setBounds(getWidth(),getHeight(),getIcon().getIconWidth(),getIcon().getIconHeight());
+                houseEntrance.setIcon(new ImageIcon(StaticVariables.houseEnter.getScaledInstance(200,200,Image.SCALE_SMOOTH)));
+                houseEntrance.setBounds(getX()-getWidth(),getHeight()-100,200,200);
                 StaticVariables.world.add(houseEntrance);
+
                 break;
             }
         }
-
+        System.out.println(houseEntrance.getLocation());
     }
     private void pickHouse(int houseNumber) {
         switch (houseNumber)

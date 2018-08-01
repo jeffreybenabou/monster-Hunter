@@ -314,7 +314,7 @@ public class World extends JLabel implements MouseListener {
             checkIfPreesTheSetting(e);
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
-//            checkIfUserPreesTheHouse(e);
+            checkIfUserIsInsideTheEntrance(e);
 
 
         }
@@ -325,6 +325,15 @@ public class World extends JLabel implements MouseListener {
 
         }
 
+
+
+
+    }
+
+    private void checkIfUserIsInsideTheEntrance(MouseEvent e){
+
+
+                checkIfUserPreesTheHouse(e);
 
 
 
@@ -398,44 +407,73 @@ public class World extends JLabel implements MouseListener {
 
     private void checkIfUserPreesTheHouse(MouseEvent e) {
 
-        House house=null;
-        Point point=null;
-        if(!e.getComponent().getClass().getSimpleName().equals("House"))
-        {
-            point=new Point(getX(),getY());
 
-        }
-        else if (e.getComponent().getClass().getSimpleName().equals("House"))
-            house=(House)e.getComponent();
+            if(e.getComponent().getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&!housePreesed)
+                switch (e.getComponent().getX()) {
+                    case 1211: {
+//                downleft
+                        housePreesed=true;
+                        new Thread(new Runnable() {
+                            public void run() {
+                                int counter=0;
 
-        if(e.getComponent().equals(house)&&housePreesed)
-        {
+                                while (counter<=600)
+                                {
+                                    MainPlayer.stand=false;
+                                    MainPlayer.spacielAttack=false;
+                                    MainPlayer.walking=false;
+                                    MainPlayer.attacking=false;
 
-            setLocation(point);
-            housePreesed=false;
-        }
-        if(house!=null&&!housePreesed)
-        {
-            switch (Integer.parseInt(house.getName()))
-            {
-                case 1:
-                {
-                    setLocation(getX()+500,getY()+500);
-                    break;
+                                    counter++;
+                                    setLocation(getX()+1,getY()-1);
+                                    try {
+                                        Thread.sleep(5);
+                                    } catch (InterruptedException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+                                while(counter>0){
+                                    MainPlayer.stand=false;
+                                    MainPlayer.spacielAttack=false;
+                                    MainPlayer.walking=false;
+                                    MainPlayer.attacking=false;
+                                    counter--;
+                                    setLocation(getX()-1,getY()+1);
+                                    try {
+                                        Thread.sleep(5);
+                                    } catch (InterruptedException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+                                housePreesed=false;
+                            }
+                        }).start();
+                        break;
+
+
+
+
+                    }
+                    case 874: {
+                        break;
+                    }
+                    case 3212: {
+
+                        break;
+                    }
                 }
-                case 2:
-                {
-                    setLocation(getX()+500,getY()+500);
-                    break;
-                }
-                case 3:
-                {
-                    setLocation(getX()-500,getY()-500);
-                    break;
-                }
-            }
-            housePreesed=true;
-        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

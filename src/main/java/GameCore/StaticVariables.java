@@ -7,19 +7,18 @@ import Objects.MainPlayer;
 import Server.Sql;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class StaticVariables {
 
 
-    public static Image watingLabel;
-    public static Image into;
-    public static Image houseIconMiniMap;
-    public static Image hole;
+    public static BufferedImage watingLabel;
+    public static BufferedImage into;
+    public static BufferedImage houseIconMiniMap;
+    public static BufferedImage hole;
 
     public static ImageLoader imageLoader;
-    public static Image
+    public static BufferedImage
             mainMenuBackGround,
             exitButton,
             startButton,
@@ -27,14 +26,14 @@ public class StaticVariables {
             loadFromComputerButton;
 
 
-    public static Image
+    public static BufferedImage
             lifePanel,
             levelLabel,
             shopIcon,
             settingLabel,
             moneyIcon;
 
-    public static Image
+    public static BufferedImage
     worldBackGround,
     tree,
     trunk,
@@ -42,7 +41,7 @@ public class StaticVariables {
     houseNum1,houseNum2,houseNum3,
     crack,
     key1,key2,key3,
-    carpet;
+    houseEnter;
 
 
     public static GamePanel gamePanel;
@@ -55,7 +54,7 @@ public class StaticVariables {
 
 
     public static Integer level=1,sumOfMoney=0;
-    public static Image coin;
+    public static BufferedImage coin;
 
 
     private static Sql sql;
@@ -103,7 +102,7 @@ public class StaticVariables {
                     key1=imageLoader.loadImage("Photos/house/key1.png");
                     key2=imageLoader.loadImage("Photos/house/key2.png");
                     key3=imageLoader.loadImage("Photos/house/key3.png");
-                    carpet=imageLoader.loadImage("Photos/debris-channel-slider.png");
+                    houseEnter =imageLoader.loadImage("Photos/houseEntrance.png");
                     startButton=imageLoader.loadImage("Photos/menuButton/newGame.png");
                     exitButton=imageLoader.loadImage("Photos/menuButton/exit.png");
                     loadFromServerButoon=imageLoader.loadImage("Photos/menuButton/loadOnline.png");
