@@ -7,6 +7,7 @@ import Objects.MainPlayer;
 import Server.Sql;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class StaticVariables {
@@ -200,6 +201,10 @@ e.printStackTrace();
 
 
     public static void main(String[] args) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        if(screenSize.getHeight()!=768||screenSize.getWidth()!=1366)
+            JOptionPane.showMessageDialog(null,"for now the game works  only in resolution of : 1366X768."+"\n"+" please change your resolution");
+        else
         new StaticVariables();
     }
 }

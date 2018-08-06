@@ -89,6 +89,7 @@ public class Key extends GameObject {
             }
         }
     }
+
     public static void changeTheKeyState(){
 
 
@@ -105,13 +106,6 @@ public class Key extends GameObject {
                     if(StaticVariables.level==3)
 
                         StaticVariables.gamePanel.getBag().getKey3().addMouseListener(StaticVariables.world);
-
-
-
-
-
-
-
 
     }
 
