@@ -376,6 +376,7 @@ public class World extends JLabel implements MouseListener {
         else
             StaticVariables.gamePanel.getBag().setVisible(false);
 
+
         for (House house :houseArrayList) {
             if(e.getComponent().equals(house)&&key1IsPreesed||key2IsPreesed||key3IsPreesed)
             {
@@ -411,43 +412,51 @@ public class World extends JLabel implements MouseListener {
             if(e.getComponent().getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&!housePreesed)
                 switch (e.getComponent().getX()) {
                     case 1211: {
-//                downleft
-                        housePreesed=true;
-                        new Thread(new Runnable() {
-                            public void run() {
-                                int counter=0;
+                        //                downleft
 
-                                while (counter<=600)
-                                {
-                                    MainPlayer.stand=false;
-                                    MainPlayer.spacielAttack=false;
-                                    MainPlayer.walking=false;
-                                    MainPlayer.attacking=false;
+                        if(!House.houseNumber1Open&&Key.key1)
+                        {
+                            housePreesed=true;
+                            House.houseNumber1Open=true;
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    int counter=0;
 
-                                    counter++;
-                                    setLocation(getX()+1,getY()-1);
-                                    try {
-                                        Thread.sleep(5);
-                                    } catch (InterruptedException e1) {
-                                        e1.printStackTrace();
+                                    while (counter<=600)
+                                    {
+                                        MainPlayer.spacielAttack=false;
+                                        MainPlayer.walking=false;
+                                        MainPlayer.attacking=false;
+
+                                        counter++;
+                                        setLocation(getX()+1,getY()-1);
+                                        try {
+                                            Thread.sleep(5);
+                                        } catch (InterruptedException e1) {
+                                            e1.printStackTrace();
+                                        }
                                     }
-                                }
-                                while(counter>0){
-                                    MainPlayer.stand=false;
-                                    MainPlayer.spacielAttack=false;
-                                    MainPlayer.walking=false;
-                                    MainPlayer.attacking=false;
-                                    counter--;
-                                    setLocation(getX()-1,getY()+1);
-                                    try {
-                                        Thread.sleep(5);
-                                    } catch (InterruptedException e1) {
-                                        e1.printStackTrace();
+                                    while(counter>0){
+                                        MainPlayer.spacielAttack=false;
+                                        MainPlayer.walking=false;
+                                        MainPlayer.attacking=false;
+                                        counter--;
+                                        setLocation(getX()-1,getY()+1);
+                                        try {
+                                            Thread.sleep(5);
+                                        } catch (InterruptedException e1) {
+                                            e1.printStackTrace();
+                                        }
                                     }
+                                    housePreesed=false;
                                 }
-                                housePreesed=false;
-                            }
-                        }).start();
+                            }).start();
+                        }
+                        else
+                        {
+                            JOptionPane.showConfirmDialog(null,"need to kill al the monster before opening this house");
+                        }
+
                         break;
 
 
@@ -455,6 +464,49 @@ public class World extends JLabel implements MouseListener {
 
                     }
                     case 874: {
+//                        up left
+                        if(!House.houseNumber2Open&&Key.key2)
+                        {
+                            housePreesed=true;
+                            House.houseNumber2Open=true;
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    int counter=0;
+
+                                    while (counter<=600)
+                                    {
+                                        MainPlayer.spacielAttack=false;
+                                        MainPlayer.walking=false;
+                                        MainPlayer.attacking=false;
+
+                                        counter++;
+                                        setLocation(getX()+1,getY()+1);
+                                        try {
+                                            Thread.sleep(5);
+                                        } catch (InterruptedException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }
+                                    while(counter>0){
+                                        MainPlayer.spacielAttack=false;
+                                        MainPlayer.walking=false;
+                                        MainPlayer.attacking=false;
+                                        counter--;
+                                        setLocation(getX()-1,getY()-1);
+                                        try {
+                                            Thread.sleep(5);
+                                        } catch (InterruptedException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }
+                                    housePreesed=false;
+                                }
+                            }).start();
+                        }
+                        else
+                        {
+                            JOptionPane.showConfirmDialog(null,"need to kill al the monster before opening this house");
+                        }
                         break;
                     }
                     case 3212: {

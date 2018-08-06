@@ -33,7 +33,7 @@ public class House extends GameObject {
 
 
                 houseEntrance.setIcon(new ImageIcon(StaticVariables.houseEnter.getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                houseEntrance.setBounds(getX()+getWidth()+300,getY()+100,200,200);
+                houseEntrance.setBounds(getX()+getWidth()+300,getY()+250,200,200);
                 StaticVariables.world.add(houseEntrance);
 
 

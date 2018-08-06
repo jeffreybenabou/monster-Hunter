@@ -7,6 +7,7 @@ public class Key extends GameObject {
 
     private Image image;
     private boolean keyActive=false,keyReachToDestination=false;
+    public static boolean key1=false,key2=false,key3=false;
 
 
     public Key(){
@@ -19,7 +20,7 @@ public class Key extends GameObject {
         {
             case 1:
             {
-
+                key1=true;
                 image=StaticVariables.key1;
                 setIcon(new ImageIcon(image.getScaledInstance(200,200,4)));
 
@@ -27,6 +28,7 @@ public class Key extends GameObject {
             }
             case 2:
             {
+                key2=true;
                 image=StaticVariables.key2;
                 setIcon(new ImageIcon(image.getScaledInstance(200,200,4)));
 
@@ -34,6 +36,7 @@ public class Key extends GameObject {
             }
             case 3:
             {
+                key3=true;
                 image=StaticVariables.key3;
                 setIcon(new ImageIcon(image.getScaledInstance(200,200,4)));
                 break;

@@ -24,7 +24,18 @@ public class MiniMap extends JLabel {
         setBlackline(BorderFactory.createRaisedBevelBorder());
         setBorder(blackline);
         setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
+        new Thread(new Runnable() {
+                    public void run() {
+                    try
+                    {
+                        setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(getWidth(),getHeight(),4)));
 
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         setBackground(Color.black);
         setTheMainPlayerLabel();
@@ -39,14 +50,8 @@ public class MiniMap extends JLabel {
         add(mainPlayerLabel);
     }
     public void addActionOfMiniMap() {
-        try
-        {
-            setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(getWidth(),getHeight(),4)));
 
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+
         new Thread(new Runnable() {
             public void run() {
                 setLoadFuncation(false);
@@ -165,17 +170,22 @@ public class MiniMap extends JLabel {
         if (!StaticVariables.world.isGhostAreBeingAdd()) {
 
             if (isChangeLevel() && Ghost.notTheFirstGhost) {
-                setKey(new Key());
-                getKey().setVisible(true);
-                StaticVariables.gamePanel.add(getKey());
-                for (JLabel label:getAghost()) {
-                    label.setVisible(false);
-                }
-                getAghost().clear();
+                new Thread(new Runnable() {
+                    public void run() {
+                        setKey(new Key());
+                        getKey().setVisible(true);
+                        StaticVariables.gamePanel.add(getKey());
+                        for (JLabel label:getAghost()) {
+                            label.setVisible(false);
+                        }
+                        getAghost().clear();
 
 
-                getKey().moveTheKey();
-                Ghost.numberOfDeadGhost = 0;
+                        getKey().moveTheKey();
+                        Ghost.numberOfDeadGhost = 0;
+                    }
+                }).start();
+
 
             }
 
@@ -190,8 +200,8 @@ public class MiniMap extends JLabel {
                     int x;
                     int y;
                     try{
-                        y=StaticVariables.mainPlayer.getLocation().y/32;
-                        x=StaticVariables.mainPlayer.getLocation().x/20;
+                        y=StaticVariables.mainPlayer.getLocation().y/32+10;
+                        x=StaticVariables.mainPlayer.getLocation().x/20+10;
                         mainPlayerLabel.setLocation(x,y);
 
                     }catch (NullPointerException e)
