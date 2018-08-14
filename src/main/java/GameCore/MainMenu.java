@@ -9,20 +9,24 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 
 public class MainMenu extends JLabel implements MouseListener {
 
-
-
+    public static LoadGame loadGame=null;
+    public static String pathToFile,pathToImage;
+    public static boolean wantToLoadGame=false;
+    int optionChoose;
     private JLabel loadingIcon;
     private ImageLoader imageLoader;
     private Sound backgroundSound;
     private JLabel watingLabel;
     private TextField textField;
-    private JButton confirm,start,load,loadFromServer,exit;
+    private JButton confirm,start,exit;
     private String type="";
     private boolean hover=false;
     private ArrayList<ImageIcon> aMale,aFemale;
@@ -43,7 +47,7 @@ public class MainMenu extends JLabel implements MouseListener {
             setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
             setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
             ChooseThePlayer();
-            for (int i = 0; i <4 ; i++) {
+            for (int i = 0; i <2 ; i++) {
                 createButton(i);
             }
             setVisible(false);
@@ -51,7 +55,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
         }catch (Exception e)
         {
-            JOptionPane.showMessageDialog(this,e.getMessage());
+
             e.printStackTrace();
 
         }
@@ -227,28 +231,14 @@ public class MainMenu extends JLabel implements MouseListener {
                     button=exit;
                     break;
                 }
-                case 2:{
-                    loadFromServer=new JButton(new ImageIcon(StaticVariables.loadFromServerButoon.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    loadFromServer.setBounds(550-MainClass.differenceX, 400-MainClass.differenceY, loadFromServer.getIcon().getIconWidth(), loadFromServer.getIcon().getIconHeight());
-                    loadFromServer.setName("loadServer");
-                    add(loadFromServer);
-                    button=loadFromServer;
-                    break;
-                }
-                case 3:{
 
-                    load=new JButton(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    load.setBounds(550-MainClass.differenceX, 250-MainClass.differenceY, load.getIcon().getIconWidth(), load.getIcon().getIconHeight());
-                    load.setName("load");
-                    add(load);
-                    button=load;
-                    break;
-                }
+
             }
         }catch (Exception e)
         {
-            JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getMessage());
+            e.printStackTrace();
         }
+
 
 
         button.setContentAreaFilled(false);
@@ -262,10 +252,42 @@ public class MainMenu extends JLabel implements MouseListener {
 
     private void addTheWaitingLabel(){
 
+
+
+
+
+
+        File file = new File(""+ImageLoader.class.getClassLoader().getResource("save/").getPath(),""+textField.getText()+".txt");
+        pathToFile=ImageLoader.class.getClassLoader().getResource("save/").getPath()+textField.getText()+".txt";
+        pathToImage=ImageLoader.class.getClassLoader().getResource("save/").getPath()+textField.getText()+".png";
+        try {
+            if(!file.createNewFile()){
+                askToLoadAGame();
+                if(optionChoose==2)
+                    return;
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
+
+
         new Thread(new Runnable() {
             public void run() {
                 try
                 {
+
+
+
 
                     loadingIcon=new JLabel("loading.....");
                     loadingIcon.setHorizontalTextPosition(JLabel.CENTER);
@@ -279,7 +301,8 @@ public class MainMenu extends JLabel implements MouseListener {
                     MainClass.removeTheMainMenu();
                 }catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getStackTrace());
+                    e.printStackTrace();
+
                 }
 
                 new Thread(new Runnable() {
@@ -316,10 +339,12 @@ public class MainMenu extends JLabel implements MouseListener {
                                     MainClass.addTheWorld();
                                     watingLabel.setVisible(false);
                                     StaticVariables.miniMap.addActionOfMiniMap();
+                                    if(wantToLoadGame)
+                                    loadGame=new LoadGame(pathToFile);
                                 }catch (Exception e)
                                 {
-                                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getMessage());
 
+e.printStackTrace();
                                 }
 
 
@@ -346,6 +371,36 @@ public class MainMenu extends JLabel implements MouseListener {
 
     }
 
+    private void askToLoadAGame() {
+
+        try
+        {
+            optionChoose= JOptionPane.showOptionDialog(this,null,"                                                     load game?",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE,new ImageIcon(StaticVariables.imageLoader.loadImage("save/"+textField.getText()+".png").getScaledInstance(400,400,4)),null,null);
+
+        }catch (Exception e)
+        {
+
+        }
+        switch (optionChoose)
+        {
+            case 0:
+            {
+                wantToLoadGame=true;
+
+
+                break;
+            }
+            case 1:
+            {
+                wantToLoadGame=false;
+                break;
+            }
+
+
+        }
+
+    }
+
 
     public void mouseClicked(MouseEvent e) {
 
@@ -361,7 +416,6 @@ public class MainMenu extends JLabel implements MouseListener {
                 addTheWaitingLabel();
             }
             else
-
                 JOptionPane.showMessageDialog(this,"pick user name and character");
 
 
@@ -401,14 +455,7 @@ public class MainMenu extends JLabel implements MouseListener {
         {
 
         }
-        if(e.getComponent().equals(load))
-        {
 
-        }
-        if(e.getComponent().equals(loadFromServer))
-        {
-
-        }
 
     }
 
@@ -482,21 +529,7 @@ public class MainMenu extends JLabel implements MouseListener {
         this.start = start;
     }
 
-    public JButton getLoad() {
-        return load;
-    }
 
-    public void setLoad(JButton load) {
-        this.load = load;
-    }
-
-    public JButton getLoadFromServer() {
-        return loadFromServer;
-    }
-
-    public void setLoadFromServer(JButton loadFromServer) {
-        this.loadFromServer = loadFromServer;
-    }
 
     public JButton getExit() {
         return exit;

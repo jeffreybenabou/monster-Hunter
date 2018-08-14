@@ -170,6 +170,7 @@ public class GamePanel extends JLabel  {
         settingLabel.setBounds( MainClass.dimension.width-130, 0,50,50);
         settingLabel.setIcon(new ImageIcon(StaticVariables.settingLabel.getScaledInstance(settingLabel.getWidth(),settingLabel.getHeight(),0)));
         add(settingLabel);
+        settingLabel.addMouseListener(StaticVariables.world);
     }
 
     private void addMoneyLabel() {

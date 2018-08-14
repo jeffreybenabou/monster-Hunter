@@ -72,8 +72,7 @@ public class StaticVariables {
 
         }catch (Exception e)
         {
-            JOptionPane.showMessageDialog(StaticVariables.mainClass,e);
-
+e.printStackTrace();
         }
 
 
@@ -88,7 +87,6 @@ public class StaticVariables {
         }catch (Exception e)
         {
 
-            JOptionPane.showMessageDialog(StaticVariables.mainClass,e);
             e.printStackTrace();
 
         }
@@ -112,7 +110,6 @@ public class StaticVariables {
 
                 }catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getCause().toString());
                     e.printStackTrace();
 
                 }
@@ -127,7 +124,6 @@ public class StaticVariables {
 
                 }catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getCause().toString());
 e.printStackTrace();
                 }
 
@@ -175,7 +171,6 @@ e.printStackTrace();
                     cloud=imageLoader.loadImage("Photos/cloud/cloud122.png");
                 }catch (Exception e)
                 {
-                    JOptionPane.showMessageDialog(mainClass,e.getCause().toString());
                     e.printStackTrace();
                 }
 

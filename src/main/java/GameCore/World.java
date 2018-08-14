@@ -29,10 +29,11 @@ public class World extends JLabel implements MouseListener {
     private Ghost firstGhost;
     private Sound backGroundWorld;
     private boolean key1IsPreesed=false,key2IsPreesed=false,key3IsPreesed=false;
+    public static boolean userInProgressToOpenHouse=false;
 
     public World(){
-        try
-        {
+
+
 
             setBounds(-500,-750,5000,5000);
             setBackground(Color.GRAY);
@@ -42,10 +43,10 @@ public class World extends JLabel implements MouseListener {
             addMouseListener(this);
 
             addBackGroundObjects();
-        }catch (Exception e)
-        {
+            setVisible(true);
 
-        }
+
+
 
 
 
@@ -77,23 +78,38 @@ public class World extends JLabel implements MouseListener {
                      *
                      * */
 
-                    setFirstGhost(new Ghost(1));
+                    try
+                    {
+                        setFirstGhost(new Ghost(1));
 
-                            getFirstGhost().setLocation(2500,2500);
-                    getFirstGhost().setName(""+0);
-                    getGhostArrayList().add(getFirstGhost());
-                    add(getFirstGhost());
+                        getFirstGhost().setLocation(2500,2500);
+                        getFirstGhost().setName(""+0);
+                        getGhostArrayList().add(getFirstGhost());
+                        add(getFirstGhost());
+                    }catch (Exception e)
+                    {
+
+                    }
                     StaticVariables.miniMap.addTheGhostLocationToMap(0,getFirstGhost().getLocation());
-                            while(getFirstGhost().getLifeBar().isAlive()){
-                                try {
-                                    Thread.sleep(100);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }catch (NullPointerException e)
-                                {
 
-                                }
+                    try
+                    {
+                        while(getFirstGhost().getLifeBar().isAlive()){
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }catch (NullPointerException e)
+                            {
+
                             }
+                        }
+
+                    }catch (Exception e)
+                    {
+
+                    }
+
 
                             Ghost.notTheFirstGhost=true;
                             addGhost();
@@ -466,6 +482,10 @@ public class World extends JLabel implements MouseListener {
         else
             StaticVariables.gamePanel.getBag().setVisible(false);
 
+        if(e.getComponent().equals(StaticVariables.gamePanel.getSettingLabel()))
+        {
+            SaveGame saveGame=new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+        }
 
         for (House house :houseArrayList) {
             if(e.getComponent().equals(house)&&key1IsPreesed||key2IsPreesed||key3IsPreesed)
@@ -478,6 +498,8 @@ public class World extends JLabel implements MouseListener {
                 StaticVariables.level++;
                 addGhost();
                 StaticVariables.miniMap.addActionOfMiniMap();
+                World.userInProgressToOpenHouse=false;
+
                 break;
 
             }

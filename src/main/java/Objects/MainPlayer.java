@@ -72,9 +72,10 @@ public class MainPlayer extends GameObject {
             setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
             point = new Point(getX(), getY());
             setTheUserAction();
+
         }catch (Exception e)
         {
-            JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getStackTrace());
+            e.printStackTrace();
         }
 
 

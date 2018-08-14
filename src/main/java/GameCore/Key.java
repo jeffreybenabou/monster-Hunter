@@ -20,6 +20,7 @@ public class Key extends GameObject {
         {
             case 1:
             {
+                World.userInProgressToOpenHouse=true;
                 key1=true;
                 image=StaticVariables.key1;
                 setIcon(new ImageIcon(image.getScaledInstance(200,200,4)));
@@ -28,6 +29,8 @@ public class Key extends GameObject {
             }
             case 2:
             {
+                World.userInProgressToOpenHouse=true;
+
                 key2=true;
                 image=StaticVariables.key2;
                 setIcon(new ImageIcon(image.getScaledInstance(200,200,4)));
@@ -36,6 +39,8 @@ public class Key extends GameObject {
             }
             case 3:
             {
+                World.userInProgressToOpenHouse=true;
+
                 key3=true;
                 image=StaticVariables.key3;
                 setIcon(new ImageIcon(image.getScaledInstance(200,200,4)));
@@ -45,8 +50,8 @@ public class Key extends GameObject {
         setBounds(500,200,getIcon().getIconWidth(),getIcon().getIconHeight());
     }
 
-    public void addKeyToBag(){
-        switch (StaticVariables.level)
+    public static void addKeyToBag(int level){
+        switch (level)
         {
             case 1:
             {
@@ -136,7 +141,7 @@ public class Key extends GameObject {
                                     keyReachToDestination = true;
                                     setVisible(false);
                                     changeTheKeyState();
-                                    addKeyToBag();
+                                    addKeyToBag(StaticVariables.level);
                                     removeFromWorld();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();

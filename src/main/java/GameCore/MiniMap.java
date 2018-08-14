@@ -151,7 +151,7 @@ public class MiniMap extends JLabel {
 
 
             } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
+
                 break;
 
             } catch (NullPointerException e) {

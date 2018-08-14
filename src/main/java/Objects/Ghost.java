@@ -439,6 +439,7 @@ public class Ghost extends GameObject {
         add(lifeBar.getjProgressBar());
 
 
+
     }
 
     public Integer getGhostType() {

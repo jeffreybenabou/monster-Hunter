@@ -1,8 +1,6 @@
 package ImageHandel;
 
 
-import GameCore.StaticVariables;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -12,6 +10,7 @@ import java.util.ArrayList;
 
 public class ImageLoader {
     private ClassLoader classLoader = ImageLoader.class.getClassLoader();
+
     private File file;
 
     public BufferedImage loadImage(String path) {
@@ -22,12 +21,12 @@ public class ImageLoader {
             return             ImageIO.read(file);
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(StaticVariables.mainClass, e.getStackTrace());
+
 
             e.printStackTrace();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(StaticVariables.mainClass, e.getStackTrace());
+
             e.printStackTrace();
 
         }

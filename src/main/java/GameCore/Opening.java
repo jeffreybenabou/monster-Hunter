@@ -26,7 +26,6 @@ setVisible(true);
 
         }catch (NullPointerException e)
         {
-            JOptionPane.showMessageDialog(StaticVariables.mainClass,e.getStackTrace());
             e.printStackTrace();
 
 
