@@ -4,7 +4,6 @@ import BackgroundObject.FootStep;
 import ImageHandel.ImageLoader;
 import Objects.Ghost;
 import Objects.MainPlayer;
-import Server.Sql;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,9 +55,9 @@ public class StaticVariables {
 
     public static Integer level=1,sumOfMoney=0;
     public static BufferedImage coin;
+    public static BufferedImage shopLabel;
 
 
-    private static Sql sql;
     public static BufferedImage houseIconChooseMiniMap;
 
     public StaticVariables(){
@@ -161,7 +160,7 @@ e.printStackTrace();
                     FootStep.   rightUp=imageLoader.loadImage("Photos/foot_step/right_up.png");
 
 
-
+                    shopLabel=imageLoader.loadImage("Photos/shop/shop.png");
                     lifePanel =imageLoader.loadImage("Photos/worldFrame/lifeBar1.png");
                     levelLabel =imageLoader.loadImage("Photos/worldFrame/level.png");
                     shopIcon=imageLoader.loadImage("Photos/worldFrame/shop_icon.png");

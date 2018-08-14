@@ -311,7 +311,7 @@ public class World extends JLabel implements MouseListener {
         if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacielAttack)
         {
 
-            checkIfPreesTheSetting(e);
+            checkIfPeesTheSetting(e);
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
             checkIfUserIsInsideTheEntrance(e);
@@ -327,6 +327,96 @@ public class World extends JLabel implements MouseListener {
 
 
 
+
+    }
+    private boolean checkIfEnoughMoney(int amount){
+        return amount<=StaticVariables.sumOfMoney;
+    }
+    private void checkIfUserWantToBuySomething(MouseEvent e){
+        if(e.getComponent().equals(StaticVariables.gamePanel.getLife1000()))
+        {
+            if(checkIfEnoughMoney(1000))
+            {
+                if(Integer.parseInt(MainPlayer.getLife().getjProgressBar().getString())+1000<=1000)
+                {
+                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getValue()+1000));
+                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getValue()+1000);
+
+
+                }
+                else
+                {
+                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getMaximum());
+                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getMaximum()));
+
+                }
+
+                StaticVariables.sumOfMoney-=1000;
+            }
+        }
+        else if(e.getComponent().equals(StaticVariables.gamePanel.getLife2000()))
+        {
+            if(checkIfEnoughMoney(2000))
+            {
+                if(Integer.parseInt(MainPlayer.getLife().getjProgressBar().getString())+2000<=2000)
+                {
+                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getValue()+2000));
+                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getValue()+2000);
+
+
+                }
+                else
+                {
+                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getMaximum());
+                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getMaximum()));
+
+                }
+
+                StaticVariables.sumOfMoney-=2000;
+            }
+        }
+       else  if(e.getComponent().equals(StaticVariables.gamePanel.getPower1()))
+        {
+            if(checkIfEnoughMoney(400))
+            {
+                if(GamePanel.getjProgressBar().getValue()+25<=100)
+                {
+                    GamePanel.getjProgressBar().setValue( GamePanel.getjProgressBar().getValue()+25);
+
+
+
+                }
+                else
+                {
+                    GamePanel.getjProgressBar().setString( ""+GamePanel.getjProgressBar().getMaximum());
+                    GamePanel.getjProgressBar().setValue( GamePanel.getjProgressBar().getMaximum());
+
+                }
+                StaticVariables.sumOfMoney-=400;
+            }
+        }
+        else if(e.getComponent().equals(StaticVariables.gamePanel.getPower2()))
+        {
+            if(checkIfEnoughMoney(800))
+            {
+                if(GamePanel.getjProgressBar().getValue()+50<=100)
+                {
+                    GamePanel.getjProgressBar().setValue( GamePanel.getjProgressBar().getValue()+50);
+
+
+
+
+
+                }
+                else
+                {
+                    GamePanel.getjProgressBar().setString( ""+GamePanel.getjProgressBar().getMaximum());
+                    GamePanel.getjProgressBar().setValue( GamePanel.getjProgressBar().getMaximum());
+
+                }
+                StaticVariables.sumOfMoney-=800;
+            }
+        }
 
     }
 
@@ -362,7 +452,7 @@ public class World extends JLabel implements MouseListener {
         }
     }
 
-    private void checkIfPreesTheSetting(MouseEvent e) {
+    private void checkIfPeesTheSetting(MouseEvent e) {
         if(e.getComponent().equals(StaticVariables.gamePanel.getMoneyIcon())||
                 e.getComponent().equals(StaticVariables.gamePanel.getBag())||
                 e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1())||
@@ -395,6 +485,18 @@ public class World extends JLabel implements MouseListener {
         setKey1IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1()));
         setKey2IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey2()));
         setKey3IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey3()));
+
+        if(e.getComponent().equals(StaticVariables.gamePanel.getShopIcon())
+                ||e.getComponent().equals(StaticVariables.gamePanel.getShopLabel()))
+        {
+
+            StaticVariables.gamePanel.getShopLabel().setVisible(true);
+        }
+        else if (e.getComponent().equals(this)){
+            StaticVariables.gamePanel.getShopLabel().setVisible(false);
+
+        }
+        checkIfUserWantToBuySomething(e);
 
 
 
@@ -563,6 +665,22 @@ public class World extends JLabel implements MouseListener {
 
     public void mouseEntered(MouseEvent e) {
 
+        if(e.getComponent().equals(StaticVariables.gamePanel.getLife1000()))
+        {
+            StaticVariables.gamePanel.getPriceTag().setText("1000");
+        }
+        if(e.getComponent().equals(StaticVariables.gamePanel.getLife2000()))
+        {
+            StaticVariables.gamePanel.getPriceTag().setText("2000");
+        }
+        if(e.getComponent().equals(StaticVariables.gamePanel.getPower1()))
+        {
+            StaticVariables.gamePanel.getPriceTag().setText("400");
+        }
+        if(e.getComponent().equals(StaticVariables.gamePanel.getPower2()))
+        {
+            StaticVariables.gamePanel.getPriceTag().setText("600");
+        }
     }
 
     public void mouseExited(MouseEvent e) {
