@@ -217,7 +217,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 case 0:{
 
                     start=new JButton(new ImageIcon(StaticVariables.startButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    start.setBounds(550-MainClass.differenceX, 100-MainClass.differenceY, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
+                    start.setBounds(550-MainClass.differenceX, 200-MainClass.differenceY, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
                     start.setName("start");
                     add(start);
                     button=start;
@@ -225,7 +225,7 @@ public class MainMenu extends JLabel implements MouseListener {
                 }
                 case 1:{
                     exit=new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    exit.setBounds(550-MainClass.differenceX, 550-MainClass.differenceY, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
+                    exit.setBounds(550-MainClass.differenceX, 350-MainClass.differenceY, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
                     exit.setName("exit");
                     add(exit);
                     button=exit;

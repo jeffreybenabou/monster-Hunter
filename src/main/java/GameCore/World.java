@@ -31,6 +31,7 @@ public class World extends JLabel implements MouseListener {
     private boolean key1IsPreesed=false,key2IsPreesed=false,key3IsPreesed=false;
     public static boolean userInProgressToOpenHouse=false;
 
+
     public World(){
 
 
