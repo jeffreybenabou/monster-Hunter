@@ -3,7 +3,7 @@ package Objects;
 import BackgroundObject.House;
 import GameCore.*;
 import ImageHandel.ImageLoader;
-
+import sound.Sound;
 
 
 import javax.swing.*;
@@ -19,6 +19,7 @@ public class Ghost extends GameObject {
 
 
 
+    private Sound attacking,dieing;
 
     private static   ArrayList<ImageIcon>
             moveLeft,
@@ -60,6 +61,14 @@ public class Ghost extends GameObject {
 
     public Ghost(int ghostType) {
         this.ghostType = ghostType;
+
+        attacking=new Sound();
+        attacking.playSound(Sound.path.get(9));
+        attacking.stopSound();
+
+        dieing=new Sound();
+        dieing.playSound(Sound.path.get(10));
+        dieing.stopSound();
 
         setHorizontalAlignment(JLabel.CENTER);
         checkTheGhostType();
@@ -176,6 +185,7 @@ public class Ghost extends GameObject {
 
     private void setTheGhostDeadAnimation() {
         index = 0;
+        dieing.startSound();
         while (index < dead.size()) {
             setIcon(dead.get(index));
             index++;
@@ -356,6 +366,7 @@ public class Ghost extends GameObject {
         try {
             if (index < moveLeft.size()) {
                 if (stopMoving) {
+                    attacking.startSound();
                     dirLeft = false;
                     dirDown = false;
                     dirUp = false;

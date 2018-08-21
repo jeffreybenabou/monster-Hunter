@@ -130,25 +130,32 @@ public class Key extends GameObject {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    setIcon(new ImageIcon(image.getScaledInstance(getWidth() - 2, getHeight() - 2, 4)));
-                    setBounds(getX() - 9, getY() - 4, getIcon().getIconWidth(), getIcon().getIconHeight());
-                    if (getBounds().intersects(getBounds()) && !keyActive) {
-                        new Thread(new Runnable() {
-                            public void run() {
-                                keyActive = true;
-                                try {
-                                    Thread.sleep(1000);
-                                    keyReachToDestination = true;
-                                    setVisible(false);
-                                    changeTheKeyState();
-                                    addKeyToBag(StaticVariables.level);
-                                    removeFromWorld();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                    try
+                    {
+                        setIcon(new ImageIcon(image.getScaledInstance(getWidth() - 2, getHeight() - 2, 4)));
+                        setBounds(getX() - 9, getY() - 4, getIcon().getIconWidth(), getIcon().getIconHeight());
+                        if (getBounds().intersects(getBounds()) && !keyActive) {
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    keyActive = true;
+                                    try {
+                                        Thread.sleep(1000);
+                                        keyReachToDestination = true;
+                                        setVisible(false);
+                                        changeTheKeyState();
+                                        addKeyToBag(StaticVariables.level);
+                                        removeFromWorld();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        }).start();
+                            }).start();
+                        }
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
                     }
+
                 }
 
             }

@@ -3,6 +3,7 @@ package GameCore;
 
 
 import Objects.MainPlayer;
+import sound.Sound;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
@@ -11,6 +12,7 @@ import java.awt.*;
 public class GamePanel extends JLabel  {
 
 
+    private Sound buy,notbuy,coinFall;
     private JLabel lifeBar;
     private JLabel levelLabel;
     private JLabel shopIcon;
@@ -38,10 +40,29 @@ public class GamePanel extends JLabel  {
         addSettingIcon();
         addMoneyLabel();
         addSpacialAttack();
+        setTheSound();
 
         setVisible(true);
 
 
+
+    }
+
+    private void setTheSound() {
+        buy=new Sound();
+        buy.playSound(Sound.path.get(6));
+        buy.stopSound();
+        buy.setVolume(6);
+
+        notbuy=new Sound();
+        notbuy.playSound(Sound.path.get(8));
+        notbuy.stopSound();
+        notbuy.setVolume(6);
+
+        coinFall=new Sound();
+        coinFall.playSound(Sound.path.get(7));
+        coinFall.stopSound();
+        coinFall.setVolume(6);
 
     }
 
@@ -242,6 +263,30 @@ public class GamePanel extends JLabel  {
 
     public JLabel getLevelLabel() {
         return levelLabel;
+    }
+
+    public Sound getBuy() {
+        return buy;
+    }
+
+    public void setBuy(Sound buy) {
+        this.buy = buy;
+    }
+
+    public Sound getNotbuy() {
+        return notbuy;
+    }
+
+    public void setNotbuy(Sound notbuy) {
+        this.notbuy = notbuy;
+    }
+
+    public Sound getCoinFall() {
+        return coinFall;
+    }
+
+    public void setCoinFall(Sound coinFall) {
+        this.coinFall = coinFall;
     }
 
     public void setLevelLabel(JLabel levelLabel) {

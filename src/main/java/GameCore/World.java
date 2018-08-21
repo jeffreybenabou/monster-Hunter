@@ -40,7 +40,7 @@ public class World extends JLabel implements MouseListener {
             setBackground(Color.GRAY);
             backGroundWorld=new Sound();
             backGroundWorld.playSound(Sound.path.get(4));
-            backGroundWorld.setVolume(-10);
+
             addMouseListener(this);
 
             addBackGroundObjects();
@@ -369,7 +369,15 @@ public class World extends JLabel implements MouseListener {
                 }
 
                 StaticVariables.sumOfMoney-=1000;
+                StaticVariables.gamePanel.getBuy().startSound();
+                StaticVariables.gamePanel.getBuy().getClip().loop(0);
             }
+            else
+            {
+                StaticVariables.gamePanel.getNotbuy().startSound();
+                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
+            }
+
         }
         else if(e.getComponent().equals(StaticVariables.gamePanel.getLife2000()))
         {
@@ -388,8 +396,13 @@ public class World extends JLabel implements MouseListener {
                     MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getMaximum()));
 
                 }
-
+                StaticVariables.gamePanel.getBuy().startSound();
+                StaticVariables.gamePanel.getBuy().getClip().loop(0);
                 StaticVariables.sumOfMoney-=2000;
+            }else
+            {
+                StaticVariables.gamePanel.getNotbuy().startSound();
+                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
             }
         }
        else  if(e.getComponent().equals(StaticVariables.gamePanel.getPower1()))
@@ -409,7 +422,13 @@ public class World extends JLabel implements MouseListener {
                     GamePanel.getjProgressBar().setValue( GamePanel.getjProgressBar().getMaximum());
 
                 }
+                StaticVariables.gamePanel.getBuy().startSound();
+                StaticVariables.gamePanel.getBuy().getClip().loop(0);
                 StaticVariables.sumOfMoney-=400;
+            }else
+            {
+                StaticVariables.gamePanel.getNotbuy().startSound();
+                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
             }
         }
         else if(e.getComponent().equals(StaticVariables.gamePanel.getPower2()))
@@ -432,6 +451,13 @@ public class World extends JLabel implements MouseListener {
 
                 }
                 StaticVariables.sumOfMoney-=800;
+                StaticVariables.gamePanel.getBuy().startSound();
+                StaticVariables.gamePanel.getBuy().getClip().loop(0);
+            }
+            else
+            {
+                StaticVariables.gamePanel.getNotbuy().startSound();
+                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
             }
         }
 
@@ -449,6 +475,8 @@ public class World extends JLabel implements MouseListener {
     private void checkIfUserPreesTheCoin(MouseEvent e) {
         if(e.getComponent().getClass().getSimpleName().equals("CoinAdd"))
         {
+            StaticVariables.gamePanel.getBuy().startSound();
+            StaticVariables.gamePanel.getBuy().getClip().loop(0);
             CoinAdd coinAdd=(CoinAdd)e.getComponent();
             coinAdd.changeTheSumOfMoney();
             coinAdd.setVisible(false);

@@ -20,7 +20,7 @@ public class MainMenu extends JLabel implements MouseListener {
     public static LoadGame loadGame=null;
     public static String pathToFile,pathToImage;
     public static boolean wantToLoadGame=false;
-    int optionChoose;
+    private int optionChoose;
     private JLabel loadingIcon;
     private ImageLoader imageLoader;
     private Sound backgroundSound;
@@ -41,7 +41,9 @@ public class MainMenu extends JLabel implements MouseListener {
 
     public MainMenu(){
         imageLoader=new ImageLoader();
-        addSound();
+        backgroundSound=new Sound();
+        backgroundSound.playSound(Sound.path.get(2));
+
         try
         {
             setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
@@ -65,10 +67,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
     }
 
-    private void addSound() {
-        backgroundSound=new Sound();
-        backgroundSound.playSound(Sound.path.get(2));
-    }
+
 
 
     public void ChooseThePlayer(){
@@ -298,6 +297,7 @@ public class MainMenu extends JLabel implements MouseListener {
                     watingLabel.setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
                     watingLabel.add(loadingIcon);
                     StaticVariables.mainClass.add(watingLabel);
+                    backgroundSound.stopSound();
                     MainClass.removeTheMainMenu();
                 }catch (Exception e)
                 {

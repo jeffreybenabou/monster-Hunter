@@ -61,14 +61,20 @@ public class MainPlayer extends GameObject {
 
             imageLoader=new ImageLoader();
             walkingSound = new Sound();
+            walkingSound.playSound(Sound.path.get(0));
             attackingSound = new Sound();
+            if(getType().equals("male"))
+            attackingSound.playSound(Sound.path.get(1));
+            else
+                attackingSound.playSound(Sound.path.get(3));
             earthQuaqe = new Sound();
-            getWalkingSound().playSound(Sound.path.get(0));
-            getWalkingSound().setVolume(-80);
-            getEarthQuaqe().playSound(Sound.path.get(5));
-            getEarthQuaqe().setVolume(-80);
-            getWalkingSound().setVolume(-80);
-            setTheMainPlayerAttackSound();
+            earthQuaqe.playSound(Sound.path.get(5));
+            earthQuaqe.setVolume(-6);
+            earthQuaqe.stopSound();
+            attackingSound.setVolume(-6);
+            attackingSound.stopSound();
+            walkingSound.setVolume(-6);
+            walkingSound.stopSound();
             setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
             point = new Point(getX(), getY());
             setTheUserAction();
@@ -168,17 +174,7 @@ public class MainPlayer extends GameObject {
 
     }
 
-    private void setTheMainPlayerAttackSound() {
-        if (type.equals("male")) {
-            attackingSound.playSound(Sound.path.get(1));
-            attackingSound.setVolume(-80);
-        } else {
-            attackingSound.playSound(Sound.path.get(3));
 
-            attackingSound.setVolume(-80);
-        }
-
-    }
 
     public static void makeNewElements(String type) {
 
@@ -358,6 +354,7 @@ public class MainPlayer extends GameObject {
         checkIfSpacialAttack();
         setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
         checkIfMainPlayerIsDieing();
+        checkSoundStatus();
 
         index++;
 
@@ -404,24 +401,37 @@ try
     public static void checkSoundStatus() {
         if(isStand())
         {
-            getWalkingSound().setVolume(-80);
-            getAttackingSound().setVolume(-80);
-            getEarthQuaqe().setVolume(-80);
+
+           try {
+               getWalkingSound().setVolume(-80);
+               getAttackingSound().setVolume(-80);
+               getEarthQuaqe().setVolume(-80);
+           }catch (Exception e)
+           {
+               e.printStackTrace();
+           }
+
+
+
+
         }
-        if(isWalking())
+        else if(isWalking())
         {
+            getWalkingSound().startSound();
             getWalkingSound().setVolume(6);
             getAttackingSound().setVolume(-80);
             getEarthQuaqe().setVolume(-80);
         }
-         if(isAttacking())
+        else  if(isAttacking())
         {
+            getAttackingSound().startSound();
             getWalkingSound().setVolume(-80);
             getAttackingSound().setVolume(6);
             getEarthQuaqe().setVolume(-80);
         }
-         if(isSpacielAttack())
+        else if(isSpacielAttack())
         {
+            getEarthQuaqe().startSound();
             getWalkingSound().setVolume(-80);
             getAttackingSound().setVolume(-80);
             getEarthQuaqe().setVolume(6);
@@ -481,7 +491,7 @@ try
                 StaticVariables.world.add(groundCrack);
                 while (isIntersect()) {
 
-                    earthQuaqe.playSound(Sound.path.get(5));
+
 
                     for (Ghost g : StaticVariables.world.getGhostArrayList()) {
                         g.decreaseLife(50);
@@ -790,6 +800,14 @@ try
 
     public static void setAddLifeToMainPlayer(Integer addLifeToMainPlayer) {
         MainPlayer.addLifeToMainPlayer = addLifeToMainPlayer;
+    }
+
+    public boolean isPlayerDead() {
+        return playerDead;
+    }
+
+    public void setPlayerDead(boolean playerDead) {
+        this.playerDead = playerDead;
     }
 
     public static boolean isIntersect() {

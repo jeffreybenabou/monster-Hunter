@@ -1,8 +1,7 @@
 package sound;
 
 
-
-
+import ImageHandel.ImageLoader;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -27,6 +26,12 @@ public class Sound {
             path.add("sounds/femaleAttack.wav");
             path.add("sounds/backgroundworld.wav");
             path.add("sounds/earthQueaqe.wav");
+            path.add("sounds/buy.wav");
+            path.add("sounds/coinFall.wav");
+            path.add("sounds/error.wav");
+            path.add("sounds/monsterAttack.wav");
+            path.add("sounds/ghostdieing.wav");
+
             firstPlay=false;
         }
     }
@@ -38,24 +43,45 @@ public class Sound {
 
 //        max=6
 
-       /* FloatControl gainControl;
+        try
+        {
+            FloatControl gainControl;
 
-            gainControl =
-                    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(value);*/
+            gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(value);
+        }catch (Exception e )
+        {
+
+        }
+
+
 
 
     }
 
+    public void stopSound()
+    {
+
+        clip.stop();
+    }
+
+    public void startSound(){
+
+        clip.start();
+        if(!clip.isRunning())
+        {
+            clip.setFramePosition(0);
+        }
+    }
+
     public void playSound(final String url) {
 
-/*
 
                 try {
                     if(clip==null)
                     {
                         clip = AudioSystem.getClip();
-                         inputStream = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(url));
+                         inputStream = AudioSystem.getAudioInputStream(ImageLoader.class.getClassLoader().getResource(url));
                         clip.open(inputStream);
                         clip.start();
                             clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -65,9 +91,8 @@ public class Sound {
 
 
                 } catch (Exception e) {
-
+e.printStackTrace();
                 }
-*/
 
     }
 
