@@ -395,6 +395,10 @@ e.printStackTrace();
                 wantToLoadGame=false;
                 break;
             }
+            default:
+            {
+                wantToLoadGame=false;
+            }
 
 
         }
