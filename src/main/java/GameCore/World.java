@@ -584,7 +584,7 @@ public class World extends JLabel implements MouseListener {
                                         counter++;
                                         setLocation(getX()+1,getY()-1);
                                         try {
-                                            Thread.sleep(5);
+                                            Thread.sleep(2);
                                         } catch (InterruptedException e1) {
                                             e1.printStackTrace();
                                         }
@@ -596,7 +596,7 @@ public class World extends JLabel implements MouseListener {
                                         counter--;
                                         setLocation(getX()-1,getY()+1);
                                         try {
-                                            Thread.sleep(5);
+                                            Thread.sleep(2);
                                         } catch (InterruptedException e1) {
                                             e1.printStackTrace();
                                         }
@@ -635,7 +635,7 @@ public class World extends JLabel implements MouseListener {
                                         counter++;
                                         setLocation(getX()+1,getY()+1);
                                         try {
-                                            Thread.sleep(5);
+                                            Thread.sleep(2);
                                         } catch (InterruptedException e1) {
                                             e1.printStackTrace();
                                         }
@@ -647,7 +647,7 @@ public class World extends JLabel implements MouseListener {
                                         counter--;
                                         setLocation(getX()-1,getY()-1);
                                         try {
-                                            Thread.sleep(5);
+                                            Thread.sleep(2);
                                         } catch (InterruptedException e1) {
                                             e1.printStackTrace();
                                         }

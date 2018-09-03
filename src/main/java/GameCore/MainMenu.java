@@ -329,11 +329,14 @@ public class MainMenu extends JLabel implements MouseListener {
 
                                 try
                                 {
+                                    MainPlayer.life=new Life(MainPlayer.sumOfLife,null);
+
                                     StaticVariables.mainPlayer=new MainPlayer();
                                     StaticVariables.world=new World();
                                     StaticVariables.world.setIcon(new ImageIcon(StaticVariables.worldBackGround));
 
                                     StaticVariables.miniMap=new MiniMap();
+
                                     StaticVariables.gamePanel=new GamePanel();
                                     StaticVariables.gamePanel.add(StaticVariables.miniMap);
                                     MainClass.addTheWorld();
@@ -386,8 +389,6 @@ e.printStackTrace();
             case 0:
             {
                 wantToLoadGame=true;
-
-
                 break;
             }
             case 1:

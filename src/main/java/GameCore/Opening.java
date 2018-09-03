@@ -36,13 +36,14 @@ setVisible(true);
 
                 try {
                     Thread.sleep(5000);
+                    StaticVariables.mainMenu.setVisible(true);
+                    StaticVariables.mainMenu.setOpaque(true);
+                    MainClass.addTheMainMenu();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 setVisible(false);
-                StaticVariables.mainMenu.setVisible(true);
-                StaticVariables.mainMenu.setOpaque(true);
-                MainClass.addTheMainMenu();
+
 
 
 

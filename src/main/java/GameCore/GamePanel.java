@@ -241,7 +241,6 @@ public class GamePanel extends JLabel  {
         lifeBar.setIcon(new ImageIcon(StaticVariables.lifePanel.getScaledInstance(lifeBar.getWidth(),lifeBar.getHeight(),0)));
         add(lifeBar);
 
-        MainPlayer.life=new Life(MainPlayer.sumOfLife,null);
 
         MainPlayer.life.getjProgressBar().setBounds(108,35,543,12);
         MainPlayer.life.getjProgressBar().setBackground(Color.BLACK);
