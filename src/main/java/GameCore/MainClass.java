@@ -69,6 +69,7 @@ public class MainClass extends JFrame  {
     }
 
     private void setTheJFrame() {
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBounds(0,0,dimension.width,dimension.height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
