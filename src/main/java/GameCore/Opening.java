@@ -22,7 +22,6 @@ public class Opening extends JLabel {
             setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
 setVisible(true);
 
-            // TODO: 24/07/2018 check why the opening image wont work
 
         }catch (NullPointerException e)
         {

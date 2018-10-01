@@ -12,10 +12,12 @@ import java.awt.*;
 public class GamePanel extends JLabel  {
 
 
+
     private Sound buy,notbuy,coinFall;
     private JLabel lifeBar;
     private JLabel levelLabel;
     private JLabel shopIcon;
+    private JLabel label;
     private JLabel shopLabel;
     private JLabel settingLabel;
     private JLabel moneyIcon;
@@ -170,7 +172,7 @@ public class GamePanel extends JLabel  {
         levelLabel.setBounds(MainClass.dimension.width-220,MainClass.dimension.height-220,230,250);
         levelLabel.setIcon(new ImageIcon(StaticVariables.levelLabel.getScaledInstance(levelLabel.getWidth(),levelLabel.getHeight(),1)));
 
-        JLabel label=new JLabel(""+1);
+         label=new JLabel(""+1);
         label.setBounds(95,0,levelLabel.getWidth(),levelLabel.getHeight()-20);
         label.setForeground(Color.red);
         label.setFont(font);
@@ -298,6 +300,14 @@ public class GamePanel extends JLabel  {
 
     public void setShopIcon(JLabel shopIcon) {
         this.shopIcon = shopIcon;
+    }
+
+    public JLabel getLabel() {
+        return label;
+    }
+
+    public void setLabel(JLabel label) {
+        this.label = label;
     }
 
     public JLabel getSettingLabel() {

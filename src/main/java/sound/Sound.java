@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class Sound {
 
-    // TODO: 21/07/2018 fix the sound problem
     public static ArrayList<String> path=new ArrayList<String>();
     private  Clip  clip;
     private static boolean firstPlay=true;

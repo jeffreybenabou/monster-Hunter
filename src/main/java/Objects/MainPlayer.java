@@ -11,6 +11,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
+import static GameCore.MiniMap.addTheMainPlayerLocationToMap;
+
 public class MainPlayer extends GameObject {
 
     public static Integer sumOfLife = 20000;
@@ -77,7 +79,10 @@ public class MainPlayer extends GameObject {
             walkingSound.stopSound();
             setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
             point = new Point(getX(), getY());
+            MiniMap.setTheMainPlayerLabel(getX(),getY());
+            StaticVariables.miniMap.add(MiniMap.mainPlayerLabel);
             setTheUserAction();
+
 
         }catch (Exception e)
         {
@@ -204,7 +209,7 @@ public class MainPlayer extends GameObject {
 
                 while (!playerDead) {
 
-
+                    addTheMainPlayerLocationToMap(getX(),getY());
                     setImageFrameRate(getImageFrameRate() + 1);
 
                     setPlace();

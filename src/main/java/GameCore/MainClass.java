@@ -44,8 +44,8 @@ public class MainClass extends JFrame  {
     }
     public static void addTheWorld(){
         try{
-            StaticVariables.mainClass.add(StaticVariables.gamePanel);
-            StaticVariables.mainClass.add(StaticVariables.world);
+            StaticVariables.mainClass.add(StaticVariables.gamePanel,0);
+            StaticVariables.mainClass.add(StaticVariables.world,1);
 
             StaticVariables.world.setVisible(true);
             StaticVariables.gamePanel.setVisible(true);

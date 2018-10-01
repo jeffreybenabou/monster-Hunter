@@ -87,7 +87,6 @@ public class MainMenu extends JLabel implements MouseListener {
 
                         new Thread(new Runnable() {
                             public void run() {
-// TODO: 21/07/2018 change the image to main player attack
 
                                 imageLoader.addImageOfObject(32,"Photos/character/male/attack/down/",aMale);
 
@@ -330,12 +329,12 @@ public class MainMenu extends JLabel implements MouseListener {
                                 try
                                 {
                                     MainPlayer.life=new Life(MainPlayer.sumOfLife,null);
-
+                                    StaticVariables.miniMap=new MiniMap();
                                     StaticVariables.mainPlayer=new MainPlayer();
                                     StaticVariables.world=new World();
                                     StaticVariables.world.setIcon(new ImageIcon(StaticVariables.worldBackGround));
 
-                                    StaticVariables.miniMap=new MiniMap();
+
 
                                     StaticVariables.gamePanel=new GamePanel();
                                     StaticVariables.gamePanel.add(StaticVariables.miniMap);
@@ -344,6 +343,8 @@ public class MainMenu extends JLabel implements MouseListener {
                                     StaticVariables.miniMap.addActionOfMiniMap();
                                     if(wantToLoadGame)
                                     loadGame=new LoadGame(pathToFile);
+                                    new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+
                                 }catch (Exception e)
                                 {
 
@@ -382,7 +383,7 @@ e.printStackTrace();
 
         }catch (Exception e)
         {
-
+ e.printStackTrace();
         }
         switch (optionChoose)
         {

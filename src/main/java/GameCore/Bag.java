@@ -22,10 +22,13 @@ public class Bag extends GameObject {
 
         key1.setBounds(50,30,100,100);
         key1.setBorder(border);
+
         key2.setBounds(200,30,100,100);
         key2.setBorder(border);
+
         key3.setBounds(350,30,100,100);
         key3.setBorder(border);
+
         add(key1);
         add(key2);
         add(key3);

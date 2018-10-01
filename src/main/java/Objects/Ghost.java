@@ -5,11 +5,9 @@ import GameCore.*;
 import ImageHandel.ImageLoader;
 import sound.Sound;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 public class Ghost extends GameObject {
@@ -17,6 +15,7 @@ public class Ghost extends GameObject {
     private Integer ghostType, damgeToMainPlayer, damgeFromMainPlayer, life;
 
 
+    private JLabel miniMapLabel;
 
 
     private Sound attacking,dieing;
@@ -102,7 +101,7 @@ public class Ghost extends GameObject {
             }
             setBounds(new Rectangle(random.nextInt(StaticVariables.world.getWidth()), random.nextInt(StaticVariables.world.getHeight()), width_, height_));
             if (house.getBounds().intersects(getBounds())) {
-                setBounds(3000, 3000, width_, height_);
+                setBounds(1500, 1500, width_, height_);
             }
 
 
@@ -136,8 +135,12 @@ public class Ghost extends GameObject {
 
     public void removeTheGhostWhenDead() {
         StaticVariables.world.remove(this);
+        StaticVariables.world.repaint();
+        StaticVariables.world.revalidate();
         new CoinAdd(getX(),getY());
-
+        StaticVariables.miniMap.remove(miniMapLabel);
+        StaticVariables.miniMap.repaint();
+        StaticVariables.miniMap.revalidate();
         setVisible(false);
     }
 
@@ -145,7 +148,12 @@ public class Ghost extends GameObject {
     public void setTheActionToGhost() {
         new Thread(new Runnable() {
             public void run() {
+                miniMapLabel=MiniMap.addGhostToMiniMap(getX(),getY());
+                StaticVariables.miniMap.add(miniMapLabel);
                 while (lifeBar.isAlive()) {
+                    miniMapLabel.setLocation(getX() / 20, getY() / 32);
+
+
                     stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
 
                     if (notTheFirstGhost)
@@ -217,7 +225,7 @@ public class Ghost extends GameObject {
                 if (getBounds().intersects(house.getBounds())) {
                     switch (Integer.parseInt(house.getName())) {
                         case 1: {
-                            setLocation(getX() + 10, getY());
+                            setLocation(getX() + 10, getY()+10);
                             dirUp = true;
                             dirDown = false;
                             dirLeft = false;
@@ -225,7 +233,7 @@ public class Ghost extends GameObject {
                             break;
                         }
                         case 2: {
-                            setLocation(getX() + 10, getY());
+                            setLocation(getX() + 10, getY()+10);
                             dirUp = false;
                             dirDown = true;
                             dirLeft = false;
@@ -233,7 +241,7 @@ public class Ghost extends GameObject {
                             break;
                         }
                         case 3: {
-                            setLocation(getX() - 10, getY());
+                            setLocation(getX() - 10, getY()+10);
                             dirUp = false;
                             dirDown = true;
                             dirLeft = true;
@@ -246,7 +254,7 @@ public class Ghost extends GameObject {
                 }
 
             }
-        } catch (ConcurrentModificationException e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -423,7 +431,7 @@ public class Ghost extends GameObject {
             case 1: {
                 setSize(250, 300);
                 damgeToMainPlayer = 2 * random.nextInt(2) + 1;
-                life = 5000;
+                life = 1000;
                 speed = 1;
                 break;
             }
@@ -432,7 +440,7 @@ public class Ghost extends GameObject {
 
                 setSize(300, 350);
                 damgeToMainPlayer = 3 * random.nextInt(2) + 1;
-                life = 10000;
+                life = 2500;
                 speed = 2;
                 break;
             }
@@ -440,7 +448,7 @@ public class Ghost extends GameObject {
 
                 setSize(400, 450);
                 damgeToMainPlayer = 4 * random.nextInt(2) + 1;
-                life = 15000;
+                life = 3500;
                 speed = 3;
 
                 break;

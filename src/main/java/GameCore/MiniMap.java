@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
     boolean changeLevel = false;
-    private JLabel mainPlayerLabel;
+    public static JLabel mainPlayerLabel;
     private boolean loadFuncation=false;
     private  Border blackline;
     private Key key;
@@ -38,17 +38,18 @@ public class MiniMap extends JLabel {
         }).start();
 
         setBackground(Color.black);
-        setTheMainPlayerLabel();
+
 
     }
 
-    public void setTheMainPlayerLabel(){
+    public static void setTheMainPlayerLabel(int x,int y){
          mainPlayerLabel=new JLabel();
-        mainPlayerLabel.setBounds(20,20,5,5);
+        mainPlayerLabel.setBounds(x,y,5,5);
         mainPlayerLabel.setBackground(Color.blue);
         mainPlayerLabel.setOpaque(true);
-        add(mainPlayerLabel);
+
     }
+
     public void addActionOfMiniMap() {
 
 
@@ -57,28 +58,13 @@ public class MiniMap extends JLabel {
                 setLoadFuncation(false);
                 setChangeLevel(false);
 
-
-                new Thread(new Runnable() {
-                    public void run() {
-                        while (true)
-                        {
-                            addTheMainPlayerLocationToMap();
-                            try {
-                                Thread.sleep(150);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }).start();
-
                 while (!isLoadFuncation()) {
 
                     addTheHouseLocationToMap();
-                    addGhostToMiniMap();
+
 
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(1000);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -110,28 +96,19 @@ public class MiniMap extends JLabel {
         }).start();
     }
 
-    private void addGhostToMiniMap() {
-        for (int i = 0; i < StaticVariables.world.getGhostArrayList().size(); i++) {
-            try {
-
-                if (StaticVariables.world.getGhostArrayList().get(i).isVisible())
-                    aghost.get(i).setLocation(StaticVariables.world.getGhostArrayList().get(i).getX() / 20, StaticVariables.world.getGhostArrayList().get(i).getY() / 32);
-                else
-                    aghost.get(i).setVisible(false);
 
 
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-                break;
+        public static JLabel  addGhostToMiniMap(int x,int y) {
+            JLabel label=new JLabel();
+            label.setBounds(x,y,5,5);
+            label.setBackground(Color.red);
+            label.setOpaque(true);
+            return label;
 
-            } catch (NullPointerException e) {
-                e.printStackTrace();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-        }
+
+
     }
 
     private void addTheHouseLocationToMap() {
@@ -193,20 +170,22 @@ public class MiniMap extends JLabel {
         }
     }
 
-    public void addTheMainPlayerLocationToMap(){
+    public static void addTheMainPlayerLocationToMap(int xPlayer,int yPlayer){
 
 
 
                     int x;
                     int y;
                     try{
-                        y=StaticVariables.mainPlayer.getLocation().y/32+10;
-                        x=StaticVariables.mainPlayer.getLocation().x/20+10;
+                        y=yPlayer/32+3;
+                        x=xPlayer/20+5;
+
                         mainPlayerLabel.setLocation(x,y);
 
                     }catch (NullPointerException e)
                     {
 
+                        e.printStackTrace();
 
                     }
 

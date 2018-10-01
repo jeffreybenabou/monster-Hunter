@@ -67,7 +67,8 @@ public class Key extends GameObject {
             }
             case 3:
             {
-                StaticVariables.gamePanel.getBag().getKey3().setIcon(new ImageIcon(StaticVariables.key3.getScaledInstance(StaticVariables.gamePanel.getWidth(),StaticVariables.gamePanel.getHeight(),0)));
+
+                StaticVariables.gamePanel.getBag().getKey3().setIcon(new ImageIcon(StaticVariables.key3.getScaledInstance(StaticVariables.gamePanel.getWidth_(),StaticVariables.gamePanel.getWidth_(),0)));
 
                 break;
             }
@@ -133,21 +134,26 @@ public class Key extends GameObject {
                     try
                     {
                         setIcon(new ImageIcon(image.getScaledInstance(getWidth() - 2, getHeight() - 2, 4)));
-                        setBounds(getX() - 9, getY() - 4, getIcon().getIconWidth(), getIcon().getIconHeight());
-                        if (getBounds().intersects(getBounds()) && !keyActive) {
+                        setLocation(getX() - 8, getY() - 3);
+
+
+                        if (getBounds().intersects(StaticVariables.gamePanel.getBag().getBounds()) && !keyActive) {
                             new Thread(new Runnable() {
                                 public void run() {
                                     keyActive = true;
                                     try {
                                         Thread.sleep(1000);
-                                        keyReachToDestination = true;
-                                        setVisible(false);
-                                        changeTheKeyState();
-                                        addKeyToBag(StaticVariables.level);
-                                        removeFromWorld();
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
+
+                                    keyReachToDestination = true;
+                                        setVisible(false);
+                                        changeTheKeyState();
+                                        addKeyToBag(StaticVariables.level);
+
+                                        removeFromWorld();
+
                                 }
                             }).start();
                         }

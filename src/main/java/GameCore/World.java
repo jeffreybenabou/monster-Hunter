@@ -30,7 +30,7 @@ public class World extends JLabel implements MouseListener {
     private Sound backGroundWorld;
     private boolean key1IsPreesed=false,key2IsPreesed=false,key3IsPreesed=false;
     public static boolean userInProgressToOpenHouse=false;
-
+    private int index =0,indexOfGhost=0;
 
     public World(){
 
@@ -86,10 +86,12 @@ public class World extends JLabel implements MouseListener {
                         getFirstGhost().setLocation(2500,2500);
                         getFirstGhost().setName(""+0);
                         getGhostArrayList().add(getFirstGhost());
-                        add(getFirstGhost());
+                        indexOfGhost=index;
+                        add(getFirstGhost(), index++);
+
                     }catch (Exception e)
                     {
-
+e.printStackTrace();
                     }
                     StaticVariables.miniMap.addTheGhostLocationToMap(0,getFirstGhost().getLocation());
 
@@ -102,13 +104,14 @@ public class World extends JLabel implements MouseListener {
                                 e.printStackTrace();
                             }catch (NullPointerException e)
                             {
-
+ e.printStackTrace();
                             }
                         }
 
                     }catch (Exception e)
                     {
 
+                        e.printStackTrace();
                     }
 
 
@@ -144,7 +147,7 @@ public class World extends JLabel implements MouseListener {
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
                                 getGhostArrayList().add(ghost);
-                                add(ghost);
+                                add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
 
@@ -159,7 +162,7 @@ public class World extends JLabel implements MouseListener {
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
-                                add(ghost);
+                                add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
 
@@ -169,13 +172,13 @@ public class World extends JLabel implements MouseListener {
                         case 3:{
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <20 ; i++) {
+                            for (int i = 0; i <1 ; i++) {
 
                                 Ghost ghost=new Ghost(3);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
                                 ghostArrayList.add(ghost);
-                                add(ghost);
+                                add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
 
@@ -201,6 +204,7 @@ public class World extends JLabel implements MouseListener {
 
 
 
+
         new Thread(new Runnable() {
 
             public void run() {
@@ -208,26 +212,25 @@ public class World extends JLabel implements MouseListener {
 
 
                         for (int i = 0; i <15 ; i++) {
-
-                            {
-
                                         Cloud cloud=new Cloud(getRandom().nextInt(getWidth()),getRandom().nextInt(getHeight()));
-                                        add(cloud);
+                                        add(cloud, index++);
                                 Bird bird=new Bird(getRandom().nextInt(getWidth()),getRandom().nextInt(getHeight()));
-                                add(bird);
-
-
-                            }
-
-
-
+                                add(bird, index++);
                         }
 
+                for (int i = 0; i < 3; ) {
+                    House house = new House(i);
+                    getBackGroundObjects().add(house);
+                    getHouseArrayList().add(house);
+                    house.setVisible(false);
+                    add(house, index++);
+                    i++;
+
+                }
 
 
 
 
-                addGhost();
 
 
 
@@ -237,26 +240,18 @@ public class World extends JLabel implements MouseListener {
                     if(!checkIfInetrcet(tree))
                     {
                         getBackGroundObjects().add(tree);
-                        add(tree);
+                        add(tree, index++);
                         i++;
 
                     }
 
                 }
-                add(StaticVariables.mainPlayer);
-
-                for (int i = 0; i < 3; ) {
-                    House house = new House(i);
-                    getBackGroundObjects().add(house);
-                    getHouseArrayList().add(house);
-                    house.setVisible(false);
-                    add(house);
-                    i++;
-
-                }
+                add(StaticVariables.mainPlayer, index++);
 
 
 
+
+                addGhost();
 
 
 
@@ -267,7 +262,7 @@ public class World extends JLabel implements MouseListener {
                     if(!checkIfInetrcet(trunk))
                     {
                         getBackGroundObjects().add(trunk);
-                        add(trunk);
+                        add(trunk, index++);
                         i++;
                     }
                 }
@@ -305,7 +300,6 @@ public class World extends JLabel implements MouseListener {
             StaticVariables.mainPlayer.calculateTheAngle(ghost.getX(),ghost.getY());
             StaticVariables.mainPlayer.setDamgeToGhost(10);
             StaticVariables.mainPlayer.setIndex(0);
-            // TODO: 29/06/2018 work on upgrade
             MainPlayer.setAttacking(true);
 
         }
@@ -466,7 +460,16 @@ public class World extends JLabel implements MouseListener {
     private void checkIfUserIsInsideTheEntrance(MouseEvent e){
 
 
+        for (House house:houseArrayList) {
+            if(house.getHouseEntrance().equals(e.getComponent()))
+            {
                 checkIfUserPreesTheHouse(e);
+                break;
+            }
+
+
+        }
+
 
 
 
@@ -513,7 +516,7 @@ public class World extends JLabel implements MouseListener {
 
         if(e.getComponent().equals(StaticVariables.gamePanel.getSettingLabel()))
         {
-            SaveGame saveGame=new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+            new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
         }
 
         for (House house :houseArrayList) {
@@ -525,6 +528,7 @@ public class World extends JLabel implements MouseListener {
 
                 Key.removeTheKeyLiseners();
                 StaticVariables.level++;
+                StaticVariables.gamePanel.getLabel().setText(""+StaticVariables.level);
                 addGhost();
                 StaticVariables.miniMap.addActionOfMiniMap();
                 World.userInProgressToOpenHouse=false;
@@ -562,9 +566,12 @@ public class World extends JLabel implements MouseListener {
     private void checkIfUserPreesTheHouse(MouseEvent e) {
 
 
+
             if(e.getComponent().getBounds().intersects(StaticVariables.mainPlayer.getBounds())&&!housePreesed)
-                switch (e.getComponent().getX()) {
-                    case 1211: {
+            {
+
+                switch (Integer.parseInt(e.getComponent().getName())) {
+                    case 0: {
                         //                downleft
 
                         if(!House.houseNumber1Open&&Key.key1)
@@ -574,12 +581,13 @@ public class World extends JLabel implements MouseListener {
                             new Thread(new Runnable() {
                                 public void run() {
                                     int counter=0;
-
+                                    MainPlayer.spacielAttack=false;
+                                    MainPlayer.walking=false;
+                                    MainPlayer.attacking=false;
+                                    MainPlayer.stand=true;
                                     while (counter<=600)
                                     {
-                                        MainPlayer.spacielAttack=false;
-                                        MainPlayer.walking=false;
-                                        MainPlayer.attacking=false;
+
 
                                         counter++;
                                         setLocation(getX()+1,getY()-1);
@@ -590,9 +598,6 @@ public class World extends JLabel implements MouseListener {
                                         }
                                     }
                                     while(counter>0){
-                                        MainPlayer.spacielAttack=false;
-                                        MainPlayer.walking=false;
-                                        MainPlayer.attacking=false;
                                         counter--;
                                         setLocation(getX()-1,getY()+1);
                                         try {
@@ -616,10 +621,14 @@ public class World extends JLabel implements MouseListener {
 
 
                     }
-                    case 874: {
+                    case 1: {
 //                        up left
                         if(!House.houseNumber2Open&&Key.key2)
                         {
+                            MainPlayer.spacielAttack=false;
+                            MainPlayer.walking=false;
+                            MainPlayer.attacking=false;
+                            MainPlayer.stand=true;
                             housePreesed=true;
                             House.houseNumber2Open=true;
                             new Thread(new Runnable() {
@@ -628,9 +637,6 @@ public class World extends JLabel implements MouseListener {
 
                                     while (counter<=600)
                                     {
-                                        MainPlayer.spacielAttack=false;
-                                        MainPlayer.walking=false;
-                                        MainPlayer.attacking=false;
 
                                         counter++;
                                         setLocation(getX()+1,getY()+1);
@@ -641,9 +647,7 @@ public class World extends JLabel implements MouseListener {
                                         }
                                     }
                                     while(counter>0){
-                                        MainPlayer.spacielAttack=false;
-                                        MainPlayer.walking=false;
-                                        MainPlayer.attacking=false;
+
                                         counter--;
                                         setLocation(getX()-1,getY()-1);
                                         try {
@@ -662,11 +666,56 @@ public class World extends JLabel implements MouseListener {
                         }
                         break;
                     }
-                    case 3212: {
+                    case 2: {
+                        if(!House.houseNumber3Open&&Key.key3)
+                        {
+                            MainPlayer.spacielAttack=false;
+                            MainPlayer.walking=false;
+                            MainPlayer.attacking=false;
+                            MainPlayer.stand=true;
+                            housePreesed=true;
+                            House.houseNumber3Open=true;
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    int counter=0;
 
+                                    while (counter<=600)
+                                    {
+
+
+                                        counter++;
+                                        setLocation(getX()-1,getY()+1);
+                                        try {
+                                            Thread.sleep(2);
+                                        } catch (InterruptedException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }
+                                    while(counter>0){
+
+                                        counter--;
+                                        setLocation(getX()+1,getY()-1);
+                                        try {
+                                            Thread.sleep(2);
+                                        } catch (InterruptedException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }
+                                    JOptionPane.showMessageDialog(null,"you won the game !!!!!");
+
+                                    housePreesed=false;
+                                }
+                            }).start();
+                        }
+                        else
+                        {
+                            JOptionPane.showConfirmDialog(null,"need to kill al the monster before opening this house");
+                        }
                         break;
                     }
                 }
+            }
+
 
 
 
