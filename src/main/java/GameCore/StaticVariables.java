@@ -193,12 +193,40 @@ e.printStackTrace();
     }
 
 
+    public static void restart(){
+        level=1;
+        sumOfMoney=0;
+
+        MainMenu.wantToLoadGame=false;
+        Ghost.numberOfDeadGhost=0;
+        Ghost.difficulty=0;
+Ghost.notTheFirstGhost=false;
+        mainClass.removeAll();
+        mainClass.dispose();
+
+        for (int i = 0; i <world.getGhostArrayList().size() ; i++) {
+            world.getGhostArrayList().set(i,null);
+            world.getGhostArrayList().remove(world.getGhostArrayList().get(i));
+        }
+        gamePanel=null;
+        world=null;
+        mainMenu=null;
+        mainClass=null;
+        mainPlayer=null;
+        miniMap=null;
+
+
+
+    }
+
 
     public static void main(String[] args) {
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if(screenSize.getHeight()!=768||screenSize.getWidth()!=1366)
             JOptionPane.showMessageDialog(null,"for now the game works  only in resolution of : 1366X768."+"\n"+" please change your resolution");
         else
-        new StaticVariables();
+           new StaticVariables();
+
     }
 }

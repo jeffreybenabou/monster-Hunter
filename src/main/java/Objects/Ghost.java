@@ -373,7 +373,7 @@ public class Ghost extends GameObject {
 
     private void changeTheGhostIcon() {
         try {
-            if (index < moveLeft.size()) {
+            if (index < moveLeft.size()-1) {
                 if (stopMoving) {
                     attacking.startSound();
                     dirLeft = false;

@@ -140,7 +140,7 @@ e.printStackTrace();
                     switch (StaticVariables.level)
                     {
                         case 1:{
-                            for (int i = 0; i <15; i++) {
+                            for (int i = 0; i <30; i++) {
 
                                 Ghost ghost=new Ghost(1);
 
