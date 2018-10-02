@@ -30,7 +30,7 @@ public class Life implements ChangeListener {
             gameObject.add(jProgressBar);
 
         }
-
+        jProgressBar.setOpaque(true);
     }
 
     public JProgressBar getjProgressBar() {

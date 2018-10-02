@@ -33,6 +33,7 @@ public class Ghost extends GameObject {
     dead;
     public static   Integer numberOfDeadGhost = 0;
 
+    public static int difficulty=0;
 
     private Life lifeBar;
     private boolean stopMoving = false;
@@ -160,7 +161,7 @@ public class Ghost extends GameObject {
                         moveTheGhostAroundTheWorld();
                     else
                         changeTheGhostIcon();
-                    decreaseLife(StaticVariables.mainPlayer.getDamgeToGhost());
+                    decreaseLife(StaticVariables.mainPlayer.getDemageToGhost());
 
 
                     try {
@@ -183,7 +184,7 @@ public class Ghost extends GameObject {
     }
 
     public void decreaseLife(int damage) {
-        if (getBounds().intersects(StaticVariables.mainPlayer.getBounds()) && (MainPlayer.isAttacking() || MainPlayer.spacielAttack)) {
+        if (getBounds().intersects(StaticVariables.mainPlayer.getBounds()) && (MainPlayer.isAttacking() || MainPlayer.spacialAttack)) {
 
 
             getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue() - damage*StaticVariables.level);
@@ -416,9 +417,10 @@ public class Ghost extends GameObject {
 
             index++;
         } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
 
         } catch (IndexOutOfBoundsException e) {
-
+            e.printStackTrace();
         }
 
 
@@ -431,7 +433,7 @@ public class Ghost extends GameObject {
             case 1: {
                 setSize(250, 300);
                 damgeToMainPlayer = 2 * random.nextInt(2) + 1;
-                life = 1000;
+                life = 2000;
                 speed = 1;
                 break;
             }
@@ -440,7 +442,7 @@ public class Ghost extends GameObject {
 
                 setSize(300, 350);
                 damgeToMainPlayer = 3 * random.nextInt(2) + 1;
-                life = 2500;
+                life = 3500;
                 speed = 2;
                 break;
             }
@@ -448,18 +450,23 @@ public class Ghost extends GameObject {
 
                 setSize(400, 450);
                 damgeToMainPlayer = 4 * random.nextInt(2) + 1;
-                life = 3500;
+                life = 5500;
                 speed = 3;
 
                 break;
             }
         }
+
+        damgeToMainPlayer+=difficulty;
+        life+=difficulty*250;
         lifeBar = new Life(life, this);
         add(lifeBar.getjProgressBar());
 
 
 
     }
+
+
 
     public Integer getGhostType() {
         return ghostType;

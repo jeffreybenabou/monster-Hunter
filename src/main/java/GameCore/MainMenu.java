@@ -1,12 +1,15 @@
 package GameCore;
 
 import ImageHandel.ImageLoader;
+import Objects.Ghost;
 import Objects.MainPlayer;
 import sound.Sound;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -34,7 +37,8 @@ public class MainMenu extends JLabel implements MouseListener {
     private Border border;
     private JLabel chooseThePlayer;
     private int index=0;
-
+    private JOptionPane showOptionDialog ;
+    private JDialog jDialog;
 
 
 
@@ -270,12 +274,7 @@ public class MainMenu extends JLabel implements MouseListener {
         }
 
 
-
-
-
-
-
-
+        defineTheLevelDifficulty();
 
 
 
@@ -373,6 +372,43 @@ e.printStackTrace();
 }).start();
 
 
+    }
+
+    private void defineTheLevelDifficulty() {
+
+
+        Button button1=new Button("easy");
+        button1.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                showOptionDialog.setVisible(false);
+                jDialog.setVisible(false);
+                Ghost.difficulty=0;
+            }
+        });
+        Button button2=new Button("normal");
+        button2.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                showOptionDialog.setVisible(false);
+                jDialog.setVisible(false);
+                Ghost.difficulty=1;
+            }
+        });
+        Button button3=new Button("hard");
+        button3.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                showOptionDialog.setVisible(false);
+                jDialog.setVisible(false);
+                Ghost.difficulty=2;
+            }
+        });
+        showOptionDialog = new JOptionPane(  "pick Difficulty", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, new Object[]{button1, button2,button3});
+        jDialog = showOptionDialog.createDialog(null, "My Test");
+        jDialog.setModal(true);
+        showOptionDialog.setVisible(true);
+        jDialog.setVisible(true);
     }
 
     private void askToLoadAGame() {

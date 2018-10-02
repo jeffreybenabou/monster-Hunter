@@ -16,7 +16,8 @@ public class ImageLoader {
     public BufferedImage loadImage(String path) {
         try {
 
-             file = new File(classLoader.getResource(path).toURI());
+
+             file = new File(classLoader.getResource(path).getFile());
 
             return             ImageIO.read(file);
 
@@ -33,7 +34,7 @@ public class ImageLoader {
         return null;
     }
 
-    public void addImageOfObject(int type, String dir, ArrayList<ImageIcon> linkedList) {
+    public synchronized void addImageOfObject(int type, String dir, ArrayList<ImageIcon> linkedList) {
         BufferedImage image;
         String dirc;
 
@@ -42,7 +43,9 @@ public class ImageLoader {
 
             for (int i = 0; i<type; i++) {
                 try {
+
                     dirc = dir + i + ".png";
+
                     image = loadImage(dirc);
                     linkedList.add(new ImageIcon(image));
 

@@ -17,14 +17,14 @@ public class MainPlayer extends GameObject {
 
     public static Integer sumOfLife = 20000;
     public static Life life;
-    public static boolean spacielAttack;
+    public static boolean spacialAttack;
 
     private static ImageLoader imageLoader;
 
     public static Sound walkingSound, attackingSound, earthQuaqe;
     public static Integer imageFrameRate = 0, addLifeToMainPlayer = 0;
     public static boolean intersect = false;
-    private int  index = 0, imageSpeed = 3, damgeToGhost;
+    private int  index = 0, imageSpeed = 4, demageToGhost;
     public static Integer xSpriteSheet = 250, ySprtieSheet = 250;
     public static String nameOfPlayer, type;
     public static boolean attacking;
@@ -115,12 +115,18 @@ public class MainPlayer extends GameObject {
 
 
                 imageLoader=new ImageLoader();
+
                 DIR_1 = "Photos/character/" + type2 + "/stand/";
-                imageLoader.addImageOfObject(31,DIR_1, standDown );
+                if(type2.equals("male"))
+                    imageLoader.addImageOfObject(31,DIR_1, standDown );
+
+                else
+                    imageLoader.addImageOfObject(42,DIR_1, standDown );
 
 
 
-                        DIR_1 = "Photos/character/" + type2 + "/walk/right/";
+
+                DIR_1 = "Photos/character/" + type2 + "/walk/right/";
                 imageLoader.addImageOfObject(31,DIR_1, right);
 
                         DIR_1 ="Photos/character/" + type2 + "/walk/left/";
@@ -277,7 +283,7 @@ public class MainPlayer extends GameObject {
                 }
             }
         } catch (NullPointerException e) {
-
+            e.printStackTrace();
         }
 
 
@@ -376,7 +382,7 @@ try
         StaticVariables.world.add(StaticVariables.world.getHole());
         setWalking(false);
         setAttacking(false);
-        setSpacielAttack(false);
+        setSpacialAttack(false);
         setStand(false);
         index=0;
         while (getHeight()>=0)
@@ -434,7 +440,7 @@ try
             getAttackingSound().setVolume(6);
             getEarthQuaqe().setVolume(-80);
         }
-        else if(isSpacielAttack())
+        else if(isSpacialAttack())
         {
             getEarthQuaqe().startSound();
             getWalkingSound().setVolume(-80);
@@ -447,7 +453,7 @@ try
         try {
 
 
-            if (isSpacielAttack()) {
+            if (isSpacialAttack()) {
 
 
 
@@ -478,7 +484,11 @@ try
                     Thread.sleep(2500);
 
                     while (GamePanel.jProgressBar.getValue() > 0) {
-                        GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue() - 1);
+                        synchronized (GamePanel.jProgressBar)
+                        {
+                            GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue() - 1);
+
+                        }
                         Thread.sleep(10);
                     }
                 } catch (InterruptedException e) {
@@ -517,7 +527,7 @@ try
 
                 }
 
-                setSpacielAttack(false);
+                setSpacialAttack(false);
                 setStand(true);
 
             }
@@ -669,14 +679,20 @@ try
                 setIndex(0);
                 new Thread(new Runnable() {
                     public void run() {
-                        try {
-                            Thread.sleep(400);
-                            GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue()+100);
-                            if (getIndex() != 0 && !isAttacking())
-                                setStand(true);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        int x=0;
+                        while (x<10)
+                        {
+                            try {
+                                x++;
+                                Thread.sleep(30);
+                                GamePanel.jProgressBar.setValue(GamePanel.jProgressBar.getValue()+1);
+
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
+                        if (getIndex() != 0 && !isAttacking())
+                            setStand(true);
                     }
                 }).start();
             }
@@ -751,12 +767,12 @@ try
         MainPlayer.life = life;
     }
 
-    public static boolean isSpacielAttack() {
-        return spacielAttack;
+    public static boolean isSpacialAttack() {
+        return spacialAttack;
     }
 
-    public static void setSpacielAttack(boolean spacielAttack) {
-        MainPlayer.spacielAttack = spacielAttack;
+    public static void setSpacialAttack(boolean spacialAttack) {
+        MainPlayer.spacialAttack = spacialAttack;
     }
 
     public static ImageLoader getImageLoader() {
@@ -839,12 +855,12 @@ try
         this.imageSpeed = imageSpeed;
     }
 
-    public int getDamgeToGhost() {
-        return damgeToGhost;
+    public int getDemageToGhost() {
+        return demageToGhost;
     }
 
-    public void setDamgeToGhost(int damgeToGhost) {
-        this.damgeToGhost = damgeToGhost;
+    public void setDemageToGhost(int demageToGhost) {
+        this.demageToGhost = demageToGhost;
     }
 
     public static Integer getxSpriteSheet() {

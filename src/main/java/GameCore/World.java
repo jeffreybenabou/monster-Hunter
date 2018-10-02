@@ -140,7 +140,7 @@ e.printStackTrace();
                     switch (StaticVariables.level)
                     {
                         case 1:{
-                            for (int i = 0; i <1; i++) {
+                            for (int i = 0; i <15; i++) {
 
                                 Ghost ghost=new Ghost(1);
 
@@ -157,7 +157,7 @@ e.printStackTrace();
 
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <1 ; i++) {
+                            for (int i = 0; i <10 ; i++) {
                                 Ghost ghost=new Ghost(2);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
@@ -172,7 +172,7 @@ e.printStackTrace();
                         case 3:{
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <1 ; i++) {
+                            for (int i = 0; i <5; i++) {
 
                                 Ghost ghost=new Ghost(3);
                                 ghost.checkIfGhostIntersectHouse();
@@ -298,7 +298,7 @@ e.printStackTrace();
             MainPlayer.walking=false;
             MainPlayer.stand=false;
             StaticVariables.mainPlayer.calculateTheAngle(ghost.getX(),ghost.getY());
-            StaticVariables.mainPlayer.setDamgeToGhost(10);
+            StaticVariables.mainPlayer.setDemageToGhost(10);
             StaticVariables.mainPlayer.setIndex(0);
             MainPlayer.setAttacking(true);
 
@@ -319,17 +319,17 @@ e.printStackTrace();
 
 
         }
-        if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacielAttack)
+        if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacialAttack)
         {
 
-            checkIfPeesTheSetting(e);
+            checkIfPreesTheSetting(e);
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
             checkIfUserIsInsideTheEntrance(e);
 
 
         }
-        if(e.getButton()==MouseEvent.BUTTON3&&!MainPlayer.spacielAttack)
+        if(e.getButton()==MouseEvent.BUTTON3&&!MainPlayer.spacialAttack)
         {
             MainPlayer.walking=false;
             MainPlayer.stand=true;
@@ -348,10 +348,10 @@ e.printStackTrace();
         {
             if(checkIfEnoughMoney(1000))
             {
-                if(Integer.parseInt(MainPlayer.getLife().getjProgressBar().getString())+1000<=1000)
+                if(Integer.parseInt(MainPlayer.getLife().getjProgressBar().getString())+5000<=MainPlayer.getLife().getjProgressBar().getMaximum())
                 {
-                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getValue()+1000));
-                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getValue()+1000);
+                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getValue()+5000));
+                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getValue()+5000);
 
 
                 }
@@ -377,10 +377,10 @@ e.printStackTrace();
         {
             if(checkIfEnoughMoney(2000))
             {
-                if(Integer.parseInt(MainPlayer.getLife().getjProgressBar().getString())+2000<=2000)
+                if(Integer.parseInt(MainPlayer.getLife().getjProgressBar().getString())+10000<=MainPlayer.getLife().getjProgressBar().getMaximum())
                 {
-                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getValue()+2000));
-                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getValue()+2000);
+                    MainPlayer.getLife().getjProgressBar().setString( ""+(MainPlayer.getLife().getjProgressBar().getValue()+10000));
+                    MainPlayer.getLife().getjProgressBar().setValue( MainPlayer.getLife().getjProgressBar().getValue()+10000);
 
 
                 }
@@ -494,13 +494,13 @@ e.printStackTrace();
         {
 
             StaticVariables.mainPlayer.setIndex(0);
-            MainPlayer.spacielAttack=true;
+            MainPlayer.spacialAttack =true;
 
 
         }
     }
 
-    private void checkIfPeesTheSetting(MouseEvent e) {
+    private void checkIfPreesTheSetting(MouseEvent e) {
         if(e.getComponent().equals(StaticVariables.gamePanel.getMoneyIcon())||
                 e.getComponent().equals(StaticVariables.gamePanel.getBag())||
                 e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1())||
@@ -581,14 +581,14 @@ e.printStackTrace();
                             new Thread(new Runnable() {
                                 public void run() {
                                     int counter=0;
-                                    MainPlayer.spacielAttack=false;
-                                    MainPlayer.walking=false;
+                                    MainPlayer.spacialAttack =false;
+
                                     MainPlayer.attacking=false;
                                     MainPlayer.stand=true;
                                     while (counter<=600)
                                     {
 
-
+                                        MainPlayer.walking=false;
                                         counter++;
                                         setLocation(getX()+1,getY()-1);
                                         try {
@@ -599,6 +599,7 @@ e.printStackTrace();
                                     }
                                     while(counter>0){
                                         counter--;
+                                        MainPlayer.walking=false;
                                         setLocation(getX()-1,getY()+1);
                                         try {
                                             Thread.sleep(2);
@@ -625,7 +626,7 @@ e.printStackTrace();
 //                        up left
                         if(!House.houseNumber2Open&&Key.key2)
                         {
-                            MainPlayer.spacielAttack=false;
+                            MainPlayer.spacialAttack =false;
                             MainPlayer.walking=false;
                             MainPlayer.attacking=false;
                             MainPlayer.stand=true;
@@ -637,7 +638,7 @@ e.printStackTrace();
 
                                     while (counter<=600)
                                     {
-
+                                        MainPlayer.walking=false;
                                         counter++;
                                         setLocation(getX()+1,getY()+1);
                                         try {
@@ -647,7 +648,7 @@ e.printStackTrace();
                                         }
                                     }
                                     while(counter>0){
-
+                                        MainPlayer.walking=false;
                                         counter--;
                                         setLocation(getX()-1,getY()-1);
                                         try {
@@ -669,7 +670,7 @@ e.printStackTrace();
                     case 2: {
                         if(!House.houseNumber3Open&&Key.key3)
                         {
-                            MainPlayer.spacielAttack=false;
+                            MainPlayer.spacialAttack =false;
                             MainPlayer.walking=false;
                             MainPlayer.attacking=false;
                             MainPlayer.stand=true;
@@ -681,7 +682,7 @@ e.printStackTrace();
 
                                     while (counter<=600)
                                     {
-
+                                        MainPlayer.walking=false;
 
                                         counter++;
                                         setLocation(getX()-1,getY()+1);
@@ -692,7 +693,7 @@ e.printStackTrace();
                                         }
                                     }
                                     while(counter>0){
-
+                                        MainPlayer.walking=false;
                                         counter--;
                                         setLocation(getX()+1,getY()-1);
                                         try {
@@ -765,6 +766,12 @@ e.printStackTrace();
 
     public void mouseEntered(MouseEvent e) {
 
+        checkIfUserIsHoverOnItem(e);
+
+
+    }
+
+    private void checkIfUserIsHoverOnItem(MouseEvent e) {
         if(e.getComponent().equals(StaticVariables.gamePanel.getLife1000()))
         {
             StaticVariables.gamePanel.getPriceTag().setText("1000");
