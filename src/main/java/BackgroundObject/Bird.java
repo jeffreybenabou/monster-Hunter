@@ -6,7 +6,6 @@ import ImageHandel.ImageLoader;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Bird extends GameObject  {
 
@@ -41,53 +40,58 @@ public class Bird extends GameObject  {
         moveTheBird();
     }
     @SuppressWarnings("InfiniteLoopStatement")
+
+
     private void moveTheBird() {
         new Thread(new Runnable() {
             public void run() {
                 while (true) {
                     try {
-                        imageFrameRate++;
-                    if (left)
-                    {
-
-
-                        setLocation(getX()-1,getY());
-                        if(imageFrameRate%10==0)
-                        setIcon(birdLeft.get(index));
-
-
-                    }
-                    else
-                    {
-                        setLocation(getX()+1,getY());
-                        if(imageFrameRate%10==0)
-                            setIcon((birdRight.get(index)));
-
-                    }
-                    if(down)
-                        setLocation(getX(),getY()+1);
-                    else
-                        setLocation(getX(),getY()-1);
-                    index++;
-                    if (index >= birdRight.size()-1||index>=birdLeft.size()-1)
-                        index = 0;
-                    checkIfIntercet();
-
-
                         Thread.sleep(15);
-
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    } catch (IndexOutOfBoundsException e) {
-                        index=0;
-                        e.printStackTrace();
-                    }catch (Exception e)
-                    {
-                        System.out.println(Arrays.toString(e.getStackTrace()));
+                    }
+                    if (!StaticVariables.stopTheGame) {
+                        try {
+                            imageFrameRate++;
+                            if (left) {
+
+
+                                setLocation(getX() - 1, getY());
+                                if (imageFrameRate % 10 == 0)
+                                    setIcon(birdLeft.get(index));
+
+
+                            } else {
+                                setLocation(getX() + 1, getY());
+                                if (imageFrameRate % 10 == 0)
+                                    setIcon((birdRight.get(index)));
+
+                            }
+                            if (down)
+                                setLocation(getX(), getY() + 1);
+                            else
+                                setLocation(getX(), getY() - 1);
+                            index++;
+                            if (index >= birdRight.size() - 1 || index >= birdLeft.size() - 1)
+                                index = 0;
+                            checkIfIntercet();
+
+
+
+
+
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        } catch (IndexOutOfBoundsException e) {
+                            index = 0;
+                            e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+
             }
         }).start();
 

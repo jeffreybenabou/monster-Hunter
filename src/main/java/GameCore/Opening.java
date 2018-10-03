@@ -3,52 +3,88 @@ package GameCore;
 
 
 import javax.swing.*;
+import java.awt.*;
 
-public class Opening extends JLabel {
+ class Opening  extends JPanel {
 
+    private JLabel opquaeLabel;
 
-    public Opening(){
+     Opening() {
 
-
-
-
-        try
-        {
-
-
-            ImageIcon imageIcon=new ImageIcon(StaticVariables.into.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,4));
-
-           setIcon(imageIcon);
-            setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
-setVisible(true);
+           setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
+            ImageIcon imageIcon = new ImageIcon(StaticVariables.into.getScaledInstance(MainClass.dimension.width, MainClass.dimension.height, 4));
+            opquaeLabel=new JLabel();
+            opquaeLabel.setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
 
 
-        }catch (NullPointerException e)
-        {
-            e.printStackTrace();
+            JLabel imageLabel = new JLabel();
+            imageLabel.setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
+            imageLabel.setIcon(imageIcon);
+
+            setOpaque(true);
+            opquaeLabel.setOpaque(true);
 
 
-        }
+            add(opquaeLabel);
+            add(imageLabel);
 
-        new Thread(new Runnable() {
-            public void run() {
+            setLayout(null);
+            setVisible(true);
 
-                try {
-                    Thread.sleep(5000);
-                    StaticVariables.mainMenu.setVisible(true);
-                    StaticVariables.mainMenu.setOpaque(true);
-                    MainClass.addTheMainMenu();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            new Thread(new Runnable() {
+                public void run() {
+                    setTheLabelToOpaque();
                 }
-                setVisible(false);
+            }).start();
 
 
 
 
 
-            }
-        }).start();
+
+
+
+
 
     }
+
+    private   void setTheLabelToOpaque(){
+        int opaque =254;
+
+        while (opaque-- > 0) {
+
+
+                opquaeLabel.setBackground(new Color(0, 0, 0, opaque));
+
+                repaint();
+
+
+
+
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        addTheMainMenu();
+
+
+
+    }
+
+    private void addTheMainMenu() {
+
+        StaticVariables.mainMenu=new MainMenu();
+        StaticVariables.mainMenu.setVisible(true);
+        StaticVariables.mainMenu.setOpaque(true);
+        MainClass.addTheMainMenu();
+        StaticVariables.mainClass.remove(this);
+        StaticVariables.mainClass.repaint();
+
+        setVisible(false);
+    }
+
+
 }

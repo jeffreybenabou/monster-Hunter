@@ -41,7 +41,7 @@ public class SaveGame {
             writer.write(Key.key3+ "");
             writer.newLine();
             writer.write(            World.userInProgressToOpenHouse+ "");
-
+            writer.newLine();
 
             writer.newLine();
             writer.close();

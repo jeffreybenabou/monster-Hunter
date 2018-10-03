@@ -1,23 +1,28 @@
 package GameCore;
 
 
-
+import Objects.Ghost;
 import Objects.MainPlayer;
 import sound.Sound;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class GamePanel extends JLabel  {
 
 
+    private   JButton muteButton ;
 
+    public static boolean muteActive =false;
     private Sound buy,notbuy,coinFall;
     private JLabel lifeBar;
     private JLabel levelLabel;
     private JLabel shopIcon;
     private JLabel label;
+    private JLabel pause;
     private JLabel shopLabel;
     private JLabel settingLabel;
     private JLabel moneyIcon;
@@ -25,6 +30,7 @@ public class GamePanel extends JLabel  {
     private JLabel life1000,life2000;
     private JLabel power1,power2;
     private JLabel price1,price2,price3,price4,price5,priceTag;
+    private JLabel setting;
     public static JProgressBar jProgressBar;
 
 
@@ -43,11 +49,172 @@ public class GamePanel extends JLabel  {
         addMoneyLabel();
         addSpacialAttack();
         setTheSound();
+        setThePauseLabel();
+        addTheSettingMenu();
 
         setVisible(true);
 
 
 
+    }
+
+    private void addTheSettingMenu() {
+        setting=new JLabel();
+        setting.setBounds(MainClass.dimension.width/2-200,MainClass.dimension.height/3-100,400,400);
+        setting.setIcon(new ImageIcon(StaticVariables.setting.getScaledInstance(setting.getWidth(),setting.getHeight(),4)));
+        setting.setVisible(false);
+        add(setting);
+        addSaveTheGame();
+        addTheMuteButton();
+
+        setting.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            public void mousePressed(MouseEvent e) {
+
+
+            }
+
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+    }
+
+    private void addTheMuteButton() {
+        muteButton=new JButton();
+        muteButton.setBounds(setting.getWidth()/2+10,setting.getHeight()-60,20,20);
+        muteButton.setContentAreaFilled(false);
+        muteButton.setBorderPainted(false);
+        muteButton.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            public void mousePressed(MouseEvent e) {
+
+                if(!muteActive)
+                    setTheMuteObject(false);
+                else
+                    setTheMuteObject(true);
+
+
+
+            }
+
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        setting.add(muteButton);
+    }
+
+    private   void setTheMuteObject(boolean mute) {
+        if(!mute)
+        {
+            muteButton.setIcon(new ImageIcon(StaticVariables.mute.getScaledInstance(muteButton.getWidth(),muteButton.getHeight(),4)));
+            muteActive =true;
+            MainPlayer.walkingSound.setVolume(-80);
+            MainPlayer.attackingSound.setVolume(-80);
+            MainPlayer.earthQuaqe.setVolume(-80);
+            StaticVariables.world.getBackGroundWorld().setVolume(-80);
+            for (Ghost ghost:StaticVariables.world.getGhostArrayList()) {
+                ghost.getAttackingSound().setVolume(-80);
+                ghost.getDieingSound().setVolume(-80);
+            }
+        }else
+        {
+            muteButton.setIcon(null);
+
+            muteActive =false;
+            MainPlayer.walkingSound.setVolume(0);
+            MainPlayer.attackingSound.setVolume(0);
+            MainPlayer.earthQuaqe.setVolume(0);
+            StaticVariables.world.getBackGroundWorld().setVolume(0);
+            for (Ghost ghost:StaticVariables.world.getGhostArrayList()) {
+                ghost.getAttackingSound().setVolume(0);
+                ghost.getDieingSound().setVolume(0);
+            }
+        }
+
+
+    }
+
+    private void addSaveTheGame() {
+        JButton saveTheGame=new JButton();
+        saveTheGame.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            public void mousePressed(MouseEvent e) {
+                new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+            }
+
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        saveTheGame.setContentAreaFilled(false);
+        saveTheGame.setBounds(80,100,setting.getWidth()-setting.getWidth()/3,setting.getHeight()/8);
+        saveTheGame.setIcon(new ImageIcon(StaticVariables.save.getScaledInstance(saveTheGame.getWidth(),saveTheGame.getHeight(),4)));
+        setting.add(saveTheGame);
+    }
+
+    private void setThePauseLabel() {
+        pause=new JLabel();
+        pause.setBounds(MainClass.dimension.width-200, 0,50,50);
+        pause.setIcon(new ImageIcon(StaticVariables.pause.getScaledInstance(pause.getWidth(),pause.getHeight(),1)));
+        pause.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            public void mousePressed(MouseEvent e) {
+                StaticVariables.stopTheGame=!StaticVariables.stopTheGame;
+            }
+
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        add(pause);
     }
 
     private void setTheSound() {
@@ -193,7 +360,30 @@ public class GamePanel extends JLabel  {
         settingLabel.setBounds( MainClass.dimension.width-130, 0,50,50);
         settingLabel.setIcon(new ImageIcon(StaticVariables.settingLabel.getScaledInstance(settingLabel.getWidth(),settingLabel.getHeight(),0)));
         add(settingLabel);
-        settingLabel.addMouseListener(StaticVariables.world);
+        settingLabel.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            public void mousePressed(MouseEvent e) {
+                if(setting.isVisible())
+                    setting.setVisible(false);
+                else
+                    setting.setVisible(true);
+            }
+
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 
     private void addMoneyLabel() {

@@ -229,6 +229,7 @@ public class MainMenu extends JLabel implements MouseListener {
                     exit=new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
                     exit.setBounds(550-MainClass.differenceX, 350-MainClass.differenceY, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
                     exit.setName("exit");
+
                     add(exit);
                     button=exit;
                     break;
@@ -404,8 +405,8 @@ e.printStackTrace();
                 Ghost.difficulty=2;
             }
         });
-        showOptionDialog = new JOptionPane(  "pick Difficulty", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, new Object[]{button1, button2,button3});
-        jDialog = showOptionDialog.createDialog(null, "My Test");
+        showOptionDialog = new JOptionPane(  "choose wisely ", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, new Object[]{button1, button2,button3});
+        jDialog = showOptionDialog.createDialog(null, "pick Difficulty");
         jDialog.setModal(true);
         showOptionDialog.setVisible(true);
         jDialog.setVisible(true);
@@ -487,14 +488,38 @@ e.printStackTrace();
 
         if(e.getComponent().equals(start))
         {
+            new Thread(new Runnable() {
+                public void run() {
+                    start.setPressedIcon(new ImageIcon(StaticVariables.startButton.getScaledInstance(start.getWidth()+20,start.getHeight()+20,4)));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
 
+                    chooseThePlayer.setVisible(true);
+                }
+            }).start();
 
-            chooseThePlayer.setVisible(true);
 
 
         }
+
         if(e.getComponent().equals(exit))
         {
+            new Thread(new Runnable() {
+                public void run() {
+                    exit.setPressedIcon(new ImageIcon(StaticVariables.exitButton.getScaledInstance(exit.getWidth()+20,exit.getHeight()+20,4)));
+
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    System.exit(0);
+                }
+            }).start();
 
         }
 

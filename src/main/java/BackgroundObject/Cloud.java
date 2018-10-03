@@ -26,6 +26,7 @@ public class Cloud extends GameObject {
 
                 while (true) {
 
+                    if(!StaticVariables.stopTheGame)
                     try {
                         if (left)
                             setLocation(getX() - 1, getY());
@@ -46,6 +47,12 @@ public class Cloud extends GameObject {
                     } catch (Exception ee) {
                         ee.printStackTrace();
 
+                    }else {
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
 
 

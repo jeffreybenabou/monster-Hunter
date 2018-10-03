@@ -1,11 +1,9 @@
 package GameCore;
-import BackgroundObject.*;
 
+import BackgroundObject.*;
 import Objects.Ghost;
 import Objects.MainPlayer;
 import sound.Sound;
-
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +14,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 public class World extends JLabel implements MouseListener {
+
 
 
 
@@ -36,6 +35,7 @@ public class World extends JLabel implements MouseListener {
 
 
 
+
             setBounds(-500,-750,5000,5000);
             setBackground(Color.GRAY);
             backGroundWorld=new Sound();
@@ -45,6 +45,7 @@ public class World extends JLabel implements MouseListener {
 
             addBackGroundObjects();
             setVisible(true);
+
 
 
 
@@ -140,7 +141,7 @@ e.printStackTrace();
                     switch (StaticVariables.level)
                     {
                         case 1:{
-                            for (int i = 0; i <30; i++) {
+                            for (int i = 0; i <8+Ghost.difficulty*3; i++) {
 
                                 Ghost ghost=new Ghost(1);
 
@@ -157,7 +158,7 @@ e.printStackTrace();
 
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <10 ; i++) {
+                            for (int i = 0; i <5 +Ghost.difficulty*3; i++) {
                                 Ghost ghost=new Ghost(2);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
@@ -172,7 +173,7 @@ e.printStackTrace();
                         case 3:{
                             ghostArrayList=new ArrayList<Ghost>();
                             Ghost.addGhostImage();
-                            for (int i = 0; i <5; i++) {
+                            for (int i = 0; i <3+Ghost.difficulty*3; i++) {
 
                                 Ghost ghost=new Ghost(3);
                                 ghost.checkIfGhostIntersectHouse();
@@ -478,8 +479,12 @@ e.printStackTrace();
     private void checkIfUserPreesTheCoin(MouseEvent e) {
         if(e.getComponent().getClass().getSimpleName().equals("CoinAdd"))
         {
-            StaticVariables.gamePanel.getBuy().startSound();
-            StaticVariables.gamePanel.getBuy().getClip().loop(0);
+            if(!GamePanel.muteActive)
+            {
+                StaticVariables.gamePanel.getBuy().startSound();
+                StaticVariables.gamePanel.getBuy().getClip().loop(0);
+            }
+
             CoinAdd coinAdd=(CoinAdd)e.getComponent();
             coinAdd.changeTheSumOfMoney();
             coinAdd.setVisible(false);
@@ -514,10 +519,7 @@ e.printStackTrace();
         else
             StaticVariables.gamePanel.getBag().setVisible(false);
 
-        if(e.getComponent().equals(StaticVariables.gamePanel.getSettingLabel()))
-        {
-            new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
-        }
+
 
         for (House house :houseArrayList) {
             if(e.getComponent().equals(house)&&key1IsPreesed||key2IsPreesed||key3IsPreesed)

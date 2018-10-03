@@ -61,22 +61,11 @@ public class MainPlayer extends GameObject {
         try
         {
 
+
+
             imageLoader=new ImageLoader();
-            walkingSound = new Sound();
-            walkingSound.playSound(Sound.path.get(0));
-            attackingSound = new Sound();
-            if(getType().equals("male"))
-            attackingSound.playSound(Sound.path.get(1));
-            else
-                attackingSound.playSound(Sound.path.get(3));
-            earthQuaqe = new Sound();
-            earthQuaqe.playSound(Sound.path.get(5));
-            earthQuaqe.setVolume(-6);
-            earthQuaqe.stopSound();
-            attackingSound.setVolume(-6);
-            attackingSound.stopSound();
-            walkingSound.setVolume(-6);
-            walkingSound.stopSound();
+            defineTheSound();
+
             setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
             point = new Point(getX(), getY());
             MiniMap.setTheMainPlayerLabel(getX(),getY());
@@ -91,6 +80,24 @@ public class MainPlayer extends GameObject {
 
 
 
+    }
+
+    private void defineTheSound() {
+        walkingSound = new Sound();
+        walkingSound.playSound(Sound.path.get(0));
+        attackingSound = new Sound();
+        if(getType().equals("male"))
+            attackingSound.playSound(Sound.path.get(1));
+        else
+            attackingSound.playSound(Sound.path.get(3));
+        earthQuaqe = new Sound();
+        earthQuaqe.playSound(Sound.path.get(5));
+        earthQuaqe.setVolume(-6);
+        earthQuaqe.stopSound();
+        attackingSound.setVolume(-6);
+        attackingSound.stopSound();
+        walkingSound.setVolume(-6);
+        walkingSound.stopSound();
     }
 
 
@@ -215,15 +222,19 @@ public class MainPlayer extends GameObject {
 
                 while (!playerDead) {
 
-                    addTheMainPlayerLocationToMap(getX(),getY());
-                    setImageFrameRate(getImageFrameRate() + 1);
+                    if(!StaticVariables.stopTheGame)
+                    {
+                        addTheMainPlayerLocationToMap(getX(),getY());
+                        setImageFrameRate(getImageFrameRate() + 1);
 
-                    setPlace();
+                        setPlace();
 
-                    checkIfMainPlayerOutOfBound();
-                    checkedMainPlayerInteractWithMonster();
-                    setLocationOfMainPlayerWhenFightTheGhost();
-                    addLifeToPlayer();
+                        checkIfMainPlayerOutOfBound();
+                        checkedMainPlayerInteractWithMonster();
+                        setLocationOfMainPlayerWhenFightTheGhost();
+                        addLifeToPlayer();
+                    }
+
 
                     try {
                         Thread.sleep(getSpeedOfMove());
@@ -365,6 +376,7 @@ public class MainPlayer extends GameObject {
         checkIfSpacialAttack();
         setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
         checkIfMainPlayerIsDieing();
+        if(!GamePanel.muteActive)
         checkSoundStatus();
 
         index++;

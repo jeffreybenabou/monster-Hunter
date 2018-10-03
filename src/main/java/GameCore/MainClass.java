@@ -18,12 +18,13 @@ public class MainClass extends JFrame  {
         differenceY=(768-dimension.height)/2;
 
 
-        setPreferredSize(new Dimension(1366+differenceX, 768+differenceY));
         setTheJFrame();
         addMouseListener(StaticVariables.world);
-       StaticVariables. into=StaticVariables.imageLoader.loadImage("Photos/opening.png");
-        Opening opening=new Opening();
-        add(opening);
+       StaticVariables.into=StaticVariables.imageLoader.loadImage("Photos/opening.png");
+
+
+
+
         setVisible(true);
     }
 

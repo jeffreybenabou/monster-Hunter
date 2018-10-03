@@ -18,7 +18,7 @@ public class Ghost extends GameObject {
     private JLabel miniMapLabel;
 
 
-    private Sound attacking,dieing;
+    private Sound attackingSound, dieingSound;
 
     private static   ArrayList<ImageIcon>
             moveLeft,
@@ -62,13 +62,13 @@ public class Ghost extends GameObject {
     public Ghost(int ghostType) {
         this.ghostType = ghostType;
 
-        attacking=new Sound();
-        attacking.playSound(Sound.path.get(9));
-        attacking.stopSound();
+        attackingSound =new Sound();
+        attackingSound.playSound(Sound.path.get(9));
+        attackingSound.stopSound();
 
-        dieing=new Sound();
-        dieing.playSound(Sound.path.get(10));
-        dieing.stopSound();
+        dieingSound =new Sound();
+        dieingSound.playSound(Sound.path.get(10));
+        dieingSound.stopSound();
 
         setHorizontalAlignment(JLabel.CENTER);
         checkTheGhostType();
@@ -142,6 +142,7 @@ public class Ghost extends GameObject {
         StaticVariables.miniMap.remove(miniMapLabel);
         StaticVariables.miniMap.repaint();
         StaticVariables.miniMap.revalidate();
+
         setVisible(false);
     }
 
@@ -152,16 +153,18 @@ public class Ghost extends GameObject {
                 miniMapLabel=MiniMap.addGhostToMiniMap(getX(),getY());
                 StaticVariables.miniMap.add(miniMapLabel);
                 while (lifeBar.isAlive()) {
-                    miniMapLabel.setLocation(getX() / 20, getY() / 32);
+                    if(!StaticVariables.stopTheGame)
+                    {
+                        miniMapLabel.setLocation(getX() / 20, getY() / 32);
+                        stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
 
+                        if (notTheFirstGhost)
+                            moveTheGhostAroundTheWorld();
+                        else
+                            changeTheGhostIcon();
+                        decreaseLife(StaticVariables.mainPlayer.getDemageToGhost());
 
-                    stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
-
-                    if (notTheFirstGhost)
-                        moveTheGhostAroundTheWorld();
-                    else
-                        changeTheGhostIcon();
-                    decreaseLife(StaticVariables.mainPlayer.getDemageToGhost());
+                    }
 
 
                     try {
@@ -180,6 +183,9 @@ public class Ghost extends GameObject {
     private void decreaseMainPlayerLife() {
         MainPlayer.life.getjProgressBar().setValue(MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer);
         MainPlayer.life.getjProgressBar().setString("" + (MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer));
+        if(MainPlayer.life.getjProgressBar().getValue()<=0)
+            MainPlayer.life.getjProgressBar().setString("Game Over");
+
 
     }
 
@@ -194,7 +200,7 @@ public class Ghost extends GameObject {
 
     private void setTheGhostDeadAnimation() {
         index = 0;
-        dieing.startSound();
+        dieingSound.startSound();
         while (index < dead.size()) {
             setIcon(dead.get(index));
             index++;
@@ -375,7 +381,8 @@ public class Ghost extends GameObject {
         try {
             if (index < moveLeft.size()-1) {
                 if (stopMoving) {
-                    attacking.startSound();
+                    if(!GamePanel.muteActive)
+                    attackingSound.startSound();
                     dirLeft = false;
                     dirDown = false;
                     dirUp = false;
@@ -567,6 +574,38 @@ public class Ghost extends GameObject {
 
     public boolean isAttackUp() {
         return isAttackUp;
+    }
+
+    public JLabel getMiniMapLabel() {
+        return miniMapLabel;
+    }
+
+    public void setMiniMapLabel(JLabel miniMapLabel) {
+        this.miniMapLabel = miniMapLabel;
+    }
+
+    public Sound getAttackingSound() {
+        return attackingSound;
+    }
+
+    public void setAttackingSound(Sound attackingSound) {
+        this.attackingSound = attackingSound;
+    }
+
+    public Sound getDieingSound() {
+        return dieingSound;
+    }
+
+    public void setDieingSound(Sound dieingSound) {
+        this.dieingSound = dieingSound;
+    }
+
+    public static int getDifficulty() {
+        return difficulty;
+    }
+
+    public static void setDifficulty(int difficulty) {
+        Ghost.difficulty = difficulty;
     }
 
     public void setAttackUp(boolean attackUp) {

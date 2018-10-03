@@ -1,9 +1,7 @@
 package GameCore;
 
 
-
-
-
+import ImageHandel.SpriteSheet;
 import Objects.Ghost;
 
 import javax.swing.*;
@@ -12,7 +10,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
-    boolean changeLevel = false;
+
+    private SpriteSheet pickHouse;
+    private int pickHouseCounter=0;
+    private boolean changeLevel = false;
     public static JLabel mainPlayerLabel;
     private boolean loadFuncation=false;
     private  Border blackline;
@@ -21,21 +22,11 @@ public class MiniMap extends JLabel {
     public static ArrayList<JLabel> house=new ArrayList<JLabel>();
 
     public MiniMap() {
-        setBlackline(BorderFactory.createRaisedBevelBorder());
-        setBorder(blackline);
+        pickHouse = new SpriteSheet(StaticVariables.houseIconChooseMiniMap);
         setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
-        new Thread(new Runnable() {
-                    public void run() {
-                    try
-                    {
-                        setIcon(new ImageIcon(StaticVariables.worldBackGround.getScaledInstance(getWidth(),getHeight(),4)));
 
-                }catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        setIcon(new ImageIcon(StaticVariables.worldBackGroundScaled.getScaledInstance(getWidth(), getHeight(), 4)));
+
 
         setBackground(Color.black);
 
@@ -64,7 +55,7 @@ public class MiniMap extends JLabel {
 
 
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -117,7 +108,11 @@ public class MiniMap extends JLabel {
             try {
                 if(i==StaticVariables.level-1)
                 {
-                    house.get(i).setIcon(new ImageIcon(StaticVariables.houseIconChooseMiniMap));
+                    if(pickHouseCounter*25<pickHouse.getSheet().getRaster().getWidth())
+                    house.get(i).setIcon(new ImageIcon(pickHouse.crop(pickHouseCounter*24,0,24,24)));
+                    else
+                        pickHouseCounter=0;
+                    pickHouseCounter++;
                 }
                 else
                     house.get(i).setIcon(new ImageIcon(StaticVariables.houseIconMiniMap));
