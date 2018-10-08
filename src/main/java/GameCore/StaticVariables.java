@@ -8,13 +8,11 @@ import Objects.MainPlayer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class StaticVariables {
 
 
     public static boolean stopTheGame=false;
-    public static ArrayList<Thread> threadGroup;
     public static BufferedImage watingLabel;
     public static BufferedImage into;
     public static BufferedImage houseIconMiniMap;
@@ -74,11 +72,20 @@ public class StaticVariables {
     public static Image loadMenuBackGRound;
     public static BufferedImage exit;
 
+    private void changeCursor()
+    {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = imageLoader.loadImage("Photos/Cursor.png");
+        Cursor c = toolkit.createCustomCursor(image , new Point(mainClass.getX(),
+                mainClass.getY()), "img");
+        mainClass.setCursor (c);
+    }
+
     public StaticVariables() {
         try {
-            threadGroup = new ArrayList<Thread>();
             imageLoader = new ImageLoader();
             mainClass = new MainClass();
+            changeCursor();
             new Thread(new Runnable() {
                 public void run() {
 

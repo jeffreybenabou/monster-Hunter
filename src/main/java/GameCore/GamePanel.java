@@ -16,6 +16,7 @@ public class GamePanel extends JLabel  {
 
     private   JButton muteButton ;
 
+    public static Thread thread;
     public static boolean muteActive =false;
     private Sound buy,notbuy,coinFall;
     private JLabel lifeBar;
@@ -228,14 +229,36 @@ public class GamePanel extends JLabel  {
     }
 
     private void addSaveTheGame() {
-        JButton saveTheGame=new JButton();
+        final JButton saveTheGame=new JButton();
+        thread=new Thread(new Runnable() {
+            public void run() {
+                while (setting.isVisible())
+                {
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+            }
+        });
         saveTheGame.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
 
             }
 
             public void mousePressed(MouseEvent e) {
-                new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+
+                if(!thread.isAlive())
+                {
+
+                    thread.start();
+                    System.out.println("ffsaf");
+                }
+
+
             }
 
             public void mouseReleased(MouseEvent e) {

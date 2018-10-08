@@ -110,22 +110,26 @@ public class MainMenu extends JLabel implements MouseListener {
 
 
 
-        setTheJlist();
+        setTheList();
         setTheScroolPen();
         addTheLoadingMenuButtons();
+        jList.repaint();
+        loadGameLabel.repaint();
 
 
 
 
     }
 
-    private void setTheJlist() {
+    private void setTheList() {
         jList = new JList(saveName.toArray());
         jList.setBounds(0, 50, saveListLabebl.getWidth(), saveListLabebl.getHeight());
         jList.setLayoutOrientation(JList.VERTICAL);
         jList.setBorder(border);
+        jList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jList.setLayoutOrientation(JList.VERTICAL);
+
         jList.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
 
@@ -143,6 +147,7 @@ public class MainMenu extends JLabel implements MouseListener {
             }
 
             public void mouseEntered(MouseEvent e) {
+
 
             }
 

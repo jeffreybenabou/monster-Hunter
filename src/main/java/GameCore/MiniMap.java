@@ -7,6 +7,7 @@ import Objects.Ghost;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
@@ -22,7 +23,7 @@ public class MiniMap extends JLabel {
     public static ArrayList<JLabel> house=new ArrayList<JLabel>();
 
     public MiniMap() {
-        pickHouse = new SpriteSheet(StaticVariables.houseIconChooseMiniMap);
+        pickHouse = new SpriteSheet((BufferedImage)StaticVariables.houseIconChooseMiniMap);
         setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
 
         setIcon(new ImageIcon(StaticVariables.worldBackGroundScaled.getScaledInstance(getWidth(), getHeight(), 4)));
