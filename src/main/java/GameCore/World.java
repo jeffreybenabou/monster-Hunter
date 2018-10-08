@@ -128,11 +128,12 @@ e.printStackTrace();
 
                     try
                     {
-                        for (House house:StaticVariables.world.getHouseArrayList()) {
-                            house.setVisible(true);
-                            house.getHouseEntrance().setVisible(true);
+                        for (int i = 0; i <StaticVariables.world.getHouseArrayList().size() ; i++) {
+                            StaticVariables.world.getHouseArrayList().get(i).setVisible(true);
+                            StaticVariables.world.getHouseArrayList().get(i).getHouseEntrance().setVisible(true);
                         }
-                    }catch (ConcurrentModificationException house )
+
+                    }catch (Exception house )
                     {
                         house.printStackTrace();
                     }
@@ -565,7 +566,7 @@ e.printStackTrace();
 
     }
 
-    private void checkIfUserPreesTheHouse(MouseEvent e) {
+    private void checkIfUserPreesTheHouse(final MouseEvent e) {
 
 
 
@@ -582,6 +583,8 @@ e.printStackTrace();
                             House.houseNumber1Open=true;
                             new Thread(new Runnable() {
                                 public void run() {
+                                    Point point=e.getComponent().getLocation();
+
                                     int counter=0;
                                     MainPlayer.spacialAttack =false;
 
@@ -589,6 +592,7 @@ e.printStackTrace();
                                     MainPlayer.stand=true;
                                     while (counter<=600)
                                     {
+
 
                                         MainPlayer.walking=false;
                                         counter++;

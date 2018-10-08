@@ -11,13 +11,11 @@ import java.util.ArrayList;
 public class ImageLoader {
     private ClassLoader classLoader = ImageLoader.class.getClassLoader();
 
-    private File file;
-
     public BufferedImage loadImage(String path) {
         try {
 
 
-             file = new File(classLoader.getResource(path).getFile());
+            File file = new File(classLoader.getResource(path).toURI());
 
             return             ImageIO.read(file);
 

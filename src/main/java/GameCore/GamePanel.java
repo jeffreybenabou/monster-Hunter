@@ -38,6 +38,8 @@ public class GamePanel extends JLabel  {
 
     private Font font=new Font("Serif", Font.BOLD, 20);
     private Bag bag;
+    private JButton loadButton;
+    private JButton exitButton;
 
     public GamePanel (){
         setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
@@ -66,6 +68,8 @@ public class GamePanel extends JLabel  {
         add(setting);
         addSaveTheGame();
         addTheMuteButton();
+        addTheLoadButton();
+        addTheExitButton();
 
         setting.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
@@ -90,6 +94,69 @@ public class GamePanel extends JLabel  {
             }
         });
 
+    }
+
+    private void addTheExitButton() {
+        exitButton=new JButton();
+        exitButton.setContentAreaFilled(false);
+        exitButton.setBounds(80,220,setting.getWidth()-setting.getWidth()/3,setting.getHeight()/8);
+        exitButton.setIcon(new ImageIcon(StaticVariables.exit.getScaledInstance(exitButton.getWidth(),exitButton.getHeight(),4)));
+        setting.add(exitButton);
+        exitButton.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            public void mousePressed(MouseEvent e) {
+                System.exit(0);
+
+            }
+
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        setting.add(exitButton);
+    }
+
+    private void addTheLoadButton() {
+
+        loadButton=new JButton();
+        loadButton.setContentAreaFilled(false);
+        loadButton.setBounds(80,160,setting.getWidth()-setting.getWidth()/3,setting.getHeight()/8);
+        loadButton.setIcon(new ImageIcon(StaticVariables.loadFromServerButoon.getScaledInstance(loadButton.getWidth(),loadButton.getHeight(),4)));
+        setting.add(loadButton);
+        loadButton.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            public void mousePressed(MouseEvent e) {
+                new LoadGame(MainMenu.pathToFile);
+
+            }
+
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        setting.add(loadButton);
     }
 
     private void addTheMuteButton() {
@@ -129,7 +196,7 @@ public class GamePanel extends JLabel  {
         setting.add(muteButton);
     }
 
-    private   void setTheMuteObject(boolean mute) {
+    private void setTheMuteObject(boolean mute) {
         if(!mute)
         {
             muteButton.setIcon(new ImageIcon(StaticVariables.mute.getScaledInstance(muteButton.getWidth(),muteButton.getHeight(),4)));
@@ -397,7 +464,7 @@ public class GamePanel extends JLabel  {
             sumOfMoney.setHorizontalTextPosition(JLabel.CENTER);
             sumOfMoney.setVerticalTextPosition(JLabel.CENTER);
             sumOfMoney.setFont(font);
-            sumOfMoney.setForeground(Color.red);
+            sumOfMoney.setForeground(Color.yellow);
             sumOfMoney.setBounds(moneyIcon.getWidth()/2-5,moneyIcon.getHeight()-40,300,40);
             sumOfMoney.setText(""+0);
             moneyIcon.add(sumOfMoney);

@@ -40,10 +40,14 @@ public class SaveGame {
             writer.newLine();
             writer.write(Key.key3+ "");
             writer.newLine();
-            writer.write(            World.userInProgressToOpenHouse+ "");
+            writer.write(World.userInProgressToOpenHouse+ "");
+            writer.newLine();
+            writer.write(StaticVariables.mainMenu.getType()+ "");
+            writer.newLine();
+            writer.write(Ghost.difficulty+ "");
             writer.newLine();
 
-            writer.newLine();
+
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

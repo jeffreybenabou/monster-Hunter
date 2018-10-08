@@ -24,7 +24,7 @@ public class MainPlayer extends GameObject {
     public static Sound walkingSound, attackingSound, earthQuaqe;
     public static Integer imageFrameRate = 0, addLifeToMainPlayer = 0;
     public static boolean intersect = false;
-    private int  index = 0, imageSpeed = 4, demageToGhost;
+    private int index = 0, imageSpeed = 4, demageToGhost;
     public static Integer xSpriteSheet = 250, ySprtieSheet = 250;
     public static String nameOfPlayer, type;
     public static boolean attacking;
@@ -54,30 +54,26 @@ public class MainPlayer extends GameObject {
 
 
     float stopTime;
-    private boolean playerDead=false;
+    private boolean playerDead = false;
 
 
     public MainPlayer() {
-        try
-        {
+        try {
 
 
-
-            imageLoader=new ImageLoader();
+            imageLoader = new ImageLoader();
             defineTheSound();
 
             setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
             point = new Point(getX(), getY());
-            MiniMap.setTheMainPlayerLabel(getX(),getY());
+            MiniMap.setTheMainPlayerLabel(getX(), getY());
             StaticVariables.miniMap.add(MiniMap.mainPlayerLabel);
             setTheUserAction();
 
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
     }
@@ -86,7 +82,7 @@ public class MainPlayer extends GameObject {
         walkingSound = new Sound();
         walkingSound.playSound(Sound.path.get(0));
         attackingSound = new Sound();
-        if(getType().equals("male"))
+        if (getType().equals("male"))
             attackingSound.playSound(Sound.path.get(1));
         else
             attackingSound.playSound(Sound.path.get(3));
@@ -119,70 +115,61 @@ public class MainPlayer extends GameObject {
             public void run() {
 
 
-
-
-                imageLoader=new ImageLoader();
+                imageLoader = new ImageLoader();
 
                 DIR_1 = "Photos/character/" + type2 + "/stand/";
-                if(type2.equals("male"))
-                    imageLoader.addImageOfObject(31,DIR_1, standDown );
+                if (type2.equals("male"))
+                    imageLoader.addImageOfObject(31, DIR_1, standDown);
 
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, standDown );
-
-
+                    imageLoader.addImageOfObject(42, DIR_1, standDown);
 
 
                 DIR_1 = "Photos/character/" + type2 + "/walk/right/";
-                imageLoader.addImageOfObject(31,DIR_1, right);
+                imageLoader.addImageOfObject(31, DIR_1, right);
 
-                        DIR_1 ="Photos/character/" + type2 + "/walk/left/";
-                imageLoader.addImageOfObject(31,DIR_1, left);
-
-
+                DIR_1 = "Photos/character/" + type2 + "/walk/left/";
+                imageLoader.addImageOfObject(31, DIR_1, left);
 
 
+                DIR_1 = "Photos/character/" + type2 + "/walk/down/";
+                imageLoader.addImageOfObject(31, DIR_1, down);
 
-                        DIR_1 = "Photos/character/" + type2 + "/walk/down/";
-                imageLoader.addImageOfObject(31,DIR_1, down);
-
-                        DIR_1 = "Photos/character/" + type2 + "/walk/up/";
-                imageLoader.addImageOfObject(31,DIR_1, up);
-
+                DIR_1 = "Photos/character/" + type2 + "/walk/up/";
+                imageLoader.addImageOfObject(31, DIR_1, up);
 
 
                 DIR_1 = "Photos/character/" + type2 + "/attack/spacielAttack/";
-                imageLoader.addImageOfObject(72,DIR_1, spacielAttackA);
+                imageLoader.addImageOfObject(72, DIR_1, spacielAttackA);
 
                 DIR_1 = "Photos/character/" + type2 + "/attack/left/";
-                if(type2.equals("male"))
-                imageLoader.addImageOfObject(32,DIR_1, attackLeft);
+                if (type2.equals("male"))
+                    imageLoader.addImageOfObject(32, DIR_1, attackLeft);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackLeft);
+                    imageLoader.addImageOfObject(42, DIR_1, attackLeft);
 
 
-                DIR_1 ="Photos/character/" + type2 + "/attack/up/";
-                if(type2.equals("male"))
-                    imageLoader.addImageOfObject(32,DIR_1, attackUp);
+                DIR_1 = "Photos/character/" + type2 + "/attack/up/";
+                if (type2.equals("male"))
+                    imageLoader.addImageOfObject(32, DIR_1, attackUp);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackUp);
-
+                    imageLoader.addImageOfObject(42, DIR_1, attackUp);
 
 
                 DIR_1 = "Photos/character/" + type2 + "/attack/down/";
-                if(type2.equals("male"))
-                imageLoader.addImageOfObject(32,DIR_1, attackDown);
+                if (type2.equals("male"))
+                    imageLoader.addImageOfObject(32, DIR_1, attackDown);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackDown);
+                    imageLoader.addImageOfObject(42, DIR_1, attackDown);
 
 
-                DIR_1 ="Photos/character/" + type2 + "/attack/right/";
-                if(type2.equals("male"))
-                imageLoader.addImageOfObject(32,DIR_1, attackRight);
+                DIR_1 = "Photos/character/" + type2 + "/attack/right/";
+                if (type2.equals("male"))
+                    imageLoader.addImageOfObject(32, DIR_1, attackRight);
                 else
-                    imageLoader.addImageOfObject(42,DIR_1, attackRight);
+                    imageLoader.addImageOfObject(42, DIR_1, attackRight);
 
-                DIR_1 = "Photos/character/"+ type2 +"/die/";
+                DIR_1 = "Photos/character/" + type2 + "/die/";
                 imageLoader.addImageOfObject(11, DIR_1, die);
 
 
@@ -191,7 +178,6 @@ public class MainPlayer extends GameObject {
 
 
     }
-
 
 
     public static void makeNewElements(String type) {
@@ -216,15 +202,13 @@ public class MainPlayer extends GameObject {
     private void setTheUserAction() {
 
 
-
         new Thread(new Runnable() {
             public void run() {
 
                 while (!playerDead) {
 
-                    if(!StaticVariables.stopTheGame)
-                    {
-                        addTheMainPlayerLocationToMap(getX(),getY());
+                    if (!StaticVariables.stopTheGame) {
+                        addTheMainPlayerLocationToMap(getX(), getY());
                         setImageFrameRate(getImageFrameRate() + 1);
 
                         setPlace();
@@ -248,10 +232,6 @@ public class MainPlayer extends GameObject {
                 }
 
 
-
-
-
-
             }
         }).start();
     }
@@ -272,33 +252,34 @@ public class MainPlayer extends GameObject {
     }
 
     private void checkedMainPlayerInteractWithMonster() {
-
-        try {
-            for (Ghost g : StaticVariables.world.getGhostArrayList()) {
-                try {
-
-                    if (g.isStopMoving() && g.getLifeBar().isAlive())
-                        setIntersect(g.isStopMoving());
+        try
+        {
+            synchronized (StaticVariables.world.getGhostArrayList())
+            {
+                for (int i = 0; i < StaticVariables.world.getGhostArrayList().size(); i++) {
+                    if (StaticVariables.world.getGhostArrayList().get(i).isStopMoving() &&StaticVariables.world.getGhostArrayList().get(i).getLifeBar().isAlive())
+                        setIntersect(StaticVariables.world.getGhostArrayList().get(i).isStopMoving());
 
                     else
                         setIntersect(false);
 
                     if (isIntersect())
                         break;
-
-
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                    break;
-
                 }
             }
-        } catch (NullPointerException e) {
+        }catch (Exception e)
+        {
             e.printStackTrace();
         }
 
 
+
+
+
     }
+
+
+
 
     private void setLocationOfMainPlayerWhenFightTheGhost() {
         if (isAttacking()) {

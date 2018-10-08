@@ -423,11 +423,9 @@ public class Ghost extends GameObject {
 
 
             index++;
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             e.printStackTrace();
 
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
         }
 
 

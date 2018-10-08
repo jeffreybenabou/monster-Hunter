@@ -62,26 +62,30 @@ public class MiniMap extends JLabel {
                     }
 
 
-                    if(Ghost.notTheFirstGhost)
-                    for (Ghost ghost : StaticVariables.world.getGhostArrayList()) {
-                        if (ghost.isVisible()) {
-                            setChangeLevel(false);
-                            break;
-                        } else
-                            setChangeLevel(true);
+                    if (Ghost.notTheFirstGhost)
+                        for (Ghost ghost : StaticVariables.world.getGhostArrayList()) {
+                            if (ghost.isVisible()) {
+                                setChangeLevel(false);
+                                break;
+                            } else
+                                setChangeLevel(true);
 
 
+                        }
+
+
+                    if (isChangeLevel())
+
+                    {
+                        levelUp();
+                        changeLevel=false;
                     }
-
-
-                    if(isChangeLevel())
-                        break;
 
 
 
                 }
 
-                levelUp();
+
 
             }
         }).start();

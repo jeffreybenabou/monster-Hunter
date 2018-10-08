@@ -38,10 +38,23 @@ public class LoadGame {
                 Key.addKeyToBag(3);
             World.userInProgressToOpenHouse=in.nextBoolean();
             if( Ghost.notTheFirstGhost) {
-                for (House house :StaticVariables.world.getHouseArrayList()) {
-                    house.setVisible(true);
-
+                try {
+                    for (int i = 0; i < 3; ) {
+                        House house = new House(i);
+                        StaticVariables.world.getBackGroundObjects().add(house);
+                        StaticVariables.world.getHouseArrayList().add(house);
+                        house.setVisible(false);
+                        StaticVariables.world.add(house);
+                        i++;
+                    }
+                    for (int i = 0; i <StaticVariables.world.getHouseArrayList().size() ; i++) {
+                        StaticVariables.world.getHouseArrayList().get(i).setVisible(true);
+                    }
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
+
                 try
                 {
 
@@ -52,11 +65,15 @@ public class LoadGame {
                 {
 
                 }
+
+
+                StaticVariables.mainMenu.setType(in.next());
+                Ghost.difficulty=in.nextInt();
+
                 if( !World.userInProgressToOpenHouse)
                 {
                     StaticVariables.world.addGhost();
                 }
-
 
 
             }

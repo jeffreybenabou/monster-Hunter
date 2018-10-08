@@ -30,6 +30,7 @@ public class Sound {
             path.add("sounds/error.wav");
             path.add("sounds/monsterAttack.wav");
             path.add("sounds/ghostdieing.wav");
+            path.add("sounds/coinFall2.wav");
 
             firstPlay=false;
         }
