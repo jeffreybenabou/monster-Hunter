@@ -22,6 +22,10 @@ public class Life implements ChangeListener {
         jProgressBar.setStringPainted(true);
         jProgressBar.addChangeListener(this);
         isAlive=true;
+        UIManager.put("ProgressBar.selectionForeground", Color.yellow);
+        UIManager.put("ProgressBar.selectionBackground", Color.yellow);
+
+
         if(gameObject!=null)
         {
             jProgressBar.setBounds(0,0,gameObject.getWidth(),15);

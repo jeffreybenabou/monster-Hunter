@@ -156,6 +156,7 @@ public class Ghost extends GameObject {
                     if(!StaticVariables.stopTheGame)
                     {
                         miniMapLabel.setLocation(getX() / 20, getY() / 32);
+
                         stopMoving = getBounds().intersects(StaticVariables.mainPlayer.getBounds());
 
                         if (notTheFirstGhost)
@@ -181,10 +182,14 @@ public class Ghost extends GameObject {
     }
 
     private void decreaseMainPlayerLife() {
-        MainPlayer.life.getjProgressBar().setValue(MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer);
-        MainPlayer.life.getjProgressBar().setString("" + (MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer));
-        if(MainPlayer.life.getjProgressBar().getValue()<=0)
-            MainPlayer.life.getjProgressBar().setString("Game Over");
+        if(!MainPlayer.playerDead)
+        {
+            MainPlayer.life.getjProgressBar().setValue(MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer);
+            MainPlayer.life.getjProgressBar().setString("" + (MainPlayer.life.getjProgressBar().getValue() - damgeToMainPlayer));
+            if(MainPlayer.life.getjProgressBar().getValue()<=0)
+                MainPlayer.life.getjProgressBar().setString("Game Over");
+        }
+
 
 
     }
@@ -193,7 +198,7 @@ public class Ghost extends GameObject {
         if (getBounds().intersects(StaticVariables.mainPlayer.getBounds()) && (MainPlayer.isAttacking() || MainPlayer.spacialAttack)) {
 
 
-            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue() - damage*StaticVariables.level);
+            getLifeBar().getjProgressBar().setValue(getLifeBar().getjProgressBar().getValue() - damage);
             getLifeBar().getjProgressBar().setString("" + getLifeBar().getjProgressBar().getValue());
         }
     }

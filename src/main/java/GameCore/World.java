@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 public class World extends JLabel implements MouseListener {
@@ -19,16 +18,17 @@ public class World extends JLabel implements MouseListener {
 
 
     private JLabel hole;
-    private  boolean housePreesed=false;
+    private  boolean housePreesed=false,ghostAreBeingAdd=false,key1IsPreesed=false,key2IsPreesed=false,key3IsPreesed=false;
+    public static boolean userInProgressToOpenHouse=false,keyCanBeAdded=false;
+
     private  ArrayList<Ghost>ghostArrayList=new ArrayList<Ghost>();
-    private  boolean ghostAreBeingAdd=false;
     private ArrayList<GameObject> backGroundObjects =new ArrayList<GameObject>();
     private  ArrayList<House>houseArrayList=new ArrayList<House>();
+
     private Random random;
     private Ghost firstGhost;
     private Sound backGroundWorld;
-    private boolean key1IsPreesed=false,key2IsPreesed=false,key3IsPreesed=false;
-    public static boolean userInProgressToOpenHouse=false;
+
     private int index =0,indexOfGhost=0;
 
     public World(){
@@ -46,6 +46,7 @@ public class World extends JLabel implements MouseListener {
             addBackGroundObjects();
             setVisible(true);
 
+        checkIfUserIsLevelUp();
 
 
 
@@ -55,6 +56,48 @@ public class World extends JLabel implements MouseListener {
 
 
     }
+
+    private void checkIfUserIsLevelUp() {
+        new Thread(new Runnable() {
+            public void run() {
+                while (true)
+                {
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                    if(keyCanBeAdded&&Ghost.numberOfDeadGhost==ghostArrayList.size()&&ghostArrayList.size()>0)
+                    {
+
+                        addTheKeyToWorld();
+                    }
+                    if(StaticVariables.level==4)
+                    {
+                        JOptionPane.showMessageDialog(null,"You clean the world from evil !!!");
+                        break;
+                    }
+
+
+                }
+            }
+        }).start();
+    }
+
+    private  void addTheKeyToWorld() {
+
+        StaticVariables.miniMap.setKey(new Key());
+        StaticVariables.miniMap.getKey().setVisible(true);
+        StaticVariables.gamePanel.add(StaticVariables.miniMap.getKey());
+
+        StaticVariables.miniMap.getKey().moveTheKey();
+        Ghost.numberOfDeadGhost = 0;
+    }
+
 
     private void addMouseLisenersToObject(){
         /*
@@ -114,9 +157,11 @@ e.printStackTrace();
 
                         e.printStackTrace();
                     }
-
+                    getGhostArrayList().remove(getFirstGhost());
+                    setFirstGhost(null);
 
                             Ghost.notTheFirstGhost=true;
+                    Ghost.numberOfDeadGhost = 0;
                             addGhost();
 
 
@@ -124,7 +169,7 @@ e.printStackTrace();
                 }
                 else
                 {
-                    setGhostAreBeingAdd(true);
+
 
                     try
                     {
@@ -142,7 +187,8 @@ e.printStackTrace();
                     switch (StaticVariables.level)
                     {
                         case 1:{
-                            for (int i = 0; i <8+Ghost.difficulty*3; i++) {
+
+                            for (int i = 0; i <1+Ghost.difficulty*3; i++) {
 
                                 Ghost ghost=new Ghost(1);
 
@@ -152,18 +198,20 @@ e.printStackTrace();
                                 add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
+                            keyCanBeAdded=true;
+
 
                             break;
                         }
                         case 2:{
 
-                            ghostArrayList=new ArrayList<Ghost>();
+
                             Ghost.addGhostImage();
                             for (int i = 0; i <5 +Ghost.difficulty*3; i++) {
                                 Ghost ghost=new Ghost(2);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
-                                ghostArrayList.add(ghost);
+                                getGhostArrayList().add(ghost);
                                 add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
@@ -172,14 +220,14 @@ e.printStackTrace();
                             break;
                         }
                         case 3:{
-                            ghostArrayList=new ArrayList<Ghost>();
+
                             Ghost.addGhostImage();
                             for (int i = 0; i <3+Ghost.difficulty*3; i++) {
 
                                 Ghost ghost=new Ghost(3);
                                 ghost.checkIfGhostIntersectHouse();
                                 ghost.setName(""+i);
-                                ghostArrayList.add(ghost);
+                                getGhostArrayList().add(ghost);
                                 add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
@@ -188,9 +236,10 @@ e.printStackTrace();
                             break;
                         }
                     }
-                    getGhostArrayList().remove(getFirstGhost());
-                    setFirstGhost(null);
-                    setGhostAreBeingAdd(false);
+
+                        setGhostAreBeingAdd(false);
+
+
 
                 }
             }
@@ -370,8 +419,7 @@ e.printStackTrace();
             }
             else
             {
-                StaticVariables.gamePanel.getNotbuy().startSound();
-                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
+                playTheErrorSound();
             }
 
         }
@@ -397,8 +445,7 @@ e.printStackTrace();
                 StaticVariables.sumOfMoney-=2000;
             }else
             {
-                StaticVariables.gamePanel.getNotbuy().startSound();
-                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
+                playTheErrorSound();
             }
         }
        else  if(e.getComponent().equals(StaticVariables.gamePanel.getPower1()))
@@ -423,8 +470,7 @@ e.printStackTrace();
                 StaticVariables.sumOfMoney-=400;
             }else
             {
-                StaticVariables.gamePanel.getNotbuy().startSound();
-                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
+                playTheErrorSound();
             }
         }
         else if(e.getComponent().equals(StaticVariables.gamePanel.getPower2()))
@@ -452,8 +498,7 @@ e.printStackTrace();
             }
             else
             {
-                StaticVariables.gamePanel.getNotbuy().startSound();
-                StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
+                playTheErrorSound();
             }
         }
 
@@ -525,15 +570,20 @@ e.printStackTrace();
         for (House house :houseArrayList) {
             if(e.getComponent().equals(house)&&key1IsPreesed||key2IsPreesed||key3IsPreesed)
             {
-                setKey1IsPreesed(false);
-                setKey2IsPreesed(false);
-                setKey3IsPreesed(false);
 
+                if(key1IsPreesed)
+                    StaticVariables.gamePanel.getBag().getKey1().removeMouseListener(this);
+                if(key2IsPreesed)
+                    StaticVariables.gamePanel.getBag().getKey2().removeMouseListener(this);
+                if(key3IsPreesed)
+                    StaticVariables.gamePanel.getBag().getKey3().removeMouseListener(this);
+                key1IsPreesed=false;
+                key2IsPreesed=false;
+                key3IsPreesed=false;
                 Key.removeTheKeyLiseners();
                 StaticVariables.level++;
                 StaticVariables.gamePanel.getLabel().setText(""+StaticVariables.level);
                 addGhost();
-                StaticVariables.miniMap.addActionOfMiniMap();
                 World.userInProgressToOpenHouse=false;
 
                 break;
@@ -543,6 +593,9 @@ e.printStackTrace();
         setKey1IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1()));
         setKey2IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey2()));
         setKey3IsPreesed(e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey3()));
+
+
+
 
         if(e.getComponent().equals(StaticVariables.gamePanel.getShopIcon())
                 ||e.getComponent().equals(StaticVariables.gamePanel.getShopLabel()))
@@ -581,45 +634,11 @@ e.printStackTrace();
                         {
                             housePreesed=true;
                             House.houseNumber1Open=true;
-                            new Thread(new Runnable() {
-                                public void run() {
-                                    Point point=e.getComponent().getLocation();
-
-                                    int counter=0;
-                                    MainPlayer.spacialAttack =false;
-
-                                    MainPlayer.attacking=false;
-                                    MainPlayer.stand=true;
-                                    while (counter<=600)
-                                    {
-
-
-                                        MainPlayer.walking=false;
-                                        counter++;
-                                        setLocation(getX()+1,getY()-1);
-                                        try {
-                                            Thread.sleep(2);
-                                        } catch (InterruptedException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    while(counter>0){
-                                        counter--;
-                                        MainPlayer.walking=false;
-                                        setLocation(getX()-1,getY()+1);
-                                        try {
-                                            Thread.sleep(2);
-                                        } catch (InterruptedException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    housePreesed=false;
-                                }
-                            }).start();
+                            startTheMoveThread(0);
                         }
                         else
                         {
-                            JOptionPane.showConfirmDialog(null,"need to kill al the monster before opening this house");
+                           playTheErrorSound();
                         }
 
                         break;
@@ -632,91 +651,31 @@ e.printStackTrace();
 //                        up left
                         if(!House.houseNumber2Open&&Key.key2)
                         {
-                            MainPlayer.spacialAttack =false;
-                            MainPlayer.walking=false;
-                            MainPlayer.attacking=false;
-                            MainPlayer.stand=true;
+
                             housePreesed=true;
                             House.houseNumber2Open=true;
-                            new Thread(new Runnable() {
-                                public void run() {
-                                    int counter=0;
+                            startTheMoveThread(1);
 
-                                    while (counter<=600)
-                                    {
-                                        MainPlayer.walking=false;
-                                        counter++;
-                                        setLocation(getX()+1,getY()+1);
-                                        try {
-                                            Thread.sleep(2);
-                                        } catch (InterruptedException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    while(counter>0){
-                                        MainPlayer.walking=false;
-                                        counter--;
-                                        setLocation(getX()-1,getY()-1);
-                                        try {
-                                            Thread.sleep(2);
-                                        } catch (InterruptedException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    housePreesed=false;
-                                }
-                            }).start();
                         }
                         else
                         {
-                            JOptionPane.showConfirmDialog(null,"need to kill al the monster before opening this house");
+                            playTheErrorSound();
                         }
                         break;
                     }
                     case 2: {
                         if(!House.houseNumber3Open&&Key.key3)
                         {
-                            MainPlayer.spacialAttack =false;
-                            MainPlayer.walking=false;
-                            MainPlayer.attacking=false;
-                            MainPlayer.stand=true;
+
                             housePreesed=true;
                             House.houseNumber3Open=true;
-                            new Thread(new Runnable() {
-                                public void run() {
-                                    int counter=0;
+                            startTheMoveThread(2);
 
-                                    while (counter<=600)
-                                    {
-                                        MainPlayer.walking=false;
 
-                                        counter++;
-                                        setLocation(getX()-1,getY()+1);
-                                        try {
-                                            Thread.sleep(2);
-                                        } catch (InterruptedException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    while(counter>0){
-                                        MainPlayer.walking=false;
-                                        counter--;
-                                        setLocation(getX()+1,getY()-1);
-                                        try {
-                                            Thread.sleep(2);
-                                        } catch (InterruptedException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    JOptionPane.showMessageDialog(null,"you won the game !!!!!");
-
-                                    housePreesed=false;
-                                }
-                            }).start();
                         }
                         else
                         {
-                            JOptionPane.showConfirmDialog(null,"need to kill al the monster before opening this house");
+                            playTheErrorSound();
                         }
                         break;
                     }
@@ -737,6 +696,85 @@ e.printStackTrace();
 
 
 
+
+    }
+
+    private void playTheErrorSound() {
+        StaticVariables.gamePanel.getNotbuy().startSound();
+        StaticVariables.gamePanel.getNotbuy().getClip().loop(0);
+    }
+
+    private void startTheMoveThread(  final int houseNumber) {
+        new Thread(new Runnable() {
+            public void run() {
+
+                int x=2;
+                int y=2;
+                int counter=0;
+                MainPlayer.spacialAttack =false;
+                MainPlayer.attacking=false;
+                MainPlayer.stand=true;
+
+
+                while (counter<=200)
+                {
+
+
+                    MainPlayer.walking=false;
+                    counter++;
+                    changeTheXAndY(x,y,true);
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
+                while(counter>0){
+                    counter--;
+                    MainPlayer.walking=false;
+                    changeTheXAndY(x,y,false);
+
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                housePreesed=false;
+            }
+
+            private void changeTheXAndY(int x, int y,boolean start) {
+                switch (houseNumber)
+                {
+                    case 0:
+                    {
+                        if(start)
+                        setLocation(getX()+x,getY()-y);
+                        else
+                            setLocation(getX()-x,getY()+y);
+
+                        break;
+                    }
+                    case 1:
+                    {
+                        if(start)
+                            setLocation(getX()+x,getY()+y);
+                        else
+                            setLocation(getX()-x,getY()-y);
+                        break;
+                    }
+                    case 2:
+                    {
+                        if(start)
+                            setLocation(getX()-x,getY()+y);
+                        else
+                            setLocation(getX()+x,getY()-y);
+                        break;
+                    }
+                }
+            }
+        }).start();
 
     }
 

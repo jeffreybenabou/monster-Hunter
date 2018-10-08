@@ -564,7 +564,6 @@ public class MainMenu extends JLabel implements MouseListener {
                                     StaticVariables.gamePanel.add(StaticVariables.miniMap);
                                     MainClass.addTheWorld();
                                     watingLabel.setVisible(false);
-                                    StaticVariables.miniMap.addActionOfMiniMap();
                                     if(wantToLoadGame)
                                     loadGame=new LoadGame(pathToFile);
                                     else

@@ -55,7 +55,10 @@ public class GamePanel extends JLabel  {
         setThePauseLabel();
         addTheSettingMenu();
 
+        thread=new Thread();
+
         setVisible(true);
+
 
 
 
@@ -230,20 +233,7 @@ public class GamePanel extends JLabel  {
 
     private void addSaveTheGame() {
         final JButton saveTheGame=new JButton();
-        thread=new Thread(new Runnable() {
-            public void run() {
-                while (setting.isVisible())
-                {
 
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-                new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
-            }
-        });
         saveTheGame.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
 
@@ -254,8 +244,7 @@ public class GamePanel extends JLabel  {
                 if(!thread.isAlive())
                 {
 
-                    thread.start();
-                    System.out.println("ffsaf");
+                    startTheThread();
                 }
 
 
@@ -277,6 +266,28 @@ public class GamePanel extends JLabel  {
         saveTheGame.setBounds(80,100,setting.getWidth()-setting.getWidth()/3,setting.getHeight()/8);
         saveTheGame.setIcon(new ImageIcon(StaticVariables.save.getScaledInstance(saveTheGame.getWidth(),saveTheGame.getHeight(),4)));
         setting.add(saveTheGame);
+    }
+
+    private synchronized void startTheThread() {
+        if(!thread.isAlive())
+        {
+            thread=new Thread(new Runnable() {
+                public void run() {
+                    while (setting.isVisible())
+                    {
+
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                    new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+                }
+            });
+            thread.start();
+        }
+
     }
 
     private void setThePauseLabel() {
@@ -739,5 +750,61 @@ public class GamePanel extends JLabel  {
 
     public void setBag(Bag bag) {
         this.bag = bag;
+    }
+
+    public JButton getMuteButton() {
+        return muteButton;
+    }
+
+    public void setMuteButton(JButton muteButton) {
+        this.muteButton = muteButton;
+    }
+
+    public static Thread getThread() {
+        return thread;
+    }
+
+    public static void setThread(Thread thread) {
+        GamePanel.thread = thread;
+    }
+
+    public static boolean isMuteActive() {
+        return muteActive;
+    }
+
+    public static void setMuteActive(boolean muteActive) {
+        GamePanel.muteActive = muteActive;
+    }
+
+    public JLabel getPause() {
+        return pause;
+    }
+
+    public void setPause(JLabel pause) {
+        this.pause = pause;
+    }
+
+    public JLabel getSetting() {
+        return setting;
+    }
+
+    public void setSetting(JLabel setting) {
+        this.setting = setting;
+    }
+
+    public JButton getLoadButton() {
+        return loadButton;
+    }
+
+    public void setLoadButton(JButton loadButton) {
+        this.loadButton = loadButton;
+    }
+
+    public JButton getExitButton() {
+        return exitButton;
+    }
+
+    public void setExitButton(JButton exitButton) {
+        this.exitButton = exitButton;
     }
 }

@@ -54,7 +54,7 @@ public class MainPlayer extends GameObject {
 
 
     float stopTime;
-    private boolean playerDead = false;
+    public static boolean playerDead = false;
 
 
     public MainPlayer() {
@@ -212,6 +212,8 @@ public class MainPlayer extends GameObject {
                         setImageFrameRate(getImageFrameRate() + 1);
 
                         setPlace();
+                        if(playerDead)
+                            break;
 
                         checkIfMainPlayerOutOfBound();
                         checkedMainPlayerInteractWithMonster();
@@ -269,7 +271,7 @@ public class MainPlayer extends GameObject {
             }
         }catch (Exception e)
         {
-            e.printStackTrace();
+e.printStackTrace();
         }
 
 
@@ -369,6 +371,8 @@ try
 {
     if(!getLife().isAlive())
     {
+        earthQuaqe.setVolume(6);
+        earthQuaqe.startSound();
         playerDead=true;
         StaticVariables.world.setHole(new JLabel(new ImageIcon(StaticVariables.hole)));
         StaticVariables.world.getHole().setBounds(getX(),getY(), StaticVariables.world.getHole().getIcon().getIconWidth(),StaticVariables.world.getHole().getIcon().getIconHeight());
@@ -515,7 +519,7 @@ try
 
 
                     for (Ghost g : StaticVariables.world.getGhostArrayList()) {
-                        g.decreaseLife(50);
+                        g.decreaseLife(20);
                     }
                     int x;
                     if (dir)
@@ -526,7 +530,7 @@ try
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + x, StaticVariables.world.getY());
 
                     try {
-                        Thread.sleep(40);
+                        Thread.sleep(30);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

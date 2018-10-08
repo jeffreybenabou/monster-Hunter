@@ -202,31 +202,7 @@ public class StaticVariables {
     }
 
 
-    public static void restart(){
-        level=1;
-        sumOfMoney=0;
 
-        MainMenu.wantToLoadGame=false;
-        Ghost.numberOfDeadGhost=0;
-        Ghost.difficulty=0;
-Ghost.notTheFirstGhost=false;
-        mainClass.removeAll();
-        mainClass.dispose();
-
-        for (int i = 0; i <world.getGhostArrayList().size() ; i++) {
-            world.getGhostArrayList().set(i,null);
-            world.getGhostArrayList().remove(world.getGhostArrayList().get(i));
-        }
-        gamePanel=null;
-        world=null;
-        mainMenu=null;
-        mainClass=null;
-        mainPlayer=null;
-        miniMap=null;
-
-
-
-    }
 
 
     public static void main(String[] args) {

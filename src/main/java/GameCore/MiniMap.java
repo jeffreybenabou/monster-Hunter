@@ -16,20 +16,36 @@ public class MiniMap extends JLabel {
     private int pickHouseCounter=0;
     private boolean changeLevel = false;
     public static JLabel mainPlayerLabel;
-    private boolean loadFuncation=false;
+
     private  Border blackline;
     private Key key;
     public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
     public static ArrayList<JLabel> house=new ArrayList<JLabel>();
+    private Thread levelUp;
 
     public MiniMap() {
+
         pickHouse = new SpriteSheet((BufferedImage)StaticVariables.houseIconChooseMiniMap);
         setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
 
         setIcon(new ImageIcon(StaticVariables.worldBackGroundScaled.getScaledInstance(getWidth(), getHeight(), 4)));
-
+        levelUp=new Thread();
 
         setBackground(Color.black);
+        new Thread(new Runnable() {
+            public void run() {
+                while (true)
+                {
+                    addTheHouseLocationToMap();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
 
 
     }
@@ -42,55 +58,7 @@ public class MiniMap extends JLabel {
 
     }
 
-    public void addActionOfMiniMap() {
 
-
-        new Thread(new Runnable() {
-            public void run() {
-                setLoadFuncation(false);
-                setChangeLevel(false);
-
-                while (!isLoadFuncation()) {
-
-                    addTheHouseLocationToMap();
-
-
-                    try {
-                        Thread.sleep(100);
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    if (Ghost.notTheFirstGhost)
-                        for (Ghost ghost : StaticVariables.world.getGhostArrayList()) {
-                            if (ghost.isVisible()) {
-                                setChangeLevel(false);
-                                break;
-                            } else
-                                setChangeLevel(true);
-
-
-                        }
-
-
-                    if (isChangeLevel())
-
-                    {
-                        levelUp();
-                        changeLevel=false;
-                    }
-
-
-
-                }
-
-
-
-            }
-        }).start();
-    }
 
 
 
@@ -142,33 +110,6 @@ public class MiniMap extends JLabel {
     }
 
 
-    private void levelUp() {
-
-        if (!StaticVariables.world.isGhostAreBeingAdd()) {
-
-            if (isChangeLevel() && Ghost.notTheFirstGhost) {
-                new Thread(new Runnable() {
-                    public void run() {
-                        setKey(new Key());
-                        getKey().setVisible(true);
-                        StaticVariables.gamePanel.add(getKey());
-                        for (JLabel label:getAghost()) {
-                            label.setVisible(false);
-                        }
-                        getAghost().clear();
-
-
-                        getKey().moveTheKey();
-                        Ghost.numberOfDeadGhost = 0;
-                    }
-                }).start();
-
-
-            }
-
-
-        }
-    }
 
     public static void addTheMainPlayerLocationToMap(int xPlayer,int yPlayer){
 
@@ -222,13 +163,7 @@ public class MiniMap extends JLabel {
         this.changeLevel = changeLevel;
     }
 
-    public boolean isLoadFuncation() {
-        return loadFuncation;
-    }
 
-    public void setLoadFuncation(boolean loadFuncation) {
-        this.loadFuncation = loadFuncation;
-    }
 
     public Border getBlackline() {
         return blackline;

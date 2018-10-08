@@ -117,8 +117,7 @@ public class Key extends GameObject {
 
     public void moveTheKey() {
 
-        new Thread(new Runnable() {
-            public void run() {
+
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -137,7 +136,7 @@ public class Key extends GameObject {
                         setLocation(getX() - 8, getY() - 3);
 
 
-                        if (getBounds().intersects(StaticVariables.gamePanel.getBag().getBounds()) && !keyActive) {
+                        if (getBounds().intersects(StaticVariables.gamePanel.getMoneyIcon().getBounds()) && !keyActive) {
                             new Thread(new Runnable() {
                                 public void run() {
                                     keyActive = true;
@@ -164,10 +163,10 @@ public class Key extends GameObject {
 
                 }
 
-            }
-        }).start();
 
-        setVisible(true);
+
+
+
 
 
     }
