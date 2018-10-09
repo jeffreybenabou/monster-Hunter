@@ -1,10 +1,8 @@
 package GameCore;
 
-import BackgroundObject.House;
 import Objects.Ghost;
 import Objects.MainPlayer;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
@@ -39,14 +37,6 @@ public class LoadGame {
             World.userInProgressToOpenHouse=in.nextBoolean();
             if( Ghost.notTheFirstGhost) {
                 try {
-                    for (int i = 0; i < 3; ) {
-                        House house = new House(i);
-                        StaticVariables.world.getBackGroundObjects().add(house);
-                        StaticVariables.world.getHouseArrayList().add(house);
-                        house.setVisible(false);
-                        StaticVariables.world.add(house);
-                        i++;
-                    }
                     for (int i = 0; i <StaticVariables.world.getHouseArrayList().size() ; i++) {
                         StaticVariables.world.getHouseArrayList().get(i).setVisible(true);
                     }
@@ -54,30 +44,10 @@ public class LoadGame {
                 {
                     e.printStackTrace();
                 }
-
-                try
-                {
-
-                    StaticVariables.world.getFirstGhost().setVisible(false);
-
-
-                }catch (Exception e)
-                {
-
-                }
-
-
                 StaticVariables.mainMenu.setType(in.next());
                 Ghost.difficulty=in.nextInt();
-
-                if( !World.userInProgressToOpenHouse)
-                {
-                    StaticVariables.world.addGhost();
-                }
-
-
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

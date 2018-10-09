@@ -10,7 +10,7 @@ public class Bag extends GameObject {
     private JLabel key1,key2,key3;
 
 
-    public Bag(){
+     Bag(){
         setBagProperties();
         setTheBagInside();
     }
@@ -44,37 +44,20 @@ public class Bag extends GameObject {
         setOpaque(true);
     }
 
-    @Override
-    public Border getBorder() {
-        return border;
-    }
 
-    @Override
-    public void setBorder(Border border) {
-        this.border = border;
-    }
 
     public JLabel getKey1() {
         return key1;
     }
 
-    public void setKey1(JLabel key1) {
-        this.key1 = key1;
-    }
 
     public JLabel getKey2() {
         return key2;
     }
 
-    public void setKey2(JLabel key2) {
-        this.key2 = key2;
-    }
 
     public JLabel getKey3() {
         return key3;
     }
 
-    public void setKey3(JLabel key3) {
-        this.key3 = key3;
-    }
 }

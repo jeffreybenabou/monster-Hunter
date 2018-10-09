@@ -5,35 +5,34 @@ import ImageHandel.SpriteSheet;
 import Objects.Ghost;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MiniMap extends JLabel {
 
+    public static JLabel mainPlayerLabel;
+    public static ArrayList<JLabel> house=new ArrayList<JLabel>();
+
+
     private SpriteSheet pickHouse;
     private int pickHouseCounter=0;
-    private boolean changeLevel = false;
-    public static JLabel mainPlayerLabel;
 
-    private  Border blackline;
+
     private Key key;
-    public static ArrayList<JLabel> aghost=new ArrayList<JLabel>();
-    public static ArrayList<JLabel> house=new ArrayList<JLabel>();
-    private Thread levelUp;
 
-    public MiniMap() {
 
-        pickHouse = new SpriteSheet((BufferedImage)StaticVariables.houseIconChooseMiniMap);
+     MiniMap() {
+
+        pickHouse = new SpriteSheet(StaticVariables.houseIconChooseMiniMap);
         setBounds(10, StaticVariables.mainClass.getHeight() - 170, 250, 160);
 
         setIcon(new ImageIcon(StaticVariables.worldBackGroundScaled.getScaledInstance(getWidth(), getHeight(), 4)));
-        levelUp=new Thread();
 
         setBackground(Color.black);
         new Thread(new Runnable() {
             public void run() {
+//noinspection InfiniteLoopStatement
+
                 while (true)
                 {
                     addTheHouseLocationToMap();
@@ -89,21 +88,14 @@ public class MiniMap extends JLabel {
                 }
                 else
                     house.get(i).setIcon(new ImageIcon(StaticVariables.houseIconMiniMap));
-
                     house.get(i).setVisible(true);
                     house.get(i).setBounds(StaticVariables.world.getHouseArrayList().get(i).getX() / 19+10, StaticVariables.world.getHouseArrayList().get(i).getY() / 32+5,house.get(i).getIcon().getIconWidth(),house.get(i).getIcon().getIconHeight());
 
 
 
-            } catch (IndexOutOfBoundsException e) {
-
+            }  catch (Exception e) {
+                e.printStackTrace();
                 break;
-
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
         }
@@ -137,55 +129,28 @@ public class MiniMap extends JLabel {
 
     }
 
-    public void addTheGhostLocationToMap(int position,Point location) {
+     void addTheGhostLocationToMap(int position,Point location) {
 
-            JLabel jLabel=new JLabel();
-            jLabel.setBounds(location.x,location.y,5,5);
-            jLabel.setBackground(Color.RED);
-            jLabel.setOpaque(true);
-        jLabel.setName(""+position);
-            add(jLabel);
-            getAghost().add(jLabel);
-
-
-
-
-
-
-
-    }
-
-    public boolean isChangeLevel() {
-        return changeLevel;
-    }
-
-    public void setChangeLevel(boolean changeLevel) {
-        this.changeLevel = changeLevel;
+        JLabel jLabel = new JLabel();
+        jLabel.setBounds(location.x, location.y, 5, 5);
+        jLabel.setBackground(Color.RED);
+        jLabel.setOpaque(true);
+        jLabel.setName("" + position);
+        add(jLabel);
     }
 
 
 
-    public Border getBlackline() {
-        return blackline;
-    }
 
-    public void setBlackline(Border blackline) {
-        this.blackline = blackline;
-    }
 
-    public Key getKey() {
+
+
+     Key getKey() {
         return key;
     }
 
-    public void setKey(Key key) {
+     void setKey(Key key) {
         this.key = key;
     }
 
-    public static ArrayList<JLabel> getAghost() {
-        return aghost;
-    }
-
-    public static void setAghost(ArrayList<JLabel> aghost) {
-        MiniMap.aghost = aghost;
-    }
 }

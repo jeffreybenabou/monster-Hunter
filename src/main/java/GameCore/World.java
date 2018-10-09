@@ -71,9 +71,9 @@ public class World extends JLabel implements MouseListener {
 
 
 
+
                     if(keyCanBeAdded&&Ghost.numberOfDeadGhost==ghostArrayList.size()&&ghostArrayList.size()>0)
                     {
-
                         addTheKeyToWorld();
                     }
                     if(StaticVariables.level==4)
@@ -188,7 +188,7 @@ e.printStackTrace();
                     {
                         case 1:{
 
-                            for (int i = 0; i <1+Ghost.difficulty*3; i++) {
+                            for (int i = 0; i <7+Ghost.difficulty*3; i++) {
 
                                 Ghost ghost=new Ghost(1);
 
@@ -215,7 +215,7 @@ e.printStackTrace();
                                 add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
-
+                            keyCanBeAdded=true;
 
                             break;
                         }
@@ -231,7 +231,7 @@ e.printStackTrace();
                                 add(ghost, indexOfGhost);
                                 StaticVariables.miniMap.addTheGhostLocationToMap(i,ghost.getLocation());
                             }
-
+                            keyCanBeAdded=true;
 
                             break;
                         }

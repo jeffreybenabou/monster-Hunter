@@ -23,7 +23,7 @@ public class CoinAdd extends JLabel {
 
     }
 
-    public void changeTheSumOfMoney()
+     void changeTheSumOfMoney()
     {
 
         StaticVariables.sumOfMoney+=random.nextInt(250)+1;

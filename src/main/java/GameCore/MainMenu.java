@@ -693,8 +693,18 @@ e.printStackTrace();
 
         if(e.getComponent().equals(loadGameButton))
         {
-            start.setEnabled(false);
-            loadGameLabel.setVisible(true);
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    start.setEnabled(false);
+                    loadGameLabel.setVisible(true);
+                }
+            }).start();
+
         }
         if(e.getComponent().equals(confirm))
         {

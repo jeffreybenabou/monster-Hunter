@@ -440,7 +440,7 @@ public class GamePanel extends JLabel  {
         levelLabel.setBounds(MainClass.dimension.width-220,MainClass.dimension.height-220,230,250);
         levelLabel.setIcon(new ImageIcon(StaticVariables.levelLabel.getScaledInstance(levelLabel.getWidth(),levelLabel.getHeight(),1)));
 
-         label=new JLabel(""+1);
+         label=new JLabel(""+StaticVariables.level);
         label.setBounds(95,0,levelLabel.getWidth(),levelLabel.getHeight()-20);
         label.setForeground(Color.red);
         label.setFont(font);
@@ -508,6 +508,7 @@ public class GamePanel extends JLabel  {
             add(bag);
             new Thread(new Runnable() {
                 public void run() {
+
                     while (true)
                     {
                         try {
@@ -545,60 +546,36 @@ public class GamePanel extends JLabel  {
 
 
 
-    public JLabel getLifeBar() {
-        return lifeBar;
-    }
 
-    public void setLifeBar(JLabel lifeBar) {
-        this.lifeBar = lifeBar;
-    }
-
-    public JLabel getLevelLabel() {
-        return levelLabel;
-    }
 
     public Sound getBuy() {
         return buy;
     }
 
-    public void setBuy(Sound buy) {
-        this.buy = buy;
-    }
 
     public Sound getNotbuy() {
         return notbuy;
     }
 
-    public void setNotbuy(Sound notbuy) {
-        this.notbuy = notbuy;
-    }
-
-    public Sound getCoinFall() {
-        return coinFall;
-    }
-
-    public void setCoinFall(Sound coinFall) {
-        this.coinFall = coinFall;
-    }
-
-    public void setLevelLabel(JLabel levelLabel) {
-        this.levelLabel = levelLabel;
-    }
 
     public JLabel getShopIcon() {
         return shopIcon;
     }
 
-    public void setShopIcon(JLabel shopIcon) {
-        this.shopIcon = shopIcon;
-    }
 
     public JLabel getLabel() {
         return label;
     }
 
-    public void setLabel(JLabel label) {
-        this.label = label;
+
+
+    public JLabel getMoneyIcon() {
+        return moneyIcon;
+    }
+
+
+    public static JProgressBar getjProgressBar() {
+        return jProgressBar;
     }
 
     public JLabel getSettingLabel() {
@@ -609,156 +586,63 @@ public class GamePanel extends JLabel  {
         this.settingLabel = settingLabel;
     }
 
-    public JLabel getMoneyIcon() {
-        return moneyIcon;
+    public JLabel getSetting() {
+        return setting;
     }
 
-    public void setMoneyIcon(JLabel moneyIcon) {
-        this.moneyIcon = moneyIcon;
+    public void setSetting(JLabel setting) {
+        this.setting = setting;
     }
-
-    public static JProgressBar getjProgressBar() {
-        return jProgressBar;
-    }
-
-    public static void setjProgressBar(JProgressBar jProgressBar) {
-        GamePanel.jProgressBar = jProgressBar;
-    }
-
 
     public int getWidth_() {
         return width_;
     }
 
-    public void setWidth_(int width_) {
-        this.width_ = width_;
-    }
 
     public JLabel getShopLabel() {
         return shopLabel;
     }
 
-    public void setShopLabel(JLabel shopLabel) {
-        this.shopLabel = shopLabel;
-    }
 
     public JLabel getLife1000() {
         return life1000;
     }
 
-    public void setLife1000(JLabel life1000) {
-        this.life1000 = life1000;
-    }
 
     public JLabel getLife2000() {
         return life2000;
     }
 
-    public void setLife2000(JLabel life2000) {
-        this.life2000 = life2000;
-    }
 
     public JLabel getPower1() {
         return power1;
     }
 
-    public void setPower1(JLabel power1) {
-        this.power1 = power1;
-    }
 
     public JLabel getPower2() {
         return power2;
     }
 
-    public void setPower2(JLabel power2) {
-        this.power2 = power2;
-    }
 
-    public JLabel getPrice1() {
-        return price1;
-    }
-
-    public void setPrice1(JLabel price1) {
-        this.price1 = price1;
-    }
-
-    public JLabel getPrice2() {
-        return price2;
-    }
-
-    public void setPrice2(JLabel price2) {
-        this.price2 = price2;
-    }
-
-    public JLabel getPrice3() {
-        return price3;
-    }
-
-    public void setPrice3(JLabel price3) {
-        this.price3 = price3;
-    }
-
-    public JLabel getPrice4() {
-        return price4;
-    }
-
-    public void setPrice4(JLabel price4) {
-        this.price4 = price4;
-    }
-
-    public JLabel getPrice5() {
-        return price5;
-    }
-
-    public void setPrice5(JLabel price5) {
-        this.price5 = price5;
-    }
 
     public JLabel getPriceTag() {
         return priceTag;
     }
 
-    public void setPriceTag(JLabel priceTag) {
-        this.priceTag = priceTag;
-    }
 
     public JLabel getSumOfMoney() {
         return sumOfMoney;
     }
 
-    public void setSumOfMoney(JLabel sumOfMoney) {
-        this.sumOfMoney = sumOfMoney;
-    }
 
-    public void setWidth_(Integer width_) {
-        this.width_ = width_;
-    }
 
-    @Override
-    public Font getFont() {
-        return font;
-    }
 
-    @Override
-    public void setFont(Font font) {
-        this.font = font;
-    }
 
     public Bag getBag() {
         return bag;
     }
 
-    public void setBag(Bag bag) {
-        this.bag = bag;
-    }
 
-    public JButton getMuteButton() {
-        return muteButton;
-    }
-
-    public void setMuteButton(JButton muteButton) {
-        this.muteButton = muteButton;
-    }
 
     public static Thread getThread() {
         return thread;
@@ -768,43 +652,7 @@ public class GamePanel extends JLabel  {
         GamePanel.thread = thread;
     }
 
-    public static boolean isMuteActive() {
-        return muteActive;
-    }
 
-    public static void setMuteActive(boolean muteActive) {
-        GamePanel.muteActive = muteActive;
-    }
 
-    public JLabel getPause() {
-        return pause;
-    }
 
-    public void setPause(JLabel pause) {
-        this.pause = pause;
-    }
-
-    public JLabel getSetting() {
-        return setting;
-    }
-
-    public void setSetting(JLabel setting) {
-        this.setting = setting;
-    }
-
-    public JButton getLoadButton() {
-        return loadButton;
-    }
-
-    public void setLoadButton(JButton loadButton) {
-        this.loadButton = loadButton;
-    }
-
-    public JButton getExitButton() {
-        return exitButton;
-    }
-
-    public void setExitButton(JButton exitButton) {
-        this.exitButton = exitButton;
-    }
 }

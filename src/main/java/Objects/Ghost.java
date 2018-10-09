@@ -12,14 +12,6 @@ import java.util.Random;
 
 public class Ghost extends GameObject {
 
-    private Integer ghostType, damgeToMainPlayer, damgeFromMainPlayer, life;
-
-
-    private JLabel miniMapLabel;
-
-
-    private Sound attackingSound, dieingSound;
-
     private static   ArrayList<ImageIcon>
             moveLeft,
             moveRight,
@@ -31,36 +23,31 @@ public class Ghost extends GameObject {
             attackDown,
 
     dead;
-    public static   Integer numberOfDeadGhost = 0;
 
-    public static int difficulty=0;
+    public static   Integer numberOfDeadGhost = 0,difficulty=0, ghostType, damgeToMainPlayer, life;
+
+    public static   boolean notTheFirstGhost = false;
+
+    private JLabel miniMapLabel;
+
+    private Sound attackingSound, dieingSound;
 
     private Life lifeBar;
-    private boolean stopMoving = false;
+
+    private Integer speed,index = 0,width_, height_;
 
     private boolean
-
+            stopMoving = false,
             dirLeft,
             dirUp,
             dirRight,
-            dirDown,
-            isAttackLeft,
-            isAttackRight,
-            isAttackUp,
-            isAttackDown,
-            isAttackLeftDown,
-            isAttackLeftUp,
-            isAttackRightUp,
-            isAttackRightDown;
+            dirDown;
 
-    private Integer speed;
-    public static   boolean notTheFirstGhost = false;
-    private Integer index = 0;
-    private Integer width_, height_;
+
 
 
     public Ghost(int ghostType) {
-        this.ghostType = ghostType;
+        Ghost.ghostType = ghostType;
 
         attackingSound =new Sound();
         attackingSound.playSound(Sound.path.get(9));
@@ -109,7 +96,7 @@ public class Ghost extends GameObject {
         }
     }
 
-    public void setTheDir() {
+    private void setTheDir() {
         Random random = new Random();
         dirLeft = random.nextBoolean();
         dirUp = random.nextBoolean();
@@ -118,7 +105,7 @@ public class Ghost extends GameObject {
         dirDown = !dirUp;
     }
 
-    public static void addTheVector() {
+    private static void addTheVector() {
         moveLeft = new ArrayList<ImageIcon>();
         moveRight = new ArrayList<ImageIcon>();
         moveUp = new ArrayList<ImageIcon>();
@@ -134,7 +121,7 @@ public class Ghost extends GameObject {
 
     }
 
-    public void removeTheGhostWhenDead() {
+    private void removeTheGhostWhenDead() {
         StaticVariables.world.remove(this);
         StaticVariables.world.repaint();
         StaticVariables.world.revalidate();
@@ -147,7 +134,7 @@ public class Ghost extends GameObject {
     }
 
 
-    public void setTheActionToGhost() {
+    private void setTheActionToGhost() {
         new Thread(new Runnable() {
             public void run() {
                 miniMapLabel=MiniMap.addGhostToMiniMap(getX(),getY());
@@ -333,29 +320,35 @@ public class Ghost extends GameObject {
         String DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_down/";
         if (pathOfFile.equals("firstGhost"))
             imageLoader.addImageOfObject(42, DIR_1, attackDown);
-        else
+        else if(pathOfFile.equals("secondeGhost"))
+            imageLoader.addImageOfObject(36, DIR_1, attackDown);
+        else if(pathOfFile.equals("thirdGhost"))
             imageLoader.addImageOfObject(48, DIR_1, attackDown);
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_left/";
         if (pathOfFile.equals("firstGhost"))
             imageLoader.addImageOfObject(42, DIR_1, attackLeft);
-        else
+        else if(pathOfFile.equals("secondeGhost"))
+            imageLoader.addImageOfObject(36, DIR_1, attackLeft);
+        else if(pathOfFile.equals("thirdGhost"))
             imageLoader.addImageOfObject(48, DIR_1, attackLeft);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_right/";
         if (pathOfFile.equals("firstGhost"))
-
             imageLoader.addImageOfObject(42, DIR_1, attackRight);
-        else
+        else if(pathOfFile.equals("secondeGhost"))
+            imageLoader.addImageOfObject(36, DIR_1, attackRight);
+        else if(pathOfFile.equals("thirdGhost"))
             imageLoader.addImageOfObject(48, DIR_1, attackRight);
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/attack/attack_up/";
         if (pathOfFile.equals("firstGhost"))
-
             imageLoader.addImageOfObject(42, DIR_1, attackUp);
-        else
+        else if(pathOfFile.equals("secondeGhost"))
+            imageLoader.addImageOfObject(36, DIR_1, attackUp);
+        else if(pathOfFile.equals("thirdGhost"))
             imageLoader.addImageOfObject(48, DIR_1, attackUp);
 
 
@@ -376,7 +369,9 @@ public class Ghost extends GameObject {
 
 
         DIR_1 = "Photos/ghost/" + pathOfFile + "/dead/";
-        imageLoader.addImageOfObject(40, DIR_1, dead);
+        imageLoader.addImageOfObject(26, DIR_1, dead);
+
+
 
 
     }
@@ -384,7 +379,7 @@ public class Ghost extends GameObject {
 
     private void changeTheGhostIcon() {
         try {
-            if (index < moveLeft.size()-1) {
+
                 if (stopMoving) {
                     if(!GamePanel.muteActive)
                     attackingSound.startSound();
@@ -392,16 +387,22 @@ public class Ghost extends GameObject {
                     dirDown = false;
                     dirUp = false;
                     dirRight = false;
-                    if (MainPlayer.isWalking())
-                        setIcon(moveRight.get(index));
-                    else if (StaticVariables.mainPlayer.isLeftFromTheGhost())
-                        setIcon((attackLeft.get(index)));
-                    else if (StaticVariables.mainPlayer.isDownFromTheGhost())
-                        setIcon((attackDown.get(index)));
-                    else if (StaticVariables.mainPlayer.isRightFromTheGhost())
-                        setIcon((attackRight.get(index)));
-                    else if (StaticVariables.mainPlayer.isUpFromTheGhost())
-                        setIcon((attackUp.get(index)));
+                    if(index<attackLeft.size())
+                    {
+                        if(MainPlayer.isWalking())
+                            setIcon((attackLeft.get(index)));
+                        else if (StaticVariables.mainPlayer.isLeftFromTheGhost())
+                            setIcon((attackLeft.get(index)));
+                        else if (StaticVariables.mainPlayer.isDownFromTheGhost())
+                            setIcon((attackDown.get(index)));
+                        else if (StaticVariables.mainPlayer.isRightFromTheGhost())
+                            setIcon((attackRight.get(index)));
+                        else if (StaticVariables.mainPlayer.isUpFromTheGhost())
+                            setIcon((attackUp.get(index)));
+                    }
+                    else
+                        index=0;
+
 
                     decreaseMainPlayerLife();
 
@@ -411,24 +412,29 @@ public class Ghost extends GameObject {
                     if (!dirUp && !dirDown && !dirLeft && !dirRight)
                         setTheDir();
 
-                    if (dirLeft)
-                        setIcon((moveLeft.get(index)));
-                    if (dirRight)
-                        setIcon((moveRight.get(index)));
-                    if (dirUp)
-                        setIcon((moveUp.get(index)));
-                    if (dirDown)
-                        setIcon((moveDown.get(index)));
+                    if(index<moveLeft.size())
+                    {
+                        if (dirLeft)
+                            setIcon((moveLeft.get(index)));
+                        if (dirRight)
+                            setIcon((moveRight.get(index)));
+                        if (dirUp)
+                            setIcon((moveUp.get(index)));
+                        if (dirDown)
+                            setIcon((moveDown.get(index)));
+                    }else
+                        index=0;
+
                 }
 
 
-            } else {
-                index = 0;
-            }
+
+
 
 
             index++;
         } catch (Exception e) {
+            index=0;
             e.printStackTrace();
 
         }
@@ -478,301 +484,30 @@ public class Ghost extends GameObject {
 
 
 
-    public Integer getGhostType() {
-        return ghostType;
-    }
-
-    public void setGhostType(Integer ghostType) {
-        this.ghostType = ghostType;
-    }
-
-    public Integer getDamgeToMainPlayer() {
-        return damgeToMainPlayer;
-    }
-
-    public void setDamgeToMainPlayer(Integer damgeToMainPlayer) {
-        this.damgeToMainPlayer = damgeToMainPlayer;
-    }
-
-    public Integer getDamgeFromMainPlayer() {
-        return damgeFromMainPlayer;
-    }
-
-    public void setDamgeFromMainPlayer(Integer damgeFromMainPlayer) {
-        this.damgeFromMainPlayer = damgeFromMainPlayer;
-    }
-
-    public Integer getLife() {
-        return life;
-    }
-
-    public void setLife(Integer life) {
-        this.life = life;
-    }
 
 
     public Life getLifeBar() {
         return lifeBar;
     }
 
-    public void setLifeBar(Life lifeBar) {
-        this.lifeBar = lifeBar;
-    }
 
     public boolean isStopMoving() {
         return stopMoving;
     }
 
-    public void setStopMoving(boolean stopMoving) {
-        this.stopMoving = stopMoving;
-    }
 
-    public boolean isDirLeft() {
-        return dirLeft;
-    }
-
-    public void setDirLeft(boolean dirLeft) {
-        this.dirLeft = dirLeft;
-    }
-
-    public boolean isDirUp() {
-        return dirUp;
-    }
-
-    public void setDirUp(boolean dirUp) {
-        this.dirUp = dirUp;
-    }
-
-    public boolean isDirRight() {
-        return dirRight;
-    }
-
-    public void setDirRight(boolean dirRight) {
-        this.dirRight = dirRight;
-    }
-
-    public boolean isDirDown() {
-        return dirDown;
-    }
-
-    public void setDirDown(boolean dirDown) {
-        this.dirDown = dirDown;
-    }
-
-    public boolean isAttackLeft() {
-        return isAttackLeft;
-    }
-
-    public void setAttackLeft(boolean attackLeft) {
-        isAttackLeft = attackLeft;
-    }
-
-    public boolean isAttackRight() {
-        return isAttackRight;
-    }
-
-    public void setAttackRight(boolean attackRight) {
-        isAttackRight = attackRight;
-    }
-
-    public boolean isAttackUp() {
-        return isAttackUp;
-    }
-
-    public JLabel getMiniMapLabel() {
-        return miniMapLabel;
-    }
-
-    public void setMiniMapLabel(JLabel miniMapLabel) {
-        this.miniMapLabel = miniMapLabel;
-    }
 
     public Sound getAttackingSound() {
         return attackingSound;
     }
 
-    public void setAttackingSound(Sound attackingSound) {
-        this.attackingSound = attackingSound;
-    }
 
     public Sound getDieingSound() {
         return dieingSound;
     }
 
-    public void setDieingSound(Sound dieingSound) {
-        this.dieingSound = dieingSound;
-    }
-
-    public static int getDifficulty() {
-        return difficulty;
-    }
-
-    public static void setDifficulty(int difficulty) {
-        Ghost.difficulty = difficulty;
-    }
-
-    public void setAttackUp(boolean attackUp) {
-        isAttackUp = attackUp;
-    }
-
-    public boolean isAttackDown() {
-        return isAttackDown;
-    }
-
-    public void setAttackDown(boolean attackDown) {
-        isAttackDown = attackDown;
-    }
-
-    public boolean isAttackLeftDown() {
-        return isAttackLeftDown;
-    }
-
-    public void setAttackLeftDown(boolean attackLeftDown) {
-        isAttackLeftDown = attackLeftDown;
-    }
-
-    public boolean isAttackLeftUp() {
-        return isAttackLeftUp;
-    }
-
-    public void setAttackLeftUp(boolean attackLeftUp) {
-        isAttackLeftUp = attackLeftUp;
-    }
-
-    public boolean isAttackRightUp() {
-        return isAttackRightUp;
-    }
-
-    public void setAttackRightUp(boolean attackRightUp) {
-        isAttackRightUp = attackRightUp;
-    }
-
-    public boolean isAttackRightDown() {
-        return isAttackRightDown;
-    }
-
-    public void setAttackRightDown(boolean attackRightDown) {
-        isAttackRightDown = attackRightDown;
-    }
-
-    public Integer getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
-    }
 
 
-    public ArrayList<ImageIcon> getMoveLeft() {
-        return moveLeft;
-    }
 
-    public void setMoveLeft(ArrayList<ImageIcon> moveLeft) {
-        this.moveLeft = moveLeft;
-    }
 
-    public ArrayList<ImageIcon> getMoveRight() {
-        return moveRight;
-    }
-
-    public void setMoveRight(ArrayList<ImageIcon> moveRight) {
-        this.moveRight = moveRight;
-    }
-
-    public ArrayList<ImageIcon> getMoveUp() {
-        return moveUp;
-    }
-
-    public void setMoveUp(ArrayList<ImageIcon> moveUp) {
-        this.moveUp = moveUp;
-    }
-
-    public ArrayList<ImageIcon> getMoveDown() {
-        return moveDown;
-    }
-
-    public void setMoveDown(ArrayList<ImageIcon> moveDown) {
-        this.moveDown = moveDown;
-    }
-
-    public ArrayList<ImageIcon> getAttackLeft() {
-        return attackLeft;
-    }
-
-    public void setAttackLeft(ArrayList<ImageIcon> attackLeft) {
-        this.attackLeft = attackLeft;
-    }
-
-    public ArrayList<ImageIcon> getAttackRight() {
-        return attackRight;
-    }
-
-    public void setAttackRight(ArrayList<ImageIcon> attackRight) {
-        this.attackRight = attackRight;
-    }
-
-    public ArrayList<ImageIcon> getAttackUp() {
-        return attackUp;
-    }
-
-    public void setAttackUp(ArrayList<ImageIcon> attackUp) {
-        this.attackUp = attackUp;
-    }
-
-    public ArrayList<ImageIcon> getAttackDown() {
-        return attackDown;
-    }
-
-    public void setAttackDown(ArrayList<ImageIcon> attackDown) {
-        this.attackDown = attackDown;
-    }
-
-    public ArrayList<ImageIcon> getDead() {
-        return dead;
-    }
-
-    public void setDead(ArrayList<ImageIcon> dead) {
-        this.dead = dead;
-    }
-
-    public Integer getNumberOfDeadGhost() {
-        return numberOfDeadGhost;
-    }
-
-    public void setNumberOfDeadGhost(Integer numberOfDeadGhost) {
-        this.numberOfDeadGhost = numberOfDeadGhost;
-    }
-
-    public boolean isNotTheFirstGhost() {
-        return notTheFirstGhost;
-    }
-
-    public void setNotTheFirstGhost(boolean notTheFirstGhost) {
-        this.notTheFirstGhost = notTheFirstGhost;
-    }
-
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
-    public Integer getWidth_() {
-        return width_;
-    }
-
-    public void setWidth_(Integer width_) {
-        this.width_ = width_;
-    }
-
-    public Integer getHeight_() {
-        return height_;
-    }
-
-    public void setHeight_(Integer height_) {
-        this.height_ = height_;
-    }
 }

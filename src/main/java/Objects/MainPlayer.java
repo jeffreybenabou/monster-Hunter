@@ -140,7 +140,7 @@ public class MainPlayer extends GameObject {
 
 
                 DIR_1 = "Photos/character/" + type2 + "/attack/spacielAttack/";
-                imageLoader.addImageOfObject(72, DIR_1, spacielAttackA);
+                imageLoader.addImageOfObject(36, DIR_1, spacielAttackA);
 
                 DIR_1 = "Photos/character/" + type2 + "/attack/left/";
                 if (type2.equals("male"))
@@ -204,6 +204,7 @@ public class MainPlayer extends GameObject {
 
         new Thread(new Runnable() {
             public void run() {
+                setSize(300,300);
 
                 while (!playerDead) {
 
@@ -357,8 +358,10 @@ e.printStackTrace();
         checkIfStand();
         checkIfAttacking();
         checkIfSpacialAttack();
-        setSize(getIcon().getIconWidth(),getIcon().getIconHeight());
         checkIfMainPlayerIsDieing();
+
+        if(!spacialAttack&&!playerDead)
+            setSize(300,300);
         if(!GamePanel.muteActive)
         checkSoundStatus();
 
@@ -395,6 +398,8 @@ try
                 e.printStackTrace();
             }
         }
+        Thread.sleep(2000);
+        StaticVariables.gamePanel.getSettingLabel().setVisible(true);
 
 
 
@@ -476,8 +481,9 @@ try
 
                 }
 
-                setIcon(getSpacielAttackA().get(getIndex()));
-                if (getIndex() == 40)
+                setSize(350,350);
+                setIcon(new ImageIcon(getSpacielAttackA().get(getIndex()).getImage().getScaledInstance(getWidth()+50,getHeight()+50,4)));
+                if (getIndex() == 30)
                     vibrateTheScreen();
 
             }
@@ -530,7 +536,7 @@ try
                     StaticVariables.world.setLocation(StaticVariables.world.getX() + x, StaticVariables.world.getY());
 
                     try {
-                        Thread.sleep(30);
+                        Thread.sleep(40);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
