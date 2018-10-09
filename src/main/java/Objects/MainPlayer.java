@@ -8,8 +8,8 @@ import sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.LinkedList;
 
 import static GameCore.MiniMap.addTheMainPlayerLocationToMap;
 
@@ -40,20 +40,16 @@ public class MainPlayer extends GameObject {
     is_stand_left_up, is_stand_left_down, is_stand_right_dowb, is_stand_right_up;
     private static String DIR_1;
 
-    public static ArrayList<ImageIcon>
+    public static LinkedList<ImageIcon>
             up, down, left, right,
             standDown,
             attackLeft, attackRight, attackDown, attackUp, die, spacielAttackA;
     private Double angle = 0d;
     private Double distanceFromPoint;
-    private Long speedOfMove = 20l;
+    private Long speedOfMove = 20L;
     private FootStep footStep;
 
 
-    float startTime;
-
-
-    float stopTime;
     public static boolean playerDead = false;
 
 
@@ -64,7 +60,7 @@ public class MainPlayer extends GameObject {
             imageLoader = new ImageLoader();
             defineTheSound();
 
-            setBounds(1000, 1000, xSpriteSheet, ySprtieSheet);
+            setBounds(1050, 1000, xSpriteSheet, ySprtieSheet);
             point = new Point(getX(), getY());
             MiniMap.setTheMainPlayerLabel(getX(), getY());
             StaticVariables.miniMap.add(MiniMap.mainPlayerLabel);
@@ -182,19 +178,19 @@ public class MainPlayer extends GameObject {
 
     public static void makeNewElements(String type) {
 
-        up = new ArrayList<ImageIcon>();
-        down = new ArrayList<ImageIcon>();
-        left = new ArrayList<ImageIcon>();
-        right = new ArrayList<ImageIcon>();
+        up = new LinkedList<ImageIcon>();
+        down = new LinkedList<ImageIcon>();
+        left = new LinkedList<ImageIcon>();
+        right = new LinkedList<ImageIcon>();
 
-        standDown = new ArrayList<ImageIcon>();
-        spacielAttackA = new ArrayList<ImageIcon>();
+        standDown = new LinkedList<ImageIcon>();
+        spacielAttackA = new LinkedList<ImageIcon>();
 
-        attackLeft = new ArrayList<ImageIcon>();
-        attackDown = new ArrayList<ImageIcon>();
-        attackRight = new ArrayList<ImageIcon>();
-        attackUp = new ArrayList<ImageIcon>();
-        die = new ArrayList<ImageIcon>();
+        attackLeft = new LinkedList<ImageIcon>();
+        attackDown = new LinkedList<ImageIcon>();
+        attackRight = new LinkedList<ImageIcon>();
+        attackUp = new LinkedList<ImageIcon>();
+        die = new LinkedList<ImageIcon>();
         addMainPlayerPosition(type);
 
     }
@@ -481,8 +477,19 @@ try
 
                 }
 
-                setSize(350,350);
-                setIcon(new ImageIcon(getSpacielAttackA().get(getIndex()).getImage().getScaledInstance(getWidth()+50,getHeight()+50,4)));
+                if(type.equals("female"))
+                {
+                    setSize(350,350);
+
+                    setIcon(new ImageIcon(getSpacielAttackA().get(getIndex()).getImage().getScaledInstance(getWidth()+50,getHeight()+50,4)));
+
+                }
+                else
+                {
+                    setIcon(new ImageIcon(getSpacielAttackA().get(getIndex()).getImage().getScaledInstance(getWidth(),getHeight(),4)));
+
+                }
+                    setSize(350,350);
                 if (getIndex() == 30)
                     vibrateTheScreen();
 
@@ -687,7 +694,7 @@ try
         }
         }
 
-        private void checkIndexOutOfBound (ArrayList < ImageIcon > arralist) {
+        private void checkIndexOutOfBound (LinkedList < ImageIcon > arralist) {
 
 
             if (getIndex() == arralist.size() - 1) {
@@ -1015,91 +1022,91 @@ try
         DIR_1 = dir1;
     }
 
-    public static ArrayList<ImageIcon> getUp() {
+    public static LinkedList<ImageIcon> getUp() {
         return up;
     }
 
-    public static void setUp(ArrayList<ImageIcon> up) {
+    public static void setUp(LinkedList<ImageIcon> up) {
         MainPlayer.up = up;
     }
 
-    public static ArrayList<ImageIcon> getDown() {
+    public static LinkedList<ImageIcon> getDown() {
         return down;
     }
 
-    public static void setDown(ArrayList<ImageIcon> down) {
+    public static void setDown(LinkedList<ImageIcon> down) {
         MainPlayer.down = down;
     }
 
-    public static ArrayList<ImageIcon> getLeft() {
+    public static LinkedList<ImageIcon> getLeft() {
         return left;
     }
 
-    public static void setLeft(ArrayList<ImageIcon> left) {
+    public static void setLeft(LinkedList<ImageIcon> left) {
         MainPlayer.left = left;
     }
 
-    public static ArrayList<ImageIcon> getRight() {
+    public static LinkedList<ImageIcon> getRight() {
         return right;
     }
 
-    public static void setRight(ArrayList<ImageIcon> right) {
+    public static void setRight(LinkedList<ImageIcon> right) {
         MainPlayer.right = right;
     }
 
-    public static ArrayList<ImageIcon> getStandDown() {
+    public static LinkedList<ImageIcon> getStandDown() {
         return standDown;
     }
 
-    public static void setStandDown(ArrayList<ImageIcon> standDown) {
+    public static void setStandDown(LinkedList<ImageIcon> standDown) {
         MainPlayer.standDown = standDown;
     }
 
-    public static ArrayList<ImageIcon> getAttackLeft() {
+    public static LinkedList<ImageIcon> getAttackLeft() {
         return attackLeft;
     }
 
-    public static void setAttackLeft(ArrayList<ImageIcon> attackLeft) {
+    public static void setAttackLeft(LinkedList<ImageIcon> attackLeft) {
         MainPlayer.attackLeft = attackLeft;
     }
 
-    public static ArrayList<ImageIcon> getAttackRight() {
+    public static LinkedList<ImageIcon> getAttackRight() {
         return attackRight;
     }
 
-    public static void setAttackRight(ArrayList<ImageIcon> attackRight) {
+    public static void setAttackRight(LinkedList<ImageIcon> attackRight) {
         MainPlayer.attackRight = attackRight;
     }
 
-    public static ArrayList<ImageIcon> getAttackDown() {
+    public static LinkedList<ImageIcon> getAttackDown() {
         return attackDown;
     }
 
-    public static void setAttackDown(ArrayList<ImageIcon> attackDown) {
+    public static void setAttackDown(LinkedList<ImageIcon> attackDown) {
         MainPlayer.attackDown = attackDown;
     }
 
-    public static ArrayList<ImageIcon> getAttackUp() {
+    public static LinkedList<ImageIcon> getAttackUp() {
         return attackUp;
     }
 
-    public static void setAttackUp(ArrayList<ImageIcon> attackUp) {
+    public static void setAttackUp(LinkedList<ImageIcon> attackUp) {
         MainPlayer.attackUp = attackUp;
     }
 
-    public static ArrayList<ImageIcon> getDie() {
+    public static LinkedList<ImageIcon> getDie() {
         return die;
     }
 
-    public static void setDie(ArrayList<ImageIcon> die) {
+    public static void setDie(LinkedList<ImageIcon> die) {
         MainPlayer.die = die;
     }
 
-    public static ArrayList<ImageIcon> getSpacielAttackA() {
+    public static LinkedList<ImageIcon> getSpacielAttackA() {
         return spacielAttackA;
     }
 
-    public static void setSpacielAttackA(ArrayList<ImageIcon> spacielAttackA) {
+    public static void setSpacielAttackA(LinkedList<ImageIcon> spacielAttackA) {
         MainPlayer.spacielAttackA = spacielAttackA;
     }
 
@@ -1135,19 +1142,5 @@ try
         this.footStep = footStep;
     }
 
-    public float getStartTime() {
-        return startTime;
-    }
 
-    public void setStartTime(float startTime) {
-        this.startTime = startTime;
-    }
-
-    public float getStopTime() {
-        return stopTime;
-    }
-
-    public void setStopTime(float stopTime) {
-        this.stopTime = stopTime;
-    }
 }

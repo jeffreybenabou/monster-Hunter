@@ -5,13 +5,13 @@ import GameCore.StaticVariables;
 import ImageHandel.ImageLoader;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Bird extends GameObject  {
 
     private static   boolean firstLoad=true;
     private Integer index=0,imageFrameRate=0;
-    public static ArrayList<ImageIcon> birdLeft,birdRight;
+    public static LinkedList<ImageIcon> birdLeft,birdRight;
     private boolean left,down;
     private ImageLoader imageLoader;
 
@@ -19,9 +19,9 @@ public class Bird extends GameObject  {
         imageLoader=new ImageLoader();
         if(firstLoad)
         {
-            setBirdLeft(new ArrayList<ImageIcon>());
+            setBirdLeft(new LinkedList<ImageIcon>());
 
-            birdRight=new ArrayList<ImageIcon>();
+            birdRight=new LinkedList<ImageIcon>();
             try
             {
                 imageLoader.addImageOfObject(13,"Photos/bird/left/",birdLeft);
@@ -140,19 +140,19 @@ public class Bird extends GameObject  {
         this.imageFrameRate = imageFrameRate;
     }
 
-    public static ArrayList<ImageIcon> getBirdLeft() {
+    public static LinkedList<ImageIcon> getBirdLeft() {
         return birdLeft;
     }
 
-    public static void setBirdLeft(ArrayList<ImageIcon> birdLeft) {
+    public static void setBirdLeft(LinkedList<ImageIcon> birdLeft) {
         Bird.birdLeft = birdLeft;
     }
 
-    public static ArrayList<ImageIcon> getBirdRight() {
+    public static LinkedList<ImageIcon> getBirdRight() {
         return birdRight;
     }
 
-    public static void setBirdRight(ArrayList<ImageIcon> birdRight) {
+    public static void setBirdRight(LinkedList<ImageIcon> birdRight) {
         Bird.birdRight = birdRight;
     }
 

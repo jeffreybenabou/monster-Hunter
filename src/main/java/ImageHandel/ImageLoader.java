@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ImageLoader {
     private ClassLoader classLoader = ImageLoader.class.getClassLoader();
@@ -32,7 +32,7 @@ public class ImageLoader {
         return null;
     }
 
-    public synchronized void addImageOfObject(int type, String dir, ArrayList<ImageIcon> linkedList) {
+    public synchronized void addImageOfObject(int type, String dir, LinkedList<ImageIcon> linkedList) {
         BufferedImage image;
         String dirc;
 

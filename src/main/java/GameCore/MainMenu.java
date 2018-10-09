@@ -18,63 +18,59 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 
 public class MainMenu extends JLabel implements MouseListener {
 
-    private ArrayList<String> saveName;
-    public static LoadGame loadGame=null;
-    public static String pathToFile,pathToImage;
-    public static boolean wantToLoadGame=false;
-    private int optionChoose,index=0;
+    private LinkedList<String> saveName;
+    public static LoadGame loadGame = null;
+    public static String pathToFile, pathToImage;
+    public static boolean wantToLoadGame = false;
+    private int optionChoose, index = 0;
     private ImageLoader imageLoader;
     private Sound backgroundSound;
-    private JLabel watingLabel,male,female,chooseThePlayer,loadingIcon,loadGameLabel,usersNames;
+    private JLabel watingLabel, male, female, chooseThePlayer, loadingIcon, loadGameLabel, usersNames;
     private TextField textField;
-    private JButton confirm,start,exit,loadGameButton,loadGameFromLoadingMenu;
-    private String type="";
-    private boolean hover=false;
-    private ArrayList<ImageIcon> aMale,aFemale;
+    private JButton confirm, start, exit, loadGameButton, loadGameFromLoadingMenu;
+    private String type = "";
+    private boolean hover = false;
+    private LinkedList<ImageIcon> aMale, aFemale;
     private Border border;
-    private JOptionPane showOptionDialog ;
+    private JOptionPane showOptionDialog;
     private JDialog jDialog;
     private JLabel loadGameImage;
     private JLabel saveListLabebl;
     private JList jList;
-    private ArrayList<BufferedImage> imageOfSave;
+    private LinkedList<BufferedImage> imageOfSave;
 
 
-    public MainMenu(){
+    public MainMenu() {
 
-        imageOfSave=new ArrayList<BufferedImage>();
-        imageLoader=new ImageLoader();
-        backgroundSound=new Sound();
+        imageOfSave = new LinkedList<BufferedImage>();
+        imageLoader = new ImageLoader();
+        backgroundSound = new Sound();
         backgroundSound.playSound(Sound.path.get(2));
 
-        try
-        {
+        try {
             addMouseListener(this);
-            setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
+            setIcon(new ImageIcon(StaticVariables.mainMenuBackGround.getScaledInstance(MainClass.dimension.width, MainClass.dimension.height, Image.SCALE_SMOOTH)));
             setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
             addTheLoadingLabel();
             ChooseThePlayer();
 
-            for (int i = 0; i <3 ; i++) {
+            for (int i = 0; i < 3; i++) {
                 createButton(i);
             }
             setVisible(false);
 
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
             e.printStackTrace();
 
         }
-
-
 
 
     }
@@ -85,7 +81,7 @@ public class MainMenu extends JLabel implements MouseListener {
 
                 File file = new File(getClass().getClassLoader().getResource("save/").getFile());
                 File[] listOfFiles = file.listFiles();
-                saveName = new ArrayList<String>();
+                saveName = new LinkedList<String>();
                 int j = 0;
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].getName().endsWith("txt")) {
@@ -109,14 +105,11 @@ public class MainMenu extends JLabel implements MouseListener {
     private void addTheListOfUsersSaveGame() {
 
 
-
         setTheList();
         setTheScroolPen();
         addTheLoadingMenuButtons();
         jList.repaint();
         loadGameLabel.repaint();
-
-
 
 
     }
@@ -160,18 +153,18 @@ public class MainMenu extends JLabel implements MouseListener {
     private void setTheScroolPen() {
         final JScrollPane jScrollPane = new JScrollPane();
         jScrollPane.setViewportView(jList);
-        jScrollPane.setBounds(saveListLabebl.getBounds().x,70,saveListLabebl.getBounds().width,saveListLabebl.getBounds().height-140);
+        jScrollPane.setBounds(saveListLabebl.getBounds().x, 70, saveListLabebl.getBounds().width, saveListLabebl.getBounds().height - 140);
         jScrollPane.setViewportView(jList);
         jScrollPane.add(saveListLabebl);
         loadGameLabel.add(jScrollPane);
     }
 
     private void addTheLoadingMenuButtons() {
-        loadGameFromLoadingMenu=new JButton("Press here to load the game ");
-        loadGameFromLoadingMenu.setBounds(saveListLabebl.getX()+25,saveListLabebl.getHeight()-50,200,40);
+        loadGameFromLoadingMenu = new JButton("Press here to load the game ");
+        loadGameFromLoadingMenu.setBounds(saveListLabebl.getX() + 25, saveListLabebl.getHeight() - 50, 200, 40);
         loadGameLabel.add(loadGameFromLoadingMenu);
-                usersNames=new JLabel("choose the save game you want to load ");
-        usersNames.setBounds(saveListLabebl.getX()+25,20,250,40);
+        usersNames = new JLabel("choose the save game you want to load ");
+        usersNames.setBounds(saveListLabebl.getX() + 25, 20, 250, 40);
         loadGameLabel.add(usersNames);
         loadGameFromLoadingMenu.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
@@ -181,7 +174,7 @@ public class MainMenu extends JLabel implements MouseListener {
             public void mousePressed(MouseEvent e) {
                 setTheTypeOfCharacter();
 
-                wantToLoadGame=true;
+                wantToLoadGame = true;
 
                 addTheWaitingLabel();
             }
@@ -203,25 +196,19 @@ public class MainMenu extends JLabel implements MouseListener {
 
     private void setTheTypeOfCharacter() {
         try {
-            setThePathToLoadGame(jList.getSelectedValue().toString(),false);
+            setThePathToLoadGame(jList.getSelectedValue().toString(), false);
 
             Scanner in = new Scanner(new FileReader(pathToFile));
-            while (in.hasNext())
-            {
+            while (in.hasNext()) {
 
-                String type=in.next();
-                if(type.equals("male")||type.equals("female"))
-                {
-                    this.type=type;
+                String type = in.next();
+                if (type.equals("male") || type.equals("female")) {
+                    this.type = type;
                     break;
                 }
 
 
-
-
-
             }
-
 
 
         } catch (FileNotFoundException e) {
@@ -231,7 +218,7 @@ public class MainMenu extends JLabel implements MouseListener {
     }
 
     private void checkTheMatchImage() {
-            loadGameImage.setIcon(new ImageIcon(imageOfSave.get(jList.getSelectedIndex()).getScaledInstance(loadGameImage.getWidth(),loadGameImage.getHeight(),4)));
+        loadGameImage.setIcon(new ImageIcon(imageOfSave.get(jList.getSelectedIndex()).getScaledInstance(loadGameImage.getWidth(), loadGameImage.getHeight(), 4)));
 
 
     }
@@ -242,31 +229,28 @@ public class MainMenu extends JLabel implements MouseListener {
         addTheListOfSaves();
 
 
-
     }
 
     private void addTheListOfSaves() {
-        saveListLabebl=new JLabel();
-        saveListLabebl.setBounds(loadGameImage.getWidth()+10,5,loadGameLabel.getWidth()-loadGameImage.getWidth()-15,loadGameLabel.getHeight()-10);
+        saveListLabebl = new JLabel();
+        saveListLabebl.setBounds(loadGameImage.getWidth() + 10, 5, loadGameLabel.getWidth() - loadGameImage.getWidth() - 15, loadGameLabel.getHeight() - 10);
         saveListLabebl.setOpaque(true);
 
         loadTheSaveNames();
     }
 
     private void setTheImageOfLoadGameLable() {
-        loadGameImage=new JLabel();
+        loadGameImage = new JLabel();
         loadGameImage.setOpaque(true);
         loadGameImage.setBackground(Color.BLACK);
         loadGameImage.setBorder(BorderFactory.createLineBorder(Color.white));
 
-        loadGameImage.setBounds(5,5,loadGameLabel.getWidth()/2+loadGameLabel.getWidth()/10-5,loadGameLabel.getHeight()-10);
+        loadGameImage.setBounds(5, 5, loadGameLabel.getWidth() / 2 + loadGameLabel.getWidth() / 10 - 5, loadGameLabel.getHeight() - 10);
 
-        try
-        {
-            loadGameImage.setIcon(new ImageIcon(StaticVariables.loadMenuBackGRound.getScaledInstance(loadGameImage.getWidth(),loadGameImage.getHeight(),4)));
+        try {
+            loadGameImage.setIcon(new ImageIcon(StaticVariables.loadMenuBackGRound.getScaledInstance(loadGameImage.getWidth(), loadGameImage.getHeight(), 4)));
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -274,20 +258,20 @@ public class MainMenu extends JLabel implements MouseListener {
     }
 
     private void setTheLoadGameLabel() {
-        loadGameLabel=new JLabel();
+        loadGameLabel = new JLabel();
 
         loadGameLabel.setBorder(BorderFactory.createLineBorder(Color.white));
         loadGameLabel.setVisible(false);
         loadGameLabel.setOpaque(true);
         repaint();
-        loadGameLabel.setBounds(MainClass.dimension.width/2-(MainClass.dimension.width/2)/2, MainClass.dimension.height/6,MainClass.dimension.width/2,MainClass.dimension.height/2+MainClass.dimension.height/5);
+        loadGameLabel.setBounds(MainClass.dimension.width / 2 - (MainClass.dimension.width / 2) / 2, MainClass.dimension.height / 6, MainClass.dimension.width / 2, MainClass.dimension.height / 2 + MainClass.dimension.height / 5);
         loadGameLabel.setBackground(Color.GRAY);
         add(loadGameLabel);
     }
 
 
-    public void ChooseThePlayer(){
-        chooseThePlayer=new JLabel();
+    public void ChooseThePlayer() {
+        chooseThePlayer = new JLabel();
         chooseThePlayer.setBorder(BorderFactory.createLineBorder(Color.white));
 
         chooseThePlayer.setVisible(false);
@@ -296,10 +280,10 @@ public class MainMenu extends JLabel implements MouseListener {
         add(chooseThePlayer);
         new Thread(new Runnable() {
             public void run() {
-                aMale=new ArrayList<ImageIcon>();
-                aFemale=new ArrayList<ImageIcon>();
-                female=new JLabel();
-                male=new JLabel();
+                aMale = new LinkedList<ImageIcon>();
+                aFemale = new LinkedList<ImageIcon>();
+                female = new JLabel();
+                male = new JLabel();
                 addPlayerLabel();
                 new Thread(new Runnable() {
                     public void run() {
@@ -307,11 +291,9 @@ public class MainMenu extends JLabel implements MouseListener {
                         new Thread(new Runnable() {
                             public void run() {
 
-                                imageLoader.addImageOfObject(32,"Photos/character/male/attack/down/",aMale);
+                                imageLoader.addImageOfObject(32, "Photos/character/male/attack/down/", aMale);
 
-                                    male.setIcon(aMale.get(0));
-
-
+                                male.setIcon(aMale.get(0));
 
 
                             }
@@ -319,10 +301,8 @@ public class MainMenu extends JLabel implements MouseListener {
                         new Thread(new Runnable() {
                             public void run() {
 
-                                imageLoader.addImageOfObject(43,"Photos/character/female/attack/down/",aFemale);
-                                    female.setIcon(aFemale.get(0));
-
-
+                                imageLoader.addImageOfObject(43, "Photos/character/female/attack/down/", aFemale);
+                                female.setIcon(aFemale.get(0));
 
 
                             }
@@ -331,12 +311,10 @@ public class MainMenu extends JLabel implements MouseListener {
                 }).start();
 
 
-
-
-                chooseThePlayer.setBounds(250,100,getWidth()/2+200,getHeight()/2+200);
+                chooseThePlayer.setBounds(250, 100, getWidth() / 2 + 200, getHeight() / 2 + 200);
                 chooseThePlayer.setOpaque(true);
                 chooseThePlayer.setBackground(new Color(0, 0, 0, 254));
-                border  = BorderFactory.createLineBorder(Color.red);
+                border = BorderFactory.createLineBorder(Color.red);
 
                 chooseThePlayer.setBorder(border);
                 chooseThePlayer.setForeground(Color.red);
@@ -353,10 +331,10 @@ public class MainMenu extends JLabel implements MouseListener {
         chooseThePlayer.add(male);
         female.addMouseListener(this);
         male.addMouseListener(this);
-        male.setBounds(480,100,380,400);
+        male.setBounds(480, 100, 380, 400);
         male.setName("male");
         male.setHorizontalAlignment(JLabel.CENTER);
-        female.setBounds(20,100,380 ,400);
+        female.setBounds(20, 100, 380, 400);
         female.setHorizontalAlignment(JLabel.RIGHT);
         female.setName("female");
 
@@ -366,7 +344,7 @@ public class MainMenu extends JLabel implements MouseListener {
         getPlayerName();
     }
 
-    public void moveTheCharacter(final JLabel label, final ArrayList<ImageIcon> vector) {
+    public void moveTheCharacter(final JLabel label, final LinkedList<ImageIcon> vector) {
 
         new Thread(new Runnable() {
             public void run() {
@@ -403,9 +381,9 @@ public class MainMenu extends JLabel implements MouseListener {
 
     private void getPlayerName() {
 
-        textField=new TextField();
-         confirm=new JButton();
-        confirm.setBounds(390,540,90,30);
+        textField = new TextField();
+        confirm = new JButton();
+        confirm.setBounds(390, 540, 90, 30);
         confirm.setText("confirm");
         confirm.setName("confirm");
         confirm.addMouseListener(this);
@@ -413,63 +391,58 @@ public class MainMenu extends JLabel implements MouseListener {
 
         textField.setName("choose");
 
-        textField.setBounds(340,50,200,20);
-        JLabel label=new JLabel(" enter your character name here :");
+        textField.setBounds(340, 50, 200, 20);
+        JLabel label = new JLabel(" enter your character name here :");
         label.setForeground(Color.red);
-        label.setBounds(340,20,200,20);
+        label.setBounds(340, 20, 200, 20);
         chooseThePlayer.add(label);
 
         chooseThePlayer.add(textField);
 
 
-
     }
 
     private void createButton(int i) {
-        JButton button=null;
-        try
-        {
-            switch (i)
-            {
-                case 0:{
+        JButton button = null;
+        try {
+            switch (i) {
+                case 0: {
 
-                    start=new JButton(new ImageIcon(StaticVariables.startButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    start.setBounds(550-MainClass.differenceX, 200-MainClass.differenceY, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
+                    start = new JButton(new ImageIcon(StaticVariables.startButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8, 0)));
+                    start.setBounds(550 - MainClass.differenceX, 200 - MainClass.differenceY, start.getIcon().getIconWidth(), start.getIcon().getIconHeight());
                     start.setName("start");
-                    start.setPressedIcon(new ImageIcon(StaticVariables.startButton.getScaledInstance(start.getWidth()+20,start.getHeight()+20,4)));
+                    start.setPressedIcon(new ImageIcon(StaticVariables.startButton.getScaledInstance(start.getWidth() + 20, start.getHeight() + 20, 4)));
 
                     add(start);
-                    button=start;
+                    button = start;
                     break;
                 }
-                case 1:{
-                    loadGameButton=new JButton(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    loadGameButton.setBounds(550-MainClass.differenceX, 350-MainClass.differenceY, loadGameButton.getIcon().getIconWidth(), loadGameButton.getIcon().getIconHeight());
+                case 1: {
+                    loadGameButton = new JButton(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8, 0)));
+                    loadGameButton.setBounds(550 - MainClass.differenceX, 350 - MainClass.differenceY, loadGameButton.getIcon().getIconWidth(), loadGameButton.getIcon().getIconHeight());
                     loadGameButton.setName("load");
-                    loadGameButton.setPressedIcon(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(loadGameButton.getWidth()+20,loadGameButton.getHeight()+20,4)));
+                    loadGameButton.setPressedIcon(new ImageIcon(StaticVariables.loadFromComputerButton.getScaledInstance(loadGameButton.getWidth() + 20, loadGameButton.getHeight() + 20, 4)));
 
                     add(loadGameButton);
-                    button=loadGameButton;
+                    button = loadGameButton;
                     break;
                 }
-                case 2:{
-                    exit=new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8,0)));
-                    exit.setBounds(550-MainClass.differenceX, 500-MainClass.differenceY, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
+                case 2: {
+                    exit = new JButton(new ImageIcon(StaticVariables.exitButton.getScaledInstance(MainClass.dimension.width / 5, MainClass.dimension.height / 8, 0)));
+                    exit.setBounds(550 - MainClass.differenceX, 500 - MainClass.differenceY, exit.getIcon().getIconWidth(), exit.getIcon().getIconHeight());
                     exit.setName("exit");
-                    exit.setPressedIcon(new ImageIcon(StaticVariables.exitButton.getScaledInstance(exit.getWidth()+20,exit.getHeight()+20,4)));
+                    exit.setPressedIcon(new ImageIcon(StaticVariables.exitButton.getScaledInstance(exit.getWidth() + 20, exit.getHeight() + 20, 4)));
 
                     add(exit);
-                    button=exit;
+                    button = exit;
                     break;
                 }
 
 
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
         button.setContentAreaFilled(false);
@@ -480,42 +453,26 @@ public class MainMenu extends JLabel implements MouseListener {
     }
 
 
-
-    private void addTheWaitingLabel(){
-
-
-
-
-
-
-
-
-
-
-
+    private void addTheWaitingLabel() {
 
 
         new Thread(new Runnable() {
             public void run() {
-                try
-                {
+                try {
 
 
-
-
-                    loadingIcon=new JLabel("loading.....");
+                    loadingIcon = new JLabel("loading.....");
                     loadingIcon.setHorizontalTextPosition(JLabel.CENTER);
                     loadingIcon.setFont(new Font("Serif", Font.PLAIN, 45));
                     loadingIcon.setForeground(Color.red);
-                    loadingIcon.setBounds(getWidth()-250-MainClass.differenceX,getHeight()-80-MainClass.differenceY,400-MainClass.differenceX,80-MainClass.differenceY);
-                    watingLabel =new JLabel(new ImageIcon(StaticVariables.watingLabel.getScaledInstance(MainClass.dimension.width,MainClass.dimension.height,Image.SCALE_SMOOTH)));
-                    watingLabel.setBounds(0,0,MainClass.dimension.width,MainClass.dimension.height);
+                    loadingIcon.setBounds(getWidth() - 250 - MainClass.differenceX, getHeight() - 80 - MainClass.differenceY, 400 - MainClass.differenceX, 80 - MainClass.differenceY);
+                    watingLabel = new JLabel(new ImageIcon(StaticVariables.watingLabel.getScaledInstance(MainClass.dimension.width, MainClass.dimension.height, Image.SCALE_SMOOTH)));
+                    watingLabel.setBounds(0, 0, MainClass.dimension.width, MainClass.dimension.height);
                     watingLabel.add(loadingIcon);
                     StaticVariables.mainClass.add(watingLabel);
                     backgroundSound.stopSound();
                     MainClass.removeTheMainMenu();
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
 
                 }
@@ -524,57 +481,48 @@ public class MainMenu extends JLabel implements MouseListener {
 
                     public void run() {
                         MainPlayer.makeNewElements(type);
-                        while (true)
-                        {
+                        while (true) {
                             try {
                                 Thread.sleep(5000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
 
-                            if(StaticVariables.worldBackGround==null)
-                            {
+                            if (StaticVariables.worldBackGround == null) {
                                 try {
                                     Thread.sleep(5);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                            }
-                            else
-                            {
+                            } else {
 
-                                try
-                                {
-                                    MainPlayer.life=new Life(MainPlayer.sumOfLife,null);
-                                    StaticVariables.miniMap=new MiniMap();
-                                    StaticVariables.mainPlayer=new MainPlayer();
-                                    StaticVariables.world=new World();
-                                    try
-                                    {
-                                                                            StaticVariables.world.setIcon(new ImageIcon(StaticVariables.worldBackGround));
+                                try {
+                                    MainPlayer.life = new Life(MainPlayer.sumOfLife, null);
+                                    StaticVariables.miniMap = new MiniMap();
+                                    StaticVariables.mainPlayer = new MainPlayer();
+                                    StaticVariables.world = new World();
+                                    try {
+                                        StaticVariables.world.setIcon(new ImageIcon(StaticVariables.worldBackGround));
 
-                                    }catch (Exception e)
-                                    {
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
 
 
-
-                                    StaticVariables.gamePanel=new GamePanel();
+                                    StaticVariables.gamePanel = new GamePanel();
                                     StaticVariables.gamePanel.add(StaticVariables.miniMap);
                                     MainClass.addTheWorld();
                                     watingLabel.setVisible(false);
-                                    if(wantToLoadGame)
-                                    loadGame=new LoadGame(pathToFile);
+                                    if (wantToLoadGame)
+                                        loadGame = new LoadGame(pathToFile);
                                     else
-                                    new SaveGame(MainMenu.pathToFile,MainMenu.pathToImage);
+                                        new SaveGame(MainMenu.pathToFile, MainMenu.pathToImage);
 
-                                }catch (Exception e)
-                                {
+                                    removeUnnecessaryImage();
+                                } catch (Exception e) {
 
-e.printStackTrace();
+                                    e.printStackTrace();
                                 }
-
 
 
                                 break;
@@ -585,33 +533,32 @@ e.printStackTrace();
                 }).start();
 
 
-
-
-
-
-
-
-
-
-    }
-}).start();
+            }
+        }).start();
 
 
     }
 
-    private void setThePathToLoadGame(String path,boolean newGame) {
-        if(newGame)
-        {
-            pathToFile=ImageLoader.class.getClassLoader().getResource("save/").getPath()+path+".txt";
-            pathToImage=ImageLoader.class.getClassLoader().getResource("save/").getPath()+path+".png";
-        }
-        else
-        {
+    private void removeUnnecessaryImage() {
+        StaticVariables.mainMenu = null;
+        StaticVariables.into = null;
+        StaticVariables.loadMenuBackGRound = null;
+        StaticVariables.mainMenuBackGround = null;
+        StaticVariables.watingLabel = null;
+        System.gc();
 
-            pathToFile=ImageLoader.class.getClassLoader().getResource("save/").getPath()+path;
-            if(path.endsWith("txt"))
-            path=path.replace("txt","png");
-            pathToImage=ImageLoader.class.getClassLoader().getResource("save/").getPath()+path;
+    }
+
+    private void setThePathToLoadGame(String path, boolean newGame) {
+        if (newGame) {
+            pathToFile = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path + ".txt";
+            pathToImage = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path + ".png";
+        } else {
+
+            pathToFile = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path;
+            if (path.endsWith("txt"))
+                path = path.replace("txt", "png");
+            pathToImage = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path;
 
         }
 
@@ -620,34 +567,34 @@ e.printStackTrace();
     private void defineTheLevelDifficulty() {
 
 
-        Button button1=new Button("easy");
+        Button button1 = new Button("easy");
         button1.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 showOptionDialog.setVisible(false);
                 jDialog.setVisible(false);
-                Ghost.difficulty=0;
+                Ghost.difficulty = 0;
             }
         });
-        Button button2=new Button("normal");
+        Button button2 = new Button("normal");
         button2.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 showOptionDialog.setVisible(false);
                 jDialog.setVisible(false);
-                Ghost.difficulty=1;
+                Ghost.difficulty = 1;
             }
         });
-        Button button3=new Button("hard");
+        Button button3 = new Button("hard");
         button3.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 showOptionDialog.setVisible(false);
                 jDialog.setVisible(false);
-                Ghost.difficulty=2;
+                Ghost.difficulty = 2;
             }
         });
-        showOptionDialog = new JOptionPane(  "choose wisely ", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, new Object[]{button1, button2,button3});
+        showOptionDialog = new JOptionPane("choose wisely ", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, new Object[]{button1, button2, button3});
         jDialog = showOptionDialog.createDialog(null, "pick Difficulty");
         jDialog.setModal(true);
         showOptionDialog.setVisible(true);
@@ -657,10 +604,10 @@ e.printStackTrace();
     }
 
     private void addTheLoadingMenuFromNewGame() {
-        File file = new File(""+ImageLoader.class.getClassLoader().getResource("save/").getPath(),""+textField.getText()+".txt");
+        File file = new File("" + ImageLoader.class.getClassLoader().getResource("save/").getPath(), "" + textField.getText() + ".txt");
 
         try {
-            if(!file.createNewFile()){
+            if (!file.createNewFile()) {
                 askToLoadAGame();
 
 
@@ -672,13 +619,11 @@ e.printStackTrace();
 
     private void askToLoadAGame() {
 
-        try
-        {
-            optionChoose= JOptionPane.showOptionDialog(this,null,"you have been use this user name already ,do you wish to start a new game ?all progress will be restart.",JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,new ImageIcon(StaticVariables.imageLoader.loadImage("save/"+textField.getText()+".png").getScaledInstance(600,400,4)),null,null);
+        try {
+            optionChoose = JOptionPane.showOptionDialog(this, null, "you have been use this user name already ,do you wish to start a new game ?all progress will be restart.", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, new ImageIcon(StaticVariables.imageLoader.loadImage("save/" + textField.getText() + ".png").getScaledInstance(600, 400, 4)), null, null);
 
-        }catch (Exception e)
-        {
- e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
@@ -691,8 +636,7 @@ e.printStackTrace();
 
     public void mousePressed(MouseEvent e) {
 
-        if(e.getComponent().equals(loadGameButton))
-        {
+        if (e.getComponent().equals(loadGameButton)) {
             new Thread(new Runnable() {
                 public void run() {
                     try {
@@ -706,47 +650,37 @@ e.printStackTrace();
             }).start();
 
         }
-        if(e.getComponent().equals(confirm))
-        {
+        if (e.getComponent().equals(confirm)) {
 
-            if(!type.equals("")&&!textField.getText().equals(""))
-            {
+            if (!type.equals("") && !textField.getText().equals("")) {
                 defineTheLevelDifficulty();
-                setThePathToLoadGame(textField.getText(),true);
+                setThePathToLoadGame(textField.getText(), true);
 
-                if(optionChoose!=-1&&optionChoose!=1&&optionChoose!=2)
-                addTheWaitingLabel();
-            }
-            else
-                JOptionPane.showMessageDialog(this,"pick user name and character");
-
-
-
-
+                if (optionChoose != -1 && optionChoose != 1 && optionChoose != 2)
+                    addTheWaitingLabel();
+            } else
+                JOptionPane.showMessageDialog(this, "pick user name and character");
 
 
         }
-        if(e.getComponent().equals(male))
-        {
+        if (e.getComponent().equals(male)) {
             male.setBorder(border);
-            male.setBorder( BorderFactory.createMatteBorder(
+            male.setBorder(BorderFactory.createMatteBorder(
                     3, 3, 3, 3, Color.red));
 
             female.setBorder(null);
-            type="male";
+            type = "male";
         }
-        if(e.getComponent().equals(female))
-        {
+        if (e.getComponent().equals(female)) {
             female.setBorder(border);
-            female.setBorder( BorderFactory.createMatteBorder(
+            female.setBorder(BorderFactory.createMatteBorder(
                     3, 3, 3, 3, Color.red));
             male.setBorder(null);
-            type="female";
+            type = "female";
         }
 
 
-        if(e.getComponent().equals(start))
-        {
+        if (e.getComponent().equals(start)) {
             loadGameButton.setEnabled(false);
             new Thread(new Runnable() {
                 public void run() {
@@ -761,18 +695,15 @@ e.printStackTrace();
             }).start();
 
 
-
         }
 
-        if(e.getComponent().equals(this))
-        {
+        if (e.getComponent().equals(this)) {
             start.setEnabled(true);
             loadGameButton.setEnabled(true);
             chooseThePlayer.setVisible(false);
             loadGameLabel.setVisible(false);
         }
-        if(e.getComponent().equals(exit))
-        {
+        if (e.getComponent().equals(exit)) {
             new Thread(new Runnable() {
                 public void run() {
 
@@ -798,26 +729,19 @@ e.printStackTrace();
     public void mouseEntered(MouseEvent e) {
 
 
-
-            if(e.getComponent().equals(male))
-            {
-                hover=true;
-                moveTheCharacter(male,aMale);
-            }
-            else if(e.getComponent().equals(female))
-            {
-                hover=true;
-                moveTheCharacter(female,aFemale);
-            }
-
-
-
+        if (e.getComponent().equals(male)) {
+            hover = true;
+            moveTheCharacter(male, aMale);
+        } else if (e.getComponent().equals(female)) {
+            hover = true;
+            moveTheCharacter(female, aFemale);
+        }
 
 
     }
 
     public void mouseExited(MouseEvent e) {
-        hover=false;
+        hover = false;
     }
 
 
@@ -862,7 +786,6 @@ e.printStackTrace();
     }
 
 
-
     public JButton getExit() {
         return exit;
     }
@@ -887,21 +810,6 @@ e.printStackTrace();
         this.hover = hover;
     }
 
-    public ArrayList<ImageIcon> getaMale() {
-        return aMale;
-    }
-
-    public void setaMale(ArrayList<ImageIcon> aMale) {
-        this.aMale = aMale;
-    }
-
-    public ArrayList<ImageIcon> getaFemale() {
-        return aFemale;
-    }
-
-    public void setaFemale(ArrayList<ImageIcon> aFemale) {
-        this.aFemale = aFemale;
-    }
 
     public JLabel getMale() {
         return male;

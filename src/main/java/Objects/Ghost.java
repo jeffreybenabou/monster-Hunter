@@ -7,12 +7,12 @@ import sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Ghost extends GameObject {
 
-    private static   ArrayList<ImageIcon>
+    private static LinkedList<ImageIcon>
             moveLeft,
             moveRight,
             moveUp,
@@ -106,17 +106,17 @@ public class Ghost extends GameObject {
     }
 
     private static void addTheVector() {
-        moveLeft = new ArrayList<ImageIcon>();
-        moveRight = new ArrayList<ImageIcon>();
-        moveUp = new ArrayList<ImageIcon>();
-        moveDown = new ArrayList<ImageIcon>();
+        moveLeft = new LinkedList<ImageIcon>();
+        moveRight = new LinkedList<ImageIcon>();
+        moveUp = new LinkedList<ImageIcon>();
+        moveDown = new LinkedList<ImageIcon>();
 
-        attackDown = new ArrayList<ImageIcon>();
-        attackLeft = new ArrayList<ImageIcon>();
-        attackRight = new ArrayList<ImageIcon>();
-        attackUp = new ArrayList<ImageIcon>();
+        attackDown = new LinkedList<ImageIcon>();
+        attackLeft = new LinkedList<ImageIcon>();
+        attackRight = new LinkedList<ImageIcon>();
+        attackUp = new LinkedList<ImageIcon>();
 
-        dead = new ArrayList<ImageIcon>();
+        dead = new LinkedList<ImageIcon>();
 
 
     }

@@ -362,7 +362,7 @@ e.printStackTrace();
 
     public void mousePressed(MouseEvent e) {
 
-        checkIfUserPreesTheCoin(e);
+        checkIfUserPressTheCoin(e);
 
         if(e.getButton()==MouseEvent.BUTTON2)
         {
@@ -373,7 +373,7 @@ e.printStackTrace();
         if(e.getButton()==MouseEvent.BUTTON1&&!MainPlayer.spacialAttack)
         {
 
-            checkIfPreesTheSetting(e);
+            checkIfPressTheSetting(e);
             checkIfPlayerPreesTheWorldOrGhost(e);
             checkIfMainPlayerFightTheGhost(e);
             checkIfUserIsInsideTheEntrance(e);
@@ -394,6 +394,7 @@ e.printStackTrace();
     private boolean checkIfEnoughMoney(int amount){
         return amount<=StaticVariables.sumOfMoney;
     }
+
     private void checkIfUserWantToBuySomething(MouseEvent e){
         if(e.getComponent().equals(StaticVariables.gamePanel.getLife1000()))
         {
@@ -510,7 +511,7 @@ e.printStackTrace();
         for (House house:houseArrayList) {
             if(house.getHouseEntrance().equals(e.getComponent()))
             {
-                checkIfUserPreesTheHouse(e);
+                checkIfUserPressTheHouse(e);
                 break;
             }
 
@@ -522,7 +523,7 @@ e.printStackTrace();
 
     }
 
-    private void checkIfUserPreesTheCoin(MouseEvent e) {
+    private void checkIfUserPressTheCoin(MouseEvent e) {
         if(e.getComponent().getClass().getSimpleName().equals("CoinAdd"))
         {
             if(!GamePanel.muteActive)
@@ -551,7 +552,7 @@ e.printStackTrace();
         }
     }
 
-    private void checkIfPreesTheSetting(MouseEvent e) {
+    private void checkIfPressTheSetting(MouseEvent e) {
         if(e.getComponent().equals(StaticVariables.gamePanel.getMoneyIcon())||
                 e.getComponent().equals(StaticVariables.gamePanel.getBag())||
                 e.getComponent().equals(StaticVariables.gamePanel.getBag().getKey1())||
@@ -619,7 +620,7 @@ e.printStackTrace();
 
     }
 
-    private void checkIfUserPreesTheHouse(final MouseEvent e) {
+    private void checkIfUserPressTheHouse(final MouseEvent e) {
 
 
 
@@ -745,6 +746,10 @@ e.printStackTrace();
             }
 
             private void changeTheXAndY(int x, int y,boolean start) {
+                /*
+                * this method check which house the players is in and set the x and y of the house
+                * by the right house
+                * */
                 switch (houseNumber)
                 {
                     case 0:

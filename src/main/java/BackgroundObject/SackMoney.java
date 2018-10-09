@@ -6,23 +6,21 @@ import sound.Sound;
 import javax.swing.*;
 import java.awt.*;
 
-public class SackMoney extends JLabel {
+ class SackMoney extends JLabel {
     private Font myFont;
-    private Sound sound;
+    private Sound moneySound;
     private SackMoney sackMoney;
-    public SackMoney(){
-        sound=new Sound();
-        sound.playSound(Sound.path.get(11));
-        sound.setVolume(6);
+     SackMoney(){
+        setTheSound();
+        setTheProperties();
+        setTheAnimation();
 
-        sackMoney=this;
-        setForeground(Color.yellow);
-         myFont = new Font("Serif", Font.BOLD, 50);
-        setFont(myFont);
-        setText("+250$");
-        setVerticalTextPosition(JLabel.CENTER);
-        setBounds(600,300,200,60);
-        StaticVariables.gamePanel.add(this);
+
+
+
+    }
+
+    private void setTheAnimation(){
         new Thread(new Runnable() {
             int x=50;
             public void run() {
@@ -42,7 +40,7 @@ public class SackMoney extends JLabel {
                         e.printStackTrace();
                     }
                 }
-                sound.stopSound();
+                moneySound.stopSound();
 
 
                 StaticVariables.sumOfMoney+=250;
@@ -51,7 +49,21 @@ public class SackMoney extends JLabel {
                 StaticVariables.gamePanel.remove(sackMoney);
             }
         }).start();
+    }
+    private void setTheProperties() {
+        sackMoney=this;
+        setForeground(Color.yellow);
+        myFont = new Font("Serif", Font.BOLD, 50);
+        setFont(myFont);
+        setText("+250$");
+        setVerticalTextPosition(JLabel.CENTER);
+        setBounds(600,300,200,60);
+        StaticVariables.gamePanel.add(this);
+    }
 
-
+    private void setTheSound() {
+        moneySound =new Sound();
+        moneySound.playSound(Sound.path.get(11));
+        moneySound.setVolume(6);
     }
 }
