@@ -12,7 +12,8 @@ public class SaveGame {
 
     public SaveGame(String path,String pathToImage) {
         new ScreenShot(pathToImage);
-        File file = new File((path));
+
+        File file = new File(path);
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(file));
@@ -42,7 +43,7 @@ public class SaveGame {
             writer.newLine();
             writer.write(World.userInProgressToOpenHouse+ "");
             writer.newLine();
-            writer.write(StaticVariables.mainMenu.getType()+ "");
+            writer.write( "");
             writer.newLine();
             writer.write(Ghost.difficulty+ "");
             writer.newLine();

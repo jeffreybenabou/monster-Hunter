@@ -268,7 +268,6 @@ public class MainPlayer extends GameObject {
             }
         }catch (Exception e)
         {
-e.printStackTrace();
         }
 
 

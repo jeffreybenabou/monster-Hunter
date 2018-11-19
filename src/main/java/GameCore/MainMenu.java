@@ -79,25 +79,32 @@ public class MainMenu extends JLabel implements MouseListener {
         new Thread(new Runnable() {
             public void run() {
 
-                File file = new File(getClass().getClassLoader().getResource("save/").getFile());
-                File[] listOfFiles = file.listFiles();
-                saveName = new LinkedList<String>();
-                int j = 0;
-                for (int i = 0; i < listOfFiles.length; i++) {
-                    if (listOfFiles[i].getName().endsWith("txt")) {
-                        saveName.add(listOfFiles[i].getName());
+                try
+                {
+                    File file = new File(getClass().getClassLoader().getResource("save/").getFile());
+                    File[] listOfFiles = file.listFiles();
+                    saveName = new LinkedList<String>();
+                    int j = 0;
+                    for (int i = 0; i < listOfFiles.length; i++) {
+                        if (listOfFiles[i].getName().endsWith("txt")) {
+                            saveName.add(listOfFiles[i].getName());
 
-                    } else if (listOfFiles[i].getName().endsWith("png")) {
+                        } else if (listOfFiles[i].getName().endsWith("png")) {
 
-                        try {
-                            imageOfSave.add(ImageIO.read(new File("target/classes/save/" + listOfFiles[i].getName())));
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            try {
+                                imageOfSave.add(ImageIO.read(new File("target/classes/save/" + listOfFiles[i].getName())));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
 
+                    }
+                    addTheListOfUsersSaveGame();
+                }catch (Exception e)
+                {
+e.fillInStackTrace();
                 }
-                addTheListOfUsersSaveGame();
+
             }
         }).start();
     }
@@ -551,16 +558,18 @@ public class MainMenu extends JLabel implements MouseListener {
 
     private void setThePathToLoadGame(String path, boolean newGame) {
         if (newGame) {
-            pathToFile = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path + ".txt";
-            pathToImage = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path + ".png";
+
+            pathToFile = ImageLoader.class.getClassLoader().getResource("save/") + path + ".txt";
+            pathToImage = ImageLoader.class.getClassLoader().getResource("save/") + path + ".png";
         } else {
 
-            pathToFile = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path;
+            pathToFile = ImageLoader.class.getClassLoader().getResource("save/") + path;
             if (path.endsWith("txt"))
                 path = path.replace("txt", "png");
-            pathToImage = ImageLoader.class.getClassLoader().getResource("save/").getPath() + path;
+            pathToImage = ImageLoader.class.getClassLoader().getResource("save/") + path;
 
         }
+
 
     }
 
@@ -604,7 +613,15 @@ public class MainMenu extends JLabel implements MouseListener {
     }
 
     private void addTheLoadingMenuFromNewGame() {
-        File file = new File("" + ImageLoader.class.getClassLoader().getResource("save/").getPath(), "" + textField.getText() + ".txt");
+        File file=null;
+        try
+        {
+             file = new File("" + ImageLoader.class.getClassLoader().getResource("save/").getPath(), "" + textField.getText() + ".txt");
+        }catch (Exception e)
+        {
+            e.fillInStackTrace();
+        }
+
 
         try {
             if (!file.createNewFile()) {

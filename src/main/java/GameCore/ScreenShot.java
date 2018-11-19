@@ -31,7 +31,6 @@ new Thread(new Runnable() {
 
 
             file = new File((path));
-
             Thread.sleep(100);
             ImageIO.write(capture, "png", file);
         } catch (IOException e) {

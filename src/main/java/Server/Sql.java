@@ -1,6 +1,7 @@
 package Server;
 
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -244,7 +245,7 @@ return false;
             connect =  DriverManager.getConnection(host, username, password);
 
         } catch (SQLException e) {
-            System.out.println( e.getCause().getMessage());
+            JOptionPane.showMessageDialog(null,"server is offline right now ");
 
 
         }
